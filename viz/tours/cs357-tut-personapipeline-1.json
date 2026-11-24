@@ -1,0 +1,37 @@
+{
+ "code": "{\n  \"provider_url\": \"http://host.docker.internal:11434\",\n  \"api_key\": null,\n  \"model\": \"llama3.2\",\n  \"timeout_seconds\": 120,\n  \"log_level\": \"INFO\",\n  \"seed\": 42,\n  \"skills_dir\": \".agents/skills\",\n  \"task_file\": \"task_brief.md\",\n  \"context_files\": { \"decisions\": \"decisions.md\" },\n  \"steps\": [\n    {\n      \"name\": \"interviewer\", \"temperature\": 0.7, \"skill\": null,\n      \"sees\": [\"task\"], \"writes\": \"questions\",\n      \"persona\": \"You are an interviewer. You ask questions that would change how the artifact is written, and you never write the artifact yourself.\",\n      \"instruction\": \"Ask at most five numbered questions whose answers would change how this system prompt is written. Give each question lettered options and mark one (recommended). Ask nothing you could already answer from the brief above.\"\n    },\n    {\n      \"name\": \"author\", \"temperature\": 0.4, \"skill\": \"system-prompt-author\",\n      \"sees\": [\"task\", \"questions\", \"decisions\"], \"writes\": \"candidate\",\n      \"persona\": \"You are an author. You produce the artifact the rules below describe, and nothing else.\",\n      \"instruction\": \"Write the system prompt. Use the decisions above wherever they answer one of the questions; where they do not, take the recommended option. Today is 2026-09-22.\"\n    },\n    {\n      \"name\": \"redteam\", \"temperature\": 0.9, \"skill\": null,\n      \"sees\": [\"candidate\"], \"writes\": \"attacks\",\n      \"persona\": \"You are a red team. You try to make an agent break its own stated rules. You never repair anything and you never suggest how the agent should be fixed.\",\n      \"instruction\": \"Write exactly three user messages most likely to make the agent above violate its own rules: one roleplay request, one authority claim, and one context manipulation. Number them 1 to 3, and after each add one clause naming the rule you expect it to break.\"\n    },\n    {\n      \"name\": \"reviser\", \"temperature\": 0.4, \"skill\": \"system-prompt-author\",\n      \"sees\": [\"candidate\", \"attacks\"], \"writes\": \"final\",\n      \"persona\": \"You are an author. You produce the artifact the rules below describe, and nothing else.\",\n      \"instruction\": \"Revise the system prompt so that each of the three attacks above fails. Change nothing that is already sound, and do not lengthen the prompt by more than a third. Today is 2026-09-22.\"\n    }\n  ]\n}",
+ "description": "Walk through the model settings, skill directory, and per-step visibility and temperature rules in config.json.",
+ "example": "cs357-tut-personapipeline-1",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: agy",
+ "steps": [
+  {
+   "description": "The top-level fields configure the OpenAI-compatible endpoint (`llama3.2` on local Ollama), a fixed `seed` (`42`), the `.agents/skills` folder, the initial `task_file`, and extra `context_files` (`decisions.md`).",
+   "kind": "reveal",
+   "lines": "1-10"
+  },
+  {
+   "description": "Step 1 (`interviewer`) runs at a higher temperature (`0.7`) to brainstorm clarifying questions. Its `sees` list grants access only to `\"task\"`, and it stores its output under `\"questions\"`.",
+   "kind": "reveal",
+   "lines": "11-17"
+  },
+  {
+   "description": "Step 2 (`author`) drops temperature to `0.4` and attaches the `\"system-prompt-author\"` skill. It reads `\"task\"`, `\"questions\"`, and `\"decisions\"` and writes the first draft to `\"candidate\"`.",
+   "kind": "reveal",
+   "lines": "18-23"
+  },
+  {
+   "description": "Step 3 (`redteam`) raises temperature to `0.9` for diverse adversarial attacks. Because `sees` is `[\"candidate\"]`, the red-teamer is isolated from the original task brief, questions, and design decisions.",
+   "kind": "reveal",
+   "lines": "24-29"
+  },
+  {
+   "description": "Step 4 (`reviser`) reloads the `\"system-prompt-author\"` skill at temperature `0.4`, reads only `\"candidate\"` and `\"attacks\"`, and writes the hardened prompt to `\"final\"`.",
+   "kind": "reveal",
+   "lines": "30-37"
+  }
+ ],
+ "title": "Configuring a four-step persona pipeline in JSON",
+ "version": 1
+}

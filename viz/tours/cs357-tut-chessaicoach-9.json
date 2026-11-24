@@ -1,0 +1,22 @@
+{
+ "code": "const [c, elo] = await Promise.all([\n  getAICommentary(currentProviderConfig, beforeFen, afterFen, san, pgnSoFar, eloEstimate.elo),\n  getAIElo(currentProviderConfig, afterFen, newSans),\n]);\nsetCommentary(c);\nsetEloEstimate(elo);",
+ "description": "Promise.all fires the commentary and the Elo estimate together, since neither depends on the other, and waits once.",
+ "example": "cs357-tut-chessaicoach-9",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "`Promise.all` runs two independent calls together: `getAICommentary` for the move and `getAIElo` for a fresh estimate. The page says they do not depend on each other, so the app fires them together and waits once.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Destructure the two results, then store them with `setCommentary` and `setEloEstimate`.",
+   "kind": "focus",
+   "lines": "5-6"
+  }
+ ],
+ "title": "Two AI Calls at Once",
+ "version": 1
+}

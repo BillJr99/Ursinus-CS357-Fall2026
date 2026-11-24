@@ -1,0 +1,40 @@
+EXTRACTED FACTS:
+ The chess club | Thursday | Olin 107
+Hawk Hacks | Saturday | IDDC
+Ultimate frisbee pickup | Sunday | Quad
+
+DRAFT:
+ Here's a friendly digest of the upcoming events for students:
+
+Get ready to have fun! This week, join us at the Chess Club on Thursday in Olin 107, or head out to Hawk Hacks on Saturday at IDDC. On Sunday, meet up with friends for an Ultimate Frisbee pickup session at the Quad - don't miss out on the excitement!
+
+FINAL DIGEST:
+ Here's a revised version:
+
+Hey students! This week, join us for some fun events! Head to Olin 107 on Thursday for Chess Club, or check out Hawk Hacks on Saturday at IDDC. On Sunday, meet up with friends for an Ultimate Frisbee pickup session at the Quad - see you there!
+
+[Category: hardware]
+Ticket: My laptop screen flickers and goes completely black after five minutes.
+Response: Here are two concrete troubleshooting steps to help you diagnose the issue:
+
+**Step 1: Check the Power Settings**
+
+Try adjusting your power settings to see if it makes a difference. Press the Windows key + X and select "Power Options." Click on "Choose what the power buttons do" and then click on "Change settings that are currently unavailable." Under "Screen brightness," try setting the screen to turn off after 5 minutes or adjust the timeout duration to a shorter interval (e.g., 1-2 minutes). Also, check if there's an option to set the laptop to "Low Power Mode" or "Power Saver" mode. This might help reduce power consumption and prevent the flickering.
+
+**Step 2: Run a Stress Test on Your Graphics Card**
+
+The flickering screen could be related to your graphics card. Try running a stress test on your graphics card using a tool like FurMark, Unigine Heaven, or 3DMark. These tools will push your graphics card to its limits and help you identify if it's the culprit behind the issue. If the flickering persists even after running these tests, it could indicate a hardware problem with your laptop's display or graphics card.
+
+Please note that these steps are just initial troubleshooting steps, and further diagnosis may be required to pinpoint the exact cause of the issue.
+
+[Category: accounts]
+Ticket: I cannot log into the campus portal after the password reset last night.
+Response: Here are two concrete steps to help you resolve the issue:
+
+**Step 1: Check your email for a password reset confirmation**
+Check your email inbox and spam folder for a password reset confirmation email from our IT department. This email should have been sent to you immediately after you requested a password reset. If you don't see an email, check your junk mail folder or contact the IT helpdesk.
+
+**Step 2: Try resetting your password again using the campus portal**
+Go back to the campus portal and click on the "Forgot Password" link. Enter your username and follow the prompts to reset your password. Make sure to use a strong and unique password, and consider enabling two-factor authentication (2FA) for added security.
+
+If you're still having trouble logging in after trying these steps, please contact the IT helpdesk for further assistance.

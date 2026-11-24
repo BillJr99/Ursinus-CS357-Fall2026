@@ -1,0 +1,28 @@
+=== Preference Data Summary ===
+
+Prompt 1: Explain what a neural network is....
+  Preferred: Response A
+  Rejected:  Response B
+
+Prompt 2: What should I do if my Python code raises a KeyError?...
+  Preferred: Response A
+  Rejected:  Response B
+
+Prompt 3: Is reinforcement learning the same as supervised learning?...
+  Preferred: Response A
+  Rejected:  Response B
+
+=== Naive Reward Scores (fraction of times preferred) ===
+
+  Response A total wins: 3/3  (naive reward score: 1.00)
+  Response B total wins: 0/3  (naive reward score: 0.00)
+
+=== What a real reward model would do ===
+  A reward model (RM) is trained on thousands of these (prompt, chosen, rejected) triples.
+  It learns to assign a scalar score to any (prompt, response) pair.
+  PPO then updates the language model to generate responses the RM scores highly.
+
+=== STUDENT EXERCISE ===
+Edit ground_truth_preferred to flip one judgment (e.g., [1, 0, 1])
+Then re-run. What does this mean for the training signal the reward model receives?
+Which response in pair 2 is actually better? Do you agree with the annotation?

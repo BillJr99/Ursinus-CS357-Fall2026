@@ -1,0 +1,27 @@
+{
+ "code": "\n# Build and push\ndocker build -t ghcr.io/yourusername/hello-cs357:0.1.0 .\necho $CR_PAT | docker login ghcr.io -u yourusername --password-stdin\ndocker push ghcr.io/yourusername/hello-cs357:0.1.0\n\n# Teammate verifies (on their machine, not logged in to your account)\ndocker pull ghcr.io/yourusername/hello-cs357:0.1.0\ndocker run --rm ghcr.io/yourusername/hello-cs357:0.1.0",
+ "description": "Five-step npm publishing: login, dry-run to review contents, publish with access public, verify with npx, ship fixes with npm version.",
+ "example": "cs357-tut-publishing-7",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete npm publishing process.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "Step 1: npm login once per machine with npm access token.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "Step 2: npm pack --dry-run lists every file that would be included in the tarball.",
+   "kind": "focus",
+   "lines": "5-9"
+  }
+ ],
+ "title": "npm Publish: Dry Run, Publish, Verify, Fix",
+ "version": 1
+}

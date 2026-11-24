@@ -1,0 +1,52 @@
+{
+ "code": "# P7: a step-budgeted agent loop in which every model turn is a validated AgentStep\nimport traceback\nfrom datetime import date, timedelta\nfrom typing import Literal, Optional\nfrom pydantic import BaseModel, ValidationError, model_validator\n\nclass AgentStep(BaseModel):\n    thought: str                                           # the plan, in one sentence\n    action: Literal[\"days_until\", \"calculator\", \"none\"]    # only tools that exist\n    argument: str = \"\"\n    done: bool\n    final_answer: Optional[str] = None\n\n    @model_validator(mode=\"after\")\n    def finished_means_answered(self):\n        # A rule JSON Schema cannot express, so the code says it: done needs an answer and no action.\n        if self.done and (not self.final_answer or self.action != \"none\"):\n            raise ValueError(\"done=true requires action='none' and a final_answer\")\n        return self\n\ndef days_until(s):\n    return f\"{(date.fromisoformat(s.strip()) - date.today()).days} days\"\n\ndef calculator(expression):\n    allowed = set(\"0123456789+-*/().% \")\n    if not all(c in allowed for c in expression):\n        return \"Error: unsafe characters in expression\"\n    return str(eval(expression, {\"__builtins__\": {}}, {}))\n\nTOOLS = {\"days_until\": days_until, \"calculator\": calculator}\n\n# A stand-in model: the replies a real model might give, in order.  Reply 2 breaks the done rule.\nexam = (date.today() + timedelta(days=70)).isoformat()\nSCRIPT = iter([\n    f'{{\"thought\": \"First find how many days until the exam.\", \"action\": \"days_until\", \"argument\": \"{exam}\", \"done\": false}}',\n    '{\"thought\": \"Now multiply.\", \"action\": \"calculator\", \"argument\": \"70 * 3\", \"done\": true}',\n    '{\"thought\": \"Multiply 70 days by 3 hours.\", \"action\": \"calculator\", \"argument\": \"70 * 3\", \"done\": false}',\n    '{\"thought\": \"I have both numbers.\", \"action\": \"none\", \"done\": true, \"final_answer\": \"Your exam is in 70 days; at 3 hours a day that is 210 hours.\"}',\n])\n\ndef fake_model(messages, schema):\n    return next(SCRIPT)\n\ndef run_agent(goal, step_budget=6):\n    messages = [{\"role\": \"user\", \"content\": f\"Goal: {goal}\"}]\n    schema = AgentStep.model_json_schema()\n    for step in range(1, step_budget + 1):\n        raw = fake_model(messages, schema)\n        messages.append({\"role\": \"assistant\", \"content\": raw})\n        try:\n            s = AgentStep.model_validate_json(raw)\n        except ValidationError as e:\n            msg = e.errors()[0][\"msg\"]\n            print(f\"[pydantic_tut:p7] step {step} REJECTED: {msg}\")\n            traceback.print_exc()\n            messages.append({\"role\": \"user\", \"content\": f\"Your reply was invalid: {msg}. Reply again.\"})\n            continue                                   # a rejected turn still spends budget\n        if s.done:\n            print(f\"step {step}  DONE: {s.final_answer}\")\n            return s.final_answer, step, \"final_answer\"\n        try:\n            observation = TOOLS[s.action](s.argument)\n        except Exception as e:\n            print(f\"[pydantic_tut:p7] {e}\")\n            traceback.print_exc()\n            observation = f\"Error: {e}\"\n        print(f\"step {step}  {s.action} -> {observation}\")\n        messages.append({\"role\": \"user\", \"content\": f\"Observation: {observation}\"})\n    return None, step_budget, \"budget_exhausted\"\n\nanswer, steps, reason = run_agent(f\"How many days until my final on {exam}, and how many hours if I study 3 a day?\")\nprint(f\"Steps: {steps} | Termination: {reason}\")",
+ "description": "Pydantic AgentStep validates each model turn with thought, action, argument, done flag, and final_answer; fake model replays four replies including one invalid.",
+ "example": "cs357-tut-localagentfromscratch-5",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete AgentStep loop code.",
+   "kind": "reveal",
+   "lines": "1-72"
+  },
+  {
+   "description": "Purpose: P7 validates a step-budgeted agent loop with Pydantic.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "AgentStep model: fields for thought, action, argument, done, final_answer with validation rule.",
+   "kind": "focus",
+   "lines": "7-19"
+  },
+  {
+   "description": "Validator: done=true requires action='none' and a final_answer, enforced in code.",
+   "kind": "focus",
+   "lines": "14-19"
+  },
+  {
+   "description": "Tools: days_until and calculator functions with safety checks.",
+   "kind": "focus",
+   "lines": "21-29"
+  },
+  {
+   "description": "Script: four pre-written model replies, second one breaks the done rule.",
+   "kind": "focus",
+   "lines": "30-39"
+  },
+  {
+   "description": "Run_agent: loop validates each step, rejects invalid ones, executes tools, tracks budget.",
+   "kind": "focus",
+   "lines": "44-69"
+  },
+  {
+   "description": "Execution: runs agent with study hours question and prints results.",
+   "kind": "focus",
+   "lines": "71-72"
+  }
+ ],
+ "title": "AgentStep Loop with Fake Model",
+ "version": 1
+}

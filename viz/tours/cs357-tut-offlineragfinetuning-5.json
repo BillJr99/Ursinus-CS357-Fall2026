@@ -1,0 +1,37 @@
+{
+ "code": "# rag_common.py: configuration, the embedding function, and the persistent store, in one place.\nimport json\nimport logging\nimport traceback\nfrom pathlib import Path\n\nimport chromadb\nfrom chromadb.config import Settings\nfrom chromadb.utils.embedding_functions import OllamaEmbeddingFunction\n\nCFG = json.loads(Path(\"config.json\").read_text())\nlogging.basicConfig(level=CFG[\"log_level\"], format=\"%(levelname)s %(message)s\")\nlog = logging.getLogger(\"rag\")\nlogging.getLogger(\"httpx\").setLevel(logging.WARNING)\n\n\ndef open_collection():\n    \"\"\"Open (or create) the on-disk collection, with the embedding model named explicitly.\"\"\"\n    try:\n        client = chromadb.PersistentClient(path=CFG[\"chroma_path\"],\n                                           settings=Settings(anonymized_telemetry=False))\n        embed = OllamaEmbeddingFunction(url=CFG[\"ollama_url\"], model_name=CFG[\"embed_model\"])\n        return client.get_or_create_collection(\n            CFG[\"collection\"], embedding_function=embed,\n            metadata={\"hnsw:space\": \"cosine\", \"embed_model\": CFG[\"embed_model\"]})\n    except Exception as e:\n        print(f\"[rag_common:open_collection] {e}\")\n        traceback.print_exc()\n        raise",
+ "description": "One module that holds the configuration, the embedding function, and the on-disk Chroma collection, so the embedding model is named in one place.",
+ "example": "cs357-tut-offlineragfinetuning-5",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The header comment says this module keeps configuration, the embedding function, and the persistent store in one place. It imports the Chroma pieces, loads `config.json` into `CFG`, and sets up logging.",
+   "kind": "reveal",
+   "lines": "1-14"
+  },
+  {
+   "description": "`open_collection` opens or creates the on-disk collection. The docstring says the embedding model is named explicitly, because a collection must be queried with the same embedding model that built it.",
+   "kind": "focus",
+   "lines": "17-18"
+  },
+  {
+   "description": "Create a `PersistentClient` at the configured path with `anonymized_telemetry=False`, then build an `OllamaEmbeddingFunction` from the configured URL and embed model.",
+   "kind": "focus",
+   "lines": "20-22"
+  },
+  {
+   "description": "Get or create the collection with that embedding function. The metadata records the cosine distance space and the embed model name, so the store remembers which model built it.",
+   "kind": "focus",
+   "lines": "23-25"
+  },
+  {
+   "description": "On any error, print a labeled message, print the traceback, and re-raise, so a failure is visible instead of silent.",
+   "kind": "focus",
+   "lines": "26-29"
+  }
+ ],
+ "title": "The Shared Module",
+ "version": 1
+}

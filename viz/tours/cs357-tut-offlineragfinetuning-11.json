@@ -1,0 +1,37 @@
+{
+ "code": "# infer_lora.py: a fresh process loads the base model, attaches the saved adapter, and compares.\nimport json\nimport os\nimport sys\nimport traceback\n\nos.environ.setdefault(\"HF_HUB_OFFLINE\", \"1\")\nimport torch\nfrom peft import PeftModel\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\nfrom lora_data import FORMAT, SYSTEM\n\nCFG = json.load(open(\"lora_config.json\"))\n\n\ndef load(with_adapter=True):\n    tok = AutoTokenizer.from_pretrained(CFG[\"base_model\"], revision=CFG[\"revision\"], local_files_only=True)\n    model = AutoModelForCausalLM.from_pretrained(CFG[\"base_model\"], revision=CFG[\"revision\"],\n                                                 local_files_only=True, dtype=torch.float32)\n    if with_adapter:\n        model = PeftModel.from_pretrained(model, CFG[\"adapter_dir\"])   # the adapter must be loaded to matter\n    return tok, model.eval()\n\n\ndef generate(tok, model, question, context=\"\"):\n    user = f\"Sources:\\n{context}\\n\\nQuestion: {question}\" if context else question\n    msgs = [{\"role\": \"system\", \"content\": f\"{SYSTEM} {FORMAT}\"}, {\"role\": \"user\", \"content\": user}]\n    ids = tok.apply_chat_template(msgs, add_generation_prompt=True, return_tensors=\"pt\", return_dict=True)\n    with torch.no_grad():\n        out = model.generate(**ids, max_new_tokens=CFG[\"max_new_tokens\"], do_sample=False,\n                             pad_token_id=tok.eos_token_id)\n    return tok.decode(out[0][ids[\"input_ids\"].shape[1]:], skip_special_tokens=True).strip()\n\n\nif __name__ == \"__main__\":\n    try:\n        tok, model = load()\n        for q in [\"What are the Saturday hours?\", \"Is there a sauna?\"]:\n            print(f\"Q: {q}\")\n            print(f\"  adapter on : {generate(tok, model, q)}\")\n            with model.disable_adapter():                              # same weights, adapter bypassed\n                print(f\"  adapter off: {generate(tok, model, q)}\")\n    except Exception as e:\n        print(f\"[infer_lora:main] {e}\")\n        traceback.print_exc()\n        sys.exit(1)",
+ "description": "A fresh process that loads the base model, attaches the saved adapter, and compares answers with the adapter on and off.",
+ "example": "cs357-tut-offlineragfinetuning-11",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The header comment says a fresh process loads the base model, attaches the saved adapter, and compares. It sets `HF_HUB_OFFLINE`, imports torch, PEFT, and transformers, pulls the prompt format, and loads the config.",
+   "kind": "reveal",
+   "lines": "1-14"
+  },
+  {
+   "description": "`load` reads the tokenizer and base model at the pinned revision with `local_files_only=True`, then attaches the saved adapter with `PeftModel.from_pretrained`. The comment says the adapter must be loaded to matter.",
+   "kind": "focus",
+   "lines": "17-23"
+  },
+  {
+   "description": "`generate` builds the messages with the system format, applies the chat template, then runs `model.generate` with `do_sample=False` for greedy decoding and the configured token limit. It decodes only the new tokens and strips them.",
+   "kind": "focus",
+   "lines": "26-33"
+  },
+  {
+   "description": "The entry point loads the model, then loops over two questions. For each it prints the answer with the adapter on, then prints the answer again inside `model.disable_adapter()`, which bypasses the adapter on the same weights.",
+   "kind": "focus",
+   "lines": "36-43"
+  },
+  {
+   "description": "The try block catches any error, prints a labeled message and the traceback, and exits with status 1.",
+   "kind": "focus",
+   "lines": "44-47"
+  }
+ ],
+ "title": "Reloading the Adapter",
+ "version": 1
+}

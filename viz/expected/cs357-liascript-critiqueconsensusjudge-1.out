@@ -1,0 +1,22 @@
+--- first draft ---
+"Important Reminder:
+
+The Critique and Refine assignment for [Class Name] is now due next Friday, so be sure to get your work completed on time.
+
+Additionally, a change has been made to the instructor's office hours: instead of being held on Fridays, they will now take place every Wednesday from [time]. If you have any questions or concerns, feel free to reach out during these new hours.
+
+--- critic: revise | issues: ['No exclamation points are present in the draft as required.']
+
+--- revised draft ---
+Important Reminder:
+
+The Critique and Refine assignment for [Class Name] is now due next Friday, so be sure to get your work completed on time.
+
+Additionally, a change has been made to the instructor's office hours: instead of being held on Fridays, they will now take place every Wednesday from [time]. If you have any questions or concerns, feel free to reach out during these new hours.
+
+Issues to fix:
+[
+  "No exclamation points are present in the draft as required."
+]
+
+--- critic: revise | issues: ['excessive punctuation']

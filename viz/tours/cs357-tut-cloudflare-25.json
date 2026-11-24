@@ -1,0 +1,37 @@
+{
+ "code": "\n# Deploy a throwaway Worker\nnpm create cloudflare@latest throwaway-worker\ncd throwaway-worker && npx wrangler deploy\n\n# Confirm it works\ncurl https://throwaway-worker.<your-subdomain>.workers.dev/\n\n# Delete it\nnpx wrangler delete --name throwaway-worker\n\n# Confirm deletion\ncurl https://throwaway-worker.<your-subdomain>.workers.dev/  # should fail",
+ "description": "A starter hint that deploys a throwaway Worker, confirms it answers, deletes it, and confirms the URL no longer responds.",
+ "example": "cs357-tut-cloudflare-25",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This hint walks through a teardown drill on a throwaway Worker, so you do not delete your main one.",
+   "kind": "reveal",
+   "lines": "1-13"
+  },
+  {
+   "description": "It scaffolds `throwaway-worker` and deploys it with `npx wrangler deploy`. The comment labels these the deploy steps.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "`curl` checks the Worker's URL answers before you delete it. The comment says confirm it works.",
+   "kind": "focus",
+   "lines": "7"
+  },
+  {
+   "description": "`npx wrangler delete --name throwaway-worker` removes the deployed Worker.",
+   "kind": "focus",
+   "lines": "10"
+  },
+  {
+   "description": "The last `curl` checks the URL again. The comment says it should fail, which is how you confirm deletion.",
+   "kind": "focus",
+   "lines": "13"
+  }
+ ],
+ "title": "Exercise 5: A Teardown Drill",
+ "version": 1
+}

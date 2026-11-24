@@ -1,0 +1,32 @@
+{
+ "code": "cd ~/cs357-work\nmkdir -p .devcontainer\ncd .devcontainer\ncurl -fsSL -o Dockerfile https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/files/devcontainer/Dockerfile\ncurl -fsSL -o docker-compose.yml https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/files/devcontainer/docker-compose.yml\ncurl -fsSL -o devcontainer.json https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/files/devcontainer/devcontainer.json\ncd ..\nls -la .devcontainer",
+ "description": "Download the three devcontainer files from the course repository into the .devcontainer folder of your clone.",
+ "example": "cs357-tut-coursecontainer-2",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Eight commands to set up devcontainer files.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "Navigation: cd to cs357-work, then mkdir -p .devcontainer to create the folder.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Downloads: three curl commands fetch Dockerfile, docker-compose.yml, and devcontainer.json from the course gh-pages.",
+   "kind": "focus",
+   "lines": "3-6"
+  },
+  {
+   "description": "Verification: cd back to clone root, then ls -la .devcontainer to list the three files.",
+   "kind": "focus",
+   "lines": "7-8"
+  }
+ ],
+ "title": "Add Course Container Files",
+ "version": 1
+}

@@ -1,0 +1,27 @@
+{
+ "code": "docker run -it --rm \\\n  --read-only \\\n  --tmpfs /tmp:rw,size=256m \\\n  --tmpfs /home/agent/.cache:rw,size=512m \\\n  -v \"$HOME/agents/project:/work\" \\\n  -v \"$HOME/notes/vault:/reference:ro\" \\\n  course-agent",
+ "description": "The run command that makes the container's own filesystem immutable and hands back scratch space with tmpfs mounts.",
+ "example": "cs357-tut-docker-9",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Run interactively, remove on exit, and add `--read-only`. The page says this makes the entire container root filesystem immutable.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "Two `--tmpfs` mounts give back the scratch space tools need: `/tmp` and the agent's `.cache` directory, both in memory and discarded on exit.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "Mount the project at `/work` read-write and the notes vault at `/reference` read-only. The page says an agent under this configuration cannot install a background service, cannot modify its own tooling, and cannot leave anything behind outside `/work`.",
+   "kind": "focus",
+   "lines": "5-7"
+  }
+ ],
+ "title": "Read-Only Root",
+ "version": 1
+}

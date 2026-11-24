@@ -1,0 +1,32 @@
+{
+ "code": "{\n  \"ollama_url\": \"http://localhost:11434\",\n  \"embed_model\": \"nomic-embed-text\",\n  \"chat_model\": \"llama3.2\",\n  \"chroma_path\": \"./chroma_db\",\n  \"collection\": \"makerspace\",\n  \"corpus_dir\": \"./corpus\",\n  \"chunk_chars\": 400,\n  \"top_k\": 3,\n  \"max_distance\": 0.55,\n  \"log_level\": \"INFO\"\n}",
+ "description": "One JSON file that holds every path, model name, and tuning number, so changing a model or path never means editing code.",
+ "example": "cs357-tut-offlineragfinetuning-3",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The file sets `ollama_url` to the local Ollama server, `embed_model` to `nomic-embed-text`, and `chat_model` to `llama3.2`. The page says all settings live in `config.json` for exactly this reason.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Three location keys: `chroma_path` points at the on-disk vector store, `collection` names the Chroma collection, and `corpus_dir` points at the markdown documents.",
+   "kind": "focus",
+   "lines": "5-7"
+  },
+  {
+   "description": "Three tuning numbers: `chunk_chars` sets the chunk size, `top_k` sets how many passages retrieval returns, and `max_distance` sets the distance cutoff for keeping a hit.",
+   "kind": "focus",
+   "lines": "8-10"
+  },
+  {
+   "description": "`log_level` sets the logging level, here `INFO`, and closes the JSON object.",
+   "kind": "focus",
+   "lines": "11-12"
+  }
+ ],
+ "title": "The config.json Settings",
+ "version": 1
+}

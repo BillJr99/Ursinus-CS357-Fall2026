@@ -1,0 +1,51 @@
+{
+ "code": "# The candidate is what you observed by running the verification methods.\n\nRUBRIC = {\n    \"threshold\": 0.85,\n    \"criteria\": [\n        {\"id\": \"K1\", \"requirement\": \"results sorted by score descending\", \"weight\": 3, \"material\": True},\n        {\"id\": \"K2\", \"requirement\": \"max_results limits the count\",       \"weight\": 2, \"material\": True},\n        {\"id\": \"K3\", \"requirement\": \"empty query exits 2\",                \"weight\": 2, \"material\": True},\n        {\"id\": \"K4\", \"requirement\": \"missing knowledge base exits 3\",     \"weight\": 3, \"material\": True},\n        {\"id\": \"K5\", \"requirement\": \"no matches returns [] and exits 0\",  \"weight\": 2, \"material\": True},\n        {\"id\": \"K6\", \"requirement\": \"default max_results is 5\",           \"weight\": 2, \"material\": True},\n        {\"id\": \"K7\", \"requirement\": \"only the allowed files changed\",     \"weight\": 3, \"material\": True},\n        {\"id\": \"K8\", \"requirement\": \"no eval, exec, or network\",          \"weight\": 4, \"material\": True},\n        {\"id\": \"K9\", \"requirement\": \"a test per testing criterion\",       \"weight\": 2, \"material\": True},\n        {\"id\": \"N1\", \"requirement\": \"docstrings say Returns\",             \"weight\": 1, \"material\": False},\n    ],\n}\n\ncandidate = {\n    \"K1\": True,\n    \"K2\": True,\n    \"K3\": True,\n    \"K4\": False,      # traceback, exit 1\n    \"K5\": True,\n    \"K6\": False,      # default is 10\n    \"K7\": True,\n    \"K8\": True,\n    \"K9\": False,      # four tests, none for criterion 2\n    \"N1\": False,      # says \"Return\"\n}\n\ndef score(candidate, rubric):\n    earned = total = 0\n    material_failed = []\n    for c in rubric[\"criteria\"]:\n        ok = bool(candidate.get(c[\"id\"], False))\n        total += c[\"weight\"]\n        earned += c[\"weight\"] if ok else 0\n        if not ok and c[\"material\"]:\n            material_failed.append(c[\"id\"])\n        tag = \"meets\" if ok else (\"DOES NOT MEET\" if c[\"material\"] else \"does not meet (non-material)\")\n        print(f\"{c['id']}  w={c['weight']}  {tag:<28} {c['requirement']}\")\n    ratio = earned / total if total else 0.0\n    print(f\"\\nweighted score {earned}/{total} = {ratio:.2f}, threshold {rubric['threshold']}\")\n    if material_failed:\n        print(\"revise: material criteria failed: \" + \", \".join(material_failed))\n    elif ratio < rubric[\"threshold\"]:\n        print(\"revise: below threshold on non-material criteria\")\n    else:\n        print(\"converged\")\n\nscore(candidate, RUBRIC)",
+ "description": "This example defines a weighted rubric with material and non-material criteria, scores a candidate's observed behavior, and applies two stopping rules: material failures block convergence, otherwise the threshold decides.",
+ "example": "cs357-liascript-iterationloops-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The RUBRIC defines a threshold (0.85) and 11 criteria with IDs, requirements, weights, and material flags. Material criteria (K1-K9) must all pass; N1 is non-material.",
+   "kind": "reveal",
+   "lines": "1-17"
+  },
+  {
+   "description": "The candidate dictionary records which criteria this candidate meets. Candidate 0 meets K1-K3, K5, K7-K8 but fails K4 (exit 3), K6 (default 10), and K9 (missing test).",
+   "kind": "reveal",
+   "lines": "19-30"
+  },
+  {
+   "description": "The score function iterates criteria, tallies earned/total weight, collects failed material criteria, and prints each criterion's status. Then it applies the stopping rules.",
+   "kind": "reveal",
+   "lines": "32-52"
+  },
+  {
+   "answer": "Revise. Three material criteria (K4, K6, K9) fail, so convergence is blocked regardless of the score.",
+   "kind": "predict",
+   "lines": "45-50",
+   "question": "Will this candidate converge, or will it be asked to revise?"
+  },
+  {
+   "description": "Each criterion prints with its weight and status: K1-K3, K5, K7-K8 meet; K4, K6, K9 DOES NOT MEET; N1 does not meet (non-material).",
+   "kind": "run",
+   "lines": "34-42",
+   "trace_step": 25
+  },
+  {
+   "description": "Weighted score: 16/24 = 0.67, threshold 0.85.",
+   "kind": "run",
+   "lines": "44-46",
+   "trace_step": 103
+  },
+  {
+   "description": "Output: revise: material criteria failed: K4, K6, K9.",
+   "kind": "run",
+   "lines": "45-46",
+   "trace_step": 104
+  }
+ ],
+ "title": "Rubric Scoring with Material Criteria",
+ "version": 1
+}

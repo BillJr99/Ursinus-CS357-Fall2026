@@ -1,0 +1,57 @@
+{
+ "code": "name: Deploy\n# Runs only when someone starts it from the Actions tab, and then waits for a reviewer:\n# the \"production\" environment's required reviewers are the human gate.\non:\n  workflow_dispatch:\npermissions:\n  contents: read\njobs:\n  deploy:\n    runs-on: ubuntu-latest\n    environment: production\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 22\n          cache: npm\n      - run: npm ci\n      - run: npm test\n      - run: npx wrangler d1 migrations apply DB --remote\n        env:\n          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}\n          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}\n      - run: npx wrangler deploy\n        env:\n          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}\n          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}",
+ "description": "Deployment workflow with manual trigger and production environment protection: tests, D1 migrations, deploy with Cloudflare credentials as secrets.",
+ "example": "cs357-tut-fullstackwithagents-18",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete deploy workflow.",
+   "kind": "reveal",
+   "lines": "1-27"
+  },
+  {
+   "description": "Metadata: Deploy name, comment about workflow_dispatch and reviewer gate.",
+   "kind": "focus",
+   "lines": "1-3"
+  },
+  {
+   "description": "Trigger: workflow_dispatch for manual start.",
+   "kind": "focus",
+   "lines": "4-5"
+  },
+  {
+   "description": "Permissions: contents read.",
+   "kind": "focus",
+   "lines": "6-7"
+  },
+  {
+   "description": "Job: deploy on ubuntu-latest with production environment.",
+   "kind": "focus",
+   "lines": "8-11"
+  },
+  {
+   "description": "Checkout: actions/checkout@v4.",
+   "kind": "focus",
+   "lines": "12-13"
+  },
+  {
+   "description": "Node: actions/setup-node@v4 with Node 22 and npm cache.",
+   "kind": "focus",
+   "lines": "14-17"
+  },
+  {
+   "description": "Test: npm ci and npm test.",
+   "kind": "focus",
+   "lines": "18-19"
+  },
+  {
+   "description": "Deploy: D1 migrations apply and wrangler deploy with CLOUDFLARE secrets.",
+   "kind": "focus",
+   "lines": "20-27"
+  }
+ ],
+ "title": "GitHub Actions: Deploy Workflow",
+ "version": 1
+}

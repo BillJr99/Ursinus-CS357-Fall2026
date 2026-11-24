@@ -1,0 +1,37 @@
+{
+ "code": "New-Item -ItemType Directory -Force -Path \"$env:USERPROFILE\\.config\\opencode\" | Out-Null\nSet-Content -Path \"$env:USERPROFILE\\.config\\opencode\\opencode.json\" -Encoding utf8 -Value @'\n{\n  \"$schema\": \"https://opencode.ai/config.json\"\n}\n'@",
+ "description": "The Windows version of the global config: create the directory with New-Item and write opencode.json from a here-string.",
+ "example": "cs357-tut-opencodesetup-2",
+ "lang": "powershell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the Windows, PowerShell version of the same two steps. It writes the same global `opencode.json` under your user profile.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "`New-Item -ItemType Directory -Force` creates the `.config\\opencode` directory. `-Force` tolerates an existing directory, and `| Out-Null` suppresses its output.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "`Set-Content` writes the file with UTF-8 encoding, taking the value from the here-string that starts at `@'`.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "The body holds the same `$schema` key, and `'@` closes the here-string.",
+   "kind": "focus",
+   "lines": "3-6"
+  },
+  {
+   "answer": "what keys are legal",
+   "kind": "predict",
+   "question": "The page says the $schema line tells an editor what, so a typo in permission or provider is underlined while you type?"
+  }
+ ],
+ "title": "The Same File in PowerShell",
+ "version": 1
+}

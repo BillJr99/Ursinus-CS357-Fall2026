@@ -1,0 +1,47 @@
+{
+ "code": "RUN mkdir -p \"$HOME/.config/pi-openai-compat\" && \\\n    printf '%s' '{ \\\n      \"previousModel\": null, \\\n      \"providers\": { \\\n        \"ollama\": { \\\n          \"displayName\": \"Ollama (local)\", \\\n          \"baseUrl\": \"http://host.docker.internal:11434/v1\", \\\n          \"apiKey\": null, \\\n          \"cachedModels\": [] \\\n        }, \\\n        \"openwebui\": { \\\n          \"displayName\": \"OpenWebUI\", \\\n          \"baseUrl\": \"http://host.docker.internal:3000/api/v1\", \\\n          \"apiKey\": null, \\\n          \"cachedModels\": [] \\\n        } \\\n      } \\\n    }' > \"$HOME/.config/pi-openai-compat/config.json\"",
+ "description": "Dockerfile that installs pi-coding-agent and pi-openai-compat, configured for non-root user with volume for Ollama host access.",
+ "example": "cs357-tut-terminalfilesystem-7",
+ "lang": "dockerfile",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete pi Dockerfile with Ollama/OpenWebUI support.",
+   "kind": "reveal",
+   "lines": "1-18"
+  },
+  {
+   "description": "Base: node:20-slim as the foundation.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Git: installed for pi to show changes before writing.",
+   "kind": "focus",
+   "lines": "2-5"
+  },
+  {
+   "description": "Non-root: create and switch to agent user for safety.",
+   "kind": "focus",
+   "lines": "7-8"
+  },
+  {
+   "description": "Ollama: add host.docker.internal to /etc/hosts and install curl and socat for connectivity.",
+   "kind": "focus",
+   "lines": "10-12"
+  },
+  {
+   "description": "Pi: install pi-coding-agent globally in agent's home directory.",
+   "kind": "focus",
+   "lines": "14-16"
+  },
+  {
+   "description": "Plugin: pi install pi-openai-compat for Ollama/OpenWebUI provider support.",
+   "kind": "focus",
+   "lines": "18"
+  }
+ ],
+ "title": "pi Dockerfile with Ollama/OpenWebUI Plugin",
+ "version": 1
+}

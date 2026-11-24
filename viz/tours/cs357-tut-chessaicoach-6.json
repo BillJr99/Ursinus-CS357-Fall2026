@@ -1,0 +1,32 @@
+{
+ "code": "if (provider === \"openwebui\") {\n  const baseUrl = normalizeBaseUrl(providerConfig.openWebUIUrl); // trims trailing slashes\n  if (!baseUrl) throw new Error(\"Enter an Open WebUI base URL.\");\n  if (!providerConfig.openWebUIModel) throw new Error(\"Choose an Open WebUI model.\");\n\n  const res = await fetch(baseUrl + \"/api/chat/completions\", {\n    method: \"POST\",\n    headers: {\n      \"content-type\": \"application/json\",\n      \"authorization\": providerConfig.openWebUIKey ? `Bearer ${providerConfig.openWebUIKey}` : \"\",\n    },\n    body: JSON.stringify({\n      model: providerConfig.openWebUIModel,\n      messages: [{ role: \"user\", content: prompt }],\n      max_tokens: maxTokens,\n      temperature,\n    }),\n  });\n\n  const data = await res.json().catch(async () => ({ raw: await res.text() }));\n  if (!res.ok || data?.error) throw new Error(data?.error?.message || data?.raw || res.statusText);\n\n  return extractOpenAIText(data).trim(); // same choices[0].message.content path as OpenAI\n}",
+ "description": "The third branch, which targets a local OpenAI-compatible server and reuses the same response parsing as OpenAI.",
+ "example": "cs357-tut-chessaicoach-6",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Enter the Open WebUI branch. Normalize the base URL (the comment says it trims trailing slashes), then throw if the base URL or the model is missing.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Post to `baseUrl + /api/chat/completions`. The `authorization` header sends a Bearer token only when a key is present, because the page says the key is optional for a local server.",
+   "kind": "focus",
+   "lines": "6-11"
+  },
+  {
+   "description": "The body sends the configured model, the `messages` array, `max_tokens`, and `temperature`.",
+   "kind": "focus",
+   "lines": "12-17"
+  },
+  {
+   "description": "Parse and error-check the response, then return `extractOpenAIText(data).trim()`. The comment notes it uses the same `choices[0].message.content` path as OpenAI, because the server speaks the same protocol.",
+   "kind": "focus",
+   "lines": "20-23"
+  }
+ ],
+ "title": "Open WebUI / Local Branch",
+ "version": 1
+}

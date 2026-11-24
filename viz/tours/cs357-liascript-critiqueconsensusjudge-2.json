@@ -1,0 +1,51 @@
+{
+ "code": "import requests\nfrom collections import Counter\n\ndef llm(system, user, temperature=0.9):\n    \"\"\"\n    Call the local LLM. Note: no seed is set here.\n    This is intentional; we want genuine randomness for debate diversity.\n    The caller controls temperature per round.\n    \"\"\"\n    try:\n        r = requests.post(\"http://localhost:11434/api/chat\", json={\n            \"model\": \"llama3.2\", \"stream\": False,\n            \"options\": {\"temperature\": temperature},   # deliberately unseeded for diversity\n            \"messages\": [{\"role\": \"system\", \"content\": system},\n                         {\"role\": \"user\", \"content\": user}]}, timeout=120)\n        return r.json()[\"message\"][\"content\"].strip()\n    except Exception as e:\n        print(f\"[debate:llm] {e}\")\n        import traceback; traceback.print_exc()\n        return \"\"\n\ndef debate(question, n_agents=3, rounds=2):\n    \"\"\"\n    Run the Du et al. (2023) debate protocol.\n    Returns: (list of final answers, (winning answer, vote count))\n    \"\"\"\n    # Round 1: all agents answer independently, no communication yet\n    # \"ANSWER: <short answer>\" at the end makes extraction consistent\n    sys = \"Solve the problem step by step. End your response with a line 'ANSWER: <your short answer>'.\"\n    answers = [llm(sys, question, temperature=0.9) for _ in range(n_agents)]\n    print(\"--- Round 1 answers ---\")\n    for i, a in enumerate(answers):\n        print(f\"Agent {i}: {a.split('ANSWER:')[-1].strip()}\")\n\n    # Rounds 2+: each agent reads the others' answers and revises\n    for rnd in range(1, rounds):\n        new_answers = []\n        for i in range(n_agents):\n            # Build the peer context: what everyone else said\n            peers = \"\\n\\n\".join(\n                f\"Agent {j} answered:\\n{a}\"\n                for j, a in enumerate(answers) if j != i\n            )\n            prompt = (\n                f\"Original question: {question}\\n\\n\"\n                f\"The other agents gave these answers:\\n{peers}\\n\\n\"\n                \"Read their reasoning carefully. If you see an error in their reasoning, \"\n                \"point it out specifically. Then give your final answer. \"\n                \"End with 'ANSWER: <your short answer>'.\"\n            )\n            # Lower temperature in revision rounds: more focused, less exploratory\n            new_answers.append(llm(sys, prompt, temperature=0.5))\n        answers = new_answers\n        print(f\"\\n--- Round {rnd + 1} answers ---\")\n        for i, a in enumerate(answers):\n            print(f\"Agent {i}: {a.split('ANSWER:')[-1].strip()}\")\n\n    # Extract the final short answers and vote\n    finals = [a.split(\"ANSWER:\")[-1].strip().lower() for a in answers]\n    vote = Counter(finals).most_common(1)[0]   # (answer_text, vote_count)\n    return finals, vote\n\n# The classic algebra trap: the intuitive answer (15) is wrong; the correct answer is 10.\n# A backpack costs $10 more than a water bottle; together they cost $30.\n# If water bottle = x, then (x + 10) + x = 30, so 2x = 20, so x = 10.\nquestion = (\n    \"A backpack costs 10 dollars more than a water bottle. \"\n    \"Together they cost 30 dollars. What does the water bottle cost?\"\n)\nfinals, (winner, count) = debate(question, n_agents=3, rounds=2)\nprint(f\"\\n=== Majority vote: '{winner}' with {count}/{len(finals)} agents agreeing ===\")\nprint(\"Correct answer: 10 dollars\")",
+ "description": "This example runs the Du et al. (2023) debate protocol: three agents independently answer a math question, then revise after seeing peers' answers, and a majority vote decides.",
+ "example": "cs357-liascript-critiqueconsensusjudge-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The llm function calls the local Ollama server with no fixed seed, so each call varies. Temperature is controlled by the caller.",
+   "kind": "reveal",
+   "lines": "1-20"
+  },
+  {
+   "description": "The debate function runs round 1 at temperature 0.9 (explore): all agents answer independently. Then revision rounds at temperature 0.5 (commit): each agent reads peers' answers and revises.",
+   "kind": "reveal",
+   "lines": "22-53"
+  },
+  {
+   "description": "After all rounds, final answers are extracted from the 'ANSWER:' line and a majority vote is taken using Counter.",
+   "kind": "focus",
+   "lines": "58-61"
+  },
+  {
+   "answer": "In this run, all three agents give the correct answer (10 or $10) in round 1; none fall for the 15 trap.",
+   "kind": "predict",
+   "lines": "30-33",
+   "question": "How many agents will give the intuitive wrong answer (15) in round 1?"
+  },
+  {
+   "description": "Round 1 answers: Agent 0: 10, Agent 1: 10, Agent 2: $10.",
+   "kind": "run",
+   "lines": "31-33",
+   "trace_step": 1
+  },
+  {
+   "description": "Round 2 answers: all agents stay at 10. Majority vote: '$10' with 2/3 agents agreeing.",
+   "kind": "run",
+   "lines": "54-56",
+   "trace_step": 2
+  },
+  {
+   "description": "Final output prints the majority vote and confirms: Correct answer: 10 dollars.",
+   "kind": "run",
+   "lines": "70-72",
+   "trace_step": 3
+  }
+ ],
+ "title": "Multi-Agent Debate on an Algebra Problem",
+ "version": 1
+}

@@ -1,0 +1,37 @@
+{
+ "code": "# step4_tool.py\nfrom datetime import date\nfrom pydantic_ai import Agent\nfrom common import make_model, show_context, watch\n\nagent = Agent(make_model(), instructions=\"You are a concise study-planning assistant. Use tools for date arithmetic.\", capabilities=[watch])\n\n@agent.tool_plain\ndef days_between(start_iso: str, end_iso: str) -> int:\n    \"\"\"Returns the number of days between two ISO dates (YYYY-MM-DD).\"\"\"\n    return (date.fromisoformat(end_iso) - date.fromisoformat(start_iso)).days\n\nresult = agent.run_sync(\"How many days are there from 2026-10-05 to 2026-12-14?\")\nprint(result.output)\nshow_context()",
+ "description": "Tool decorator with type hints and docstring generates schema; tool appears as description and result in context window.",
+ "example": "cs357-tut-agentframeworks-14",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Tool integration: days_between tool, agent with instructions, and invoke.",
+   "kind": "reveal",
+   "lines": "1-15"
+  },
+  {
+   "description": "Imports: datetime, Agent, and common helpers.",
+   "kind": "focus",
+   "lines": "1-4"
+  },
+  {
+   "description": "Agent: Agent with make_model, instructions to use tools for date arithmetic, capabilities with watch.",
+   "kind": "focus",
+   "lines": "6-7"
+  },
+  {
+   "description": "Tool: @agent.tool_plain decorator, days_between with type hints and docstring for schema generation.",
+   "kind": "focus",
+   "lines": "8-11"
+  },
+  {
+   "description": "Execution: run_sync with date question, print output, show_context to see tool in window.",
+   "kind": "focus",
+   "lines": "13-15"
+  }
+ ],
+ "title": "Pydantic AI: Tool Integration",
+ "version": 1
+}

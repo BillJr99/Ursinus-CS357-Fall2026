@@ -1,0 +1,12 @@
+--- Round 1 answers ---
+Agent 0: 10
+Agent 1: 10
+Agent 2: $10
+
+--- Round 2 answers ---
+Agent 0: $10
+Agent 1: $10
+Agent 2: 10
+
+=== Majority vote: '$10' with 2/3 agents agreeing ===
+Correct answer: 10 dollars

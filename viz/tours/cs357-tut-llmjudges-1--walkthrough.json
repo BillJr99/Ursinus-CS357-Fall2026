@@ -1,0 +1,59 @@
+{
+ "code": "import os\n\nSAMPLES = {\n    \"s01.txt\": \"The library should stay open until 2 a.m. during finals week. Seventy-one percent of students surveyed last spring said they studied past midnight at least three times during finals (Student Life Survey, 2025). Late closing also cuts noise complaints in the residence halls, which rose 40 percent during finals last year (Residence Life Report, 2025). Some argue the added staffing costs too much, but two student workers for four extra hours cost less than one noise incident investigation. The extension is cheap, and it is what students already need.\",\n    \"s02.txt\": \"A lot of people study late during finals, and longer hours would help them. I think the library should probably stay open later. Some students have said they wish it was open longer. It might cost a bit more, but that is probably worth it.\",\n    \"s03.txt\": \"Finals week is stressful for everyone. There are many places to study on campus, and each has its own advantages. The library is a nice building with good lighting. Everyone should find the study spot that works best for them.\",\n}\nos.makedirs(\"samples\", exist_ok=True)\nfor name, text in SAMPLES.items():\n    with open(os.path.join(\"samples\", name), \"w\") as f:\n        f.write(text + \"\\n\")\n\nRUBRIC = {\n  \"criteria\": [\n    {\"name\": \"claims_cited\", \"weight\": 50,\n     \"levels\": {\"1\": \"no claims cite evidence\", \"2\": \"some claims cite evidence\",\n                \"3\": \"most claims cite evidence\", \"4\": \"every claim cites evidence\"}},\n    {\"name\": \"directness\", \"weight\": 30,\n     \"levels\": {\"1\": \"never states a position\", \"2\": \"position implied\",\n                \"3\": \"position stated\", \"4\": \"position stated in the first sentence\"}},\n    {\"name\": \"counterargument\", \"weight\": 20,\n     \"levels\": {\"1\": \"absent\", \"2\": \"mentioned\", \"3\": \"engaged\", \"4\": \"engaged and rebutted\"}},\n  ]\n}\nassert sum(c[\"weight\"] for c in RUBRIC[\"criteria\"]) == 100\n\ndef weighted_total(levels, rubric=RUBRIC):\n    \"\"\"levels maps each criterion name to an awarded level, 1 to 4.\"\"\"\n    return sum(c[\"weight\"] * levels[c[\"name\"]] / 4 for c in rubric[\"criteria\"])\n\n# The levels the samples were written to land on.  Replace them with yours.\nHAND = {\n    \"s01.txt\": {\"claims_cited\": 4, \"directness\": 4, \"counterargument\": 4},\n    \"s02.txt\": {\"claims_cited\": 2, \"directness\": 3, \"counterargument\": 2},\n    \"s03.txt\": {\"claims_cited\": 1, \"directness\": 1, \"counterargument\": 1},\n}\nfor name, levels in HAND.items():\n    print(name, \"hand total:\", weighted_total(levels))",
+ "description": "Walk through setting up samples, rubric as data, hand scores, and promptfoo configuration for LLM-based judging.",
+ "example": "cs357-tut-llmjudges-1",
+ "lang": "python",
+ "name": "walkthrough",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "stages": {
+  "cs357-tut-llmjudges-2": {
+   "code": "python3 -c \"print('{' * 2 + 'answer' + '}' * 2)\" > prompt.txt",
+   "lang": "shell"
+  }
+ },
+ "steps": [
+  {
+   "description": "Import os for file operations",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "Define SAMPLES dict with three text samples and write them to samples/",
+   "kind": "focus",
+   "lines": "3-11"
+  },
+  {
+   "description": "Define RUBRIC with three criteria, weights, and level descriptions",
+   "kind": "focus",
+   "lines": "13-24"
+  },
+  {
+   "description": "Define weighted_total to compute score from levels and weights",
+   "kind": "focus",
+   "lines": "27-29"
+  },
+  {
+   "answer": "s01.txt hand total: 100.0",
+   "kind": "predict",
+   "question": "What is the hand total for s01.txt?"
+  },
+  {
+   "description": "Move to promptfoo setup",
+   "kind": "stage",
+   "stage": "cs357-tut-llmjudges-2"
+  },
+  {
+   "description": "Create prompt.txt with answer template",
+   "kind": "reveal",
+   "lines": "1"
+  },
+  {
+   "description": "Template syntax uses double curly braces around answer",
+   "kind": "focus",
+   "lines": "1"
+  }
+ ],
+ "title": "LLM Judges and promptfoo: A Rubric, a Judge, and How Far to Trust It",
+ "version": 1
+}

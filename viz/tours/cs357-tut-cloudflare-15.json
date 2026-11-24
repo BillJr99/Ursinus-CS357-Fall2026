@@ -1,0 +1,37 @@
+{
+ "code": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [{\n    \"Effect\": \"Allow\",\n    \"Principal\": { \"Federated\": \"arn:aws:iam::<ACCOUNT_ID>:oidc-provider/token.actions.githubusercontent.com\" },\n    \"Action\": \"sts:AssumeRoleWithWebIdentity\",\n    \"Condition\": {\n      \"StringEquals\": {\n        \"token.actions.githubusercontent.com:aud\": \"sts.amazonaws.com\",\n        \"// TODO pin the EXACT repo + environment, never a wildcard\": \"\",\n        \"token.actions.githubusercontent.com:sub\": \"repo:<ORG>/<REPO>:environment:production\"\n      }\n    }\n  }]\n}",
+ "description": "A trust policy that lets a GitHub Actions run assume a role through OpenID Connect and receive short-lived credentials.",
+ "example": "cs357-tut-cloudflare-15",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is an AWS trust policy. It lets a GitHub Actions run assume a role through OpenID Connect, so the cloud hands out short-lived credentials.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "`Principal` names the GitHub OIDC provider, and `Action: sts:AssumeRoleWithWebIdentity` is the call that exchanges the token for credentials.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "description": "The `Condition` checks the token's audience and subject. The `sub` is pinned to `repo:<ORG>/<REPO>:environment:production`.",
+   "kind": "focus",
+   "lines": "9-11"
+  },
+  {
+   "description": "The TODO comment warns you to pin the exact repo and environment, never a wildcard. A loose subject hands production credentials to any repository or branch.",
+   "kind": "focus",
+   "lines": "10"
+  },
+  {
+   "answer": "stamps them",
+   "kind": "predict",
+   "question": "The page says the identity provider, not your workflow, does what to the three claims?"
+  }
+ ],
+ "title": "An AWS OIDC Trust Policy",
+ "version": 1
+}

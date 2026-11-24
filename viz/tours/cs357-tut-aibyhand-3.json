@@ -1,0 +1,62 @@
+{
+ "code": "import numpy as np\n\nlogits = np.array([4.0, 2.0, 1.0])\n\nfor T in [0.5, 1.0, 2.0]:\n    scaled = logits / T\n    exp_scaled = np.exp(scaled)\n    probs = exp_scaled / exp_scaled.sum()\n    print(f\"T={T}: {probs.round(3)}\")",
+ "description": "The Python check for the three-temperature softmax: one set of logits scaled, exponentiated, and normalized at T = 0.5, 1, and 2.",
+ "example": "cs357-tut-aibyhand-3",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: opencode free model",
+ "steps": [
+  {
+   "description": "`numpy` does the exponentiation and the rounding for this check.",
+   "kind": "reveal",
+   "lines": "1"
+  },
+  {
+   "description": "`logits` holds the three raw scores for tokens A, B, and C: `4.0`, `2.0`, and `1.0`. The page works these three temperatures by hand, and this script verifies them.",
+   "kind": "reveal",
+   "lines": "3"
+  },
+  {
+   "description": "The loop runs the same softmax at three temperatures, `0.5`, `1.0`, and `2.0`.",
+   "kind": "reveal",
+   "lines": "5"
+  },
+  {
+   "description": "Inside the loop, `logits / T` scales the scores, `np.exp` exponentiates them, and dividing by `exp_scaled.sum()` normalizes them into a distribution. That is softmax with temperature, matching the hand steps of scaled logits, exponentials, sum, then divide.",
+   "kind": "focus",
+   "lines": "6-8"
+  },
+  {
+   "answer": "It flattens: the top probability drops to about 0.629 and the other two rise to about 0.231 and 0.140. A larger temperature shrinks the gaps between logits before the exponential.",
+   "kind": "predict",
+   "lines": "9",
+   "question": "At `T = 0.5` the probabilities come out about `[0.98, 0.018, 0.002]`. What happens to the same distribution at `T = 2.0`?"
+  },
+  {
+   "description": "Run it. The loop starts with `T = 0.5`.",
+   "kind": "run",
+   "lines": "5",
+   "trace_step": 2
+  },
+  {
+   "description": "The scaled logits for `T = 0.5` are `8.0`, `4.0`, and `2.0`, the same numbers as the hand calculation.",
+   "kind": "run",
+   "lines": "6",
+   "trace_step": 3
+  },
+  {
+   "description": "The exponentials are divided by their sum, turning them into probabilities that add to 1.",
+   "kind": "run",
+   "lines": "8",
+   "trace_step": 5
+  },
+  {
+   "description": "The first print shows `T=0.5: [0.98  0.018 0.002]`. The loop repeats for `1.0` and `2.0`, and the three lines together show the distribution flattening as temperature rises.",
+   "kind": "run",
+   "lines": "9",
+   "trace_step": 6
+  }
+ ],
+ "title": "Softmax at Three Temperatures",
+ "version": 1
+}

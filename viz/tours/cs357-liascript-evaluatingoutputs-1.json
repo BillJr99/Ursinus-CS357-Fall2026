@@ -1,0 +1,45 @@
+{
+ "code": "import requests\n\ndef chat(prompt, model=\"llama3.2\"):\n    try:\n        r = requests.post(\"http://localhost:11434/api/chat\", json={\n            \"model\": model, \"stream\": False,\n            \"options\": {\"temperature\": 0.0, \"seed\": 42},\n            \"messages\": [{\"role\": \"user\",\n                          \"content\": prompt + \" Respond with only the answer, no explanation.\"}]},\n            timeout=120)\n        return r.json()[\"message\"][\"content\"].strip().lower()\n    except Exception as e:\n        print(f\"[evaluating:chat] {e}\")\n        import traceback; traceback.print_exc()\n        return \"\"\n\ntasks = [\n    (\"What is the capital of Australia?\", \"canberra\"),\n    (\"What year did the Apollo 11 mission land on the Moon?\", \"1969\"),\n    (\"Who wrote the novel Frankenstein?\", \"mary shelley\"),\n    (\"What is 17 * 24?\", \"408\"),\n    (\"In what year was Ursinus College founded?\", \"1869\"),\n]\n\ncorrect = 0\nfor q, gold in tasks:\n    pred = chat(q)\n    hit = gold in pred\n    correct += hit\n    print(f\"{'PASS' if hit else 'FAIL'} | {q} -> {pred!r} (expected {gold!r})\")\n\nprint(f\"\\naccuracy = {correct}/{len(tasks)} = {correct/len(tasks):.2f}\")",
+ "description": "This example runs a deterministic evaluation (temperature 0.0, seed 42) of five factual questions against a local model, scoring each with a substring match and reporting overall accuracy.",
+ "example": "cs357-liascript-evaluatingoutputs-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The chat function calls the local Ollama server with temperature 0.0 and seed 42 for reproducible outputs, and demands only the answer with no explanation.",
+   "kind": "reveal",
+   "lines": "1-15"
+  },
+  {
+   "description": "The tasks list holds five (question, gold_answer) pairs: capital of Australia, Apollo 11 landing year, Frankenstein author, 17*24, and Ursinus College founding year.",
+   "kind": "reveal",
+   "lines": "17-23"
+  },
+  {
+   "description": "The loop queries the model for each question, checks if the gold answer appears as a substring in the prediction, and prints PASS or FAIL with the model's actual output.",
+   "kind": "reveal",
+   "lines": "25-30"
+  },
+  {
+   "answer": "The model fails on the Ursinus College founding year, answering 1782 instead of 1869.",
+   "kind": "predict",
+   "lines": "26-30",
+   "question": "Which question will the model fail on?"
+  },
+  {
+   "description": "Loop runs through all five tasks: 4 PASS (Canberra, 1969, Mary Shelley, 408), 1 FAIL (Ursinus 1782 vs 1869).",
+   "kind": "run",
+   "lines": "26-30",
+   "trace_step": 1
+  },
+  {
+   "description": "Final accuracy prints: 4/5 = 0.80.",
+   "kind": "run",
+   "lines": "32",
+   "trace_step": 2
+  }
+ ],
+ "title": "Simple Evaluation Harness for Factual QA",
+ "version": 1
+}

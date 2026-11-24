@@ -1,0 +1,79 @@
+{
+ "code": "# Setup: the task, the settings you own, and a scripted stand-in for the model.\nimport json\nimport re\n\nMESSAGES = [\n    \"Chess club meets Thursday at 7pm in Olin 107.\",\n    \"Hawk Hacks is Saturday at 10am in IDDC. Bring laptops!\",\n    \"Ultimate frisbee pickup moved to Sunday at 2pm on the quad.\",\n    \"Does anyone know if the library is open late during finals?\",\n    \"Free pizza in the lobby, first come first served.\",\n]\n\nCONFIG = {\"spawn_budget\": 6, \"temperature\": 0.0, \"seed\": 42}   # yours, not the model's\n\nEXTRACT = \"Extract every event as 'name | day | time | place', one per line. Output only the lines.\"\nDRAFT   = \"Write a friendly digest of these events for students, one sentence per event.\"\nPOLISH  = \"Edit the digest for concision and warmth. Keep every day and time.\"\nCLASSIFY = \"Classify the message as exactly one word: event, change, or question. Output only that word.\"\n\nEVENT = re.compile(r\"^(?P<name>.+?) (?:meets|is|moved to) (?P<day>\\w+day) at (?P<time>\\d+(?:am|pm)) \"\n                   r\"(?:in|on) (?P<place>[^.!]+)\")\nCALLS = []   # every model call, so each pattern's cost can be counted\n\ndef stand_in(system, user):\n    \"\"\"Not a language model: fixed rules per role, so every intermediate output is\n    visible and repeatable.  Part VI replaces this function with a real model call.\"\"\"\n    if system == EXTRACT:\n        rows = []\n        for line in user.splitlines():\n            m = EVENT.match(line.strip())\n            if m:\n                rows.append(\" | \".join(m.group(\"name\", \"day\", \"time\", \"place\")))\n        return \"\\n\".join(rows)\n    if system == DRAFT:\n        out = []\n        for row in user.splitlines():\n            name, day, time, place = [x.strip() for x in row.split(\"|\")]\n            out.append(f\"{name} is on {day} at {time} ({place}).\")\n        return \" \".join(out)\n    if system == POLISH:   # the mistake Question 6 warned about\n        return user.replace(\" is on \", \": \").replace(\"Thursday\", \"Friday\")\n    if system == CLASSIFY:\n        if \"moved\" in user or \"cancel\" in user:\n            return \"change\"\n        if user.rstrip().endswith(\"?\"):\n            return \"question\"\n        return \"event\" if EVENT.match(user) else \"announcement\"   # outside the closed set\n    return \"\"\n\ndef llm(system, user):\n    \"\"\"The one function every pattern calls.  In this page it is the stand-in.\"\"\"\n    CALLS.append(system[:24])\n    return stand_in(system, user)\n\nprint(f\"{len(MESSAGES)} messages; settings {CONFIG}\")\nprint(repr(llm(CLASSIFY, MESSAGES[0])), repr(llm(EXTRACT, MESSAGES[0])))\nCALLS.clear()",
+ "description": "This example sets up five messages and four prompt roles (extract, draft, polish, classify) with a deterministic stand-in function that simulates each role's output, including deliberate bugs for the controls to catch.",
+ "example": "cs357-liascript-orchestrationworkshop-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: pi free model + edit: codex",
+ "steps": [
+  {
+   "description": "Five messages arrive: three events (chess, hawk hacks, ultimate frisbee), one question about library hours, and one announcement about free pizza.",
+   "kind": "reveal",
+   "lines": "1-11"
+  },
+  {
+   "description": "CONFIG holds the settings you own: spawn_budget, temperature, and seed. These stay outside any prompt.",
+   "kind": "reveal",
+   "lines": "13"
+  },
+  {
+   "description": "Four system prompts define the roles: EXTRACT pulls structured event lines, DRAFT writes a friendly digest, POLISH edits for concision and warmth, CLASSIFY labels each message as event, change, or question.",
+   "kind": "reveal",
+   "lines": "15-18"
+  },
+  {
+   "description": "The EVENT regex parses lines that match 'name meets/is/moved to day at time in/on place', capturing the four fields.",
+   "kind": "reveal",
+   "lines": "20-21"
+  },
+  {
+   "description": "CALLS tracks every model call so each pattern's cost can be counted.",
+   "kind": "reveal",
+   "lines": "22"
+  },
+  {
+   "description": "stand_in is a scripted replacement for a language model. It implements fixed rules for each system prompt so every intermediate output is visible and repeatable.",
+   "kind": "reveal",
+   "lines": "24-48"
+  },
+  {
+   "description": "For EXTRACT, the regex runs on each line and outputs matching events as 'name | day | time | place' lines.",
+   "kind": "focus",
+   "lines": "27-33"
+  },
+  {
+   "description": "For DRAFT, each extracted row becomes a sentence: 'name is on day at time (place).' All sentences are joined with spaces.",
+   "kind": "focus",
+   "lines": "34-39"
+  },
+  {
+   "description": "For POLISH, two deliberate bugs: ' is on ' becomes ': ' and 'Thursday' becomes 'Friday'  -  the mistake Question 6 warned about.",
+   "kind": "focus",
+   "lines": "40-41"
+  },
+  {
+   "description": "For CLASSIFY: 'moved' or 'cancel' means change; ends with '?' means question; matches EVENT means event; otherwise 'announcement'  -  a label outside the closed set.",
+   "kind": "focus",
+   "lines": "42-47"
+  },
+  {
+   "description": "llm is the single function every pattern calls. It logs the system prompt prefix to CALLS and delegates to stand_in.",
+   "kind": "reveal",
+   "lines": "50-53"
+  },
+  {
+   "description": "The script prints the message count and CONFIG.",
+   "kind": "run",
+   "lines": "55",
+   "trace_step": 12
+  },
+  {
+   "description": "Two test calls: CLASSIFY on the first message returns 'event'; EXTRACT on the first message returns 'Chess club | Thursday | 7pm | Olin 107'. CALLS is then cleared for the next stage.",
+   "kind": "run",
+   "lines": "56",
+   "trace_step": 13
+  }
+ ],
+ "title": "Message processing pipeline with a scripted model stand-in",
+ "version": 1
+}

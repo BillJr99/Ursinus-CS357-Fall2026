@@ -1,0 +1,43 @@
+{
+ "code": "retrieved = {\n    \"Q1\": [\"doc0\", \"doc3\", \"doc4\"],\n    \"Q2\": [\"doc1\", \"doc2\", \"doc0\"],\n    \"Q3\": [\"doc0\", \"doc3\", \"doc1\"],\n    \"Q4\": [\"doc1\", \"doc4\", \"doc2\"],\n    \"Q5\": [\"doc0\", \"doc1\", \"doc3\"],\n}\ngold = {\"Q1\": \"doc0\", \"Q2\": \"doc1\", \"Q3\": \"doc3\", \"Q4\": \"doc2\", \"Q5\": \"doc4\"}\n\ndef recall_at_k(retrieved, gold, k):\n    \"\"\"The share of questions whose gold chunk appears in the top k.\"\"\"\n    hits = [gold[q] in retrieved[q][:k] for q in gold]\n    return sum(hits) / len(hits)\n\nfor k in (1, 2, 3):\n    misses = [q for q in gold if gold[q] not in retrieved[q][:k]]\n    print(f\"recall@{k} = {recall_at_k(retrieved, gold, k):.2f}   missed: {misses}\")",
+ "description": "A Python script defines retrieved chunks and gold answers for five questions, then computes recall@1, recall@2, and recall@3 showing how many gold chunks appear in the top k results.",
+ "example": "cs357-liascript-rag-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The retrieved dictionary maps each question to a list of three document IDs ranked by the retriever, best match first.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "The gold dictionary maps each question to the single document ID that a human marked as the correct answer.",
+   "kind": "reveal",
+   "lines": "8-8"
+  },
+  {
+   "description": "The recall_at_k function computes the share of questions whose gold chunk appears in the top k retrieved chunks, using a list comprehension and mean.",
+   "kind": "reveal",
+   "lines": "10-13"
+  },
+  {
+   "answer": "yes",
+   "kind": "predict",
+   "question": "For Q1 with gold doc0 and retrieved [doc0, doc3, doc4], is the gold chunk in the top 1?"
+  },
+  {
+   "description": "The loop iterates k = 1, 2, 3, computes recall for each, and prints the score with the list of missed questions.",
+   "kind": "reveal",
+   "lines": "15-17"
+  },
+  {
+   "description": "The loop runs and prints recall@1 = 0.40 missed Q3 Q4 Q5, recall@2 = 0.60 missed Q4 Q5, recall@3 = 0.80 missed Q5.",
+   "kind": "run",
+   "lines": "15-17",
+   "trace_step": 9
+  }
+ ],
+ "title": "Computing Recall@k for Retrieval Evaluation",
+ "version": 1
+}

@@ -1,0 +1,42 @@
+{
+ "code": "# step6_loop.py\nimport asyncio\nfrom datetime import date\nfrom pydantic_ai import Agent, UsageLimits\nfrom common import make_model, watch\n\nagent = Agent(make_model(), instructions=\"You are a concise study-planning assistant. Use tools for date arithmetic.\", capabilities=[watch])\n\n@agent.tool_plain\ndef days_between(start_iso: str, end_iso: str) -> int:\n    \"\"\"Returns the number of days between two ISO dates (YYYY-MM-DD).\"\"\"\n    return (date.fromisoformat(end_iso) - date.fromisoformat(start_iso)).days\n\nasync def main():\n    question = \"How many days from 2026-10-05 to the 2026-12-14 final, and how many weeks is that?\"\n    async with agent.iter(question, usage_limits=UsageLimits(request_limit=5)) as run:\n        async for node in run:   # one node per step of the loop\n            print(type(node).__name__)\n    print(run.result.output)\n\nasyncio.run(main())",
+ "description": "MCP server tools appear in context window as offered tools: library_hours with its description, tool-call, and tool-return.",
+ "example": "cs357-tut-agentframeworks-17",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Full MCP context: instructions, user prompt, tool call and return for library hours.",
+   "kind": "reveal",
+   "lines": "1-21"
+  },
+  {
+   "description": "Imports: asyncio, date, Agent, MCPToolset, common helpers.",
+   "kind": "focus",
+   "lines": "1-7"
+  },
+  {
+   "description": "Agent setup: same as previous block with campus toolset.",
+   "kind": "focus",
+   "lines": "9-11"
+  },
+  {
+   "description": "Async main: async with agent.iter for step-by-step loop inspection.",
+   "kind": "focus",
+   "lines": "13-14"
+  },
+  {
+   "description": "Iteration: async for node in run prints type names, UsageLimits prevents infinite loops.",
+   "kind": "focus",
+   "lines": "15-19"
+  },
+  {
+   "description": "Result: print final output after loop completes.",
+   "kind": "focus",
+   "lines": "20-21"
+  }
+ ],
+ "title": "Pydantic AI: MCP in Context Window",
+ "version": 1
+}

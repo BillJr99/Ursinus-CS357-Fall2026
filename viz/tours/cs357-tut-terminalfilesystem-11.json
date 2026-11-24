@@ -1,0 +1,32 @@
+{
+ "code": "skill = next((root / path for path in (\n    \".agents/skills/small-model-orchestrator\",\n    \".pi/skills/small-model-orchestrator\") if (root / path / \"SKILL.md\").is_file()), None)\nif skill is None:\n    raise ValueError(\"small-model-orchestrator/SKILL.md was not found under .agents/skills or .pi/skills\")",
+ "description": "Launches checks for small-model-orchestrator skill in .agents/skills/ or .pi/skills/ directories and raises ValueError if not found.",
+ "example": "cs357-tut-terminalfilesystem-11",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Skill lookup and check logic.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "Skill path search: tries .agents/skills/ then .pi/skills/ for SKILL.md.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Check: if no SKILL.md found, skill is None.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "Error: raises ValueError with explicit message about both possible locations.",
+   "kind": "focus",
+   "lines": "5"
+  }
+ ],
+ "title": "Skill Check: small-model-orchestrator",
+ "version": 1
+}

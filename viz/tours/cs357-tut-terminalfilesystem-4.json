@@ -1,0 +1,27 @@
+{
+ "code": "# Your revised command goes here\n# You need two -v flags: one for the read-only researcher content,\n# one for a writable logs/memory location\ndocker run --rm \\\n  -v /home/user/agents/researcher:/workspace:ro \\\n  -v ??? \\   # <-- add a second mount here for write access\n  my-researcher-image \\\n  python agent.py",
+ "description": "Student B mounts only the researcher workspace directory as read-only, so agent sees only /workspace with the specific files it needs.",
+ "example": "cs357-tut-terminalfilesystem-4",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Student B's Docker command with minimal mount.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "Mount scope: only researcher's specific workspace directory is mounted.",
+   "kind": "focus",
+   "lines": "2-4"
+  },
+  {
+   "description": "Visibility: agent sees /workspace containing only the files it was given, nothing else.",
+   "kind": "focus",
+   "lines": "6-8"
+  }
+ ],
+ "title": "Student B: Minimal Read-Only Mount",
+ "version": 1
+}

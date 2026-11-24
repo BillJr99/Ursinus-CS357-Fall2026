@@ -1,0 +1,3 @@
+claim: The app handles empty input.
+evidence: A passing empty-input test.
+limit: Only text input was tested.

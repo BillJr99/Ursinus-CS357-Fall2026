@@ -1,0 +1,13 @@
+{"version": 2, "width": 100, "height": 30, "title": "Review a Git change before syncing", "code_viz_provenance": "recorded", "duration": 0.417}
+[0.0, "m", "Create a repository"]
+[0.0, "o", "$ git init -q\r\n"]
+[0.0, "o", ""]
+[0.101, "m", "Save the first note"]
+[0.101, "o", "$ printf 'Demo notes\\n' > notes.md && git add notes.md && git -c user.name=Student -c user.email=student@example.invalid commit -qm 'Record the note'\r\n"]
+[0.101, "o", ""]
+[0.202, "m", "Make one edit"]
+[0.202, "o", "$ printf 'A new decision\\n' >> notes.md\r\n"]
+[0.202, "o", ""]
+[0.303, "m", "Inspect the diff before syncing"]
+[0.303, "o", "$ git --no-pager diff -- notes.md\r\n"]
+[0.416, "o", "\u001b[1mdiff --git a/notes.md b/notes.md\u001b[m\r\n\u001b[1mindex 514afba..d8af55e 100644\u001b[m\r\n\u001b[1m--- a/notes.md\u001b[m\r\n\u001b[1m+++ b/notes.md\u001b[m\r\n\u001b[36m@@ -1 +1,2 @@\u001b[m\r\n Demo notes\u001b[m\r\n\u001b[32m+\u001b[m\u001b[32mA new decision\u001b[m\r\n"]

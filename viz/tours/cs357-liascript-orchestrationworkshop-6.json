@@ -1,0 +1,58 @@
+{
+ "code": "# Step 3: a supervisor loop.  A model picks the next move each turn; you own the roster,\n# the budget, and every stop condition.\nROSTER = {\"extractor\": EXTRACT, \"writer\": DRAFT, \"polisher\": POLISH}\n\ndef naive_supervisor(task, transcript):\n    \"\"\"A scripted stand-in for the supervisor model.  It replies with the same JSON a real\n    supervisor must produce, and it makes a plausible mistake: it always stops with the\n    newest text, whether or not that text passed the check.\"\"\"\n    results = [t for t in transcript if \"result\" in t]\n    done = [t[\"agent\"] for t in results]\n    if \"extractor\" not in done:\n        return json.dumps({\"action\": \"call\", \"agent\": \"extractor\", \"input\": task})\n    if \"writer\" not in done:\n        return json.dumps({\"action\": \"call\", \"agent\": \"writer\", \"input\": results[0][\"result\"]})\n    if \"polisher\" not in done:\n        return json.dumps({\"action\": \"call\", \"agent\": \"polisher\", \"input\": results[-1][\"result\"]})\n    return json.dumps({\"action\": \"stop\", \"answer\": results[-1][\"result\"]})\n\ndef supervise(task, decide, budget=CONFIG[\"spawn_budget\"]):\n    transcript, seen, facts = [], set(), None\n    def best():                                        # the newest text that passed the check\n        ok = [t[\"result\"] for t in transcript if t.get(\"check\") == \"ok\"]\n        return ok[-1] if ok else None\n    for turn in range(1, budget + 1):\n        CALLS.append(\"SUPERVISOR\")                     # the supervisor's own decision is a model call\n        raw = decide(task, transcript)\n        print(f\"turn {turn}: {raw[:84]}\")\n        try:\n            step = json.loads(raw)\n        except json.JSONDecodeError:                   # stop condition: fail closed\n            return {\"status\": \"stopped: malformed decision\", \"answer\": best(), \"turns\": turn}\n        if step.get(\"action\") == \"stop\":\n            missing = check_times(facts, step.get(\"answer\", \"\")) if facts else [\"no facts yet\"]\n            if not missing:                            # stop condition: the check passed\n                return {\"status\": \"done\", \"answer\": step[\"answer\"], \"turns\": turn}\n            transcript.append({\"agent\": \"supervisor\", \"error\": f\"stop refused, missing {missing}\"})\n            print(f\"   stop refused: missing {missing}\")\n            continue\n        agent, text = step.get(\"agent\"), step.get(\"input\", \"\")\n        if agent not in ROSTER:                        # closed roster, like the router's labels\n            transcript.append({\"agent\": agent, \"error\": \"unknown sub-agent\"})\n            print(f\"   refused: {agent!r} is not on the roster\")\n            continue\n        if (agent, text) in seen:                      # stop condition: the same call twice is a loop\n            return {\"status\": f\"stopped: repeated call to {agent}\", \"answer\": best(), \"turns\": turn}\n        seen.add((agent, text))\n        result = llm(ROSTER[agent], text)              # the sub-agent sees only its own input\n        entry = {\"agent\": agent, \"result\": result}\n        if agent == \"extractor\":\n            facts = result\n        elif facts:\n            entry[\"check\"] = check_times(facts, result) or \"ok\"\n        transcript.append(entry)\n        print(f\"   {agent} -> {result[:58].replace(chr(10), ' / ')}...  check={entry.get('check', '-')}\")\n    return {\"status\": f\"stopped: budget of {budget} turns reached\", \"answer\": best(), \"turns\": budget}\n\nCALLS.clear()\noutcome = supervise(\"\\n\".join(for_digest), naive_supervisor)\nprint(f\"\\nSTATUS: {outcome['status']} (turns: {outcome['turns']}, model calls: {len(CALLS)})\")\nprint(f\"ANSWER (newest text that passed the check): {outcome['answer']}\")",
+ "description": "A supervise function runs a supervisor loop with a hard budget cap, closed roster guard, and idempotency check for repeated calls. Its refused-stop rule requires check_times to pass before accepting a stop action.",
+ "example": "cs357-liascript-orchestrationworkshop-6",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: omp free model + edit: codex",
+ "steps": [
+  {
+   "description": "The ROSTER defines three sub-agents (extractor, writer, polisher) mapped to their prompts, the only agents the supervisor may call.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "The naive_supervisor is a scripted stand-in that always sequences through extractor, writer, polisher, then stops with the newest result whether or not it passed the check.",
+   "kind": "reveal",
+   "lines": "5-17"
+  },
+  {
+   "description": "The mistake: it stops with results[-1] (the polisher output) even if check_times fails, which the real supervisor must not do.",
+   "kind": "focus",
+   "lines": "16-17"
+  },
+  {
+   "description": "The supervise function initializes transcript, seen set, and facts. The best() helper returns the newest text that passed the check.",
+   "kind": "reveal",
+   "lines": "19-23"
+  },
+  {
+   "description": "best() filters transcript for entries with check == 'ok' and returns the last one, ensuring we only return verified text.",
+   "kind": "focus",
+   "lines": "21-23"
+  },
+  {
+   "description": "The main loop runs up to budget turns. Each turn calls the decide function (supervisor) and parses JSON. It handles four stop conditions: malformed JSON, stop with check passed, stop refused by check, unknown agent, repeated call, and budget exhausted.",
+   "kind": "reveal",
+   "lines": "24-55"
+  },
+  {
+   "answer": "the stop is refused, an error is logged, and the loop continues to the next turn",
+   "kind": "predict",
+   "question": "What happens when the supervisor says stop but check_times finds missing facts?"
+  },
+  {
+   "description": "Lines 32-37: on stop action, check_times runs; if missing facts exist, the stop is refused with an error appended to transcript and the loop continues.",
+   "kind": "focus",
+   "lines": "32-37"
+  },
+  {
+   "description": "The supervisor runs: extractor extracts facts, writer drafts (check ok), and polisher changes Thursday to Friday (check fails). The supervisor tries to stop 3 times (all refused). The budget exhausts at 6 turns, returning the draft that passed the check.",
+   "kind": "run",
+   "lines": "57-60",
+   "trace_step": 5
+  }
+ ],
+ "title": "Supervisor Loop with Budget, Roster, and Four Stop Conditions",
+ "version": 1
+}

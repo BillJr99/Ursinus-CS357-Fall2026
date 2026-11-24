@@ -1,0 +1,6 @@
+0.667  kept       baseline: fraction of terms found
+0.785  kept       attempt 1: drop stopwords
+0.646  discarded  attempt 2: whole words only
+0.826  kept       attempt 3: stopwords + title counts twice
+
+best 0.826, target 0.80

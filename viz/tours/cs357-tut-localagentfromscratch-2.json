@@ -1,0 +1,57 @@
+{
+ "code": "\"\"\"tiny_agent.py: the five steps from Running Your Own AI, composed into one program.\n\nprompt (chat) -> remember (history file) -> iterate (loop) -> skill (SKILL.md) -> command (gated run)\n\"\"\"\nimport json, logging, os, re, shlex, subprocess, sys, traceback\nimport requests\n\nlog = logging.getLogger(\"tiny_agent\")\n\nTOOL_RULE = (\"You can ask to run one shell command at a time.  To do that, reply with exactly one line: \"\n             \"RUN: <command>.  You will then receive its output as an Observation.  \"\n             \"Pipes and redirection are not available.  Otherwise, answer normally.\")\n\ndef load_config(path=\"config.json\"):\n    try:\n        with open(path, encoding=\"utf-8\") as f:\n            cfg = json.load(f)\n        cfg[\"provider_url\"] = os.environ.get(\"OLLAMA_URL\", cfg[\"provider_url\"])   # the container override\n        return cfg\n    except Exception as e:\n        print(f\"[tiny_agent:load_config] {e}\")\n        traceback.print_exc()\n        sys.exit(1)\n\n# Step 1: prompt\ndef chat(cfg, messages):\n    try:\n        url = cfg[\"provider_url\"].rstrip(\"/\")\n        headers = {\"Authorization\": f\"Bearer {cfg['api_key']}\"} if cfg.get(\"api_key\") else {}\n        if url.endswith(\"/chat/completions\"):\n            # OpenAI-style providers (ursinus.ai, other hosted services): the full endpoint URL,\n            # temperature at the top level, and the reply nested under choices[0].\n            r = requests.post(url, headers=headers, json={\n                \"model\": cfg[\"model\"], \"stream\": False,\n                \"temperature\": cfg[\"temperature\"],\n                \"messages\": messages}, timeout=120)\n            r.raise_for_status()\n            return r.json()[\"choices\"][0][\"message\"]\n        # Ollama (local or hosted): the server's base URL, temperature under \"options\".\n        r = requests.post(f\"{url}/api/chat\", headers=headers, json={\n            \"model\": cfg[\"model\"], \"stream\": False,\n            \"options\": {\"temperature\": cfg[\"temperature\"]},\n            \"messages\": messages}, timeout=120)\n        r.raise_for_status()\n        return r.json()[\"message\"]\n    except Exception as e:\n        print(f\"[tiny_agent:chat] {e}\")\n        traceback.print_exc()\n        return {\"role\": \"assistant\", \"content\": \"\"}\n\n# Step 2: remember\ndef load_history(cfg):\n    try:\n        with open(cfg[\"history_path\"], encoding=\"utf-8\") as f:\n            return json.load(f)\n    except FileNotFoundError:\n        return [{\"role\": \"system\", \"content\": \"\"}]\n    except Exception as e:\n        print(f\"[tiny_agent:load_history] {e}\")\n        traceback.print_exc()\n        return [{\"role\": \"system\", \"content\": \"\"}]\n\ndef save_history(cfg, messages):\n    try:\n        with open(cfg[\"history_path\"], \"w\", encoding=\"utf-8\") as f:\n            json.dump(messages, f, indent=2)\n    except Exception as e:\n        print(f\"[tiny_agent:save_history] {e}\")\n        traceback.print_exc()\n\n# Step 4: skill\ndef strip_front_matter(text):\n    lines = text.splitlines()\n    if not lines or lines[0].strip() != \"---\":\n        return text.strip()\n    for i in range(1, len(lines)):\n        if lines[i].strip() == \"---\":\n            return \"\\n\".join(lines[i + 1:]).strip()\n    return text.strip()\n\ndef load_skill(cfg):\n    try:\n        with open(cfg[\"skill_path\"], encoding=\"utf-8\") as f:\n            return strip_front_matter(f.read())\n    except FileNotFoundError:\n        log.warning(\"no skill at %s; running without one\", cfg[\"skill_path\"])\n        return \"\"\n\ndef build_system(cfg):\n    system = \"You are a concise assistant.\\n\\n\" + TOOL_RULE\n    skill = load_skill(cfg)\n    if skill:\n        system += \"\\n\\nFollow these rules exactly:\\n\\n\" + skill\n    return system\n\n# Step 5: command, behind two gates\ndef gate(cfg, cmd):\n    \"\"\"Return (allowed, reason).  Gate 1 is the allowlist (deny); gate 2 is the person (ask).\"\"\"\n    try:\n        argv = shlex.split(cmd)\n    except ValueError as e:\n        return False, f\"could not parse the command: {e}\"\n    if not argv or argv[0] not in cfg[\"allowed_commands\"]:\n        return False, f\"'{argv[0] if argv else cmd}' is not on the allowlist {cfg['allowed_commands']}\"\n    print(f\"[the model wants to run]  {cmd}\")\n    if input(\"Type YES to allow it: \").strip() != \"YES\":\n        return False, \"the user declined to run that command\"\n    return True, \"approved\"\n\ndef run_command(cfg, cmd):\n    try:\n        done = subprocess.run(shlex.split(cmd), capture_output=True, text=True,\n                              timeout=cfg[\"command_timeout\"])\n        return f\"exit code {done.returncode}\\n{done.stdout}{done.stderr}\"[:2000]\n    except Exception as e:\n        print(f\"[tiny_agent:run_command] {e}\")\n        traceback.print_exc()\n        return f\"the command failed to start: {e}\"\n\ndef take_turn(cfg, messages, user_text):\n    messages.append({\"role\": \"user\", \"content\": user_text})\n    reply = chat(cfg, messages)\n    messages.append(reply)\n    for _ in range(cfg[\"max_commands_per_turn\"]):       # a budget, so a turn always ends\n        match = re.search(r\"^\\s*RUN:\\s*(.+)$\", reply[\"content\"], re.MULTILINE)\n        if not match:\n            break\n        cmd = match.group(1).strip().strip(\"`\")\n        allowed, reason = gate(cfg, cmd)\n        observation = run_command(cfg, cmd) if allowed else f\"Not run: {reason}.\"\n        log.info(\"command %r -> %s\", cmd, \"ran\" if allowed else reason)\n        messages.append({\"role\": \"user\", \"content\": f\"Observation: {observation}\"})\n        reply = chat(cfg, messages)\n        messages.append(reply)\n    return reply[\"content\"]\n\n# Step 3: iterate\ndef main():\n    cfg = load_config()\n    logging.basicConfig(level=getattr(logging, cfg.get(\"log_level\", \"INFO\")),\n                        format=\"[%(levelname)s] %(message)s\")\n    messages = load_history(cfg)\n    messages[0] = {\"role\": \"system\", \"content\": build_system(cfg)}   # skill re-read on every start\n    log.info(\"model %s at %s, %d messages remembered\", cfg[\"model\"], cfg[\"provider_url\"], len(messages) - 1)\n    print(\"Type a message.  /forget erases the memory file, /quit exits.\")\n    while True:\n        try:\n            user_text = input(\"you> \").strip()\n        except EOFError:\n            break\n        if user_text == \"/quit\":\n            break\n        if user_text == \"/forget\":\n            messages = [{\"role\": \"system\", \"content\": build_system(cfg)}]\n            save_history(cfg, messages)\n            print(\"[memory erased]\")\n            continue\n        if not user_text:\n            continue\n        print(\"model>\", take_turn(cfg, messages, user_text))\n        save_history(cfg, messages)\n\nif __name__ == \"__main__\":\n    main()",
+ "description": "Complete agent program composing the five steps: prompt, remember, iterate, skill, and command with gated execution.",
+ "example": "cs357-tut-localagentfromscratch-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete tiny_agent.py program.",
+   "kind": "reveal",
+   "lines": "1-164"
+  },
+  {
+   "description": "Docstring: the five steps composed into one program.",
+   "kind": "focus",
+   "lines": "1-4"
+  },
+  {
+   "description": "TOOL_RULE: the instruction telling the model it can run shell commands.",
+   "kind": "focus",
+   "lines": "10-12"
+  },
+  {
+   "description": "Load_config: reads config.json and applies OLLAMA_URL override from environment.",
+   "kind": "focus",
+   "lines": "14-23"
+  },
+  {
+   "description": "Chat: Step 1 prompt, handles both OpenAI-style and Ollama endpoints.",
+   "kind": "focus",
+   "lines": "25-49"
+  },
+  {
+   "description": "Step 2 remember: load_history and save_history for persistence.",
+   "kind": "focus",
+   "lines": "51-70"
+  },
+  {
+   "description": "Step 4 skill: strip_front_matter, load_skill, build_system integrate SKILL.md.",
+   "kind": "focus",
+   "lines": "71-94"
+  },
+  {
+   "description": "Step 5 command: gate, run_command, take_turn implement two-gate security model.",
+   "kind": "focus",
+   "lines": "96-135"
+  },
+  {
+   "description": "Step 3 iterate: main loop with /forget, /quit commands and memory management.",
+   "kind": "focus",
+   "lines": "137-162"
+  }
+ ],
+ "title": "Tiny Agent Program",
+ "version": 1
+}

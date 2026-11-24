@@ -1,0 +1,27 @@
+{
+ "code": "python run_eval.py > results.txt\n\n# Runs run_eval.py and saves ALL standard output to results.txt\n\n# WARNING: this OVERWRITES results.txt entirely if it already exists\n\npython run_eval.py >> results.txt\n\n# Same, but APPENDS to results.txt instead of overwriting; safe for accumulating runs\n\npython run_eval.py > out.txt 2> err.txt\n\n# Saves normal output to out.txt AND saves error messages to err.txt separately\n\n# The \"2>\" targets file descriptor 2, which is the error stream",
+ "description": "Walk through saving command output to files with >, appending with >>, and separating error streams with 2>.",
+ "example": "cs357-tut-shell-3",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: agy",
+ "steps": [
+  {
+   "description": "`>` redirects standard output (`stdout`) from the screen into `results.txt`. It creates `results.txt` if missing and overwrites the entire file if it already exists.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`>>` appends standard output to the end of `results.txt` instead of overwriting it. Use `>>` when you want to accumulate output across multiple runs.",
+   "kind": "reveal",
+   "lines": "7-9"
+  },
+  {
+   "description": "`>` sends normal output (stream 1) to `out.txt`, while `2>` redirects the error stream (file descriptor 2, `stderr`) to `err.txt` so warnings and tracebacks stay separate from your results.",
+   "kind": "reveal",
+   "lines": "11-15"
+  }
+ ],
+ "title": "Redirecting standard output and error streams",
+ "version": 1
+}

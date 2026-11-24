@@ -1,0 +1,37 @@
+{
+ "code": "// Is any provider actually ready to use?\nconst aiEnabled =\n  (provider === \"anthropic\" && !!anthropicKey.trim()) ||\n  (provider === \"openai\"    && !!openaiKey.trim()) ||\n  (provider === \"openwebui\" && !!openWebUIUrl.trim() && !!openWebUIModel);\n\n// Inside executeMove, after the move is already applied and drawn:\nif (currentAIEnabled) {\n  setCommentaryLoading(true);\n  try {\n    const [c, elo] = await Promise.all([ getAICommentary(...), getAIElo(...) ]);\n    setCommentary(c);\n    setEloEstimate(elo);\n  } catch (e) {\n    setCommentary(`AI request failed: ${e.message}`); // errors become visible, not silent\n  } finally {\n    setCommentaryLoading(false);\n  }\n} else {\n  setCommentary(`You played ${san}. Configure a provider for AI analysis.`);\n}",
+ "description": "The React state that decides whether any provider is ready, and the move handler that calls the model only when it is.",
+ "example": "cs357-tut-chessaicoach-12",
+ "lang": "jsx",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "`aiEnabled` is true when the selected provider has the fields it needs: an Anthropic key, an OpenAI key, or an Open WebUI URL and model. The comment asks whether any provider is actually ready to use.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "Inside `executeMove`, after the move is already applied and drawn, check `currentAIEnabled` and turn on the commentary loading flag.",
+   "kind": "focus",
+   "lines": "7-9"
+  },
+  {
+   "description": "Run the two calls together with `Promise.all`, then store the commentary and the Elo estimate.",
+   "kind": "focus",
+   "lines": "10-13"
+  },
+  {
+   "description": "The `catch` turns a failed request into a visible message instead of a silent one, and the `finally` always clears the loading flag.",
+   "kind": "focus",
+   "lines": "14-18"
+  },
+  {
+   "description": "When AI is not enabled, set the commentary to tell the player to configure a provider. The page says this fallback keeps the app usable with no provider at all.",
+   "kind": "focus",
+   "lines": "19-21"
+  }
+ ],
+ "title": "AI Gate and executeMove",
+ "version": 1
+}

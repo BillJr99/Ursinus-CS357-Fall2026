@@ -1,0 +1,32 @@
+{
+ "code": "\n# Tool definition (this is what the agent framework sends to the model)\ndef get_weather(city: str) -> dict:\n    \"\"\"\n    Fetches current weather for a city.\n    Returns: {\"city\": str, \"temp_c\": float, \"condition\": str}\n    \"\"\"\n    ...",
+ "description": "A function signature and docstring that describe a weather tool. The agent framework sends this definition to the model so the model knows what it may call.",
+ "example": "cs357-tut-localmodels-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a tool definition. The comment says it is what the agent framework sends to the model. `get_weather` takes a city string and returns a dict.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "The docstring says what the tool does and names the shape of its return value: `city` as a string, `temp_c` as a float, and `condition` as a string.",
+   "kind": "focus",
+   "lines": "4-7"
+  },
+  {
+   "description": "The body is `...`, a placeholder. The definition describes the tool to the model; the real work happens elsewhere.",
+   "kind": "focus",
+   "lines": "8"
+  },
+  {
+   "answer": "structural reliability",
+   "kind": "predict",
+   "question": "The page says the difference between a generic model and a function-calling model is not just output quality, but what kind of reliability?"
+  }
+ ],
+ "title": "A Tool Definition Sent to the Model",
+ "version": 1
+}

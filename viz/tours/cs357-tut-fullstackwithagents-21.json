@@ -1,0 +1,27 @@
+{
+ "code": "    - { match: \"gh pr merge *\", approval: deny }\n    - { match: \"gh pr view *\", approval: allow }\n    - { match: \"gh pr checks *\", approval: allow }",
+ "description": "Three permission patterns for .omp/config.yml: deny merge first (first-match-wins), then allow view and checks, mirroring opencode.json but reversed order.",
+ "example": "cs357-tut-fullstackwithagents-21",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Three gh permission patterns.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Denial first: gh pr merge denied at top of patterns list.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Read-only: gh pr view and gh pr checks allowed for inspection.",
+   "kind": "focus",
+   "lines": "2-3"
+  }
+ ],
+ "title": "Oh My Pi GitHub Permissions",
+ "version": 1
+}

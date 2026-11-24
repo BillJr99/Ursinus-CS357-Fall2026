@@ -1,0 +1,34 @@
+{
+ "code": "import asyncio\n\nasync def fetch(name):\n    await asyncio.sleep(0.01)       # stand-in for waiting on a server\n    return f\"got {name}\"\n\nasync def main():\n    print(await fetch(\"tools\"))\n\nasyncio.run(main())",
+ "description": "This program defines asynchronous functions and starts the outer one with asyncio.run.",
+ "example": "cs357-tut-pythonessentials-8",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: copilot free model",
+ "steps": [
+  {
+   "description": "fetch is an async function. It awaits a short sleep as a stand-in for waiting on a server, then returns text with its name.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "main awaits fetch inside another async function and prints its returned text.",
+   "kind": "reveal",
+   "lines": "7-8"
+  },
+  {
+   "answer": "It returns got tools.",
+   "kind": "predict",
+   "lines": "8",
+   "question": "What text does fetch return when main passes tools?"
+  },
+  {
+   "description": "asyncio.run starts main. The program prints got tools.",
+   "kind": "run",
+   "lines": "10",
+   "trace_step": 3
+  }
+ ],
+ "title": "Await an asynchronous call",
+ "version": 1
+}

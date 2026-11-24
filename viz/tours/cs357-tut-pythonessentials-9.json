@@ -1,0 +1,42 @@
+{
+ "code": "python3 -m venv .venv\nsource .venv/bin/activate        # Windows: .venv\\Scripts\\activate\npython3 -m pip install requests\npython3 -c \"import requests; print('requests ok')\"",
+ "description": "Four commands that create a virtual environment, activate it, install a package into it, and check that the install worked.",
+ "example": "cs357-tut-pythonessentials-9",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "These four commands set up and test a virtual environment. A virtual environment gives one project its own Python and its own packages, so installing something for one lab cannot break another. It is a folder, usually named `.venv`.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "`python3 -m venv .venv` creates the environment folder, `.venv`, in the current directory.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "`source .venv/bin/activate` turns the environment on for this terminal. On Windows the command is `.venv\\Scripts\\activate`.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "`python3 -m pip install requests` installs the `requests` package into the active environment, not into the system Python.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "The `-c` one-liner imports `requests` and prints `requests ok`, a quick check that the package is importable.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "answer": "the terminal",
+   "kind": "predict",
+   "question": "The page says you run the `source` line again in each new terminal, because activating lasts only as long as what?"
+  }
+ ],
+ "title": "A Virtual Environment for One Project",
+ "version": 1
+}

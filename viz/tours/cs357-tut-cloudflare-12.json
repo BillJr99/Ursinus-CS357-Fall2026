@@ -1,0 +1,27 @@
+{
+ "code": "echo \"Deploying with token $CLOUDFLARE_API_TOKEN\"   # NEVER - prints the secret verbatim\nset -x                                               # DANGEROUS in a script that touches secrets:\n                                                     #    it echoes every command with its expanded values",
+ "description": "The two lines that defeat the log mask and print a secret into a world-readable log.",
+ "example": "cs357-tut-cloudflare-12",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "These two lines defeat the log mask and leak the token. A registered secret is masked as `***` in logs unless you print it yourself.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "The first line prints the secret verbatim, so the mask never applies.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "`set -x` echoes every command with its expanded values, so the token appears again in the log. The comment marks both as never and dangerous.",
+   "kind": "focus",
+   "lines": "2-3"
+  }
+ ],
+ "title": "Two Lines That Leak the Token",
+ "version": 1
+}

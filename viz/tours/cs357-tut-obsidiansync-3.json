@@ -1,0 +1,37 @@
+{
+ "code": "cd ~/Documents/Obsidian/MyVault\ngit pull origin main --no-rebase   # fetch the other side\n\n# Open memories/session-log.md in any editor\n\n# The conflict markers show: your version on top, remote version on bottom\n\n# Resolution: keep BOTH sections; remove the markers, keep all content\ngit add memories/session-log.md\ngit commit -m \"memory: merge conflict resolved (kept both sections)\"\ngit push",
+ "description": "The fixed strategy for a conflict in the append-only session log: pull, keep both sections, remove the markers, then commit and push.",
+ "example": "cs357-tut-obsidiansync-3",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The page says the resolution strategy is always the same. Line 1 enters the vault, and line 2 runs `git pull origin main --no-rebase` to fetch the other side of the conflict.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "The comments tell you to open `memories/session-log.md` in any editor. The conflict markers show your version on top and the remote version on the bottom.",
+   "kind": "focus",
+   "lines": "4-6"
+  },
+  {
+   "description": "This is the resolution rule: keep BOTH sections, remove the markers, and keep all content. The page says this is safe for append-only files because both versions added content and neither deleted or modified existing entries.",
+   "kind": "focus",
+   "lines": "8"
+  },
+  {
+   "description": "The last three lines stage the file, commit it with the message `memory: merge conflict resolved (kept both sections)`, and push the merged result.",
+   "kind": "focus",
+   "lines": "9-11"
+  },
+  {
+   "answer": "<<<<<<< HEAD",
+   "kind": "predict",
+   "question": "The page says a conflict is visible in the file as which markers?"
+  }
+ ],
+ "title": "Resolving a Simultaneous-Write Conflict",
+ "version": 1
+}

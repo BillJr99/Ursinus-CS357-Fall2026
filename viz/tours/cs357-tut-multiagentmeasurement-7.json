@@ -1,0 +1,42 @@
+{
+ "code": "import json\nimport csv\nimport traceback\nimport requests\nfrom critique_refine import load_config, generate_draft\n\ndef judge_score(draft, judge_rubric, config):\n    \"\"\"\n    Score a draft on every criterion of judge_rubric.\n    Returns {\"scores\": {criterion_id: {\"level\", \"meets\", \"evidence\", \"fix\"}}}.\n    Fails closed: an unparseable reply scores every criterion as not meeting its bar.\n    \"\"\"\n    system_prompt = (\n        \"You are a strict judge. For EACH criterion, choose the level whose description matches the draft. \"\n        \"Quote the exact sentence from the draft that justifies the level. \"\n        \"If the draft does not clear the criterion's MEETS line, write one concrete revision instruction; \"\n        \"otherwise write an empty string. \"\n        \"Return ONLY valid JSON in this exact format, with no additional text:\\n\"\n        '{\"scores\": {\"<criterion id>\": {\"level\": <int>, \"evidence\": \"<exact quote>\", \"fix\": \"<instruction>\"}}}\\n\\n'\n        f\"RUBRIC:\\n{json.dumps(judge_rubric['criteria'], indent=1)}\"\n    )\n    payload = {\n        \"model\": config[\"model\"],\n        \"messages\": [\n            {\"role\": \"system\", \"content\": system_prompt},\n            {\"role\": \"user\", \"content\": f\"DRAFT TO SCORE:\\n\\n{draft}\"}\n        ],\n        \"stream\": False,\n        \"options\": {\"temperature\": config[\"critic_temp\"], \"seed\": config[\"critic_seed\"]}\n    }\n\n    try:\n        response = requests.post(config[\"provider_url\"], json=payload, headers=({\"Authorization\": f\"Bearer {config['api_key']}\"} if config.get(\"api_key\") else {}), timeout=60)\n        response.raise_for_status()\n        raw = response.json()[\"message\"][\"content\"]\n    except Exception as e:\n        print(f\"[lab3:judge_score:network] {e}\")\n        traceback.print_exc()\n        raise\n\n    try:\n        clean = raw.strip().replace(\"```json\", \"\").replace(\"```\", \"\").strip()\n        judgment = json.loads(clean)\n        for c in judge_rubric[\"criteria\"]:\n            s = judgment[\"scores\"][c[\"id\"]]\n            s[\"level\"] = int(s[\"level\"])\n            s.setdefault(\"evidence\", \"\")\n            s.setdefault(\"fix\", \"\")\n            # The code decides \"meets\", not the model\n            s[\"meets\"] = s[\"level\"] >= c[\"meets_level\"]\n        return judgment\n    except Exception as e:\n        print(f\"[lab3:judge_score:json_parse] Malformed judge output - failing closed. Raw: {raw!r}\")\n        return {\"scores\": {\n            c[\"id\"]: {\"level\": 0, \"meets\": False, \"evidence\": \"\", \"fix\": \"[JSON parse failure] no instruction this round\"}\n            for c in judge_rubric[\"criteria\"]\n        }}",
+ "description": "judge_refine.py defines judge_score, which asks a model to pick a level and quote the justifying sentence, then decides 'meets' in code and fails closed on an unparseable reply.",
+ "example": "cs357-tut-multiagentmeasurement-7",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The file imports `json`, `csv`, `traceback`, and `requests`, and pulls `load_config` and `generate_draft` from `critique_refine`. The page says the only new request code is its own model call.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`judge_score` scores a draft on every criterion and returns a `scores` map. Its docstring states it fails closed: an unparseable reply scores every criterion as not meeting its bar.",
+   "kind": "focus",
+   "lines": "7-12"
+  },
+  {
+   "description": "`system_prompt` tells the judge to choose the matching level, quote the exact justifying sentence, and write one revision instruction when the draft misses the MEETS line. It asks for only valid JSON in the given format, and appends the rubric criteria.",
+   "kind": "focus",
+   "lines": "13-21"
+  },
+  {
+   "description": "The `payload` sends the system prompt and the draft as messages, with `stream` off. The model and the `temperature` and `seed` come from the config, so the judge reuses `critic_temp` and `critic_seed`.",
+   "kind": "focus",
+   "lines": "22-30"
+  },
+  {
+   "description": "The parse block strips code fences, loads the JSON, coerces each level to an int, and sets `meets` by comparing the level to `meets_level`. The comment says the code decides `meets`, not the model.",
+   "kind": "focus",
+   "lines": "41-51"
+  },
+  {
+   "description": "The `except` block is the fail-closed path. It prints a parse-failure message and returns every criterion at level 0 with `meets` false and a note that no instruction is given this round.",
+   "kind": "focus",
+   "lines": "52-57"
+  }
+ ],
+ "title": "The Judge That Fails Closed",
+ "version": 1
+}

@@ -1,0 +1,7 @@
+{"version": 2, "width": 100, "height": 30, "title": "Run the first Docker check", "code_viz_provenance": "recorded", "duration": 0.502}
+[0.0, "m", "Check the command"]
+[0.0, "o", "$ docker --version\r\n"]
+[0.063, "o", "Docker version 27.3.1, build ce12230\r\n"]
+[0.101, "m", "Run a short container"]
+[0.101, "o", "$ docker run --rm hello-world\r\n"]
+[0.38, "o", "\r\nHello from Docker!\r\nThis message shows that your installation appears to be working correctly.\r\n\r\nTo generate this message, Docker took the following steps:\r\n 1. The Docker client contacted the Docker daemon.\r\n 2. The Docker daemon pulled the \"hello-world\" image from the Docker Hub.\r\n    (amd64)\r\n 3. The Docker daemon created a new container from that image which runs the\r\n    executable that produces the output you are currently reading.\r\n 4. The Docker daemon streamed that output to the Docker client, which sent it\r\n    to your terminal.\r\n\r\nTo try something more ambitious, you can run an Ubuntu container with:\r\n $ docker run -it ubuntu bash\r\n\r\nShare images, automate workflows, and more with a free Docker ID:\r\n https://hub.docker.com/\r\n\r\nFor more examples and ideas, visit:\r\n https://docs.docker.com/get-started/\r\n\r\n"]

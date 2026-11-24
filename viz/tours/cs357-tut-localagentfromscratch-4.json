@@ -1,0 +1,47 @@
+{
+ "code": "# P6: agent memory as typed records, saved to JSON and loaded back\nimport traceback\nfrom pathlib import Path\nfrom typing import Literal\nfrom pydantic import BaseModel, TypeAdapter, ValidationError\n\nclass MemoryRecord(BaseModel):\n    key: str                                        # what the fact is about\n    value: str                                      # the fact itself\n    source: Literal[\"user\", \"tool\", \"agent\"]        # who told us: provenance matters\n\nMEMORY = Path(\"memory.json\")\nRecords = TypeAdapter(list[MemoryRecord])           # validates a whole list at once\n\ndef save(records):\n    MEMORY.write_bytes(Records.dump_json(records, indent=2))\n\ndef load():\n    try:\n        return Records.validate_json(MEMORY.read_bytes())\n    except FileNotFoundError as e:\n        print(f\"[pydantic_tut:p6] no memory yet, starting empty: {e}\")   # the first run\n        traceback.print_exc()\n        return []\n    except ValidationError as e:\n        print(f\"[pydantic_tut:p6] memory.json is corrupt, refusing to use it: {e.errors()[0]['msg']}\")\n        traceback.print_exc()\n        return []\n\nMEMORY.unlink(missing_ok=True)                      # start from a clean slate for this demo\n\nrecords = load()\nrecords.append(MemoryRecord(key=\"name\", value=\"Sam\", source=\"user\"))\nrecords.append(MemoryRecord(key=\"study_hours_per_day\", value=\"3\", source=\"user\"))\nsave(records)\nprint(MEMORY.read_text())\n\nagain = load()                                      # a fresh run of the program\nprint(\"Prompt line:\", \"; \".join(f\"{r.key} = {r.value} (from {r.source})\" for r in again))\n\n# Now damage the file the way a bad write or a hand edit would, and load again.\nMEMORY.write_text('[{\"key\": \"name\", \"value\": \"Sam\", \"source\": \"a rumor\"}]')\nprint(\"After the damage:\", load())",
+ "description": "Pydantic MemoryRecord validates each remembered fact with key, value, and source for provenance; saves to JSON and refuses corrupt files.",
+ "example": "cs357-tut-localagentfromscratch-4",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete memory validation code.",
+   "kind": "reveal",
+   "lines": "1-43"
+  },
+  {
+   "description": "Purpose: P6 validates agent memory as typed records.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "MemoryRecord: Pydantic model with key, value, and source fields for provenance tracking.",
+   "kind": "focus",
+   "lines": "7-11"
+  },
+  {
+   "description": "Setup: MEMORY file path and TypeAdapter for list validation.",
+   "kind": "focus",
+   "lines": "12-13"
+  },
+  {
+   "description": "Save: writes validated records to JSON file with indentation.",
+   "kind": "focus",
+   "lines": "15-17"
+  },
+  {
+   "description": "Load: reads and validates JSON, handles missing file or corruption gracefully.",
+   "kind": "focus",
+   "lines": "18-28"
+  },
+  {
+   "description": "Demonstration: creates clean records, saves, reloads, damages file, and shows refusal.",
+   "kind": "focus",
+   "lines": "30-43"
+  }
+ ],
+ "title": "Memory as Typed Records",
+ "version": 1
+}

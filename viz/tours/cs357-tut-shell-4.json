@@ -1,0 +1,32 @@
+{
+ "code": "echo $HOME\n\n# Prints the value of the HOME variable, your home directory path\n\nexport OLLAMA_HOST=http://localhost:11434\n\n# Creates (or overwrites) the variable OLLAMA_HOST and marks it for export\n\n# \"export\" means child processes (like the ollama command) will inherit this value;\n# the course container sets this same variable to the host.docker.internal address\n\nexport OLLAMA_MODELS=$HOME/ollama-models\n\n# Tells the Ollama server where to keep downloaded models, if your home disk is small\n\nenv | grep OLLAMA\n\n# env lists ALL current environment variables; grep filters to only OLLAMA ones\n\n# Use this to confirm your variables are set correctly before launching a tool",
+ "description": "Walk through inspecting environment variables with echo, setting child-process configuration with export, and verifying variables with env and grep.",
+ "example": "cs357-tut-shell-4",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: agy",
+ "steps": [
+  {
+   "description": "`echo $HOME` reads the `HOME` environment variable (the `$` prefix expands its value) and prints your home directory path.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "`export OLLAMA_HOST=http://localhost:11434` sets `OLLAMA_HOST` and marks it for export so child processes you launch in this shell (such as `ollama` or `opencode`) inherit the address.",
+   "kind": "reveal",
+   "lines": "5-10"
+  },
+  {
+   "description": "`export OLLAMA_MODELS=$HOME/ollama-models` combines `$HOME` expansion with `export` to point the Ollama server at a custom directory for downloaded model weights.",
+   "kind": "reveal",
+   "lines": "12-14"
+  },
+  {
+   "description": "`env | grep OLLAMA` lists every exported variable in your current shell and pipes that list into `grep` to confirm both `OLLAMA_` settings are active before you start a tool.",
+   "kind": "reveal",
+   "lines": "16-20"
+  }
+ ],
+ "title": "Reading and exporting environment variables",
+ "version": 1
+}

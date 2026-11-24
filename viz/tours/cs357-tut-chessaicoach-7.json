@@ -1,0 +1,37 @@
+{
+ "code": "async function getAICommentary(providerConfig, beforeFen, afterFen, san, pgnSoFar, eloEst) {\n  const prompt = `You are an expert chess coach. The player is White (estimated ~${eloEst} Elo).\n\nYou are analyzing the move that was just played, in the context of the entire game so far.\n\nFull PGN so far (ending with the move being analyzed):\n${pgnSoFar || \"(opening)\"}\n\nPosition BEFORE the move (FEN):\n${beforeFen}\n\nMove just played:\n${san}\n\nPosition AFTER the move (FEN):\n${afterFen}\n\nAnalyze ONLY the move just played, but do so in the context of the whole game so far.\nJudge whether it is good, inaccurate, a mistake, or a blunder.\nIf it is suboptimal, name a better move for this turn and explain why.\nDo NOT mention, predict, recommend, or hint at any future moves, replies, or continuations.\nKeep the answer to 2-4 sentences.\nBe encouraging but honest.`;\n\n  return callTextModel(providerConfig, prompt, { maxTokens: 350, temperature: 0.2 });\n}",
+ "description": "The function that builds the prompt for the sentence or two of commentary after each move, assembling game context and setting guardrails.",
+ "example": "cs357-tut-chessaicoach-7",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "`getAICommentary` takes the provider config, the FEN before and after the move, the move in SAN, the PGN so far, and the Elo estimate. The prompt opens by framing the model as an expert chess coach and noting the player is White with an estimated Elo.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "The prompt embeds the concrete state: the full PGN so far, the FEN before the move, the move just played, and the FEN after. The page says this lets the model reason about the actual position, not a vague description.",
+   "kind": "focus",
+   "lines": "6-16"
+  },
+  {
+   "description": "The instructions set explicit scope: analyze only the move just played, judge whether it is good, inaccurate, a mistake, or a blunder, and name a better move when the move is suboptimal.",
+   "kind": "focus",
+   "lines": "18-20"
+  },
+  {
+   "description": "Two guardrails follow: do not mention, predict, recommend, or hint at any future moves, and keep the answer to 2-4 sentences. The page says the scope limits stop the model from volunteering whole opening lines.",
+   "kind": "focus",
+   "lines": "21-23"
+  },
+  {
+   "description": "Finally it calls `callTextModel` with `maxTokens: 350` and `temperature: 0.2`, and returns the result.",
+   "kind": "focus",
+   "lines": "25-26"
+  }
+ ],
+ "title": "Coach Commentary Prompt",
+ "version": 1
+}

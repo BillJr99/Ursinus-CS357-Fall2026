@@ -1,0 +1,22 @@
+{
+ "code": "python3 -m venv .venv\nsource .venv/bin/activate\npython3 -m pip install \"pydantic-ai-slim[openai,mcp]==2.54.0\" \"fastmcp==4.0.11\" \"pytest==8.*\"\nollama pull qwen2.5:3b     # this tutorial's default: a reliable tool caller (3B, about 1.9 GB)\nollama pull llama3.2       # the course's general chat model, for the comparisons (3B, about 2 GB)",
+ "description": "These commands create an isolated Python virtual environment, install pinned Pydantic AI and FastMCP packages, and pull the two local Ollama models.",
+ "example": "cs357-tut-pydanticai-1",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "Create and activate a virtual environment in .venv, then install pinned versions of pydantic-ai-slim (with openai and mcp extras), fastmcp, and pytest.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Pull qwen2.5:3b (the default tool-calling model for this tutorial) and llama3.2 (the general chat model used for comparison) into your local Ollama server.",
+   "kind": "reveal",
+   "lines": "4-5"
+  }
+ ],
+ "title": "Virtual environment and local Ollama model setup",
+ "version": 1
+}

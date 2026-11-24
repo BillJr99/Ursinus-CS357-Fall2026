@@ -1,0 +1,55 @@
+{
+ "code": "import json\nimport requests\n\ndef llm(system, user, temperature=0.3):\n    \"\"\"Call the local LLM. Temperature controls creativity vs. determinism.\"\"\"\n    try:\n        r = requests.post(\"http://localhost:11434/api/chat\", json={\n            \"model\": \"llama3.2\", \"stream\": False,\n            \"options\": {\"temperature\": temperature, \"seed\": 42},\n            \"messages\": [{\"role\": \"system\", \"content\": system},\n                         {\"role\": \"user\", \"content\": user}]}, timeout=120)\n        return r.json()[\"message\"][\"content\"].strip()\n    except Exception as e:\n        print(f\"[critique:llm] {e}\")\n        import traceback; traceback.print_exc()\n        return \"\"\n\n# The RUBRIC is the critic's instructions, specific, checkable criteria.\n# Crucially, the GENERATOR never sees this rubric directly.\n# It only sees the list of issues the critic identified.\nRUBRIC = \"\"\"Evaluate the draft against ALL of these criteria:\n1. Exactly 3 sentences (count them carefully).\n2. Mentions a specific date (day of week, date, or both).\n3. No exclamation points anywhere in the draft.\nRespond ONLY with valid JSON in this exact format:\n{\"verdict\": \"accept\" or \"revise\", \"issues\": [\"specific defect 1\", \"specific defect 2\"]}\nIf all criteria are met, return: {\"verdict\": \"accept\", \"issues\": []}\"\"\"\n\ndef critique(draft):\n    \"\"\"Run the critic on a draft. Returns a dict with 'verdict' and 'issues'.\"\"\"\n    out = llm(RUBRIC, draft, temperature=0.0)  # cold: deterministic evaluation\n    try:\n        # Strip markdown code fences if the model adds them\n        clean = out.replace(\"```json\", \"\").replace(\"```\", \"\").strip()\n        return json.loads(clean)\n    except Exception as e:\n        print(f\"[critique:parse] {e} on output: {out[:80]}\")\n        import traceback; traceback.print_exc()\n        # Fail closed: if we cannot parse the verdict, assume \"revise\"\n        # This is safer than failing open (assuming \"accept\") for most use cases\n        return {\"verdict\": \"revise\", \"issues\": [\"critic output was not valid JSON; treating as revise\"]}\n\nTASK = \"Announce that Critique and Refine is due next Friday and office hours moved to Wednesday.\"\n\n# Step 1: generate the first draft (warm temperature for creative exploration)\ndraft = llm(\"You draft short announcements for a college class.\", TASK, temperature=0.8)\nprint(f\"--- first draft ---\\n{draft}\\n\")\n\n# Step 2: the critic checks it against the rubric\nverdict = critique(draft)\nprint(f\"--- critic: {verdict['verdict']} | issues: {verdict['issues']}\\n\")\n\n# Step 3: revise, passing only the issues list and not the rubric\nif verdict[\"verdict\"] != \"accept\":\n    draft = llm(\n        \"Revise the draft to fix EXACTLY the listed issues, changing nothing else.\",\n        f\"Draft:\\n{draft}\\n\\nIssues to fix:\\n{json.dumps(verdict['issues'], indent=2)}\",\n        temperature=0.3  # cooler: disciplined revision rather than free exploration\n    )\n    print(f\"--- revised draft ---\\n{draft}\\n\")\n\n    # Step 4: the critic checks the revision, which is where the next round would begin\n    verdict = critique(draft)\n    print(f\"--- critic: {verdict['verdict']} | issues: {verdict['issues']}\")",
+ "description": "This example shows a generator-critic loop: a warm generator writes an announcement, a cold critic checks it against a rubric, and the generator revises based only on the critic's issues list.",
+ "example": "cs357-liascript-critiqueconsensusjudge-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The llm function calls the local Ollama server with a system and user message, using a seed for reproducibility.",
+   "kind": "reveal",
+   "lines": "1-16"
+  },
+  {
+   "description": "The RUBRIC defines three checkable criteria: exactly 3 sentences, mentions a specific date, no exclamation points. The critic must respond with a JSON verdict.",
+   "kind": "reveal",
+   "lines": "18-27"
+  },
+  {
+   "description": "The critique function runs the critic at temperature 0.0 (deterministic), parses the JSON verdict, and fails closed (assumes revise) if parsing fails.",
+   "kind": "reveal",
+   "lines": "29-41"
+  },
+  {
+   "description": "The TASK is the announcement prompt. Step 1 generates a first draft at temperature 0.8 (creative). Step 2 runs the critic on it.",
+   "kind": "reveal",
+   "lines": "43-51"
+  },
+  {
+   "answer": "No. The critic returns 'revise' because the draft has no exclamation points, but the rubric requires exactly 3 sentences and a specific date, which the draft likely misses.",
+   "kind": "predict",
+   "lines": "50-51",
+   "question": "Will the first draft pass all three rubric criteria?"
+  },
+  {
+   "description": "First draft prints (4+ sentences, no specific date). Critic verdict: revise with issues including 'No exclamation points are present'.",
+   "kind": "run",
+   "lines": "46-51",
+   "trace_step": 1
+  },
+  {
+   "description": "Step 3 revises at temperature 0.3 (disciplined) given only the issues list, not the rubric. Step 4 runs the critic again on the revision.",
+   "kind": "reveal",
+   "lines": "53-64"
+  },
+  {
+   "description": "Revised draft prints. Critic verdict: revise with issue 'excessive punctuation' - the loop would continue.",
+   "kind": "run",
+   "lines": "63-64",
+   "trace_step": 2
+  }
+ ],
+ "title": "Critique and Refine Loop with a Rubric",
+ "version": 1
+}

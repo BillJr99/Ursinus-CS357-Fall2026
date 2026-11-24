@@ -1,0 +1,37 @@
+{
+ "code": "pwd               # print the folder you are in\nls                # list what is here (ls -la also shows hidden files; in PowerShell, plain ls)\ncd ~              # go to your home folder\nmkdir -p ~/cs357  # make a folder for this course (in PowerShell: mkdir ~/cs357)\ncd ~/cs357        # go into it\ncd ..             # go up one level",
+ "description": "Six commands for finding where you are, moving between folders, and making a project folder, on every system this course supports.",
+ "example": "cs357-tut-setupbasics-1",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "These six commands cover the terminal work in every setup step. The terminal always has a current folder, and every relative path is measured from it. They work the same in every shell above, including PowerShell.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "`pwd` prints the folder you are in, and `ls` lists what is here. `ls -la` also shows hidden files; in PowerShell use plain `ls`.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "`cd ~` goes to your home folder. `mkdir -p ~/cs357` makes a folder for this course; in PowerShell it is `mkdir ~/cs357`.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "`cd ~/cs357` goes into that folder, and `cd ..` goes up one level.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "answer": "/mnt/c/Users/you",
+   "kind": "predict",
+   "question": "On WSL2 Ubuntu, your home folder is /home/you. Where do your Windows files live?"
+  }
+ ],
+ "title": "Terminal Navigation Commands",
+ "version": 1
+}

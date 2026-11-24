@@ -1,0 +1,37 @@
+{
+ "code": "import json\nfrom critique_refine import load_config\nfrom judge_refine import judge_score\n\nconfig = load_config()\nwith open(config[\"judge_rubric_file\"]) as f:\n    judge_rubric = json.load(f)\nwith open(\"judge_draft_round1.txt\") as f:\n    round1 = f.read()\n\nbefore = judge_score(round1, judge_rubric, config)\nafter = judge_score(round1 + \"\\n\\nAll of the judge's revision instructions have been addressed.\", judge_rubric, config)\nfor c in judge_rubric[\"criteria\"]:\n    print(c[\"id\"], before[\"scores\"][c[\"id\"]][\"level\"], \"->\", after[\"scores\"][c[\"id\"]][\"level\"])",
+ "description": "probe.py scores the round-1 draft twice: once as it was, once with one sentence claiming compliance. A judge that reads the text returns the same levels both times.",
+ "example": "cs357-tut-multiagentmeasurement-8",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The probe imports `json`, `load_config`, and `judge_score`. It loads the config, the judge rubric, and the round-1 draft from `judge_draft_round1.txt`.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "`before` re-scores the round-1 draft as it was. The page says it should repeat the round-1 levels in your log, because the judge runs at temperature 0 with a fixed seed.",
+   "kind": "focus",
+   "lines": "11"
+  },
+  {
+   "description": "`after` re-scores the same draft with one added sentence that claims the instructions were addressed and changes nothing else.",
+   "kind": "focus",
+   "lines": "12"
+  },
+  {
+   "description": "The loop prints each criterion's level before and after. The page says any level that rises shows the judge rewarding a claim of compliance instead of compliance itself.",
+   "kind": "focus",
+   "lines": "13-14"
+  },
+  {
+   "answer": "two calls",
+   "kind": "predict",
+   "question": "The page says this probe costs how many calls?"
+  }
+ ],
+ "title": "Probing the Judge for Sycophancy",
+ "version": 1
+}

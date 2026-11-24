@@ -1,0 +1,37 @@
+{
+ "code": "# compare.py: one base model, four conditions, the same held-out questions and decoding settings.\nimport json\nimport re\nimport os\nimport resource\nimport sys\nimport time\nimport traceback\n\nos.environ.setdefault(\"HF_HUB_OFFLINE\", \"1\")\nfrom ask import retrieve\nfrom infer_lora import generate, load\n\nDATA = json.load(open(\"lora_data.json\"))[\"test\"]\n\n\ndef score(case, reply, retrieved_ids):\n    text = reply.lower()\n    abstained = \"not in my documents\" in text\n    cited = [c for c in retrieved_ids if f\"[{c}]\" in reply]\n    row = {\"format_ok\": reply.startswith(\"ANSWER:\"), \"abstained\": abstained,\n           \"recall@3\": None if case[\"source\"] is None else case[\"source\"] in retrieved_ids}\n    if case[\"kind\"] == \"unanswerable\":\n        row[\"correct\"] = abstained\n        row[\"citation_ok\"] = None\n    else:\n        row[\"correct\"] = bool(re.search(rf\"\\b{re.escape(case['gold'])}\\b\", text)) and not abstained\n        row[\"citation_ok\"] = bool(cited) and case[\"source\"] in cited   # cites the chunk that holds the fact\n    return row\n\n\ndef run(condition, tok, model):\n    rows, start = [], time.time()\n    for case in DATA:\n        evidence = retrieve(case[\"q\"]) if \"RAG\" in condition else []\n        context = \"\\n\".join(f\"[{i}] {d}\" for i, d, _ in evidence)\n        if \"LoRA\" in condition:\n            reply = generate(tok, model, case[\"q\"], context)\n        else:\n            with model.disable_adapter():\n                reply = generate(tok, model, case[\"q\"], context)\n        rows.append({\"q\": case[\"q\"], \"kind\": case[\"kind\"], \"reply\": reply,\n                     **score(case, reply, [i for i, _, _ in evidence])})\n    return rows, time.time() - start\n\n\ndef main():\n    tok, model = load(with_adapter=True)\n    report = {}\n    for condition in [\"base\", \"base+RAG\", \"LoRA\", \"LoRA+RAG\"]:\n        rows, seconds = run(condition, tok, model)\n        report[condition] = rows\n        n = len(rows)\n        ok = lambda k: sum(1 for r in rows if r[k]) \n        cites = [r[\"citation_ok\"] for r in rows if r[\"citation_ok\"] is not None]\n        print(f\"{condition:9s} correct {ok('correct')}/{n}  format {ok('format_ok')}/{n}  \"\n              f\"cited-right {sum(cites)}/{len(cites)}  {seconds:.0f}s\")\n    json.dump(report, open(\"compare_report.json\", \"w\"), indent=1)\n    print(\"peak RSS MB\", resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1024)\n\n\nif __name__ == \"__main__\":\n    try:\n        main()\n    except Exception as e:\n        print(f\"[compare:main] {e}\")\n        traceback.print_exc()\n        sys.exit(1)",
+ "description": "The comparison script that runs one base model across four conditions on the same held-out questions and scores each answer.",
+ "example": "cs357-tut-offlineragfinetuning-13",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The header comment says one base model, four conditions, the same held-out questions and decoding settings. It sets `HF_HUB_OFFLINE`, imports retrieval and the generation helpers, and loads the held-out test questions into `DATA`.",
+   "kind": "reveal",
+   "lines": "1-14"
+  },
+  {
+   "description": "`score` marks whether the reply starts with `ANSWER:`, whether it abstained, and whether retrieval recalled the source. For an unanswerable question it counts an abstention as correct, and otherwise it checks the gold text and whether the reply cites the chunk that holds the fact.",
+   "kind": "focus",
+   "lines": "17-29"
+  },
+  {
+   "description": "`run` loops over the test cases. It retrieves evidence only when the condition contains RAG, builds the context, then generates with the adapter on for a LoRA condition or inside `disable_adapter` otherwise. Each row records the question, kind, reply, and score.",
+   "kind": "focus",
+   "lines": "32-44"
+  },
+  {
+   "description": "`main` loads the model with the adapter, then loops over the four conditions in order. For each it runs the cases, stores the rows, and prints correct, format, and cited-right counts plus the elapsed time. It writes the full report to `compare_report.json` and prints the peak memory.",
+   "kind": "focus",
+   "lines": "47-59"
+  },
+  {
+   "description": "The entry point calls `main` inside a try block, printing a labeled message and the traceback and exiting with status 1 on error.",
+   "kind": "focus",
+   "lines": "62-68"
+  }
+ ],
+ "title": "Comparing the Four Conditions",
+ "version": 1
+}

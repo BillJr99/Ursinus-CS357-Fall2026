@@ -1,0 +1,52 @@
+{
+ "code": "\n# Create the top-level agents directory under the project root\n\n# mkdir -p creates all parent directories if they do not exist yet\nmkdir -p /home/user/projects/myapp/agents\n\n# Create identity directories for each agent\n\n# The curly-brace notation {config,memory,logs,workspace} creates four subdirectories at once\n\n# config = agent's settings, memory = things the agent remembers between runs,\n\n# logs = record of what the agent did, workspace = files the agent is currently working on\nmkdir -p /home/user/projects/myapp/agents/researcher/{config,memory,logs,workspace}\nmkdir -p /home/user/projects/myapp/agents/writer/{config,memory,logs,workspace}\n\n# Set restrictive permissions so only the owning user can enter these directories\n\n# chmod 700 means: owner can read/write/enter; group members cannot; everyone else cannot\n\n# Without this, any other user on the system could read the agent's memory and logs\nchmod 700 /home/user/projects/myapp/agents/researcher\nchmod 700 /home/user/projects/myapp/agents/writer\n\n# Create a shared knowledge base that the researcher can read\n\n# chmod 755 means: owner can read/write/enter; everyone else can read and enter (but not write)\n\n# This makes the knowledge base readable by the agent inside Docker, which runs as a different UID\nmkdir -p /home/user/projects/myapp/shared/knowledgebase\nchmod 755 /home/user/projects/myapp/shared/knowledgebase\n\n# Create an output directory the writer will produce files in\n\n# chmod 750 means: owner can read/write/enter; group members can read and enter; others cannot\nmkdir -p /home/user/projects/myapp/shared/output\nchmod 750 /home/user/projects/myapp/shared/output\n\n# Run the researcher agent in a Docker container with carefully chosen volume mounts:\n\n# -v .../researcher:/home/agent:rw  -> researcher's own identity dir, read-write (it can save memory/logs)\n\n# -v .../knowledgebase:/data/kb:ro  -> shared knowledge base, READ-ONLY (it cannot change the source docs)\n\n# --network none                    -> no internet access (prevents data exfiltration)\n\n# The writer's identity directory is NOT mounted here; researcher literally cannot see it\ndocker run --rm \\\n  -v /home/user/projects/myapp/agents/researcher:/home/agent:rw \\\n  -v /home/user/projects/myapp/shared/knowledgebase:/data/kb:ro \\\n  --network none \\\n  my-researcher-image \\\n  python agent.py --task \"summarize recent papers on RAG retrieval\"\n\n# Expected: the agent runs, writes summaries to /home/agent/workspace/, exits cleanly\n\n# Run the writer agent with its own separate set of mounts:\n\n# -v .../writer:/home/agent:rw           -> writer's own identity dir, read-write\n\n# -v .../shared/output:/workspace/output:rw  -> shared output dir, read-write (writer produces files here)\n\n# -v .../researcher/workspace:/workspace/input:ro  -> researcher's OUTPUT only, read-only\n\n# Notice: the writer gets researcher's WORKSPACE (output files), NOT researcher's config or memory\ndocker run --rm \\\n  -v /home/user/projects/myapp/agents/writer:/home/agent:rw \\\n  -v /home/user/projects/myapp/shared/output:/workspace/output:rw \\\n  -v /home/user/projects/myapp/agents/researcher/workspace:/workspace/input:ro \\\n  --network none \\\n  my-writer-image \\\n  python agent.py --task \"draft a 500-word section from the summaries\"\n\n# Expected: the agent reads summaries from /workspace/input/, writes a draft to /workspace/output/",
+ "description": "Create isolated identity directories for researcher and writer agents with restrictive permissions, then run each in Docker with carefully scoped mounts and no network access.",
+ "example": "cs357-tut-terminalfilesystem-1",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete terminal session for two-agent workspace setup.",
+   "kind": "reveal",
+   "lines": "1-74"
+  },
+  {
+   "description": "Top-level directory: create agents directory under project root with mkdir -p.",
+   "kind": "focus",
+   "lines": "2-6"
+  },
+  {
+   "description": "Identity directories: create researcher and writer subdirectories {config,memory,logs,workspace} in one command.",
+   "kind": "focus",
+   "lines": "7-15"
+  },
+  {
+   "description": "Permissions: chmod 700 on identity directories prevents other users from reading memory and logs.",
+   "kind": "focus",
+   "lines": "17-23"
+  },
+  {
+   "description": "Shared knowledgebase: chmod 755 makes it readable by Docker agent running as different UID.",
+   "kind": "focus",
+   "lines": "25-31"
+  },
+  {
+   "description": "Shared output: chmod 750 allows owner and group to read/write, others cannot.",
+   "kind": "focus",
+   "lines": "33-37"
+  },
+  {
+   "description": "Researcher container: mounts identity dir rw, knowledgebase ro, network none, runs python agent.py.",
+   "kind": "focus",
+   "lines": "39-55"
+  },
+  {
+   "description": "Writer container: mounts its own identity dir, shared output rw, researcher workspace ro, network none.",
+   "kind": "focus",
+   "lines": "57-74"
+  }
+ ],
+ "title": "Identity Directories: Setup and Docker Runs",
+ "version": 1
+}

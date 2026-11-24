@@ -1,0 +1,37 @@
+{
+ "code": "docker pull nousresearch/hermes-agent:latest\nmkdir -p \"$HOME/agents/hermes/home\"\n\n# Once, to create the identity: the wizard writes config and keys into the mount.\ndocker run --rm -it \\\n  -v \"$HOME/agents/hermes/home:/opt/data\" \\\n  nousresearch/hermes-agent:latest setup\n\n# Thereafter, to run it:\ndocker run --rm -it --name hermes \\\n  --add-host=host.docker.internal:host-gateway \\\n  -v \"$HOME/agents/hermes/home:/opt/data\" \\\n  -v \"$HOME/agents/workspace:/workspace\" \\\n  nousresearch/hermes-agent:latest",
+ "description": "Run Open WebUI container pointing to the gateway URL with host.docker.internal and data volume.",
+ "example": "cs357-tut-agentstack-5",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete Open WebUI docker run command.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "Container name: open-webui runs detached with port 3000:8080.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Host alias: --add-host=host.docker.internal:host-gateway allows container to reach host.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Data volume: $HOME/agents/openwebui/data mounts to /app/backend/data for persistence.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "Configuration: Admin Settings use URL http://host.docker.internal:4000/v1 with key sk-litellm-local.",
+   "kind": "focus",
+   "lines": "5-8"
+  }
+ ],
+ "title": "Open WebUI Container",
+ "version": 1
+}

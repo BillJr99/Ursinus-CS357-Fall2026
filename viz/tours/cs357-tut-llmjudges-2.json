@@ -1,0 +1,33 @@
+{
+ "code": "python3 -c \"print('{' * 2 + 'answer' + '}' * 2)\" > prompt.txt",
+ "description": "This shell command creates prompt.txt with promptfoo's answer template.",
+ "example": "cs357-tut-llmjudges-2",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: copilot free model",
+ "steps": [
+  {
+   "description": "python3 constructs the template text instead of requiring you to type curly braces.",
+   "kind": "reveal",
+   "lines": "1"
+  },
+  {
+   "description": "The two multiplied brace strings produce two opening and two closing braces around answer.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "answer": "The template contains answer, so promptfoo echoes the stored answer value.",
+   "kind": "predict",
+   "lines": "1",
+   "question": "What variable name appears between the two pairs of curly braces?"
+  },
+  {
+   "description": "The shell redirection writes that one-line template into prompt.txt.",
+   "kind": "focus",
+   "lines": "1"
+  }
+ ],
+ "title": "Write the prompt template",
+ "version": 1
+}

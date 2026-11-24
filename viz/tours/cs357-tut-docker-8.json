@@ -1,0 +1,37 @@
+{
+ "code": "\n# Reasonable ONLY because of the flags around it\ndocker run -it --rm \\\n  -v \"$HOME/agents/project:/work\" \\\n  -v \"$HOME/notes/vault:/reference:ro\" \\\n  --network none \\\n  --cap-drop ALL \\\n  --security-opt no-new-privileges \\\n  --pids-limit 256 \\\n  --memory 4g \\\n  -e AGENT_API_KEY \\\n  course-agent claude --dangerously-skip-permissions",
+ "description": "The run command that disables the agent's permission prompts inside a container constrained by several isolation flags.",
+ "example": "cs357-tut-docker-8",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The comment says this is reasonable only because of the flags around it. Run interactively, remove on exit, and mount the project at `/work`.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Mount the notes vault at `/reference` read-only, so the agent can read reference material but cannot change it.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "description": "Cut the network with `--network none`, drop all capabilities with `--cap-drop ALL`, and forbid privilege escalation with `--security-opt no-new-privileges`.",
+   "kind": "focus",
+   "lines": "6-8"
+  },
+  {
+   "description": "Limit process count with `--pids-limit 256`, cap memory at `--memory 4g`, and pass `AGENT_API_KEY` through from your shell.",
+   "kind": "focus",
+   "lines": "9-11"
+  },
+  {
+   "description": "Run `claude --dangerously-skip-permissions`. The page says to read the command as a sentence: the agent may act without asking, and the worst it can do is damage one git-tracked folder.",
+   "kind": "focus",
+   "lines": "12"
+  }
+ ],
+ "title": "Trusted Mode in a Fence",
+ "version": 1
+}

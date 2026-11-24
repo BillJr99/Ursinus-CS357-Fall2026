@@ -1,0 +1,27 @@
+{
+ "code": "\n# .gitignore - add these the moment the files could exist, before your first git add\n.dev.vars\n.env\n*.local",
+ "description": "A .gitignore entry that keeps local secret files out of the repository, added before the first git add.",
+ "example": "cs357-tut-cloudflare-14",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a `.gitignore` file. It lists the files Git should never track.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`.dev.vars` and `.env` hold local secrets, so they stay out of the repository.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "The comment says to add these the moment the files could exist, before your first `git add`.",
+   "kind": "focus",
+   "lines": "2"
+  }
+ ],
+ "title": "Git-Ignoring Local Secret Files",
+ "version": 1
+}

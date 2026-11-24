@@ -1,0 +1,82 @@
+{
+ "code": "import requests\n\ndef llm(system, user, temperature=0.0):\n    \"\"\"\n    Call a locally running LLM via Ollama.\n    system: the agent's role and constraints (kept short on purpose)\n    user:   the actual input this agent should process\n    temperature=0.0: deterministic output for predictable pipelines\n    \"\"\"\n    try:\n        r = requests.post(\"http://localhost:11434/api/chat\", json={\n            \"model\": \"llama3.2\", \"stream\": False,\n            \"options\": {\"temperature\": temperature, \"seed\": 42},\n            \"messages\": [{\"role\": \"system\", \"content\": system},\n                         {\"role\": \"user\", \"content\": user}]}, timeout=120)\n        return r.json()[\"message\"][\"content\"].strip()\n    except Exception as e:\n        print(f\"[orchestration:llm] {e}\")\n        import traceback; traceback.print_exc()\n        return \"\"\n\n# --- Pipeline: extract -> draft -> polish ---\n# Each stage sees only what it needs; intermediate outputs are inspectable.\n\ndef digest_pipeline(raw_announcements):\n    # Stage 1: Extract structured facts from raw text\n    # Output: one line per event, in a predictable format\n    facts = llm(\n        \"Extract every event as 'name | date | location', one per line. Output only the lines.\",\n        raw_announcements\n    )\n    # Stage 2: Draft a human-readable summary from the structured facts\n    # Note: the draft stage never sees the raw announcements, only the extracted facts\n    draft = llm(\n        \"Write a friendly 3-sentence digest of these events for students.\",\n        facts\n    )\n    # Stage 3: Polish for length and tone\n    final = llm(\n        \"Edit for concision and warmth. Keep under 60 words.\",\n        draft\n    )\n    return facts, draft, final  # return all intermediates for inspection and debugging\n\nraw = (\n    \"The chess club meets Thursday at 7 in Olin 107. \"\n    \"Hawk Hacks is Saturday 10am in IDDC. Bring laptops! \"\n    \"Ultimate frisbee pickup moved to Sunday 2pm on the quad.\"\n)\nfacts, draft, final = digest_pipeline(raw)\nprint(\"EXTRACTED FACTS:\\n\", facts)\nprint(\"\\nDRAFT:\\n\", draft)\nprint(\"\\nFINAL DIGEST:\\n\", final)\n\n# --- Router: classify input, then dispatch to the right specialist ---\n# The router makes ONE decision; the specialist does the actual work.\n\nSPECIALISTS = {\n    \"hardware\": \"You fix physical computer problems. Give exactly 2 concrete troubleshooting steps.\",\n    \"software\": \"You fix application and software problems. Give exactly 2 concrete steps.\",\n    \"accounts\": \"You handle login, password, and account access issues. Give exactly 2 concrete steps.\",\n}\n\ndef route(ticket):\n    # Router: classify into exactly one of the allowed labels\n    # The closed-set guard below handles cases where the model invents a new category\n    label = llm(\n        \"Classify the ticket as exactly one word: hardware, software, or accounts. Output only that word.\",\n        ticket\n    ).lower()\n    # Guard: if the model returns something unexpected, default to \"software\"\n    # This is a code-level fix; a prompt-level fix would say \"output ONLY one of these three words\"\n    label = label if label in SPECIALISTS else \"software\"\n    # Dispatch to the appropriate specialist\n    response = llm(SPECIALISTS[label], ticket)\n    return label, response\n\nfor ticket in [\n    \"My laptop screen flickers and goes completely black after five minutes.\",\n    \"I cannot log into the campus portal after the password reset last night.\"\n]:\n    label, response = route(ticket)\n    print(f\"\\n[Category: {label}]\\nTicket: {ticket}\\nResponse: {response}\")",
+ "description": "This example shows a pipeline that extracts facts, drafts a digest, and polishes it, plus a router that classifies tickets and dispatches to a specialist. Each stage is a separate LLM call with a short system prompt.",
+ "example": "cs357-liascript-orchestrationworkshop-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: pi free model + edit: codex",
+ "steps": [
+  {
+   "description": "The llm function calls a local Ollama server at localhost:11434 with a system prompt, user input, temperature 0.0, and a fixed seed. It returns the model's response or an empty string on error.",
+   "kind": "reveal",
+   "lines": "1-20"
+  },
+  {
+   "description": "digest_pipeline runs three stages: extract pulls structured 'name | date | location' lines from raw text. Draft writes a friendly 3-sentence digest from the facts; polish edits for concision and warmth under 60 words. All intermediates are returned for inspection.",
+   "kind": "reveal",
+   "lines": "22-43"
+  },
+  {
+   "description": "Stage 1 (extract) sees the raw announcements and outputs one structured line per event.",
+   "kind": "focus",
+   "lines": "28-31"
+  },
+  {
+   "description": "Stage 2 (draft) sees only the extracted facts, not the raw text, and writes a 3-sentence digest.",
+   "kind": "focus",
+   "lines": "34-37"
+  },
+  {
+   "description": "Stage 3 (polish) sees only the draft and tightens it to under 60 words. The raw announcements are two stages away  -  this avoids 'lost in the middle'.",
+   "kind": "focus",
+   "lines": "39-42"
+  },
+  {
+   "description": "The raw input has three events. The pipeline runs and prints facts, draft, and final digest.",
+   "kind": "reveal",
+   "lines": "45-53"
+  },
+  {
+   "description": "route is a classify-then-dispatch router. The router calls llm to classify a ticket as hardware, software, or accounts. A guard defaults unexpected labels to 'software'. Then the specialist for that label answers the ticket.",
+   "kind": "reveal",
+   "lines": "55-76"
+  },
+  {
+   "description": "The router's system prompt demands exactly one word. The guard at line 73 catches any label outside the closed set and silently defaults to 'software'  -  a code-level fix, not a prompt-level one.",
+   "kind": "focus",
+   "lines": "67-73"
+  },
+  {
+   "answer": "The router classifies it as 'accounts', the guard passes, and the accounts specialist returns two concrete steps for account access issues.",
+   "kind": "predict",
+   "lines": "78-83",
+   "question": "What happens when a ticket about a login problem is classified?"
+  },
+  {
+   "description": "The digest pipeline runs. Extract outputs three lines with name, day, and location.",
+   "kind": "run",
+   "lines": "50",
+   "trace_step": 0
+  },
+  {
+   "description": "Draft produces a 3-sentence friendly digest mentioning all three events.",
+   "kind": "run",
+   "lines": "51",
+   "trace_step": 1
+  },
+  {
+   "description": "Polish shortens it to under 60 words while keeping the key details.",
+   "kind": "run",
+   "lines": "52",
+   "trace_step": 2
+  },
+  {
+   "description": "The router processes two tickets. The first (screen flickers) is classified as hardware. The second (cannot log in) is classified as accounts. Each specialist returns two troubleshooting steps.",
+   "kind": "run",
+   "lines": "82",
+   "trace_step": 3
+  }
+ ],
+ "title": "Three-stage digest pipeline and classify-then-dispatch router",
+ "version": 1
+}

@@ -1,0 +1,7 @@
+PASS | What is the capital of Australia? -> 'canberra.' (expected 'canberra')
+PASS | What year did the Apollo 11 mission land on the Moon? -> 'july 20, 1969.' (expected '1969')
+PASS | Who wrote the novel Frankenstein? -> 'mary shelley.' (expected 'mary shelley')
+PASS | What is 17 * 24? -> '408' (expected '408')
+FAIL | In what year was Ursinus College founded? -> '1782' (expected '1869')
+
+accuracy = 4/5 = 0.80

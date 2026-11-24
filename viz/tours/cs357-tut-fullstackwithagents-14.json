@@ -1,0 +1,47 @@
+{
+ "code": "// The Questions Board API. Static files in public/ are served by Workers Assets; this code\n// answers only /api/* (see \"run_worker_first\" in wrangler.jsonc).\n\nconst MAX_LENGTH = 280;\n\nfunction json(body, status = 200) {\n  return new Response(JSON.stringify(body), {\n    status,\n    headers: { \"content-type\": \"application/json\" },\n  });\n}\n\nasync function listQuestions(env) {\n  const { results } = await env.DB.prepare(\n    \"SELECT id, text, votes, created_at FROM questions ORDER BY votes DESC, id ASC\",\n  ).all();\n  return json(results);\n}\n\nasync function addQuestion(request, env) {\n  let body;\n  try {\n    body = await request.json();\n  } catch {\n    return json({ error: \"send JSON like {\\\"text\\\": \\\"...\\\"}\" }, 400);\n  }\n  const text = typeof body?.text === \"string\" ? body.text.trim() : \"\";\n  if (text.length === 0 || text.length > MAX_LENGTH) {\n    return json({ error: `text must be 1 to ${MAX_LENGTH} characters` }, 400);\n  }\n  const row = await env.DB.prepare(\n    \"INSERT INTO questions (text) VALUES (?) RETURNING id, text, votes, created_at\",\n  ).bind(text).first();\n  return json(row, 201);\n}\n\nasync function upvote(id, env) {\n  const row = await env.DB.prepare(\n    \"UPDATE questions SET votes = votes + 1 WHERE id = ? RETURNING id, text, votes, created_at\",\n  ).bind(id).first();\n  return row ? json(row) : json({ error: \"no such question\" }, 404);\n}\n\nexport default {\n  async fetch(request, env) {\n    const url = new URL(request.url);\n    if (url.pathname === \"/api/questions\") {\n      if (request.method === \"GET\") return listQuestions(env);\n      if (request.method === \"POST\") return addQuestion(request, env);\n      return json({ error: \"method not allowed\" }, 405);\n    }\n    const vote = url.pathname.match(/^\\/api\\/questions\\/(\\d+)\\/upvote$/);\n    if (vote && request.method === \"POST\") return upvote(Number(vote[1]), env);\n    return json({ error: \"not found\" }, 404);\n  },\n};",
+ "description": "Worker that handles /api/questions for GET and POST, /api/questions/:id/upvote for POST, with validation and D1 database operations.",
+ "example": "cs357-tut-fullstackwithagents-14",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete Worker implementation.",
+   "kind": "reveal",
+   "lines": "1-56"
+  },
+  {
+   "description": "Header and constant: comment about Workers Assets, MAX_LENGTH=280.",
+   "kind": "focus",
+   "lines": "1-4"
+  },
+  {
+   "description": "Json helper: creates Response with JSON stringified body and status.",
+   "kind": "focus",
+   "lines": "6-11"
+  },
+  {
+   "description": "ListQuestions: SELECT from questions ordered by votes DESC, id ASC, returns JSON.",
+   "kind": "focus",
+   "lines": "13-18"
+  },
+  {
+   "description": "AddQuestion: parses JSON, validates text length 1-280, INSERT with RETURNING, returns 201.",
+   "kind": "focus",
+   "lines": "20-35"
+  },
+  {
+   "description": "Upvote: UPDATE votes + 1 WHERE id = ?, RETURNING, returns row or 404.",
+   "kind": "focus",
+   "lines": "37-42"
+  },
+  {
+   "description": "Fetch: routes to listQuestions, addQuestion, upvote based on pathname and method, 404 for unknown.",
+   "kind": "focus",
+   "lines": "44-56"
+  }
+ ],
+ "title": "src/index.js: Worker Entry Point",
+ "version": 1
+}

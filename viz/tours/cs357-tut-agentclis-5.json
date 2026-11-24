@@ -1,0 +1,32 @@
+{
+ "code": "# Codex: add to ~/.codex/config.toml (the first two lines go above any [table] in the file)\nmodel_provider = \"local\"\nmodel = \"llama3.2\"\n\n[model_providers.local]\nname = \"local gateway\"\nbase_url = \"http://localhost:4000/v1\"\nenv_key = \"LITELLM_API_KEY\"   # Codex reads the key from this variable: export LITELLM_API_KEY=sk-litellm-local",
+ "description": "Eight lines of TOML configure Codex to use the local gateway: set model_provider to local, model to llama3.2, then define the local provider with base_url and env_key for the API key.",
+ "example": "cs357-tut-agentclis-5",
+ "lang": "toml",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The config sets model_provider and model at the top level, then defines a [model_providers.local] table with name, base_url pointing to localhost:4000/v1, and env_key set to LITELLM_API_KEY.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "Line 7 shows the base_url uses /v1 suffix; the gateway expects OpenAI-compatible paths.",
+   "kind": "focus",
+   "lines": "7"
+  },
+  {
+   "description": "Line 8 tells Codex to read the key from LITELLM_API_KEY; export LITELLM_API_KEY=sk-litellm-local before launch.",
+   "kind": "focus",
+   "lines": "8"
+  },
+  {
+   "answer": "LITELLM_API_KEY",
+   "kind": "predict",
+   "question": "What environment variable does Codex read for the API key?"
+  }
+ ],
+ "title": "Codex Local Gateway Configuration (TOML)",
+ "version": 1
+}

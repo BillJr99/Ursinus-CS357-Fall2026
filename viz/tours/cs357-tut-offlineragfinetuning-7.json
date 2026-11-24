@@ -1,0 +1,37 @@
+{
+ "code": "# ask.py: retrieve, show the evidence, then answer with citations or abstain.\nimport sys\nimport traceback\n\nimport requests\n\nfrom rag_common import CFG, open_collection\n\nPROMPT = \"\"\"Answer the question using only the sources below. Cite the source ID in square\nbrackets after each fact, like [equipment-0]. If the sources do not contain the answer,\nreply exactly: not in my documents.\n\nSources:\n{sources}\n\nQuestion: {question}\"\"\"\n\n\ndef retrieve(question: str):\n    col = open_collection()\n    hits = col.query(query_texts=[question], n_results=CFG[\"top_k\"])   # the query is embedded too\n    rows = zip(hits[\"ids\"][0], hits[\"documents\"][0], hits[\"distances\"][0])\n    return [(i, d, dist) for i, d, dist in rows]\n\n\ndef generate(question: str, evidence):\n    sources = \"\\n\\n\".join(f\"[{i}] {doc}\" for i, doc, _ in evidence)\n    r = requests.post(f\"{CFG['ollama_url']}/api/chat\", timeout=300, json={\n        \"model\": CFG[\"chat_model\"], \"stream\": False,\n        \"options\": {\"temperature\": 0.0, \"seed\": 42},\n        \"messages\": [{\"role\": \"user\", \"content\": PROMPT.format(sources=sources, question=question)}]})\n    r.raise_for_status()\n    return r.json()[\"message\"][\"content\"]\n\n\ndef ask(question: str) -> str:\n    evidence = retrieve(question)\n    print(\"Retrieved evidence (smaller distance = closer):\")\n    for i, doc, dist in evidence:\n        print(f\"  [{i}] d={dist:.3f}  {doc[:90]!r}\")\n    kept = [e for e in evidence if e[2] <= CFG[\"max_distance\"]]\n    if not kept:\n        return \"not in my documents (nothing retrieved was close enough)\"\n    return generate(question, kept)\n\n\nif __name__ == \"__main__\":\n    try:\n        print(\"\\nAnswer:\", ask(\" \".join(sys.argv[1:]) or \"When is laser cutter training?\"))\n    except Exception as e:\n        print(f\"[ask:main] {e}\")\n        traceback.print_exc()\n        sys.exit(1)",
+ "description": "The ask script that retrieves passages, prints the evidence, then answers with citations or abstains.",
+ "example": "cs357-tut-offlineragfinetuning-7",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The header comment describes the flow: retrieve, show the evidence, then answer with citations or abstain. It imports the shared config and collection, and defines the prompt template. The template tells the model to cite the source ID in square brackets after each fact, and to reply exactly `not in my documents` when the sources lack the answer.",
+   "kind": "reveal",
+   "lines": "1-16"
+  },
+  {
+   "description": "`retrieve` opens the collection and queries it with the question. The comment notes the query is embedded too, and it returns each hit's ID, document, and distance.",
+   "kind": "focus",
+   "lines": "19-23"
+  },
+  {
+   "description": "`generate` formats the kept evidence as bracketed sources, then posts to the Ollama chat endpoint with `stream: False`, `temperature: 0.0`, and a fixed `seed`. It returns the reply text from the response.",
+   "kind": "focus",
+   "lines": "26-33"
+  },
+  {
+   "description": "`ask` retrieves the evidence and prints it with each distance, because the page says printing the evidence first lets you tell a retrieval failure from a generation failure. It keeps only hits within `max_distance`, and returns an abstention message when nothing is close enough.",
+   "kind": "focus",
+   "lines": "36-44"
+  },
+  {
+   "description": "The entry point runs `ask` on the command-line question, defaulting to the laser cutter question, inside a try block that prints and exits on error.",
+   "kind": "focus",
+   "lines": "47-53"
+  }
+ ],
+ "title": "Ask: Evidence, Answer, or Abstain",
+ "version": 1
+}

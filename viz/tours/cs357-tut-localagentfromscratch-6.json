@@ -1,0 +1,52 @@
+{
+ "code": "# P7 on your machine: the AgentStep loop against a live Ollama (needs Ollama on localhost:11434)\nimport traceback\nimport requests\nfrom datetime import date, timedelta\nfrom typing import Literal, Optional\nfrom pydantic import BaseModel, ValidationError, model_validator\n\nclass AgentStep(BaseModel):\n    thought: str\n    action: Literal[\"days_until\", \"calculator\", \"none\"]\n    argument: str = \"\"\n    done: bool\n    final_answer: Optional[str] = None\n\n    @model_validator(mode=\"after\")\n    def finished_means_answered(self):\n        if self.done and (not self.final_answer or self.action != \"none\"):\n            raise ValueError(\"done=true requires action='none' and a final_answer\")\n        return self\n\ndef days_until(s):\n    return f\"{(date.fromisoformat(s.strip()) - date.today()).days} days\"\n\ndef calculator(expression):\n    allowed = set(\"0123456789+-*/().% \")\n    if not all(c in allowed for c in expression):\n        return \"Error: unsafe characters in expression\"\n    return str(eval(expression, {\"__builtins__\": {}}, {}))\n\nTOOLS = {\"days_until\": days_until, \"calculator\": calculator}\n\nSYSTEM = (\"You are a campus study-skills coach. Each reply is ONE step as JSON: a thought, \"\n          \"an action (days_until, calculator, or none), its argument, and done. \"\n          \"Set done to true only with action none and a final_answer.\")\n\ndef call_model(messages, schema, model=\"llama3.2\"):\n    try:\n        r = requests.post(\"http://localhost:11434/api/chat\", json={\n            \"model\": model, \"stream\": False, \"messages\": messages,\n            \"format\": schema,                                   # the schema constrains decoding\n            \"options\": {\"temperature\": 0, \"seed\": 42}}, timeout=120)\n        r.raise_for_status()\n        return r.json()[\"message\"][\"content\"]\n    except Exception as e:\n        print(f\"[pydantic_tut:p7real] {e}\")\n        traceback.print_exc()\n        raise\n\ndef run_agent(goal, step_budget=6):\n    messages = [{\"role\": \"system\", \"content\": SYSTEM},\n                {\"role\": \"user\", \"content\": f\"Goal: {goal}\"}]\n    schema = AgentStep.model_json_schema()\n    for step in range(1, step_budget + 1):\n        raw = call_model(messages, schema)\n        messages.append({\"role\": \"assistant\", \"content\": raw})\n        try:\n            s = AgentStep.model_validate_json(raw)\n        except ValidationError as e:\n            msg = e.errors()[0][\"msg\"]\n            print(f\"[pydantic_tut:p7real] step {step} REJECTED: {msg}\")\n            traceback.print_exc()\n            messages.append({\"role\": \"user\", \"content\": f\"Your reply was invalid: {msg}. Reply again.\"})\n            continue\n        if s.done:\n            print(f\"step {step}  DONE: {s.final_answer}\")\n            return s.final_answer, step, \"final_answer\"\n        try:\n            observation = TOOLS[s.action](s.argument)\n        except Exception as e:\n            print(f\"[pydantic_tut:p7real] {e}\")\n            traceback.print_exc()\n            observation = f\"Error: {e}\"\n        print(f\"step {step}  {s.action}({s.argument}) -> {observation}\")\n        messages.append({\"role\": \"user\", \"content\": f\"Observation: {observation}\"})\n    return None, step_budget, \"budget_exhausted\"\n\nif __name__ == \"__main__\":\n    exam = (date.today() + timedelta(days=70)).isoformat()\n    print(run_agent(f\"How many days until my final on {exam}, and how many hours if I study 3 a day?\"))",
+ "description": "Same AgentStep validation but with call_model talking to a live Ollama instance on localhost:11434; schema sent in format parameter constrains decoding.",
+ "example": "cs357-tut-localagentfromscratch-6",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete live Ollama loop code.",
+   "kind": "reveal",
+   "lines": "1-79"
+  },
+  {
+   "description": "Purpose: P7 runs against a live Ollama instance on localhost:11434.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "AgentStep model: same validation as fake model version.",
+   "kind": "focus",
+   "lines": "8-19"
+  },
+  {
+   "description": "Tools: days_until and calculator functions identical to fake model version.",
+   "kind": "focus",
+   "lines": "21-29"
+  },
+  {
+   "description": "SYSTEM prompt: instructs model to produce one step as JSON with constraints.",
+   "kind": "focus",
+   "lines": "30-34"
+  },
+  {
+   "description": "Call_model: posts to localhost:11434/api/chat with schema in format parameter for constrained decoding.",
+   "kind": "focus",
+   "lines": "36-47"
+  },
+  {
+   "description": "Run_agent: same loop as fake model but calls live Ollama, validates responses, executes tools.",
+   "kind": "focus",
+   "lines": "49-75"
+  },
+  {
+   "description": "Main: runs agent with study hours question when executed as script.",
+   "kind": "focus",
+   "lines": "77-79"
+  }
+ ],
+ "title": "AgentStep Loop Against Live Ollama",
+ "version": 1
+}

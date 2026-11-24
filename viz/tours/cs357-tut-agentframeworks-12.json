@@ -1,0 +1,47 @@
+{
+ "code": "# step2_memory.py\nfrom pathlib import Path\nfrom pydantic_ai import Agent\nfrom common import make_model, show_context, watch\n\nPath(\"memory.md\").write_text(\"- The student's name is Sam.\\n- Sam is taking CS357 and Calculus II.\\n\")\n\nagent = Agent(make_model(), instructions=\"You are a concise study-planning assistant.\", capabilities=[watch])\n\n@agent.instructions\ndef long_term_memory() -> str:\n    # Long-term memory is a file. Reading it here pastes it into the context.\n    return \"What you remember about this student:\\n\" + Path(\"memory.md\").read_text()\n\nfirst = agent.run_sync(\"Which two courses am I taking?\")\nprint(first.output)\n# Short-term memory: hand the earlier turns back in. Nothing is stored on the server.\nsecond = agent.run_sync(\"Which of those has more programming?\", message_history=first.all_messages())\nprint(second.output)\nshow_context()",
+ "description": "Long-term memory from a file and short-term memory via message_history, both rendered as text in the context window.",
+ "example": "cs357-tut-agentframeworks-12",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Memory implementation: file-based long-term and message_history short-term.",
+   "kind": "reveal",
+   "lines": "1-20"
+  },
+  {
+   "description": "Setup: imports and memory.md creation with student info.",
+   "kind": "focus",
+   "lines": "1-6"
+  },
+  {
+   "description": "Agent creation: Agent with make_model and instructions.",
+   "kind": "focus",
+   "lines": "8-9"
+  },
+  {
+   "description": "Long-term memory: @agent.instructions decorator reads memory.md and pastes it into context.",
+   "kind": "focus",
+   "lines": "10-13"
+  },
+  {
+   "description": "First request: run_sync asks about courses, print output.",
+   "kind": "focus",
+   "lines": "15-16"
+  },
+  {
+   "description": "Short-term memory: second run_sync includes message_history from first to maintain conversation context.",
+   "kind": "focus",
+   "lines": "17-19"
+  },
+  {
+   "description": "Inspection: show_context reveals both memory types in the window.",
+   "kind": "focus",
+   "lines": "20"
+  }
+ ],
+ "title": "Pydantic AI: Memory",
+ "version": 1
+}

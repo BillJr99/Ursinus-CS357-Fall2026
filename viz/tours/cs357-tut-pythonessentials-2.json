@@ -1,0 +1,50 @@
+{
+ "code": "from pathlib import Path\n\nfolder = Path(\"demo_notes\")\nfolder.mkdir(exist_ok=True)\n(folder / \"a.txt\").write_text(\"alpha\\n\", encoding=\"utf-8\")\n(folder / \"b.txt\").write_text(\"beta\\n\", encoding=\"utf-8\")\n\nfor doc in sorted(folder.glob(\"*.txt\")):\n    print(doc.name, doc.stem, doc.read_text(encoding=\"utf-8\").strip())",
+ "description": "Create a directory and files using Path objects, then iterate through files matching a pattern.",
+ "example": "cs357-tut-pythonessentials-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe free model",
+ "steps": [
+  {
+   "description": "Reveal import: pathlib.Path for cross-platform file operations.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "Reveal folder creation: Path to demo_notes and mkdir with exist_ok to avoid errors.",
+   "kind": "reveal",
+   "lines": "3-4"
+  },
+  {
+   "description": "Reveal file writing: create a.txt and b.txt with content using / operator for path joining.",
+   "kind": "reveal",
+   "lines": "5-6"
+  },
+  {
+   "answer": "Path objects for a.txt and b.txt in alphabetical order",
+   "kind": "predict",
+   "lines": "8",
+   "question": "What does sorted(folder.glob('*.txt')) return?"
+  },
+  {
+   "description": "Reveal iteration: loop through sorted txt files printing name, stem, and content.",
+   "kind": "reveal",
+   "lines": "8-9"
+  },
+  {
+   "description": "Run to the loop start showing the glob pattern.",
+   "kind": "run",
+   "lines": "8",
+   "trace_step": 5
+  },
+  {
+   "description": "Run to show a.txt a alpha and b.txt b beta output.",
+   "kind": "run",
+   "lines": "9",
+   "trace_step": 6
+  }
+ ],
+ "title": "Files and Folders with pathlib",
+ "version": 1
+}

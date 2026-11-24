@@ -1,0 +1,32 @@
+{
+ "code": "      - name: Deploy (simulated)\n        run: echo \"would deploy ${WORKER_NAME} - real wrangler deploy goes here\"\n        env:\n          WORKER_NAME: ${{ vars.WORKER_NAME }}",
+ "description": "A workflow step that replaces the real deploy with an echo, so you can exercise the trigger, secret injection, and guardrail without a cloud bill.",
+ "example": "cs357-tut-cloudflare-28",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the simulated-deploy fallback for Exercise 7. It stands in for the real deploy step when you have no Cloudflare account.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "The step is named `Deploy (simulated)`, and its `run` prints `would deploy ${WORKER_NAME}` followed by a note that the real `wrangler deploy` goes here.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "The `env` block supplies `WORKER_NAME` from `vars.WORKER_NAME`, so the step still exercises secret injection and the guardrail even though nothing is deployed.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "answer": "the actor allowlist, branch restriction, or environment approval you chose",
+   "kind": "predict",
+   "question": "The exercise has you show one run that your guardrail refused and one that it allowed. Which human judgment does the guardrail replace?"
+  }
+ ],
+ "title": "Exercise 7: A Simulated Deploy Step",
+ "version": 1
+}

@@ -1,0 +1,27 @@
+{
+ "code": "{\n  \"permission\": {\n    \"*\": \"allow\"\n  }\n}",
+ "description": "A project permission block that allows everything, the file route the desktop application needs because it has no flag to pass.",
+ "example": "cs357-tut-opencodesetup-19",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the project `opencode.json` permission block that turns the gates off. The page says this is the route the desktop application needs, since it has no flag to pass, and it is only defensible inside the container from the previous section.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`\"*\": \"allow\"` approves everything, which is the same as running the container with `opencode --auto`.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "answer": "a deny rule",
+   "kind": "predict",
+   "question": "The page says the flag approves what is not explicitly denied, so a rule of which kind survives it?"
+  }
+ ],
+ "title": "Turning the Gates Off",
+ "version": 1
+}

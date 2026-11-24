@@ -1,0 +1,60 @@
+{
+ "code": "import json\nfrom collections import defaultdict\n\n# Practice trace: one run, two tasks, two agents.  The planner rows are Model 4's two\n# plan steps from the Observability session; the critic rows are made up for practice.\nTRACE = \"\"\"\\\n{\"run_id\": \"t-77b0\", \"task\": \"T1\", \"agent\": \"planner\", \"model\": \"hermes-3\", \"prompt_tokens\": 412, \"completion_tokens\": 41, \"latency_ms\": 2773, \"measured\": true}\n{\"run_id\": \"t-77b0\", \"task\": \"T1\", \"agent\": \"critic\", \"model\": \"hermes-3\", \"prompt_tokens\": 980, \"completion_tokens\": 60, \"latency_ms\": 1900, \"measured\": true}\n{\"run_id\": \"t-77b0\", \"task\": \"T2\", \"agent\": \"planner\", \"model\": \"hermes-3\", \"prompt_tokens\": 3690, \"completion_tokens\": 512, \"latency_ms\": 8422, \"measured\": true}\n{\"run_id\": \"t-77b0\", \"task\": \"T2\", \"agent\": \"critic\", \"model\": \"hermes-3\", \"prompt_tokens\": 4310, \"completion_tokens\": 88, \"latency_ms\": 4600, \"measured\": true}\n\"\"\"\nwith open(\"practice_trace.jsonl\", \"w\") as f:\n    f.write(TRACE)\n\nwith open(\"practice_trace.jsonl\") as f:\n    rows = [json.loads(line) for line in f if line.strip()]\n\nunmeasured = [r for r in rows if not r.get(\"measured\")]\nif unmeasured:\n    print(f\"WARNING: {len(unmeasured)} rows are estimates, not measurements\")\n\ndef total_by(key):\n    sums = defaultdict(lambda: {\"calls\": 0, \"in\": 0, \"out\": 0, \"s\": 0.0})\n    for r in rows:\n        t = sums[r[key]]\n        t[\"calls\"] += 1\n        t[\"in\"] += r[\"prompt_tokens\"]\n        t[\"out\"] += r[\"completion_tokens\"]\n        t[\"s\"] += r[\"latency_ms\"] / 1000\n    return sums\n\nfor key in [\"run_id\", \"task\", \"agent\"]:\n    print(f\"\\nper {key}\")\n    print(f\"{key:<8} {'calls':>5} {'input':>7} {'output':>7} {'seconds':>8}\")\n    for name, t in total_by(key).items():\n        print(f\"{name:<8} {t['calls']:>5} {t['in']:>7} {t['out']:>7} {t['s']:>8.1f}\")\n\ntasks = total_by(\"task\")\navg_in = sum(t[\"in\"] for t in tasks.values()) / len(tasks)\navg_out = sum(t[\"out\"] for t in tasks.values()) / len(tasks)\nprint(f\"\\naverage per task: {avg_in:.0f} input, {avg_out:.0f} output tokens\")",
+ "description": "Parse a JSONL trace file, aggregate token counts and latency by run_id, task, or agent, and compute averages.",
+ "example": "cs357-tut-tokensenergycost-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe free model",
+ "steps": [
+  {
+   "description": "Reveal TRACE: practice JSONL with 4 rows for 2 tasks and 2 agents, each with token counts.",
+   "kind": "reveal",
+   "lines": "1-10"
+  },
+  {
+   "description": "Reveal file writing: saves trace to practice_trace.jsonl.",
+   "kind": "reveal",
+   "lines": "12-13"
+  },
+  {
+   "description": "Reveal parsing: reads JSONL and warns about unmeasured rows.",
+   "kind": "reveal",
+   "lines": "15-20"
+  },
+  {
+   "description": "Reveal total_by: aggregates calls, input, output, and seconds by a specified key.",
+   "kind": "reveal",
+   "lines": "22-30"
+  },
+  {
+   "answer": "critic",
+   "kind": "predict",
+   "lines": "36",
+   "question": "Which agent has more input tokens?"
+  },
+  {
+   "description": "Reveal loop: prints tables for run_id, task, and agent groupings.",
+   "kind": "reveal",
+   "lines": "32-36"
+  },
+  {
+   "description": "Reveal averages: computes mean input and output tokens per task.",
+   "kind": "reveal",
+   "lines": "38-41"
+  },
+  {
+   "description": "Run to show per run_id table.",
+   "kind": "run",
+   "lines": "36",
+   "trace_step": 54
+  },
+  {
+   "description": "Run to show average per task and complete output.",
+   "kind": "run",
+   "lines": "41",
+   "trace_step": 184
+  }
+ ],
+ "title": "Token Cost Aggregation by Run, Task, and Agent",
+ "version": 1
+}

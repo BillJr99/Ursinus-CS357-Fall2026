@@ -1,0 +1,27 @@
+{
+ "code": "{\n  \"plugin\": [\n    \"git+https://github.com/BillJr99/opencode-auto-models.git\"\n  ]\n}",
+ "description": "A plugin entry that takes a Git URL. A plugin adds behavior that runs at defined moments, where a skill adds instructions the model may load.",
+ "example": "cs357-tut-opencodesetup-14",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the `plugin` array, which takes a package name or a Git URL. A plugin adds behavior: JavaScript or TypeScript that runs at defined moments, such as before a tool call, and can refuse it outright.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "The array holds one entry, `git+https://github.com/BillJr99/opencode-auto-models.git`. The page calls this optional, and says it earns its place only once you have a provider whose model list keeps changing, because it merges what the provider reports into your `models` map.",
+   "kind": "focus",
+   "lines": "2-4"
+  },
+  {
+   "answer": "@ai-sdk/openai-compatible",
+   "kind": "predict",
+   "question": "The page says the plugin works for any provider built on which adapter package, so an Ollama block and an OpenWebUI block both qualify?"
+  }
+ ],
+ "title": "The Plugin Array",
+ "version": 1
+}

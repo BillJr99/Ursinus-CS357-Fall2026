@@ -1,0 +1,33 @@
+{
+ "code": "python3 -c \"print('{' * 2 + 'answer' + '}' * 2)\" > prompt.txt",
+ "description": "A one-line Python command writes the promptfoo template {{answer}} to prompt.txt, which becomes the prompt that echoes each stored answer for the judge to grade.",
+ "example": "cs357-liascript-rubricworkshop-1",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The command runs python3 -c with a string that concatenates two opening braces, the word answer, and two closing braces, then redirects the output to prompt.txt.",
+   "kind": "reveal",
+   "lines": "1-1"
+  },
+  {
+   "description": "The expression '{' * 2 + 'answer' + '}' * 2 builds the literal string {{answer}}, which is promptfoo's template syntax for substituting a variable.",
+   "kind": "focus",
+   "lines": "1-1"
+  },
+  {
+   "answer": "{{answer}}",
+   "kind": "predict",
+   "question": "What does the file prompt.txt contain after this command runs?"
+  },
+  {
+   "description": "The command executes and writes {{answer}} to prompt.txt, creating the one-line template file that promptfoo will use to grade each dataset row.",
+   "kind": "run",
+   "lines": "1",
+   "trace_step": 1
+  }
+ ],
+ "title": "Creating the promptfoo Template File",
+ "version": 1
+}

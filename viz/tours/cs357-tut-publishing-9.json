@@ -1,0 +1,27 @@
+{
+ "code": "npm version patch     # bumps 0.1.0 -> 0.1.1\nnpm publish\n\n# Verify both versions are installable\nnpm install @yourusername/hello-agent@0.1.0   # old version\nnpm install @yourusername/hello-agent@0.1.1   # new version",
+ "description": "Publish scoped npm package: run dry-run, publish with access public, teammate verifies with npx.",
+ "example": "cs357-tut-publishing-9",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Exercise 2 starter commands.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "Steps: dry-run to read every line, publish with --access public, teammate verifies with npx.",
+   "kind": "focus",
+   "lines": "2-4"
+  },
+  {
+   "description": "Success: teammate runs npx @yourusername/hello-agent with message, receives expected JSON output.",
+   "kind": "focus",
+   "lines": "6"
+  }
+ ],
+ "title": "Exercise 2: First npm Package",
+ "version": 1
+}

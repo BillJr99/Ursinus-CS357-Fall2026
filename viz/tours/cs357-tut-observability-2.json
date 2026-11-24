@@ -1,0 +1,37 @@
+{
+ "code": "opencode stats                        # everything, all time, all projects\nopencode stats --days 1 --project \"\"  # today, in the current project only\nopencode stats --days 7 --models      # the last week, broken down by model",
+ "description": "Three opencode stats commands that total tokens and cost across sessions, scoped by day and project, or broken down by model.",
+ "example": "cs357-tut-observability-2",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "`opencode stats` prints token and cost totals for every session on your machine. Each line scopes it differently.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "With no flags, the command totals everything, all time, across all projects.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "`--days 1 --project \"\"` limits the totals to today, in the current project only.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "`--days 7 --models` covers the last week and adds a per-model breakdown.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "answer": "1.18",
+   "kind": "predict",
+   "question": "The page says these commands were checked against which opencode version?"
+  }
+ ],
+ "title": "Token Totals Across Sessions",
+ "version": 1
+}

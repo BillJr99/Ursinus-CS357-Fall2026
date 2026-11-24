@@ -1,0 +1,37 @@
+{
+ "code": "mkdir -p ~/.config/opencode\ncat > ~/.config/opencode/opencode.json <<'JSON'\n{\n  \"$schema\": \"https://opencode.ai/config.json\"\n}\nJSON",
+ "description": "Two commands that make the global config directory and write a minimal opencode.json with only the schema key.",
+ "example": "cs357-tut-opencodesetup-1",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This creates the global config file, so every project inherits a working model. `opencode.json` holds the model you talk to, the permissions, the extra files, the plugins, and the tool servers.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "`mkdir -p ~/.config/opencode` makes the global config directory, and `-p` keeps it quiet if the directory already exists.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "`cat > ~/.config/opencode/opencode.json <<'JSON'` writes the file from the heredoc that follows. The quoted delimiter keeps the contents literal.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "The JSON body holds one key, `$schema`. The page says it is optional and worth keeping, because it tells an editor what keys are legal.",
+   "kind": "focus",
+   "lines": "3-6"
+  },
+  {
+   "answer": "config.json",
+   "kind": "predict",
+   "question": "The page says the file name is exact. It is opencode.json, never what?"
+  }
+ ],
+ "title": "Creating the Global opencode.json",
+ "version": 1
+}

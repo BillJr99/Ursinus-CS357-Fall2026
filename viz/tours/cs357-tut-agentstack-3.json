@@ -1,0 +1,42 @@
+{
+ "code": "# llmproxy/docker-compose.yml\nservices:\n  llmproxy:\n    image: ghcr.io/berriai/litellm:main-latest\n    ports: [\"4000:4000\"]\n    volumes: [\"./litellm_config.yaml:/app/config.yaml:ro\"]\n    command: [\"--config\", \"/app/config.yaml\", \"--port\", \"4000\"]\n    extra_hosts: [\"host.docker.internal:host-gateway\"]\n    restart: unless-stopped",
+ "description": "Docker Compose service for llmproxy with routing config mounted read-only and host.docker.internal resolved.",
+ "example": "cs357-tut-agentstack-3",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete llmproxy/docker-compose.yml file.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "File purpose: this is llmproxy/docker-compose.yml.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Service definition: llmproxy service uses the litellm main-latest image.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "Ports: container port 4000 is published to host port 4000.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "description": "Volumes: the routing config is mounted read-only at /app/config.yaml.",
+   "kind": "focus",
+   "lines": "6"
+  },
+  {
+   "description": "Extra_hosts: host.docker.internal maps to host-gateway for Linux resolution.",
+   "kind": "focus",
+   "lines": "8"
+  }
+ ],
+ "title": "Gateway Compose File",
+ "version": 1
+}

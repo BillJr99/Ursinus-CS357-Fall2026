@@ -1,0 +1,4 @@
+Energy:  3.42 Wh
+Carbon from measured time:  1.196 g CO2e
+Carbon from per-token rates: 0.037 g CO2e, plus 0.156 g training share
+Hosted price avoided: $1.14, plus 0.0034 kWh at your electricity rate

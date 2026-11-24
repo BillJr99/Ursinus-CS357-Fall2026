@@ -1,0 +1,42 @@
+{
+ "code": "# Pull two models that fit your hardware\nollama pull llama3.2:3b        # ~2 GB, runs on any laptop\nollama pull phi4               # ~9 GB, needs 16 GB RAM\n\n# Run each model interactively\nollama run llama3.2:3b\n\n# Or query via Python (pip install openai)\nfrom openai import OpenAI\nclient = OpenAI(base_url=\"http://localhost:11434/v1\", api_key=\"ollama\")\n\nprompts = [\n    \"What year did the Berlin Wall fall, and what caused it?\",  # factual\n    \"Write the opening paragraph of a short story set in a lighthouse.\",  # creative\n    \"Write a Python function that checks if a string is a palindrome.\",  # code\n    \"If a train leaves Philadelphia at 9 AM at 60 mph heading to NYC (95 miles away), and another leaves NYC at 9:30 AM at 80 mph, when do they meet?\",  # reasoning\n    \"Translate 'Good morning, I hope you have a wonderful day' into Spanish, French, and Japanese.\",  # multilingual\n]\nfor prompt in prompts:\n    response = client.chat.completions.create(\n        model=\"llama3.2:3b\",\n        messages=[{\"role\": \"user\", \"content\": prompt}]\n    )\n    print(response.choices[0].message.content)",
+ "description": "A starter hint that pulls two models that fit your hardware, runs them, and queries them from Python with the same five prompts.",
+ "example": "cs357-tut-localmodels-3",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The hint pulls two models that fit your hardware. The comments give their sizes: `llama3.2:3b` is about 2 GB and runs on any laptop, and `phi4` is about 9 GB and needs 16 GB of RAM.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "`ollama run llama3.2:3b` starts a model interactively. The exercise says to run each model this way and type the same five prompts.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "description": "The Python path queries the model through the OpenAI client. `base_url=\"http://localhost:11434/v1\"` points at Ollama, and the `api_key` is the placeholder `\"ollama\"`.",
+   "kind": "focus",
+   "lines": "8-10"
+  },
+  {
+   "description": "`prompts` holds the five tasks the exercise names: factual, creative, code, reasoning, and multilingual. Each comment labels its task.",
+   "kind": "focus",
+   "lines": "12-18"
+  },
+  {
+   "description": "The loop sends each prompt to `chat.completions.create` with the chosen model and one user message, then prints the reply. The exercise says to use the same prompt text for both models.",
+   "kind": "focus",
+   "lines": "19-24"
+  },
+  {
+   "answer": "rephrase",
+   "kind": "predict",
+   "question": "The exercise says to use the same prompt text for both models, and not to do what?"
+  }
+ ],
+ "title": "Exercise 1: Pull Two Models and Compare",
+ "version": 1
+}

@@ -1,0 +1,27 @@
+{
+ "code": "User: What is the boiling point of water at sea level?\nAI:   The boiling point of water at sea level is 100°C (212°F).\n\nUser: Who won the 1987 Ursinus College intramural chess tournament?\nAI:   The 1987 Ursinus College intramural chess tournament was won by\n      Michael Chen, a junior majoring in mathematics.",
+ "description": "These two answers show that fluent prose does not signal whether a claim is supported.",
+ "example": "cs357-tut-sampling-3",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: GPT-5.6 Terra",
+ "steps": [
+  {
+   "description": "The first question asks for water's boiling point at sea level. The answer gives 100°C and 212°F.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "The second question asks about a specific intramural tournament. Its answer names a winner and student details.",
+   "kind": "reveal",
+   "lines": "4-6"
+  },
+  {
+   "description": "The page identifies the first answer as verifiable and correct, but describes the second as almost certainly fabricated despite the same authoritative tone.",
+   "kind": "focus",
+   "lines": "1-6"
+  }
+ ],
+ "title": "Compare confident AI answers",
+ "version": 1
+}

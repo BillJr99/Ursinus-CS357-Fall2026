@@ -1,0 +1,37 @@
+{
+ "code": "tags = request_json(base, \"/api/tags\", timeout=timeout)      # 1. is the model installed?\nshow = request_json(base, \"/api/show\", {\"model\": model}, timeout)  # 2. what is its stated maximum?\nrequest_json(base, \"/v1/chat/completions\", probe, timeout)   # 3. load it, using the same endpoint pi will\nactive = active_context(request_json(base, \"/api/ps\", ...))  # 4. what did the server ACTUALLY allocate?",
+ "description": "Python pattern for safe file operations: open with 'x' mode for exclusive creation, write atomically, rename for atomic commit.",
+ "example": "cs357-tut-terminalfilesystem-10",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Python safe write pattern.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Import: os module for file operations.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Temp file: write to tmp_path first, 'x' mode raises FileExistsError if file exists.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Write: write content to temporary file.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "Atomic commit: os.replace atomically replaces target with tmp_path.",
+   "kind": "focus",
+   "lines": "4"
+  }
+ ],
+ "title": "Python Safe File Operations",
+ "version": 1
+}

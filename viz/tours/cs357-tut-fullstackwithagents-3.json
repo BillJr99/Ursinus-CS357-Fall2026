@@ -1,0 +1,47 @@
+{
+ "code": "{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"permission\": {\n    \"*\": \"ask\",\n    \"read\": \"allow\",\n    \"edit\": \"ask\",\n    \"external_directory\": \"deny\",\n    \"skill\": { \"*\": \"allow\" },\n    \"bash\": {\n      \"*\": \"ask\",\n      \"git *\": \"allow\",\n      \"git push *\": \"ask\",\n      \"git clean *\": \"ask\",\n      \"git reset --hard*\": \"ask\",\n      \"npm test*\": \"allow\",\n      \"npx vitest *\": \"allow\",\n      \"npm ci\": \"allow\",\n      \"ls *\": \"allow\",\n      \"cat *\": \"allow\",\n      \"rm *\": \"deny\",\n      \"mv *\": \"deny\",\n      \"rmdir *\": \"deny\",\n      \"npx wrangler deploy*\": \"ask\",\n      \"npx wrangler delete*\": \"ask\",\n      \"npx wrangler d1 delete*\": \"ask\"\n    }\n  }\n}",
+ "description": "Permission rules for OpenCode: default ask, read allowed, git allowed except push/clean/reset-hard, rm/mv/rmdir denied, wrangler deploy/delete always ask.",
+ "example": "cs357-tut-fullstackwithagents-3",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete opencode.json permission configuration.",
+   "kind": "reveal",
+   "lines": "1-28"
+  },
+  {
+   "description": "Schema and root: schema URL and permission block start.",
+   "kind": "focus",
+   "lines": "1-3"
+  },
+  {
+   "description": "Defaults: catch-all ask, read allow, edit ask, external_directory deny, skill allow.",
+   "kind": "focus",
+   "lines": "4-8"
+  },
+  {
+   "description": "Git rules: git commands allowed except push, clean, and reset --hard which ask.",
+   "kind": "focus",
+   "lines": "9-14"
+  },
+  {
+   "description": "Test commands: npm test, npx vitest, npm ci all allowed without asking.",
+   "kind": "focus",
+   "lines": "15-17"
+  },
+  {
+   "description": "Safe commands: ls and cat allowed for inspection.",
+   "kind": "focus",
+   "lines": "18-20"
+  },
+  {
+   "description": "Denial and ask: rm/mv/rmdir denied, wrangler deploy/delete/d1 delete always ask.",
+   "kind": "focus",
+   "lines": "21-25"
+  }
+ ],
+ "title": "OpenCode Permissions: opencode.json",
+ "version": 1
+}

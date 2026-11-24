@@ -1,0 +1,27 @@
+{
+ "code": "# common.py: one place that says which model the agent talks to, plus a trace printer.\nimport os\n\nos.environ.setdefault(\"PYDANTIC_AI_NO_BANNER\", \"1\")   # no start-up banner on every run\n\nfrom pydantic_ai.models.openai import OpenAIChatModel\nfrom pydantic_ai.providers.ollama import OllamaProvider\n\n\ndef make_model():\n    \"\"\"A local Ollama model through its OpenAI-compatible endpoint. No hosted fallback.\n\n    qwen2.5:3b is the default because it calls tools reliably; set MODEL=llama3.2 to compare.\n    \"\"\"\n    provider = OllamaProvider(base_url=os.environ.get(\"BASE_URL\", \"http://localhost:11434/v1\"),\n                              api_key=os.environ.get(\"API_KEY\"))\n    return OpenAIChatModel(os.environ.get(\"MODEL\", \"qwen2.5:3b\"), provider=provider)\n\n\ndef show_trace(messages):\n    \"\"\"Print every message part in a run: who wrote it, and what it said.\"\"\"\n    for m in messages:\n        for part in m.parts:\n            kind = part.part_kind\n            if kind == \"tool-call\":\n                print(f\"  [{kind}] {part.tool_name}({part.args})\")\n            elif kind in (\"tool-return\", \"retry-prompt\"):\n                print(f\"  [{kind}] {getattr(part, 'tool_name', '')} -> {str(part.content)[:120]!r}\")\n            elif hasattr(part, \"content\"):\n                print(f\"  [{kind}] {str(part.content)[:120]!r}\")",
+ "description": "common.py defines make_model() so every script connects to the local Ollama endpoint in one place, and show_trace() to print each message part in a run.",
+ "example": "cs357-tut-pydanticai-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "Set PYDANTIC_AI_NO_BANNER to silence the startup banner and import OpenAIChatModel and OllamaProvider.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "make_model() connects to the local Ollama server at http://localhost:11434/v1 (or BASE_URL) and defaults to qwen2.5:3b unless you set the MODEL environment variable.",
+   "kind": "reveal",
+   "lines": "10-18"
+  },
+  {
+   "description": "show_trace() loops over every message and its parts, printing tool calls, tool returns, retry prompts, and text content so you can inspect the full exchange.",
+   "kind": "reveal",
+   "lines": "20-30"
+  }
+ ],
+ "title": "Shared model builder and trace printer in common.py",
+ "version": 1
+}

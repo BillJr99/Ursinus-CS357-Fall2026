@@ -1,0 +1,45 @@
+{
+ "code": "# Cost model for Ursinus tutoring agent\nqueries_per_day = 200\nsystem_prompt_tokens = 300   # input\nquestion_tokens = 100        # input\nanswer_tokens = 250          # output\n\nprice_input_per_million = 15.00   # GPT-4 class\nprice_output_per_million = 60.00  # GPT-4 class (4x input)\n\ninput_per_query = system_prompt_tokens + question_tokens\noutput_per_query = answer_tokens\n\ncost_per_query = (\n    (input_per_query / 1_000_000) * price_input_per_million +\n    (output_per_query / 1_000_000) * price_output_per_million\n)\n\ndaily_cost = queries_per_day * cost_per_query\nmonthly_cost = daily_cost * 30\nprint(f\"Monthly API cost: ${monthly_cost:.2f}\")\n\n# Local model: GPU runs 24/7 regardless of query volume\ngpu_cost_per_hour = 0.50\nmonthly_gpu_cost = gpu_cost_per_hour * 24 * 30\nprint(f\"Monthly local GPU cost: ${monthly_gpu_cost:.2f}\")",
+ "description": "This example compares the monthly cost of a hosted API against a 24/7 local GPU for a hypothetical tutoring agent at 200 queries per day.",
+ "example": "cs357-liascript-biasdata-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "We define the workload: 200 queries per day, each with 300 system prompt tokens, 100 question tokens, and 250 answer tokens.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "Hosted API prices: $15 per million input tokens, $60 per million output tokens (GPT-4 class rates).",
+   "kind": "reveal",
+   "lines": "7-8"
+  },
+  {
+   "description": "Cost per query adds input and output costs: 400 input tokens at $15/M and 250 output tokens at $60/M gives the per-query cost.",
+   "kind": "focus",
+   "lines": "10-16"
+  },
+  {
+   "answer": "The monthly local GPU cost ($360) is higher than the monthly API cost ($126).",
+   "kind": "predict",
+   "lines": "20,25",
+   "question": "Which monthly cost is higher: the API cost or the 24/7 GPU cost?"
+  },
+  {
+   "description": "Monthly API cost prints: $126.00.",
+   "kind": "run",
+   "lines": "20",
+   "trace_step": 14
+  },
+  {
+   "description": "Monthly local GPU cost prints: $360.00 (GPU runs 24/7 at $0.50/hour regardless of query volume).",
+   "kind": "run",
+   "lines": "25",
+   "trace_step": 17
+  }
+ ],
+ "title": "Pricing a Tutoring Agent: API vs Local GPU",
+ "version": 1
+}

@@ -1,0 +1,27 @@
+{
+ "code": "docker build -t myagent:0.1 .          # -t names (tags) the image; . is the build context\ndocker run -d -p 8000:8000 --name myagent myagent:0.1\ncurl http://localhost:8000/health      # verify",
+ "description": "Three commands that build the agent image, run it with a published port, and verify the health endpoint.",
+ "example": "cs357-tut-docker-3",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "`docker build -t myagent:0.1 .` builds the image. The comment says `-t` names (tags) the image and the dot is the build context, the folder Docker reads.",
+   "kind": "reveal",
+   "lines": "1"
+  },
+  {
+   "description": "`docker run -d -p 8000:8000 --name myagent myagent:0.1` runs the image detached, publishes port 8000, and names the container `myagent`.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "`curl http://localhost:8000/health` verifies the service, hitting the same port that was published.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "Build and Run the Image",
+ "version": 1
+}

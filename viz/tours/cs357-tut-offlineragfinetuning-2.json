@@ -1,0 +1,32 @@
+{
+ "code": "mkdir offline-rag && cd offline-rag\npython -m venv .venv && source .venv/bin/activate\npip install \"chromadb==1.5.9\" \"ollama==0.6.3\" \"requests\" \\\n            \"pydantic-ai-slim[openai,mcp]==2.54.0\" \\\n            \"transformers==5.19.0\" \"peft==0.21.2\" \"accelerate==1.15.0\"\npip install \"torch==2.14.1\" --index-url https://download.pytorch.org/whl/cpu   # CPU build; skip on a GPU machine\n\nollama pull nomic-embed-text      # embeddings, 274 MB, Apache-2.0\nollama pull llama3.2              # generator, 2.0 GB, Llama 3.2 Community License\nollama pull qwen2.5:3b            # tool-calling generator for Section C, 1.9 GB, Qwen Research License (check its terms before any commercial use)\n\nexport HF_HOME=\"$PWD/hf_home\"     # keep the Hugging Face cache inside the project\npython - <<'EOF'\nfrom huggingface_hub import snapshot_download\nsnapshot_download(\"HuggingFaceTB/SmolLM2-360M-Instruct\",           # Apache-2.0\n                  revision=\"a10cc1512eabd3dde888204e902eca88bddb4951\")\nEOF",
+ "description": "The one-time online commands that create the project, install pinned packages, pull the Ollama models, and cache the base model locally.",
+ "example": "cs357-tut-offlineragfinetuning-2",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Make the project folder, move into it, create a virtual environment, and activate it. The page calls this the online stage, run once with the network available.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "Install the pinned packages: `chromadb`, `ollama`, `requests`, `pydantic-ai-slim`, `transformers`, `peft`, and `accelerate`. The last line installs the CPU build of `torch`, and the comment says to skip it on a GPU machine.",
+   "kind": "focus",
+   "lines": "3-6"
+  },
+  {
+   "description": "Pull three Ollama models with `ollama pull`. The comments name the embedding model `nomic-embed-text`, the generator `llama3.2`, and the tool-calling generator `qwen2.5:3b` for Section C, with each model's size and license.",
+   "kind": "focus",
+   "lines": "8-10"
+  },
+  {
+   "description": "Set `HF_HOME` so the Hugging Face cache stays inside the project, then download SmolLM2-360M-Instruct with `snapshot_download` at a pinned `revision`. The page says the revision is a commit hash, so a later update on the Hub cannot change what you trained on.",
+   "kind": "focus",
+   "lines": "12-17"
+  }
+ ],
+ "title": "Online Stage Setup",
+ "version": 1
+}

@@ -1,0 +1,32 @@
+{
+ "code": "cat > AGENTS.md <<'MD'\n# cs357-work\n\nMy CS357 lab workspace.\n\n- The model server is on the host at http://localhost:11434 (llama3.2).\n- Python 3, standard library plus `requests`. Ask before adding a dependency.\n- Every script handles network errors and prints a located message, e.g. [lab1:chat].\n- Small, readable functions with docstrings.\nMD",
+ "description": "A heredoc that writes AGENTS.md, the project's standing instructions. It is a system prompt you keep in version control.",
+ "example": "cs357-tut-opencodesetup-7",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This writes `AGENTS.md`, a Markdown file at the root of your project holding the standing instructions you would otherwise retype every session. It is reviewable, diffable, and shared with anyone who clones the repository.",
+   "kind": "reveal",
+   "lines": "1-10"
+  },
+  {
+   "description": "The heading names the project, `cs357-work`, and one line says what it is: your CS357 lab workspace.",
+   "kind": "focus",
+   "lines": "2-4"
+  },
+  {
+   "description": "Four bullets state the contract: the model server address, the Python rule with a request to ask before adding a dependency, the error-handling rule with a located message, and the docstring rule.",
+   "kind": "focus",
+   "lines": "6-9"
+  },
+  {
+   "answer": "in the configuration",
+   "kind": "predict",
+   "question": "The page says opencode reads AGENTS.md from the project root on its own. You never name it where?"
+  }
+ ],
+ "title": "Writing AGENTS.md",
+ "version": 1
+}

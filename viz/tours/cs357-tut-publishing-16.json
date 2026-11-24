@@ -1,0 +1,32 @@
+{
+ "code": "[build-system]\nrequires = [\"hatchling\"]\nbuild-backend = \"hatchling.build\"\n\n[project]\nname = \"my-agent\"\nversion = \"0.1.0\"\ndescription = \"A local LLM agent for CS357 with a CLI entry point.\"\nreadme = \"README.md\"\nrequires-python = \">=3.11\"\ndependencies = [\n    \"requests>=2.31.0\",\n]\n\n[project.scripts]\n\n# After pip install, users can run: ask \"What is photosynthesis?\"\nask = \"my_agent:main\"",
+ "description": "Complete pyproject.toml with build-system, project metadata, and project.scripts for CLI entry point after pip install.",
+ "example": "cs357-tut-publishing-16",
+ "lang": "toml",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete runnable pyproject.toml.",
+   "kind": "reveal",
+   "lines": "1-18"
+  },
+  {
+   "description": "Build-system: hatchling backend and build-backend.",
+   "kind": "focus",
+   "lines": "1-3"
+  },
+  {
+   "description": "Project: name, version, description, readme, Python requirement, dependencies.",
+   "kind": "focus",
+   "lines": "5-13"
+  },
+  {
+   "description": "Scripts: [project.scripts] with ask entry point mapping to my_agent:main, enables ask CLI command.",
+   "kind": "focus",
+   "lines": "15-18"
+  }
+ ],
+ "title": "Runnable pyproject.toml: Complete Example",
+ "version": 1
+}

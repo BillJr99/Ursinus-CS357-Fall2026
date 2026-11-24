@@ -1,0 +1,32 @@
+{
+ "code": "Set-Content -Path AGENTS.md -Encoding utf8 -Value @'\n# cs357-work\n\nMy CS357 lab workspace.\n\n- The model server is on the host at http://localhost:11434 (llama3.2).\n- Python 3, standard library plus `requests`. Ask before adding a dependency.\n- Every script handles network errors and prints a located message, e.g. [lab1:chat].\n- Small, readable functions with docstrings.\n'@",
+ "description": "The Windows version of the same file: Set-Content writes AGENTS.md from a here-string with the identical instructions.",
+ "example": "cs357-tut-opencodesetup-8",
+ "lang": "powershell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the Windows, PowerShell version of `AGENTS.md`. It writes the same file with the same instructions.",
+   "kind": "reveal",
+   "lines": "1-10"
+  },
+  {
+   "description": "`Set-Content -Path AGENTS.md -Encoding utf8` writes the file, taking its value from the here-string that starts at `@'`.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "The content matches the shell version: the `cs357-work` heading, the one-line description, and the four bullets covering the model server, Python dependencies, error handling, and docstrings.",
+   "kind": "focus",
+   "lines": "2-9"
+  },
+  {
+   "answer": "paths and globs",
+   "kind": "predict",
+   "question": "The page says the instructions key names additional files to load alongside AGENTS.md, and it accepts what?"
+  }
+ ],
+ "title": "AGENTS.md in PowerShell",
+ "version": 1
+}

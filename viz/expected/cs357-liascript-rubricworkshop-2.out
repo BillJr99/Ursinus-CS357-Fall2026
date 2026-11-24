@@ -1,0 +1,17 @@
+weighted score: 100.0/100
+{
+ "scores": {
+  "claims_cited": {
+   "level": 4,
+   "evidence": "every claim cites evidence"
+  },
+  "directness": {
+   "level": 4,
+   "evidence": "position stated in the first sentence"
+  },
+  "counterargument": {
+   "level": 4,
+   "evidence": "engaged and rebutted"
+  }
+ }
+}

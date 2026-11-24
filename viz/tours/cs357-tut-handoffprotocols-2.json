@@ -1,0 +1,50 @@
+{
+ "code": "import os, shutil, tempfile, threading, time\n\ndef rename_claim(src, dst):\n    try:\n        os.rename(src, dst)              # one step: it happens or it does not\n        return True\n    except FileNotFoundError:\n        return False\n\ndef check_then_act_claim(src, dst):\n    if not os.path.exists(src):          # step 1: check\n        return False\n    text = open(src).read()\n    time.sleep(0.01)                     # anything can happen between the steps\n    open(dst, \"w\").write(text)           # step 2: act\n    try:\n        os.remove(src)\n    except FileNotFoundError:\n        pass                             # the other agent already removed it\n    return True\n\ndef race(claim_fn, rounds=100):\n    double = 0\n    for _ in range(rounds):\n        root = tempfile.mkdtemp()\n        src = os.path.join(root, \"task-7.md\")\n        open(src, \"w\").write(\"one task\")\n        start = threading.Barrier(2)     # release both agents at the same moment\n        winners = []\n        def agent(who):\n            start.wait()\n            if claim_fn(src, os.path.join(root, f\"claimed-by-{who}.md\")):\n                winners.append(who)\n        threads = [threading.Thread(target=agent, args=(w,)) for w in \"AB\"]\n        for t in threads:\n            t.start()\n        for t in threads:\n            t.join()\n        if len(winners) > 1:\n            double += 1\n        shutil.rmtree(root)\n    return double\n\nprint(\"rename:         rounds with two winners =\", race(rename_claim))\nprint(\"check then act: rounds with two winners =\", race(check_then_act_claim))",
+ "description": "Two threads race for one task to compare atomic rename with a check-then-act claim.",
+ "example": "cs357-tut-handoffprotocols-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: copilot free model",
+ "steps": [
+  {
+   "description": "rename_claim attempts one os.rename call. A missing source means another agent already moved the task.",
+   "kind": "reveal",
+   "lines": "3-8"
+  },
+  {
+   "description": "check_then_act_claim checks for the source, reads it, waits, then writes a destination. Its check and action are separate steps.",
+   "kind": "reveal",
+   "lines": "10-20"
+  },
+  {
+   "answer": "Yes. Both can see the source before either removes it, then each can write its own destination.",
+   "kind": "predict",
+   "lines": "14-20",
+   "question": "Can both agents return True when they use check_then_act_claim?"
+  },
+  {
+   "description": "race creates one task per round, releases two agents together, and records each agent whose claim function returns True.",
+   "kind": "reveal",
+   "lines": "22-33"
+  },
+  {
+   "description": "The threads start and join. A round with more than one winner increments double before its temporary folder is removed.",
+   "kind": "reveal",
+   "lines": "34-42"
+  },
+  {
+   "description": "The first call runs one hundred rounds using rename_claim. The deck states that its number of rounds with two winners is always 0.",
+   "kind": "run",
+   "lines": "44",
+   "trace_step": 4
+  },
+  {
+   "description": "The second call runs the same race with check_then_act_claim. Its number can change because both agents can believe they own the task.",
+   "kind": "run",
+   "lines": "45",
+   "trace_step": 4
+  }
+ ],
+ "title": "Race two claim methods",
+ "version": 1
+}

@@ -1,0 +1,37 @@
+{
+ "code": "from lab4 import load_config, run_consensus\nconfig = load_config()\n\nlong_form_q = \"What makes a great study group, and what are the biggest pitfalls to avoid?\"\nthresholds = [0.1, 0.3, 0.5]  # tight, medium, loose\n\nfor threshold in thresholds:\n    config[\"consensus\"][\"distance_threshold\"] = threshold\n    synthesis, drafts, labels, reps, calls = run_consensus(long_form_q, config)\n    num_clusters = len(set(labels))\n    print(f\"\\n=== Threshold = {threshold} ===\")\n    print(f\"Clusters: {num_clusters}\")\n    print(f\"Synthesis (first 200 chars): {synthesis[:200]}...\")",
+ "description": "threshold.py runs the same consensus task at three distance thresholds and prints the cluster count and the start of the synthesis for each. The config file stays unchanged.",
+ "example": "cs357-tut-multiagentmeasurement-10",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The script imports `load_config` and `run_consensus` from `lab4`, loads the config, and defines one long-form question and three thresholds: `0.1`, `0.3`, and `0.5`, labeled tight, medium, and loose.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "The loop walks the thresholds and sets `config[\"consensus\"][\"distance_threshold\"]` before each run. The page notes this changes the value in memory only, so `config.json` stays as it was.",
+   "kind": "focus",
+   "lines": "7-8"
+  },
+  {
+   "description": "`run_consensus` returns the synthesis, drafts, labels, representatives, and call count. `num_clusters` counts the distinct labels, which is the number of positions the drafts formed.",
+   "kind": "focus",
+   "lines": "9-10"
+  },
+  {
+   "description": "Each pass prints the threshold, the cluster count, and the first 200 characters of the synthesis, so you can compare the output across the three dial settings.",
+   "kind": "focus",
+   "lines": "11-13"
+  },
+  {
+   "answer": "twenty-one",
+   "kind": "predict",
+   "question": "The page says each threshold makes seven calls, six samples and one synthesis, so the run makes how many in total?"
+  }
+ ],
+ "title": "Consensus at Three Thresholds",
+ "version": 1
+}

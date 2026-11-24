@@ -1,0 +1,27 @@
+{
+ "code": "# step5_loop.py: walk the agentic loop one node at a time, then trip each kind of limit.\nimport asyncio\nfrom datetime import date\n\nfrom pydantic_ai import Agent, UsageLimitExceeded, UsageLimits\n\nfrom common import make_model\n\nagent = Agent(make_model(), instructions=\"Use the tools for dates; never guess them.\",\n              model_settings={\"temperature\": 0.0, \"seed\": 42})\n\n\n@agent.tool_plain\ndef get_today() -> str:\n    \"\"\"Returns today's date in ISO format (YYYY-MM-DD).\"\"\"\n    return date.today().isoformat()\n\n\n@agent.tool_plain\ndef days_until(target: date) -> int:\n    \"\"\"Returns the number of days from today until the target date.\"\"\"\n    return (target - date.today()).days\n\n\nQUESTION = \"What is today's date, and how many days until 2026-12-07?\"\n\n\nasync def walk():\n    async with agent.iter(QUESTION, usage_limits=UsageLimits(request_limit=5)) as run:\n        async for node in run:\n            name = type(node).__name__\n            if name == \"CallToolsNode\":\n                calls = [p.tool_name for p in node.model_response.parts if p.part_kind == \"tool-call\"]\n                print(f\"{name}: model asked for {calls or 'no tools (final answer)'}\")\n            else:\n                print(name)\n    print(run.result.output)\n    print(run.usage)\n\n\n\n\nasync def trip_limits():\n    for limits in (UsageLimits(request_limit=1), UsageLimits(tool_calls_limit=1)):\n        try:\n            await agent.run(QUESTION, usage_limits=limits)\n            print(limits, \"-> finished within the limit\")\n        except UsageLimitExceeded as e:\n            print(limits, \"->\", str(e).split(\".\")[0])\n\n\nasync def main():\n    await walk()\n    await trip_limits()\n\n\nasyncio.run(main())",
+ "description": "agent.iter steps through each node of an agent run, and trip_limits shows how request_limit and tool_calls_limit stop a run at different points.",
+ "example": "cs357-tut-pydanticai-8",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "Register get_today and days_until on the agent and define QUESTION, which asks for both today's date and the days until 2026-12-07.",
+   "kind": "reveal",
+   "lines": "1-25"
+  },
+  {
+   "description": "walk() uses agent.iter(QUESTION, ...) to iterate over each stage node (UserPromptNode, ModelRequestNode, CallToolsNode, End) and prints the tools requested on each CallToolsNode.",
+   "kind": "reveal",
+   "lines": "28-39"
+  },
+  {
+   "description": "trip_limits() runs the same question under UsageLimits(request_limit=1) and UsageLimits(tool_calls_limit=1), catching UsageLimitExceeded to show how each budget fails.",
+   "kind": "reveal",
+   "lines": "43-57"
+  }
+ ],
+ "title": "Stepping through the agentic loop and tripping usage limits",
+ "version": 1
+}

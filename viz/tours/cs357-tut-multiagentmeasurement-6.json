@@ -1,0 +1,37 @@
+{
+ "code": "{\n  \"task\": \"function_docstring\",\n  \"criteria\": [\n    {\n      \"id\": \"J1\",\n      \"name\": \"Accuracy\",\n      \"levels\": {\"1\": \"States behavior the function does not have\", \"2\": \"Correct but vague about at least one behavior\", \"3\": \"Every stated behavior is correct and specific\"},\n      \"meets_level\": 3,\n      \"meets\": \"A reader could predict the output for a new input from the docstring alone.\"\n    },\n    {\n      \"id\": \"J2\",\n      \"name\": \"Edge cases\",\n      \"levels\": {\"1\": \"No edge cases mentioned\", \"2\": \"Names edge cases without saying what happens\", \"3\": \"Names at least two edge cases and states the result of each\"},\n      \"meets_level\": 3,\n      \"meets\": \"At least two edge cases (for example, an empty list) appear with their results stated.\"\n    },\n    {\n      \"id\": \"J3\",\n      \"name\": \"Example\",\n      \"levels\": {\"1\": \"No example\", \"2\": \"An example with trivial input or no stated output\", \"3\": \"A doctest whose input exercises a nontrivial case and whose stated output is correct\"},\n      \"meets_level\": 3,\n      \"meets\": \"The doctest would pass, and would fail on a plausible bug such as dropping duplicates.\"\n    }\n  ]\n}",
+ "description": "judge_rubric.json holds three criteria, each with three levels, a meets_level bar, and a meets line stated so a reader can check it.",
+ "example": "cs357-tut-multiagentmeasurement-6",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is `judge_rubric.json`. It names the task, `function_docstring`, and starts the `criteria` list. The page says this rubric asks whether the parts of a docstring are any good, not just whether they are present.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "`J1` is Accuracy. It has three `levels` and `meets_level: 3`. Its `meets` line says a reader could predict the output for a new input from the docstring alone.",
+   "kind": "focus",
+   "lines": "4-10"
+  },
+  {
+   "description": "`J2` is Edge cases. Level 3 names at least two edge cases and states the result of each. Its `meets` line gives an empty list as the example.",
+   "kind": "focus",
+   "lines": "11-17"
+  },
+  {
+   "description": "`J3` is Example. Its level 3 is a doctest that exercises a nontrivial case with a correct output. Its `meets` line says the doctest would pass and would fail on a plausible bug such as dropping duplicates.",
+   "kind": "focus",
+   "lines": "18-25"
+  },
+  {
+   "answer": "meets_level",
+   "kind": "predict",
+   "question": "The page says the code compares the awarded level with what, so the model never decides 'meets' on its own?"
+  }
+ ],
+ "title": "A Judge Rubric with Levels and Bars",
+ "version": 1
+}

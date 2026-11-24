@@ -1,0 +1,63 @@
+{
+ "code": "W1 = [[2.0, -1.0], [-1.0, 1.0]]\nb1 = [-0.5, -0.5]\nV, c = [2.0, 1.0], 1.0\n\ndef forward(x):\n    pre = [W1[j][0]*x[0] + W1[j][1]*x[1] + b1[j] for j in range(2)]\n    h = [max(0.0, p) for p in pre]\n    y = V[0]*h[0] + V[1]*h[1] + c\n    print(f\"x={x}  pre={pre}  h={h}  y={y}\")\n\nforward([1.0, 1.0])\nforward([0.0, 2.0])",
+ "description": "The Python check for a two-neuron ReLU network: the hand weights, the forward pass, and the two traced inputs that flip which neuron is active.",
+ "example": "cs357-tut-aibyhand-5",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: opencode free model",
+ "steps": [
+  {
+   "description": "`W1` holds the two hidden weight rows, `b1` the two hidden biases, `V` the output weights, and `c` the output bias. These are the same numbers as the hand equations: 2.0 and -1.0 for `h1`, -1.0 and 1.0 for `h2`, and -0.5 for both biases.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "`forward` computes each pre-activation as the input times its weights plus the bias, then applies ReLU with `max(0.0, p)`. `pre` collects both pre-activations and `h` collects both activations.",
+   "kind": "reveal",
+   "lines": "5-7"
+  },
+  {
+   "description": "The output `y` is `V[0]*h[0] + V[1]*h[1] + c`, the weighted sum of the activations plus the bias. The print shows `x`, `pre`, `h`, and `y` for each call.",
+   "kind": "reveal",
+   "lines": "8-9"
+  },
+  {
+   "answer": "In the first call `h1` is active at 0.5 and `h2` is clipped to 0, giving `y = 2.0`. In the second, `h2` is active at 1.5 and `h1` is clipped to 0, giving `y = 2.5`. The active-neuron pattern flips between the two inputs.",
+   "kind": "predict",
+   "lines": "11-12",
+   "question": "The two calls use `x = (1.0, 1.0)` and `x = (0.0, 2.0)`. Which hidden neuron is active in each?"
+  },
+  {
+   "description": "Run it. The first call passes `x = (1.0, 1.0)` into `forward`.",
+   "kind": "run",
+   "lines": "11",
+   "trace_step": 4
+  },
+  {
+   "description": "The pre-activations come out `0.5` and `-0.5`, matching the hand trace.",
+   "kind": "run",
+   "lines": "6",
+   "trace_step": 5
+  },
+  {
+   "description": "ReLU keeps `0.5` and clips `-0.5` to `0.0`, so `h` is `[0.5, 0.0]`.",
+   "kind": "run",
+   "lines": "7",
+   "trace_step": 8
+  },
+  {
+   "description": "The print shows `x=[1.0, 1.0]  pre=[0.5, -0.5]  h=[0.5, 0.0]  y=2.0`.",
+   "kind": "run",
+   "lines": "9",
+   "trace_step": 12
+  },
+  {
+   "description": "The second call flips the pattern: `x=[0.0, 2.0]  pre=[-2.5, 1.5]  h=[0.0, 1.5]  y=2.5`. Each input switches on a different neuron, which is what makes the network piecewise linear.",
+   "kind": "run",
+   "lines": "12",
+   "trace_step": 14
+  }
+ ],
+ "title": "A Tiny ReLU Network by Hand",
+ "version": 1
+}

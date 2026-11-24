@@ -1,0 +1,27 @@
+{
+ "code": "async function callTextModel(providerConfig, prompt, { maxTokens = 500, temperature = 0.2 } = {}) {\n  const provider = providerConfig.provider;\n  if (provider === \"anthropic\") { /* POST to api.anthropic.com/v1/messages */ }\n  if (provider === \"openai\")    { /* POST to api.openai.com/v1/chat/completions */ }\n  if (provider === \"openwebui\") { /* POST to <baseUrl>/api/chat/completions */ }\n  throw new Error(\"Unsupported AI provider.\");\n}",
+ "description": "One function that sends the same prompt to Anthropic, OpenAI, or a local Open WebUI server, branching on the selected provider.",
+ "example": "cs357-tut-chessaicoach-2",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "`callTextModel` takes the provider config, the prompt, and an options object with defaults for `maxTokens` and `temperature`. It reads `providerConfig.provider` into a local `provider`.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "Three branches, one per provider. The comments mark each endpoint: Anthropic posts to `api.anthropic.com/v1/messages`, OpenAI to `api.openai.com/v1/chat/completions`, and Open WebUI to `<baseUrl>/api/chat/completions`.",
+   "kind": "focus",
+   "lines": "3-5"
+  },
+  {
+   "description": "If no branch matched, throw an error for an unsupported provider. The page says the rest of the app never knows or cares which provider is active, so adding a fourth provider means adding one more branch here and nothing else changes.",
+   "kind": "focus",
+   "lines": "6-7"
+  }
+ ],
+ "title": "The callTextModel Dispatcher",
+ "version": 1
+}

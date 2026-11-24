@@ -1,0 +1,27 @@
+{
+ "code": "{\n  \"permission\": {\n    \"*\": \"allow\",\n    \"bash\": {\n      \"rm -rf *\": \"deny\",\n      \"git push --force*\": \"deny\"\n    }\n  }\n}",
+ "description": "A permission block that allows everything but keeps two deny rules, for the commands you never want attempted even inside a container.",
+ "example": "cs357-tut-opencodesetup-20",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This keeps a short deny list even with the gates off. The page says `deny` is the right tool for anything you never want attempted, even in this mode, and a deny rule survives the auto flag.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "`\"*\": \"allow\"` approves everything not denied. Inside `bash`, `\"rm -rf *\": \"deny\"` blocks the command that empties the mount faster than you can react, and `\"git push --force*\": \"deny\"` blocks the force-push.",
+   "kind": "focus",
+   "lines": "3-7"
+  },
+  {
+   "answer": "genuinely irreversible",
+   "kind": "predict",
+   "question": "The page says the force-push rule protects the history on GitHub, the copy the container cannot reach, making it the one thing here that is what?"
+  }
+ ],
+ "title": "Keeping a Short Deny List",
+ "version": 1
+}

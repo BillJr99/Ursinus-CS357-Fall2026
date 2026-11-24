@@ -1,0 +1,27 @@
+{
+ "code": "mkdir -p ~/agents/project ~/agents/reference\ngit -C ~/agents/project init\ndocker build -f Dockerfile.agent -t course-agent .",
+ "description": "The starter commands for the sixth exercise, which set up a writable workspace and a reference folder, then build the agent image.",
+ "example": "cs357-tut-docker-13",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Create the project and reference folders under `~/agents`. The exercise uses the project folder as the writable workspace and the reference folder as the read-only reference.",
+   "kind": "reveal",
+   "lines": "1"
+  },
+  {
+   "description": "Initialize a git repository in the project folder, so the agent's changes are trackable.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Build the agent image from `Dockerfile.agent` and tag it `course-agent`. The exercise then runs the three checks from Section 9.5.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "Exercise 6 Starter: Build the Agent Fence",
+ "version": 1
+}

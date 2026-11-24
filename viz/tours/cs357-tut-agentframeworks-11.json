@@ -1,0 +1,32 @@
+{
+ "code": "# step1_basic.py\nfrom pydantic_ai import Agent\nfrom common import make_model, show_context, watch\n\nagent = Agent(make_model(), instructions=\"You are a concise study-planning assistant.\", capabilities=[watch])\nresult = agent.run_sync(\"In one sentence: what is an agent?\")\nprint(result.output)\nshow_context()",
+ "description": "Minimal agent with instructions only: run_sync sends the prompt, show_context displays what the model received.",
+ "example": "cs357-tut-agentframeworks-11",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete basic agent example: import, agent creation, invoke, print, and context display.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "Imports: pydantic_ai Agent, and common helpers make_model, show_context, watch.",
+   "kind": "focus",
+   "lines": "1-4"
+  },
+  {
+   "description": "Agent creation: Agent with make_model, instructions as concise study-planning assistant, capabilities with watch.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "description": "Execution: run_sync with the question, print output, then show_context to reveal the window.",
+   "kind": "focus",
+   "lines": "7-8"
+  }
+ ],
+ "title": "Pydantic AI: Basic Request",
+ "version": 1
+}

@@ -1,0 +1,37 @@
+{
+ "code": "\n# Deploy to Cloudflare's network (prompts to confirm, then shows the live URL)\nnpx wrangler deploy\n\n# Output: Deployed hello-worker -> https://hello-worker.<your-subdomain>.workers.dev\n\n# Test your live Worker immediately with curl\ncurl https://hello-worker.<your-subdomain>.workers.dev/greet?name=Bill\n\n# Expected: {\"greeting\":\"hello, Bill\",\"course\":\"CS357\"}\n\ncurl https://hello-worker.<your-subdomain>.workers.dev/health\n\n# Expected: {\"ok\":true,\"at\":\"2026-06-21T...\"}\n\ncurl https://hello-worker.<your-subdomain>.workers.dev/anything-else\n\n# Expected: {\"error\":\"not found\"} with HTTP status 404",
+ "description": "Commands that deploy the Worker to Cloudflare and then test all three routes with curl.",
+ "example": "cs357-tut-cloudflare-5",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "`npx wrangler deploy` deploys the Worker to Cloudflare's global network. It prompts you to confirm, which is the human gate before publishing to a public URL.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "The deploy prints the live URL, `https://hello-worker.<your-subdomain>.workers.dev`.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "description": "The first `curl` tests the `/greet` route with the query parameter `name=Bill`.",
+   "kind": "focus",
+   "lines": "7-9"
+  },
+  {
+   "description": "The second `curl` tests `/health`, which returns `ok: true` and a timestamp.",
+   "kind": "focus",
+   "lines": "12-14"
+  },
+  {
+   "description": "The third `curl` hits an unknown path and expects a 404 JSON error.",
+   "kind": "focus",
+   "lines": "16-18"
+  }
+ ],
+ "title": "Deploy and Test the Live Worker",
+ "version": 1
+}

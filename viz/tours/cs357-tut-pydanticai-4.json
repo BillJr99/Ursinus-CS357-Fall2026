@@ -1,0 +1,27 @@
+{
+ "code": "# step2_schema.py: the schema you wrote by hand in the deck, generated from the signature.\nimport json\nfrom datetime import date\n\nfrom pydantic import BaseModel, Field, ValidationError\nfrom pydantic_ai import Tool\n\n\ndef days_until(target: date) -> int:\n    \"\"\"Returns the number of days from today until the target date (positive means the future).\n\n    Args:\n        target: The target date, for example 2026-12-07.\n    \"\"\"\n    return (target - date.today()).days\n\n\nprint(json.dumps(Tool(days_until).tool_def.parameters_json_schema, indent=2))\n\n\n# Core Pydantic, with no agent anywhere: a model validates data, and that is all it does.\nclass DaysUntilArgs(BaseModel):\n    target: date = Field(description=\"The target date, for example 2026-12-07.\")\n\n\nprint(DaysUntilArgs.model_validate({\"target\": \"2026-12-07\"}))\ntry:\n    DaysUntilArgs.model_validate({\"target\": \"next Tuesday\"})\nexcept ValidationError as e:\n    print(\"rejected:\", e.errors()[0][\"msg\"])",
+ "description": "Pydantic AI generates a JSON Schema from a tool function's type hints and docstring, using core Pydantic BaseModel validation under the hood.",
+ "example": "cs357-tut-pydanticai-4",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "Wrapping days_until in Tool(days_until) builds a JSON Schema directly from the target: date annotation and the Args docstring entry.",
+   "kind": "reveal",
+   "lines": "1-18"
+  },
+  {
+   "description": "DaysUntilArgs is a plain Pydantic BaseModel with no agent involved; it declares the same target: date field and description.",
+   "kind": "reveal",
+   "lines": "21-24"
+  },
+  {
+   "description": "model_validate parses '2026-12-07' into a Python date object and raises ValidationError on 'next Tuesday'.",
+   "kind": "reveal",
+   "lines": "26-30"
+  }
+ ],
+ "title": "Generated tool schemas versus core Pydantic validation",
+ "version": 1
+}

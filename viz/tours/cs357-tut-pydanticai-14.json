@@ -1,0 +1,22 @@
+{
+ "code": "agent = Agent(\n    make_model(),\n    deps_type=Deps,\n    output_type=[str, DeferredToolRequests],\n    toolsets=[MCPToolset(Path(\"calendar_server.py\"))],     # get_today, days_until\n    capabilities=[ProcessHistory(keep_recent)],\n    model_settings={\"temperature\": 0.0, \"seed\": 42},\n)\n# then register save_deadline (Part 3), skill_menu and load_skill (Part 7) on this agent,\n# and call it with deps=..., message_history=..., and usage_limits=UsageLimits(...)",
+ "description": "This snippet shows how to pass dependencies, deferred approvals, an MCP toolset, and a history processor to a single Agent.",
+ "example": "cs357-tut-pydanticai-14",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "Configure one Agent with deps_type=Deps, output_type=[str, DeferredToolRequests], MCPToolset for calendar_server.py, and ProcessHistory(keep_recent).",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "The comments note the remaining pieces for Exercise 1: registering save_deadline, skill_menu, and load_skill, and passing deps, message_history, and usage_limits at run time.",
+   "kind": "reveal",
+   "lines": "9-10"
+  }
+ ],
+ "title": "Combining dependencies, approvals, MCP tools, and history on one Agent",
+ "version": 1
+}

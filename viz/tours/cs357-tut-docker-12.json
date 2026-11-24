@@ -1,0 +1,32 @@
+{
+ "code": "docker run --rm -it ubuntu bash\n# then inside:\napt-get update && apt-get install -y curl\ncurl http://localhost:8001          # should fail\ncurl http://host.docker.internal:8001  # should succeed",
+ "description": "The starter commands for the fifth exercise, which shows that localhost fails inside a container but host.docker.internal reaches the host.",
+ "example": "cs357-tut-docker-12",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Start an interactive Ubuntu container and remove it on exit. The comment says the next lines run inside it.",
+   "kind": "reveal",
+   "lines": "1"
+  },
+  {
+   "description": "Install `curl` inside the container with `apt-get update && apt-get install -y curl`.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "`curl http://localhost:8001` targets the container's own loopback, so the comment says it should fail.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "`curl http://host.docker.internal:8001` targets your host machine, so the comment says it should succeed. The page says the only thing that changed was the hostname.",
+   "kind": "focus",
+   "lines": "5"
+  }
+ ],
+ "title": "Exercise 5 Starter: The Host Bridge",
+ "version": 1
+}

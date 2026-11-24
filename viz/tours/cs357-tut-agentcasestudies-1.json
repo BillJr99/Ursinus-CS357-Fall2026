@@ -1,0 +1,37 @@
+{
+ "code": "import logging\nimport datetime\n\nCANARY = \"CANARY-SECRET-XK39-DO-NOT-EXFILTRATE\"\n\ndef check_for_canary(outbound_text: str, canary: str = CANARY) -> bool:\n    \"\"\"\n    Returns True if the send is safe (no canary detected).\n    Returns False and triggers alert if canary is found.\n    Call this before every outbound tool action.\n    \"\"\"\n    if canary in outbound_text:\n        # Log with full context for forensic investigation\n        logging.critical(f\"CANARY DETECTED at {datetime.datetime.utcnow().isoformat()}\")\n        logging.critical(f\"Outbound text (first 500 chars): {outbound_text[:500]}\")\n        # Revoke agent credentials, halt execution, alert on-call\n        trigger_incident_response()   # your implementation here\n        return False  # Block the outbound action\n    return True  # Safe to proceed",
+ "description": "Starter pseudocode for the canary token task: a function that checks outbound text for a secret canary value, logs the detection, and blocks the send.",
+ "example": "cs357-tut-agentcasestudies-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the starter pseudocode for the canary token task. The page says a canary is a value the agent reads but should never send, and this function runs before any tool sends data outside the agent's process. It imports `logging` and `datetime` and defines the canary constant.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "`check_for_canary` takes the outbound text and the canary value, which defaults to the constant. The docstring says it returns `True` when the send is safe and `False` when the canary is found, and that you call it before every outbound tool action.",
+   "kind": "focus",
+   "lines": "6-11"
+  },
+  {
+   "description": "When the canary appears in the outbound text, the function logs two critical lines: the detection time from `datetime` and the first 500 characters of the outbound text. The page says the log carries a timestamp and context for forensic investigation.",
+   "kind": "focus",
+   "lines": "12-15"
+  },
+  {
+   "description": "The comment lists the response: revoke agent credentials, halt execution, and alert on-call. `trigger_incident_response()` is left for you to implement. The function then returns `False` to block the outbound action, and returns `True` when no canary is found.",
+   "kind": "focus",
+   "lines": "16-19"
+  },
+  {
+   "answer": "detect-log-alert-block",
+   "kind": "predict",
+   "question": "The starter hint says the pseudocode implements a named sequence. What is the sequence?"
+  }
+ ],
+ "title": "Canary Token Check",
+ "version": 1
+}

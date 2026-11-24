@@ -1,0 +1,42 @@
+{
+ "code": "git status                      # start clean\ndocker run ... course-agent     # the run above\nopencode run \"<the job>\" --auto 2>&1 | tee agent-run.log   # inside the container\n# ...agent works, you go and do something else...\nless agent-run.log              # the action log that run wrote",
+ "description": "Four commands that start from a clean tree, run the job inside the container, and read the action log afterward.",
+ "example": "cs357-tut-opencodesetup-21",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the workflow end to end, in four commands. The page says a clean tree before the run makes `git status` afterwards a complete list of what the agent did, and `git checkout -- .` an instant undo.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`git status` starts clean, so the run begins from a known state and every later change is attributable to the agent.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "`docker run ... course-agent` is the run from the previous section, with the one bind mount and no credentials.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "`opencode run \"<the job>\" --auto 2>&1 | tee agent-run.log` runs the job inside the container without prompts and writes the combined output to a log file.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "The comment marks the wait while the agent works, and `less agent-run.log` reads the action log that the run wrote.",
+   "kind": "focus",
+   "lines": "4-5"
+  },
+  {
+   "answer": "the blast radius",
+   "kind": "predict",
+   "question": "The page says the push is how the work leaves what?"
+  }
+ ],
+ "title": "The Workflow End to End",
+ "version": 1
+}

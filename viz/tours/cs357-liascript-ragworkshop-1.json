@@ -1,0 +1,48 @@
+{
+ "code": "# Steps 1 and 2: ingest a small corpus and chunk it the way the lab's index.py does.\nCORPUS = {   # four invented files; every fact in them is synthetic\n    \"hours.md\": \"\"\"# Hours\n\nThe co-op workshop is open Tuesday and Thursday from 4pm to 8pm, and Saturday from 10am to 2pm.\n\nThe workshop is closed on college holidays. Volunteers post closures on the front door.\"\"\",\n    \"membership.md\": \"\"\"# Membership\n\nA semester membership costs $15 and includes unlimited stand time. Students with a college ID pay $10.\n\nEvery member completes a 30-minute orientation before using a repair stand.\"\"\",\n    \"tools.md\": \"\"\"# Tools\n\nTruing stands and wheel tools stay in the workshop. Members may borrow a pump or a tire lever overnight for a $5 deposit.\n\nThe parts washer uses citrus degreaser only. Never pour solvent into the parts washer.\"\"\",\n    \"safety.md\": \"\"\"# Safety\n\nSafety glasses are required whenever anyone is cutting a cable or a chain.\n\nReport any injury to the shift volunteer, who records it in the incident binder before the shift ends.\"\"\",\n}\n\ndef paragraph_chunks(corpus):\n    \"\"\"The lab's index.py rule: one chunk per blank-line-separated paragraph.\"\"\"\n    rows = []\n    for name in sorted(corpus):\n        paragraphs = [p.strip() for p in corpus[name].split(\"\\n\\n\") if p.strip()]\n        for i, p in enumerate(paragraphs):\n            rows.append({\"id\": f\"{name.rsplit('.', 1)[0]}-{i}\", \"source\": name, \"text\": p})\n    return rows\n\nchunks = paragraph_chunks(CORPUS)\nprint(f\"Indexed {len(chunks)} chunks from {len(CORPUS)} files.\")\nfor c in chunks:\n    print(f\"  {c['id']:<13} {c['source']:<14} {c['text'][:55]!r}\")",
+ "description": "A CORPUS dictionary holds four synthetic markdown files. The paragraph_chunks function splits each file on blank lines, creates stable IDs from the file stem and paragraph number, and returns a list of chunk dictionaries.",
+ "example": "cs357-liascript-ragworkshop-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The CORPUS dictionary defines four files (hours.md, membership.md, tools.md, safety.md) each with a heading and two paragraphs separated by blank lines.",
+   "kind": "reveal",
+   "lines": "1-23"
+  },
+  {
+   "description": "The paragraph_chunks function iterates files in sorted order, splits each file on double newlines, strips whitespace, and builds chunk dictionaries with id, source, and text fields.",
+   "kind": "reveal",
+   "lines": "25-32"
+  },
+  {
+   "description": "Line 29 splits on blank lines and filters empty paragraphs, giving one chunk per paragraph as the lab's index.py does.",
+   "kind": "focus",
+   "lines": "29-29"
+  },
+  {
+   "description": "Line 31 creates the stable ID by taking the file stem (removing .md) and appending the paragraph index i.",
+   "kind": "focus",
+   "lines": "31-31"
+  },
+  {
+   "answer": "3 chunks: hours-0, hours-1, hours-2",
+   "kind": "predict",
+   "question": "How many chunks does hours.md produce, and what are their IDs?"
+  },
+  {
+   "description": "The script calls paragraph_chunks, prints the total count, then iterates chunks printing id, source, and the first 55 characters of text.",
+   "kind": "reveal",
+   "lines": "34-37"
+  },
+  {
+   "description": "The output shows 12 chunks from 4 files: each file yields 3 chunks (heading + 2 paragraphs) with IDs like hours-0, hours-1, hours-2.",
+   "kind": "run",
+   "lines": "34-37",
+   "trace_step": 7
+  }
+ ],
+ "title": "Ingesting and Chunking a Corpus by Paragraph",
+ "version": 1
+}

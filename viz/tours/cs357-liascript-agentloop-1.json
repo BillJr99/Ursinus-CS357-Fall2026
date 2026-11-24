@@ -1,0 +1,33 @@
+{
+ "code": "import json\nimport requests\n\nOLLAMA_URL = \"http://localhost:11434/api/chat\"\nMODEL = \"llama3.2\"\n\ndef chat(messages, temperature=0.7):\n    try:\n        r = requests.post(OLLAMA_URL, json={\n            \"model\": MODEL,\n            \"messages\": messages,\n            \"stream\": False,\n            \"options\": {\"temperature\": temperature}\n        }, timeout=120)\n        return r.json()[\"message\"][\"content\"]\n    except Exception as e:\n        print(f\"[agentloop:chat] {e}\")\n        import traceback; traceback.print_exc()\n        return \"\"\n\nprint(\"Environment ready.\")",
+ "description": "You read the request settings and response handling before the agent loop is built.",
+ "example": "cs357-liascript-agentloop-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: codex free model + check fix: claude",
+ "steps": [
+  {
+   "description": "You import the request tools and name the local Ollama endpoint and model.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "You define chat with a messages argument and a default temperature. The request sends those values with stream set to False, then returns the response's message content.",
+   "kind": "reveal",
+   "lines": "7-15"
+  },
+  {
+   "answer": "It prints the error and traceback, then returns an empty string.",
+   "kind": "predict",
+   "lines": "16-19",
+   "question": "What does chat return when the request or response handling raises an exception?"
+  },
+  {
+   "description": "You finish the exception handler and print Environment ready. The supplied recording contains that setup message.",
+   "kind": "reveal",
+   "lines": "16-21"
+  }
+ ],
+ "title": "Prepare the local chat helper",
+ "version": 1
+}

@@ -1,0 +1,52 @@
+{
+ "code": "name: CI\non:\n  push:\n  pull_request:\npermissions:\n  contents: read\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 22\n          cache: npm\n      - run: npm ci\n      - run: npm test",
+ "description": "Continuous integration workflow that runs npm ci and npm test on push and pull request on ubuntu-latest with Node 22.",
+ "example": "cs357-tut-fullstackwithagents-17",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete CI workflow.",
+   "kind": "reveal",
+   "lines": "1-17"
+  },
+  {
+   "description": "Name: CI workflow name.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Triggers: runs on push and pull_request events.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "Permissions: contents read for checkout.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "description": "Job: test job on ubuntu-latest.",
+   "kind": "focus",
+   "lines": "7-8"
+  },
+  {
+   "description": "Steps: actions/checkout@v4, actions/setup-node@v4 with Node 22 and npm cache.",
+   "kind": "focus",
+   "lines": "9-12"
+  },
+  {
+   "description": "Npm: npm ci to install exact dependencies.",
+   "kind": "focus",
+   "lines": "13-14"
+  },
+  {
+   "description": "Test: npm test to run the suite.",
+   "kind": "focus",
+   "lines": "15-16"
+  }
+ ],
+ "title": "GitHub Actions: CI Workflow",
+ "version": 1
+}

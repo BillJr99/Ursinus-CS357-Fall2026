@@ -1,0 +1,62 @@
+{
+ "code": "import { env, exports } from \"cloudflare:workers\";\nimport { beforeEach, describe, it, expect } from \"vitest\";\n\nconst api = (path, init) => exports.default.fetch(`https://board.test${path}`, init);\nconst ask = (text) => api(\"/api/questions\", {\n  method: \"POST\",\n  headers: { \"content-type\": \"application/json\" },\n  body: JSON.stringify({ text }),\n});\n\ndescribe(\"questions board API\", () => {\n  // Each test starts from an empty board, so no test depends on another one running first.\n  beforeEach(async () => {\n    await env.DB.exec(\"DELETE FROM questions\");\n  });\n\n  it(\"starts with no questions\", async () => {\n    const r = await api(\"/api/questions\");\n    expect(r.status).toBe(200);\n    expect(await r.json()).toEqual([]);\n  });\n\n  it(\"adds a question and lists it\", async () => {\n    const created = await ask(\"  What is a Worker?  \");\n    expect(created.status).toBe(201);\n    expect(await created.json()).toMatchObject({ text: \"What is a Worker?\", votes: 0 });\n    const listed = await (await api(\"/api/questions\")).json();\n    expect(listed.map((q) => q.text)).toEqual([\"What is a Worker?\"]);\n  });\n\n  it(\"refuses an empty question and one over 280 characters\", async () => {\n    expect((await ask(\"   \")).status).toBe(400);\n    expect((await ask(\"x\".repeat(281))).status).toBe(400);\n    expect((await ask(\"x\".repeat(280))).status).toBe(201);\n  });\n\n  it(\"lists the most upvoted question first\", async () => {\n    const first = await (await ask(\"first\")).json();\n    const second = await (await ask(\"second\")).json();\n    const voted = await api(`/api/questions/${second.id}/upvote`, { method: \"POST\" });\n    expect((await voted.json()).votes).toBe(1);\n    const listed = await (await api(\"/api/questions\")).json();\n    expect(listed.map((q) => q.id)).toEqual([second.id, first.id]);\n  });\n\n  it(\"answers 404 for a question that does not exist\", async () => {\n    expect((await api(\"/api/questions/999/upvote\", { method: \"POST\" })).status).toBe(404);\n  });\n});",
+ "description": "Comprehensive test suite for the questions board API: empty list, add and list, validation, sorting by votes, and 404 handling.",
+ "example": "cs357-tut-fullstackwithagents-13",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete API test suite.",
+   "kind": "reveal",
+   "lines": "1-49"
+  },
+  {
+   "description": "Imports: exports from cloudflare:workers, vitest functions.",
+   "kind": "focus",
+   "lines": "1-4"
+  },
+  {
+   "description": "Api helper: constructs fetch calls to https://board.test.",
+   "kind": "focus",
+   "lines": "4-5"
+  },
+  {
+   "description": "Ask helper: POST to /api/questions with JSON body.",
+   "kind": "focus",
+   "lines": "6-9"
+  },
+  {
+   "description": "BeforeEach: clears questions table for isolation.",
+   "kind": "focus",
+   "lines": "11-15"
+  },
+  {
+   "description": "First test: starts with no questions, expects 200 and empty array.",
+   "kind": "focus",
+   "lines": "17-21"
+  },
+  {
+   "description": "Add test: posts a question, expects 201, verifies content, then lists and checks.",
+   "kind": "focus",
+   "lines": "23-29"
+  },
+  {
+   "description": "Validation: refuses empty and over-280-character questions with 400, accepts exactly 280 with 201.",
+   "kind": "focus",
+   "lines": "31-35"
+  },
+  {
+   "description": "Sorting: upvotes second question, verifies it appears first in list.",
+   "kind": "focus",
+   "lines": "37-44"
+  },
+  {
+   "description": "404: expects 404 for non-existent question upvote.",
+   "kind": "focus",
+   "lines": "46-48"
+  }
+ ],
+ "title": "test/api.test.js: API Test Suite",
+ "version": 1
+}

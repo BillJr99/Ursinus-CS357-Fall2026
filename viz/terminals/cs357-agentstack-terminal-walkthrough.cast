@@ -1,0 +1,7 @@
+{"version": 2, "width": 100, "height": 30, "title": "Verify a local Ollama endpoint", "code_viz_provenance": "scripted", "duration": 0.002}
+[0.0, "m", "Download a local model"]
+[0.0, "o", "$ ollama pull qwen2.5:3b\r\n"]
+[0.0, "o", "pulling manifest\nverifying sha256 digest\nwriting manifest\nsuccess\n"]
+[0.001, "m", "Check the API"]
+[0.001, "o", "$ curl -s http://localhost:11434/api/tags\r\n"]
+[0.001, "o", "{\"models\":[{\"name\":\"qwen2.5:3b\",\"model\":\"qwen2.5:3b\"}]}\n"]

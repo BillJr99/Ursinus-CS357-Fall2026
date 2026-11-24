@@ -1,0 +1,39 @@
+{
+ "code": "import json\n\ndraft = '''\"\"\"Merge two sorted lists of integers into a single sorted list.\n\nArgs:\n    a (list[int]): First sorted list of integers.\n    b: Second sorted list of integers.\n\nReturns:\n    list[int]: A new sorted list containing all elements from a and b.\n\nExample:\n    >>> merge_sorted_lists([1, 3], [2, 4])\n    [1, 2, 3, 4]\n\"\"\"'''\n\nentry = {\"id\": \"D04\", \"defect\": \"missing_C2\", \"description\": \"Parameter b has no type\", \"draft\": draft}\nprint(json.dumps(entry, indent=2))",
+ "description": "This code packages a planted docstring defect as one JSON entry.",
+ "example": "cs357-tut-multiagentmeasurement-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: copilot free model",
+ "steps": [
+  {
+   "description": "json provides the encoder for the calibration entry.",
+   "kind": "reveal",
+   "lines": "1"
+  },
+  {
+   "description": "draft holds a multi-line docstring. Parameter b has a description but no type.",
+   "kind": "reveal",
+   "lines": "3-15"
+  },
+  {
+   "answer": "It identifies missing_C2, because parameter b has no type.",
+   "kind": "predict",
+   "lines": "17",
+   "question": "Which criterion does this entry identify as missing?"
+  },
+  {
+   "description": "entry records an ID, defect label, description, and the full draft text.",
+   "kind": "reveal",
+   "lines": "17"
+  },
+  {
+   "description": "json.dumps prints the entry with the multi-line docstring escaped into one JSON string.",
+   "kind": "run",
+   "lines": "18",
+   "trace_step": 3
+  }
+ ],
+ "title": "Create an escaped calibration draft",
+ "version": 1
+}

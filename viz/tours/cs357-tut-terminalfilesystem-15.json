@@ -1,0 +1,47 @@
+{
+ "code": "docker run --rm -it \\\n  --user \"$(id -u):$(id -g)\" \\\n  --add-host=host.docker.internal:host-gateway \\\n  --security-opt=no-new-privileges --cap-drop ALL --pids-limit=1024 \\\n  -v \"$PWD:/workspace\" -w /workspace \\\n  -e PI_OLLAMA_MODEL=llama3.2 \\\n  course-pi-ollama",
+ "description": "Run course-pi-ollama container as current user with security hardening and workspace mount.",
+ "example": "cs357-tut-terminalfilesystem-15",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete docker run command.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "Interactive: -it flags for interactive terminal session.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "User mapping: --user maps container UID/GID to host user.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Host access: --add-host enables container-to-host networking.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "Security: --security-opt and --cap-drop remove all privileges.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "Volume and workspace: binds current directory as /workspace, sets working directory.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "description": "Model selection: environment variable sets the Ollama model to use.",
+   "kind": "focus",
+   "lines": "7"
+  }
+ ],
+ "title": "Docker Run: Rootless pi Container (bash)",
+ "version": 1
+}

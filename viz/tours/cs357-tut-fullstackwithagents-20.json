@@ -1,0 +1,27 @@
+{
+ "code": "\"gh pr view *\": \"allow\",\n\"gh pr checks *\": \"allow\",\n\"gh pr merge *\": \"deny\",",
+ "description": "Three permission rules for GitHub CLI in opencode.json: allow viewing PRs and checks, deny merging, using last-match-wins rule.",
+ "example": "cs357-tut-fullstackwithagents-20",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Three gh permission lines.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Read-only: gh pr view and gh pr checks both allowed.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Write protection: gh pr merge denied to prevent agent from merging PRs.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "OpenCode GitHub Permissions",
+ "version": 1
+}

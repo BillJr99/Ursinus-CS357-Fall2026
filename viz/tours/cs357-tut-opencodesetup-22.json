@@ -1,0 +1,37 @@
+{
+ "code": "{\n  \"provider\": {\n    \"campus\": {\n      \"npm\": \"@ai-sdk/openai-compatible\",\n      \"options\": {\n        \"baseURL\": \"PASTE-PROVIDER-URL\",\n        \"apiKey\": \"PASTE-YOUR-KEY\"\n      },\n      \"models\": { \"PASTE-MODEL-NAME\": { \"name\": \"campus model\" } }\n    }\n  }\n}",
+ "description": "The provider template opencode writes for a hosted or campus server, with placeholders for the URL, the key, and the model name that you fill in yourself.",
+ "example": "cs357-tut-opencodesetup-22",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the template opencode writes when you ask it to add a provider. It is an OpenAI-compatible provider named `campus`, with placeholder values you replace yourself, and a hosted provider needs three things: its URL, your key, and the model's name.",
+   "kind": "reveal",
+   "lines": "1-12"
+  },
+  {
+   "description": "The provider is named `campus`, and `npm` is `@ai-sdk/openai-compatible`, the adapter package that speaks the endpoint's dialect.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "`options` holds `baseURL` as `PASTE-PROVIDER-URL` and `apiKey` as `PASTE-YOUR-KEY`, both placeholders. The page says never type or paste a key into an opencode prompt, because everything typed there goes to the provider and stays in the session history.",
+   "kind": "focus",
+   "lines": "5-8"
+  },
+  {
+   "description": "`models` maps `PASTE-MODEL-NAME` to a display name, `campus model`, so the model is listed under the provider once you restart.",
+   "kind": "focus",
+   "lines": "9"
+  },
+  {
+   "answer": ".gitignore",
+   "kind": "predict",
+   "question": "The page says to add the file to which file before the key goes in, so the key never reaches a commit?"
+  }
+ ],
+ "title": "The Campus Provider Template",
+ "version": 1
+}

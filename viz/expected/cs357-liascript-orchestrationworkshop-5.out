@@ -1,0 +1,7 @@
+event         -> digest                   Chess club meets Thursday at 7pm in Olin 107
+event         -> digest                   Hawk Hacks is Saturday at 10am in IDDC. Brin
+change        -> digest (marked UPDATED)  Ultimate frisbee pickup moved to Sunday at 2
+question      -> FAQ queue                Does anyone know if the library is open late
+announcement  -> needs_human              Free pizza in the lobby, first come first se
+
+model calls: 5; 3 of 5 messages go on to the pipeline

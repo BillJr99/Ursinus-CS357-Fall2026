@@ -1,0 +1,27 @@
+{
+ "code": "# step3_run.py: run the deadline agent, and put a person in front of every write.\nfrom datetime import date\nfrom pathlib import Path\n\nfrom pydantic_ai import DeferredToolRequests, DeferredToolResults, ToolDenied, UsageLimits\n\nfrom common import show_trace\nfrom step3_deps import Deps, agent\n\ndeps = Deps(today=date.today(), notes_dir=Path(\"notes\"))\ndeps.notes_dir.mkdir(exist_ok=True)\nlimits = UsageLimits(request_limit=6, tool_calls_limit=4)\n\nresult = agent.run_sync(\"Save my CS357 RAG lab deadline, 2026-11-12, titled 'RAG lab'.\",\n                        deps=deps, usage_limits=limits)\nfor _ in range(2):                                  # bounded: at most two rounds of asking\n    if not isinstance(result.output, DeferredToolRequests):\n        break\n    decisions = DeferredToolResults()\n    for call in result.output.approvals:\n        answer = input(f\"Approve {call.tool_name}({call.args})? [y/N] \").strip().lower()\n        decisions.approvals[call.tool_call_id] = (\n            True if answer == \"y\" else ToolDenied(\"The student declined. Do not try again; say so.\"))\n    result = agent.run_sync(message_history=result.all_messages(), deferred_tool_results=decisions,\n                            deps=deps, usage_limits=limits)\n\nprint(result.output)\nshow_trace(result.all_messages())",
+ "description": "When a run pauses with DeferredToolRequests, this script asks the user for approval and resumes the run with their decision.",
+ "example": "cs357-tut-pydanticai-6",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "Create the Deps instance and UsageLimits(request_limit=6, tool_calls_limit=4), then start the run with agent.run_sync.",
+   "kind": "reveal",
+   "lines": "1-15"
+  },
+  {
+   "description": "If result.output is a DeferredToolRequests object, loop over its pending approvals and prompt the user with [y/N].",
+   "kind": "reveal",
+   "lines": "16-23"
+  },
+  {
+   "description": "Record True or ToolDenied for each tool_call_id, resume agent.run_sync with the saved message_history and deferred_tool_results, and print the final output and trace.",
+   "kind": "reveal",
+   "lines": "24-28"
+  }
+ ],
+ "title": "Prompting a person to approve or deny a deferred tool call",
+ "version": 1
+}

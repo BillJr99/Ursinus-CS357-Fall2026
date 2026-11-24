@@ -1,0 +1,47 @@
+{
+ "code": "# P5: a skill's front matter as a Pydantic model\nimport traceback\nfrom pathlib import Path\nimport yaml\nfrom pydantic import BaseModel, Field, ValidationError\n\n# Write the terse-helper skill from Running Your Own AI, Step 4, so this cell is self-contained.\nskill = Path(\".agents/skills/terse-helper/SKILL.md\")\nskill.parent.mkdir(parents=True, exist_ok=True)\nskill.write_text(\"\"\"---\nname: terse-helper\ndescription: Answer in at most two sentences, and end every answer with a \"Next step:\" line.\n---\n# Terse Helper\n\n1.  Answer in at most two sentences.\n2.  End every answer with one line that starts with \"Next step:\".\n3.  If you do not know, say \"I don't know\" rather than guessing.\n\"\"\", encoding=\"utf-8\")\n\nclass SkillFrontMatter(BaseModel):\n    name: str = Field(pattern=r\"^[a-z0-9]+(-[a-z0-9]+)*$\")    # lowercase words joined by hyphens\n    description: str = Field(min_length=20, max_length=1024)   # the trigger the agent reads\n\ndef load_skill(path):\n    \"\"\"Split SKILL.md into validated front matter and the body the model reads.\"\"\"\n    text = Path(path).read_text(encoding=\"utf-8\")\n    if not text.startswith(\"---\"):\n        raise ValueError(\"the first line of SKILL.md must be ---\")\n    _, front, body = text.split(\"---\", 2)\n    meta = SkillFrontMatter.model_validate(yaml.safe_load(front))\n    folder = Path(path).parent.name\n    if meta.name != folder:                          # the silent failure: name and folder disagree\n        raise ValueError(f\"name {meta.name!r} does not match folder {folder!r}\")\n    return meta, body.strip()\n\ntry:\n    meta, body = load_skill(skill)\n    print(meta)\n    print(body.splitlines()[0])\nexcept (ValidationError, ValueError) as e:\n    print(f\"[pydantic_tut:p5] {e}\")\n    traceback.print_exc()\n\n# The same check on front matter a student might write by hand:\ntry:\n    SkillFrontMatter.model_validate({\"name\": \"Terse Helper\", \"description\": \"helps\"})\nexcept ValidationError as e:\n    print(f\"[pydantic_tut:p5] {len(e.errors())} errors: \" + \"; \".join(f\"{x['loc'][0]}: {x['msg']}\" for x in e.errors()))\n    traceback.print_exc()",
+ "description": "Use Pydantic to validate SKILL.md front matter, ensuring name matches folder and description meets length requirements.",
+ "example": "cs357-tut-localagentfromscratch-3",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete skill validation code.",
+   "kind": "reveal",
+   "lines": "1-50"
+  },
+  {
+   "description": "Purpose: P5 validates a skill's front matter using Pydantic.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Setup: writes the terse-helper skill file with front matter and rules.",
+   "kind": "focus",
+   "lines": "7-19"
+  },
+  {
+   "description": "Model definition: SkillFrontMatter with name pattern and description length constraints.",
+   "kind": "focus",
+   "lines": "21-23"
+  },
+  {
+   "description": "Load_skill: reads SKILL.md, splits front matter, validates with Pydantic, checks folder match.",
+   "kind": "focus",
+   "lines": "25-35"
+  },
+  {
+   "description": "Validation: loads skill, prints metadata and first body line, catches validation errors.",
+   "kind": "focus",
+   "lines": "37-43"
+  },
+  {
+   "description": "Error demonstration: hand-written front matter with invalid name and short description is refused.",
+   "kind": "focus",
+   "lines": "46-49"
+  }
+ ],
+ "title": "Skill Front Matter Validation",
+ "version": 1
+}

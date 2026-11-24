@@ -1,0 +1,32 @@
+{
+ "code": "\n# Upload to TestPyPI (safe; does not affect the real PyPI)\npip install twine\ntwine upload --repository testpypi dist/*",
+ "description": "python -m build creates two files: a wheel (.whl) for fast binary install and a source distribution (.tar.gz) as fallback.",
+ "example": "cs357-tut-publishing-14",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Build output directory structure.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Directory: dist/ contains the built artifacts.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Wheel: my_agent-0.1.0-py3-none-any.whl is the pre-built binary archive for fast installs.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Sdist: my_agent-0.1.0.tar.gz is the source distribution fallback for platforms without pre-built wheels.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "Build Output: Wheel and SDist",
+ "version": 1
+}

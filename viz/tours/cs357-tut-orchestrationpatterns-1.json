@@ -1,0 +1,60 @@
+{
+ "code": "# Section 1: the task, the settings you own, and a scripted stand-in for the model.\nimport json\nimport re\n\nMESSAGES = [\n    \"Chess club meets Thursday at 7pm in Olin 107.\",\n    \"Hawk Hacks is Saturday at 10am in IDDC. Bring laptops!\",\n    \"Ultimate frisbee pickup moved to Sunday at 2pm on the quad.\",\n    \"Does anyone know if the library is open late during finals?\",\n    \"Free pizza in the lobby, first come first served.\",\n]\n\nCONFIG = {\"spawn_budget\": 6, \"temperature\": 0.0, \"seed\": 42}   # yours, not the model's\n\nEXTRACT = \"Extract every event as 'name | day | time | place', one per line. Output only the lines.\"\nDRAFT   = \"Write a friendly digest of these events for students, one sentence per event.\"\nPOLISH  = \"Edit the digest for concision and warmth. Keep every day and time.\"\nCLASSIFY = \"Classify the message as exactly one word: event, change, or question. Output only that word.\"\n\nEVENT = re.compile(r\"^(?P<name>.+?) (?:meets|is|moved to) (?P<day>\\w+day) at (?P<time>\\d+(?:am|pm)) \"\n                   r\"(?:in|on) (?P<place>[^.!]+)\")\nCALLS = []   # every model call, so each pattern's cost can be counted\n\ndef stand_in(system, user):\n    \"\"\"Not a language model: fixed rules per role, so every intermediate output is\n    visible and repeatable.  Part III replaces this function with a real model call.\"\"\"\n    if system == EXTRACT:\n        rows = []\n        for line in user.splitlines():\n            m = EVENT.match(line.strip())\n            if m:\n                rows.append(\" | \".join(m.group(\"name\", \"day\", \"time\", \"place\")))\n        return \"\\n\".join(rows)\n    if system == DRAFT:\n        out = []\n        for row in user.splitlines():\n            name, day, time, place = [x.strip() for x in row.split(\"|\")]\n            out.append(f\"{name} is on {day} at {time} ({place}).\")\n        return \" \".join(out)\n    if system == POLISH:   # the scripted mistake: a fact changes during editing\n        return user.replace(\" is on \", \": \").replace(\"Thursday\", \"Friday\")\n    if system == CLASSIFY:\n        if \"moved\" in user or \"cancel\" in user:\n            return \"change\"\n        if user.rstrip().endswith(\"?\"):\n            return \"question\"\n        return \"event\" if EVENT.match(user) else \"announcement\"   # outside the closed set\n    return \"\"\n\ndef llm(system, user):\n    \"\"\"The one function every pattern calls.  Here it is the stand-in.\"\"\"\n    CALLS.append(system[:24])\n    return stand_in(system, user)\n\nprint(f\"{len(MESSAGES)} messages; settings {CONFIG}\")\nprint(repr(llm(CLASSIFY, MESSAGES[0])), repr(llm(EXTRACT, MESSAGES[0])))\nCALLS.clear()",
+ "description": "Scripted stand-in for a model processes five messages with four distinct prompts, tracking every call for cost analysis.",
+ "example": "cs357-tut-orchestrationpatterns-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe free model",
+ "steps": [
+  {
+   "description": "Reveal imports and purpose: Section 1 sets up the task and settings.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Reveal MESSAGES: five inputs with events, a question, and an unanticipated announcement.",
+   "kind": "reveal",
+   "lines": "5-11"
+  },
+  {
+   "answer": "spawn_budget, temperature, and seed",
+   "kind": "predict",
+   "lines": "13",
+   "question": "What does CONFIG hold that is yours, not the model's?"
+  },
+  {
+   "description": "Reveal CONFIG and prompts: your settings and four one-sentence system prompts for EXTRACT, DRAFT, POLISH, CLASSIFY.",
+   "kind": "reveal",
+   "lines": "13-18"
+  },
+  {
+   "description": "Reveal EVENT regex and CALLS: the pattern extracts name, day, time, place; CALLS tracks every model invocation.",
+   "kind": "reveal",
+   "lines": "20-22"
+  },
+  {
+   "description": "Reveal stand_in: scripted rules per role that extract events, draft digests, polish with a deliberate mistake, and classify.",
+   "kind": "reveal",
+   "lines": "24-48"
+  },
+  {
+   "description": "Reveal llm: the single function every pattern calls, wrapping stand_in and recording each call.",
+   "kind": "reveal",
+   "lines": "50-53"
+  },
+  {
+   "description": "Run to print the message count and settings.",
+   "kind": "run",
+   "lines": "55",
+   "trace_step": 13
+  },
+  {
+   "description": "Run to show classification and extraction of the first message.",
+   "kind": "run",
+   "lines": "56",
+   "trace_step": 14
+  }
+ ],
+ "title": "Five Messages and Four Prompts",
+ "version": 1
+}

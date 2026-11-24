@@ -1,0 +1,3 @@
+Strategy                  Batch   Time (s)   Throughput (tok/s)
+-----------------------------------------------------------------
+Static batching               1      60.82                 78.8

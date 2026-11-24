@@ -1,0 +1,37 @@
+{
+ "code": "tmux new -s agents        # start a persistent session named \"agents\"\nclaude                    # launch a long agent task inside it\n\n# press Ctrl-b then d      -> DETACH: the view closes, the agent keeps running\n\n# ... close your laptop, ride the train, open it again ...\ntmux attach -t agents     # REATTACH from anywhere, even a fresh SSH login",
+ "description": "A 7-line docker run command with flags that enforce boundaries: --rm for self-cleaning, -it for interactive terminal, --add-host for host.docker.internal, two volume mounts for identity and workspace, -w to set working directory, and the image with tool name.",
+ "example": "cs357-tut-agentclis-10",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The command mounts the agent's home directory for persistent auth, the shared workspace for read/write, sets the working directory to /workspace, and runs the commercial-ai image with claude.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "Line 2 makes host.docker.internal resolve to the host machine IP so the container can reach the local gateway.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Lines 3-4 mount two directories: the first persists the agent's authentication tokens and settings; the second is the workspace the agent reads and writes.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "Line 5 sets the container's working directory to /workspace so the agent's world is exactly the workspace mount.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "answer": "the agent's authentication tokens and settings",
+   "kind": "predict",
+   "question": "What does the first volume mount persist?"
+  }
+ ],
+ "title": "Standard Course Docker Run Pattern",
+ "version": 1
+}

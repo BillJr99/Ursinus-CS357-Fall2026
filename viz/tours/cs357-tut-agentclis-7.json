@@ -1,0 +1,37 @@
+{
+ "code": "mkdir -p ~/.config/opencode\ncat > ~/.config/opencode/opencode.json <<'JSON'\n{\n  \"provider\": {\n    \"ollama\": {\n      \"npm\": \"@ai-sdk/openai-compatible\",\n      \"options\": { \"baseURL\": \"http://localhost:11434/v1\" },\n      \"models\": { \"llama3.2\": { \"name\": \"llama3.2 (raw Ollama)\" } }\n    },\n    \"openwebui\": {\n      \"npm\": \"@ai-sdk/openai-compatible\",\n      \"options\": {\n        \"baseURL\": \"http://localhost:3000/api/v1\",\n        \"apiKey\": \"sk-REPLACE-ME\"\n      },\n      \"models\": { \"llama3.2\": { \"name\": \"llama3.2 (via OpenWebUI)\" } }\n    }\n  }\n}\nJSON",
+ "description": "A 20-line JSON config registers two providers (ollama and openwebui) in opencode, each using the openai-compatible npm package with separate base URLs and model names so both appear in /models.",
+ "example": "cs357-tut-agentclis-7",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The config creates the opencode directory, then writes a JSON file with a provider map containing ollama (baseURL localhost:11434/v1, model llama3.2) and openwebui (baseURL localhost:3000/api/v1, apiKey placeholder, model llama3.2).",
+   "kind": "reveal",
+   "lines": "1-20"
+  },
+  {
+   "description": "Line 2 creates the config directory if it does not exist.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Lines 5-8 define the ollama provider with the raw Ollama endpoint and a descriptive model name.",
+   "kind": "focus",
+   "lines": "5-8"
+  },
+  {
+   "description": "Lines 10-16 define the openwebui provider with its endpoint, an API key placeholder, and a distinct model name so you can tell them apart in /models.",
+   "kind": "focus",
+   "lines": "10-16"
+  },
+  {
+   "answer": "opencode.json (not config.json)",
+   "kind": "predict",
+   "question": "What is the file name opencode expects for its config?"
+  }
+ ],
+ "title": "opencode Configuration with Ollama and OpenWebUI",
+ "version": 1
+}

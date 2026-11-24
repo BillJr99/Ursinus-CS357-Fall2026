@@ -1,0 +1,37 @@
+{
+ "code": "{\n  \"name\": \"@yourusername/hello-agent\",\n  \"version\": \"0.1.0\",\n  \"description\": \"Prints a structured greeting; a CS357 publishing exercise.\",\n  \"bin\": { \"hello-agent\": \"./index.js\" },\n  \"files\": [\"index.js\", \"README.md\"],\n  \"license\": \"MIT\"\n}",
+ "description": "Minimal package.json with name, version, description, bin entry point, files allowlist, and MIT license for a publishable CLI.",
+ "example": "cs357-tut-publishing-4",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete package.json.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "Identity: scoped name @yourusername/hello-agent, version 0.1.0, description.",
+   "kind": "focus",
+   "lines": "1-3"
+  },
+  {
+   "description": "Bin: hello-agent maps to ./index.js, enabling CLI execution via npx.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "Files allowlist: explicit list of what gets published, only index.js and README.md included.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "description": "License: MIT license for legal usability.",
+   "kind": "focus",
+   "lines": "7"
+  }
+ ],
+ "title": "package.json: Three Load-Bearing Fields",
+ "version": 1
+}

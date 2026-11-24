@@ -1,0 +1,32 @@
+{
+ "code": "cd /workspace\ngit config user.name \"Your Name\"\ngit config user.email \"you@example.com\"",
+ "description": "Configure git user name and email per repository so they persist in the workspace mount across container sessions.",
+ "example": "cs357-tut-coursecontainer-5",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Three commands to set git identity in the workspace.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Directory: cd /workspace moves to the mounted repository.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Name: git config user.name sets your name per repository.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Email: git config user.email sets your email per repository, stored in /workspace/.git/config.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "Set Git Identity in Container",
+ "version": 1
+}

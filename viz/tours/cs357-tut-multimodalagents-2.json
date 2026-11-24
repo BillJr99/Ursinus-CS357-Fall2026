@@ -1,0 +1,27 @@
+{
+ "code": "from PIL import Image\n\ndef crop_and_show(image_path: str, bbox: list, label: str):\n    \"\"\"Crop an image to a bounding box and save for verification.\"\"\"\n    img = Image.open(image_path)\n    x1, y1, x2, y2 = bbox\n    cropped = img.crop((x1, y1, x2, y2))\n    cropped.save(f\"crop_{label}.png\")\n    print(f\"Saved crop_{label}.png ({x2-x1}×{y2-y1} pixels)\")\n\n# After extracting bboxes from VLM response:\nfor element in extracted[\"elements\"]:\n    crop_and_show(\"screenshot.png\", element[\"bbox\"], element[\"name\"].replace(\" \", \"_\"))",
+ "description": "The starter helper for the grounding exercise: crop an image to a bounding box and save the crop so you can verify the model pointed to the right region.",
+ "example": "cs357-tut-multimodalagents-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Import Pillow's `Image` and define `crop_and_show`, which takes an image path, a bounding box, and a label. The docstring says it crops an image to a bounding box and saves it for verification, and the first line opens the image.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "Unpack the bounding box into `x1, y1, x2, y2`, crop the image to that box, save the crop as `crop_<label>.png`, and print the saved file name with its pixel width and height.",
+   "kind": "focus",
+   "lines": "6-9"
+  },
+  {
+   "description": "After extracting bounding boxes from the VLM response, loop over the elements and call `crop_and_show` for each. The call passes the screenshot, the element's `bbox`, and the element name with spaces replaced by underscores.",
+   "kind": "focus",
+   "lines": "11-13"
+  }
+ ],
+ "title": "Crop a Bounding Box",
+ "version": 1
+}

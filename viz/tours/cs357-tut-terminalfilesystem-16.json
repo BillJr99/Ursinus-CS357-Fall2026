@@ -1,0 +1,47 @@
+{
+ "code": "docker run --rm -it `\n  --add-host=host.docker.internal:host-gateway `\n  --security-opt=no-new-privileges --cap-drop ALL --pids-limit=1024 `\n  -v \"${PWD}:/workspace\" -w /workspace `\n  -e PI_OLLAMA_MODEL=llama3.2 `\n  course-pi-ollama",
+ "description": "PowerShell equivalent of the bash docker run, with platform-specific syntax differences.",
+ "example": "cs357-tut-terminalfilesystem-16",
+ "lang": "powershell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete PowerShell docker run command.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "Interactive: -it flags for interactive terminal session.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Host access: --add-host enables container-to-host networking.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Security: --security-opt and --cap-drop remove all privileges.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "Volume and workspace: binds PWD as /workspace with braces for variable expansion.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "Model selection: environment variable sets the Ollama model.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "description": "Image: course-pi-ollama container image to run.",
+   "kind": "focus",
+   "lines": "6"
+  }
+ ],
+ "title": "Docker Run: Rootless pi Container (PowerShell)",
+ "version": 1
+}

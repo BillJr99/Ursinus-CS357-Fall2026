@@ -1,0 +1,10 @@
+{"version": 2, "width": 100, "height": 30, "title": "Inspect the models Ollama can run", "code_viz_provenance": "scripted", "duration": 0.003}
+[0.0, "m", "Download the tutorial’s sample model"]
+[0.0, "o", "$ ollama pull llama3.2:3b\r\n"]
+[0.0, "o", "pulling manifest\nwriting manifest\nsuccess\n"]
+[0.001, "m", "Check what is stored locally"]
+[0.001, "o", "$ ollama list\r\n"]
+[0.001, "o", "NAME          ID          SIZE     MODIFIED\nllama3.2:3b   <model-id>  2.0 GB   <time>\n"]
+[0.002, "m", "Open an interactive prompt"]
+[0.002, "o", "$ ollama run llama3.2:3b\r\n"]
+[0.002, "o", ">>> Send a message\n"]

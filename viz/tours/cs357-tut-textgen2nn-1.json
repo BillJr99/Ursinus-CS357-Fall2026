@@ -1,0 +1,60 @@
+{
+ "code": "W1 = [[0.5, 1.0],    # weights into h1\n      [1.0, -1.0]]   # weights into h2\nb1 = [-0.5, 0.5]\nV  = [1.5, 2.0]      # weights into output\nc  = 0.25\n\ndef relu(z):\n    return max(0.0, z)\n\ndef forward(x, verbose=True):\n    pre = [W1[j][0]*x[0] + W1[j][1]*x[1] + b1[j] for j in range(2)]\n    h   = [relu(p) for p in pre]\n    y   = V[0]*h[0] + V[1]*h[1] + c\n    if verbose:\n        print(f\"x = {x}\")\n        for j in range(2):\n            print(f\"  h{j+1}: pre = {W1[j][0]}*{x[0]} + {W1[j][1]}*{x[1]} + {b1[j]} = {pre[j]:+.2f}\"\n                  f\"  -> ReLU -> {h[j]:.2f}\")\n        print(f\"  y  = {V[0]}*{h[0]:.2f} + {V[1]}*{h[1]:.2f} + {c} = {y:.2f}\\n\")\n    return y\n\nfor x in [(1.0, 2.0), (2.0, 1.0), (0.0, 0.0)]:\n    forward(list(x))",
+ "description": "Implement a 2-2-1 network forward pass with ReLU activation, printing intermediate values for verification against hand traces.",
+ "example": "cs357-tut-textgen2nn-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe free model",
+ "steps": [
+  {
+   "description": "Reveal weights and biases: W1 for hidden layer, b1, V for output, c.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "Reveal ReLU: max(0, z) activation function.",
+   "kind": "reveal",
+   "lines": "7-8"
+  },
+  {
+   "description": "Reveal forward: computes pre-activations, applies ReLU, computes output, with verbose tracing.",
+   "kind": "reveal",
+   "lines": "10-20"
+  },
+  {
+   "answer": "2.00",
+   "kind": "predict",
+   "lines": "18",
+   "question": "What is h1 after ReLU for input (1.0, 2.0)?"
+  },
+  {
+   "description": "Reveal test inputs: three pairs to verify against hand traces.",
+   "kind": "reveal",
+   "lines": "22-23"
+  },
+  {
+   "description": "Focus on pre-activation: weighted sum plus bias for each hidden neuron.",
+   "kind": "focus",
+   "lines": "11"
+  },
+  {
+   "description": "Focus on h and y: ReLU activation for hidden, weighted sum for output.",
+   "kind": "focus",
+   "lines": "12-13"
+  },
+  {
+   "description": "Run to show verbose trace for (1.0, 2.0).",
+   "kind": "run",
+   "lines": "19",
+   "trace_step": 20
+  },
+  {
+   "description": "Run to show all three input traces complete.",
+   "kind": "run",
+   "lines": "23",
+   "trace_step": 33
+  }
+ ],
+ "title": "Neural Network Forward Pass",
+ "version": 1
+}

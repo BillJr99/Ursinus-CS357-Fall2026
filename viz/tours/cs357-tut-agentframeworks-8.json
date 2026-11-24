@@ -1,0 +1,42 @@
+{
+ "code": "from deepagents import create_deep_agent\n\n# Form 1 - a \"provider:model\" STRING, resolved by LangChain's init_chat_model.\n\n# Requires the matching integration package (here: pip install langchain-ollama).\nagent = create_deep_agent(model=\"ollama:llama3.2\", tools=[days_between], system_prompt=\"...\")\n\n# other strings: \"openai:gpt-4o-mini\", \"anthropic:claude-3-5-sonnet-latest\", ...\n\n# Form 2 - a fully-constructed chat model OBJECT, when you need to set options\n\n# (base_url, temperature, context length) or point at an OpenAI-compatible server.\nfrom langchain_ollama import ChatOllama\nllm = ChatOllama(model=\"llama3.2\", temperature=0, num_ctx=8192)\nagent = create_deep_agent(model=llm, tools=[days_between], system_prompt=\"...\")\n\n# To route through OpenWebUI's OpenAI-compatible endpoint instead of Ollama-direct:\nfrom langchain_openai import ChatOpenAI\nllm = ChatOpenAI(base_url=\"http://localhost:3000/api\", api_key=\"sk-...\", model=\"llama3.2\")\nagent = create_deep_agent(model=llm, tools=[days_between], system_prompt=\"...\")",
+ "description": "Agent with subagents for researcher and critic, system prompt instructs delegation flow, isolated context windows prevent cross-talk.",
+ "example": "cs357-tut-agentframeworks-8",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Delegating agent with subagents for isolated context windows.",
+   "kind": "reveal",
+   "lines": "1-20"
+  },
+  {
+   "description": "Researcher_subagent definition with its own system prompt and tools.",
+   "kind": "focus",
+   "lines": "6-8"
+  },
+  {
+   "description": "Critic_subagent definition with its own system prompt.",
+   "kind": "focus",
+   "lines": "9-10"
+  },
+  {
+   "description": "Main agent: study-plan writer with system prompt that explicitly delegates to researcher, then critic.",
+   "kind": "focus",
+   "lines": "12-14"
+  },
+  {
+   "description": "Subagents list: researcher_subagent and critic_subagent as isolated helpers.",
+   "kind": "focus",
+   "lines": "15-16"
+  },
+  {
+   "description": "Invocation: agent.invoke with study plan request, print the final content.",
+   "kind": "focus",
+   "lines": "18-20"
+  }
+ ],
+ "title": "DeepAgents: Sub-Agents and Delegation",
+ "version": 1
+}

@@ -1,0 +1,67 @@
+{
+ "code": "# The Ollama response behind Model 4, step 1 (durations are in nanoseconds)\nresp = {\"model\": \"hermes-3\", \"done\": True, \"done_reason\": \"stop\",\n        \"total_duration\": 2_773_000_000, \"load_duration\": 12_000_000,\n        \"prompt_eval_count\": 412, \"prompt_eval_duration\": 610_000_000,\n        \"eval_count\": 41, \"eval_duration\": 2_100_000_000}\n\nNS = 1e9\nin_tok, out_tok = resp[\"prompt_eval_count\"], resp[\"eval_count\"]\nread_s = resp[\"prompt_eval_duration\"] / NS\nwrite_s = resp[\"eval_duration\"] / NS\ntotal_s = resp[\"total_duration\"] / NS\n\nprint(f\"read  {in_tok:>4} input tokens  in {read_s:.2f} s  ({in_tok / read_s:.0f} tokens/s)\")\nprint(f\"wrote {out_tok:>4} output tokens in {write_s:.2f} s  ({out_tok / write_s:.1f} tokens/s)\")\nprint(f\"total {total_s:.2f} s, and writing was {write_s / total_s:.0%} of it\")\n\n# The trace line, built from measured numbers rather than estimates\nprint({\"trace_id\": \"t-77b0\", \"step\": 1, \"phase\": \"plan\",\n       \"prompt_tokens\": in_tok, \"completion_tokens\": out_tok,\n       \"latency_ms\": int(total_s * 1000), \"finish_reason\": resp[\"done_reason\"]})",
+ "description": "This example parses an Ollama chat response to compute input and output token throughput, showing that reading the prompt is fast and parallel while writing tokens is slow and sequential.",
+ "example": "cs357-liascript-observability-4",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: pi free model + edit: codex",
+ "steps": [
+  {
+   "description": "The resp dictionary holds a real Ollama response from Model 4's step 1 plan phase. It includes total_duration, load_duration, prompt_eval_count, prompt_eval_duration, eval_count, and eval_duration, all in nanoseconds.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "The key fields: 412 input tokens took 610ms (prompt_eval_duration), 41 output tokens have their duration in eval_duration, and the total was 2773ms. The load_duration of 12ms is negligible.",
+   "kind": "focus",
+   "lines": "3-5"
+  },
+  {
+   "description": "NS converts nanoseconds to seconds. in_tok and out_tok extract the token counts. read_s, write_s, and total_s convert the durations to seconds.",
+   "kind": "reveal",
+   "lines": "7-11"
+  },
+  {
+   "description": "Three print statements show the throughput: input tokens at ~675 tokens/s, output tokens at ~19.5 tokens/s, and that writing took 76% of the total time.",
+   "kind": "reveal",
+   "lines": "13-15"
+  },
+  {
+   "answer": "It contains the trace_id, step, phase, the measured prompt_tokens and completion_tokens, the total latency in milliseconds, and the finish_reason from the response.",
+   "kind": "predict",
+   "lines": "17-20",
+   "question": "What does the trace line printed at the end contain?"
+  },
+  {
+   "description": "The trace line is built from the measured numbers, not estimates. It records 412 prompt tokens, 41 completion tokens, 2773ms latency, and finish_reason stop.",
+   "kind": "reveal",
+   "lines": "17-20"
+  },
+  {
+   "description": "The first print shows: 412 input tokens read in 0.61 seconds at 675 tokens per second.",
+   "kind": "run",
+   "lines": "13",
+   "trace_step": 0
+  },
+  {
+   "description": "The second print shows: 41 output tokens written in 2.10 seconds at 19.5 tokens per second.",
+   "kind": "run",
+   "lines": "14",
+   "trace_step": 1
+  },
+  {
+   "description": "The third print shows: total 2.77 seconds, writing was 76% of the time.",
+   "kind": "run",
+   "lines": "15",
+   "trace_step": 2
+  },
+  {
+   "description": "The trace line is printed with the measured token counts, latency, and finish_reason.",
+   "kind": "run",
+   "lines": "18-20",
+   "trace_step": 3
+  }
+ ],
+ "title": "Reading Ollama response durations and token speeds",
+ "version": 1
+}

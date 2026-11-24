@@ -1,0 +1,10 @@
+sample  words  criterion        before  after  delta
+s01        89  claims_cited          3      3     +0
+s01        89  directness            4      4     +0
+s01        89  counterargument       4      4     +0
+s02        45  claims_cited          1      1     +0
+s02        45  directness            2      3     +1
+s02        45  counterargument       2      2     +0
+s03        40  claims_cited          1      1     +0
+s03        40  directness            2      3     +1
+s03        40  counterargument       1      1     +0

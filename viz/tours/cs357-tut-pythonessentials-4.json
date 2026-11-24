@@ -1,0 +1,45 @@
+{
+ "code": "import json\n\ndef parse_reply(text):\n    try:\n        return json.loads(text)\n    except json.JSONDecodeError as e:\n        print(\"not JSON:\", e.msg)\n        return None\n\nprint(parse_reply('{\"ok\": 1}'))\nprint(parse_reply(\"Sure! Here is the JSON\"))",
+ "description": "A function parses JSON with try/except to handle malformed input gracefully, returning None on failure.",
+ "example": "cs357-tut-pythonessentials-4",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe free model",
+ "steps": [
+  {
+   "description": "Reveal import: json module for parsing.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "Reveal parse_reply: try json.loads, except JSONDecodeError prints message and returns None.",
+   "kind": "reveal",
+   "lines": "3-8"
+  },
+  {
+   "answer": "The parsed Python dict",
+   "kind": "predict",
+   "lines": "5",
+   "question": "What does parse_reply return for valid JSON?"
+  },
+  {
+   "description": "Reveal test cases: valid JSON string and malformed text.",
+   "kind": "reveal",
+   "lines": "10-11"
+  },
+  {
+   "description": "Run to show successful parse returning the dict.",
+   "kind": "run",
+   "lines": "10",
+   "trace_step": 2
+  },
+  {
+   "description": "Run to show exception caught and None returned.",
+   "kind": "run",
+   "lines": "11",
+   "trace_step": 6
+  }
+ ],
+ "title": "Error Handling with try and except",
+ "version": 1
+}

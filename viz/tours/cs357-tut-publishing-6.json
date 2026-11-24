@@ -1,0 +1,27 @@
+{
+ "code": "{% raw %}\n\n# .github/workflows/publish.yml\n- uses: docker/login-action@v3\n  with:\n    registry: ghcr.io\n    username: ${{ github.actor }}\n    password: ${{ secrets.GITHUB_TOKEN }}   # automatically provided by GitHub Actions\n\n- uses: docker/build-push-action@v6\n  with:\n    context: .\n    push: true\n    tags: ghcr.io/${{ github.repository }}:${{ github.ref_name }}\n    # github.ref_name is the tag you pushed (e.g., v0.2.0)\n{% endraw %}",
+ "description": "Workflow that logs into GHCR using GITHUB_TOKEN, builds and pushes image with tag from ref_name, triggered manually.",
+ "example": "cs357-tut-publishing-6",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete GitHub Actions workflow.",
+   "kind": "reveal",
+   "lines": "1-16"
+  },
+  {
+   "description": "Login: docker/login-action@v3 authenticates to ghcr.io with github.actor and GITHUB_TOKEN.",
+   "kind": "focus",
+   "lines": "3-8"
+  },
+  {
+   "description": "Build and push: docker/build-push-action@v6 builds from context, pushes true, tags with repository and ref_name.",
+   "kind": "focus",
+   "lines": "10-15"
+  }
+ ],
+ "title": "GitHub Actions: Container Publish Workflow",
+ "version": 1
+}

@@ -1,0 +1,57 @@
+{
+ "code": "# One evaluation run, from token_usage.csv\ncalls = 40\ninput_tokens = 48_200\noutput_tokens = 6_900\ngeneration_seconds = 410\n\n# ---- Assumptions: every one is labeled, and every one is yours to replace ----\nmachine_watts = 30          # ASSUMPTION, no published source: measure yours (plug-in meter, nvidia-smi, or powermetrics on a Mac)\ngrid_g_per_kwh = 350        # SOURCE: EPA eGRID2023 U.S. total output rate, 770.9 lb CO2e/MWh; look up your region at epa.gov/egrid/power-profiler\ng_per_input_token = 5.3e-7  # SOURCE: energy-profiles.json, offline profile (0.0005 g per local query midpoint)\ng_per_output_token = 1.6e-6 # SOURCE: energy-profiles.json, offline profile (output costs 3x input)\ntraining_g_per_request = 3.9e8 / 1.0e11   # energy-profiles.json: Llama 3 8B training total / ASSUMED lifetime requests\nprice_in_per_million = 15.00   # a GPT-4-class hosted price per million input tokens\nprice_out_per_million = 60.00  # and per million output tokens (4x input)\n\n# ---- Conversions ----\nkwh = machine_watts * generation_seconds / 3600 / 1000\ncarbon_from_time = kwh * grid_g_per_kwh\ncarbon_from_tokens = input_tokens * g_per_input_token + output_tokens * g_per_output_token\ntraining_share = calls * training_g_per_request\nhosted_cost = (input_tokens / 1e6) * price_in_per_million + (output_tokens / 1e6) * price_out_per_million\n\nprint(f\"Energy:  {kwh * 1000:.2f} Wh\")\nprint(f\"Carbon from measured time:  {carbon_from_time:.3f} g CO2e\")\nprint(f\"Carbon from per-token rates: {carbon_from_tokens:.3f} g CO2e, plus {training_share:.3f} g training share\")\nprint(f\"Hosted price avoided: ${hosted_cost:.2f}, plus {kwh:.4f} kWh at your electricity rate\")",
+ "description": "This example converts measured token counts and generation time into energy use, two carbon estimates, and a hosted-model cost comparison.",
+ "example": "cs357-liascript-biasdata-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "We start with one evaluation run: 40 calls, 48,200 input tokens, 6,900 output tokens, and 410 seconds of generation time.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "Every assumption is labeled with its source or marked as an assumption to replace: machine wattage, grid carbon intensity, per-token carbon rates, training emissions share, and hosted model prices.",
+   "kind": "reveal",
+   "lines": "7-15"
+  },
+  {
+   "description": "The conversions compute energy in kWh, carbon from measured time, carbon from per-token rates (plus training share), and the hosted price we avoided by running locally.",
+   "kind": "focus",
+   "lines": "17-22"
+  },
+  {
+   "answer": "Carbon from measured time (1.196 g) is much larger than carbon from per-token rates (0.037 g).",
+   "kind": "predict",
+   "lines": "18-19",
+   "question": "Which carbon estimate is larger: the one from measured time or the one from per-token rates?"
+  },
+  {
+   "description": "The first print shows energy: 3.42 Wh.",
+   "kind": "run",
+   "lines": "23",
+   "trace_step": 17
+  },
+  {
+   "description": "Carbon from measured time: 1.196 g CO2e.",
+   "kind": "run",
+   "lines": "24",
+   "trace_step": 18
+  },
+  {
+   "description": "Carbon from per-token rates: 0.037 g CO2e, plus 0.156 g training share.",
+   "kind": "run",
+   "lines": "25",
+   "trace_step": 19
+  },
+  {
+   "description": "Hosted price avoided: $1.14, plus 0.0034 kWh at your electricity rate.",
+   "kind": "run",
+   "lines": "26",
+   "trace_step": 20
+  }
+ ],
+ "title": "Token Usage to Energy, Carbon, and Cost",
+ "version": 1
+}

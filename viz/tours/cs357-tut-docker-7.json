@@ -1,0 +1,32 @@
+{
+ "code": "docker run -it --rm \\\n  --name agent \\\n  -v \"$HOME/agents/project:/work\" \\\n  -v \"$HOME/notes/vault:/reference:ro\" \\\n  -e AGENT_API_KEY \\\n  course-agent",
+ "description": "The run command that gives an agent exactly one read-write mount, with the reference mount read-only.",
+ "example": "cs357-tut-docker-7",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Run interactively and remove the container on exit, naming it `agent`. The page says the discipline that makes everything safe is one read-write mount and everything else read-only or absent.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "Mount `$HOME/agents/project` at `/work` read-write. The page says this folder is a git repository, so every change the agent makes is listed by `git status` and revertible with `git checkout`.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "Mount `$HOME/notes/vault` at `/reference` with `:ro`. The page says the agent reads these and physically cannot modify them.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "Pass `AGENT_API_KEY` through from your shell with `-e` and no value, which the page says avoids baking the key into the image or its history. The course's own stack needs no key, because the model is local.",
+   "kind": "focus",
+   "lines": "5-6"
+  }
+ ],
+ "title": "One Writable Folder",
+ "version": 1
+}

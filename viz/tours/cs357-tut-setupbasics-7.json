@@ -1,0 +1,27 @@
+{
+ "code": "{\n  \"mcpServers\": {\n    \"word-tools\": {\n      \"command\": \"python3\",\n      \"args\": [\"word_count_server.py\"]\n    }\n  }\n}",
+ "description": "The .omp/mcp.json file that registers the word-tools server for Oh My Pi, with the command and the script it runs.",
+ "example": "cs357-tut-setupbasics-7",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is `.omp/mcp.json`, saved in your project. The page says to type `/mcp list` inside Oh My Pi to confirm it, or `/mcp test word-tools` to try the connection.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "`mcpServers` defines one server, `word-tools`, the same name used in the opencode config.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "`command` is `python3`, and `args` passes `word_count_server.py`, the MCP server file from the previous section.",
+   "kind": "focus",
+   "lines": "4-5"
+  }
+ ],
+ "title": "Oh My Pi MCP Server Config",
+ "version": 1
+}

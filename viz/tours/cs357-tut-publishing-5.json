@@ -1,0 +1,37 @@
+{
+ "code": "\n# Step 1: Log in (once per machine; use your npm access token when prompted for a password)\nnpm login\n\n# Step 2: See EXACTLY what would ship; read this output carefully before proceeding\nnpm pack --dry-run\n\n# This lists every file that would be included in the published tarball\n\n# Step 3: Publish (--access public is required for scoped packages on the first publish)\nnpm publish --access public\n\n# Step 4: Verify as a stranger would, from a different directory or machine\nnpx @yourusername/hello-agent Bill\n\n# Expected output: {\"greeting\":\"hello, Bill\",\"from\":\"CS357\"}\n\n# Step 5: Ship a fix\nnpm version patch                  # bumps 0.1.0 -> 0.1.1, edits package.json, creates a git tag\nnpm publish                        # publish the new version (no --access needed after first time)",
+ "description": "Shebang-enabled Node script that greets by name from process.argv, with structured JSON output and course exception pattern.",
+ "example": "cs357-tut-publishing-5",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete index.js CLI implementation.",
+   "kind": "reveal",
+   "lines": "1-20"
+  },
+  {
+   "description": "Shebang: #!/usr/bin/env node makes file executable as CLI command.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Comment and argument: explains purpose, gets name from process.argv[2] or defaults to world.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "Output: logs structured JSON with greeting and CS357 identifier.",
+   "kind": "focus",
+   "lines": "4-5"
+  },
+  {
+   "description": "Error handling: course exception pattern with console.error for debug info and clean exit.",
+   "kind": "focus",
+   "lines": "6-10"
+  }
+ ],
+ "title": "index.js: CLI Entry Point",
+ "version": 1
+}

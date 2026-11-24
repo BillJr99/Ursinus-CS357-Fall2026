@@ -1,0 +1,32 @@
+{
+ "code": "cd ~/cs357-work/.devcontainer\ndocker compose build\ndocker compose run --rm cs357",
+ "description": "Use docker compose to build the course image and run it as the cs357 service, entering an interactive shell.",
+ "example": "cs357-tut-coursecontainer-3",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Three commands for Option B: plain Docker Compose entry.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Directory: cd to .devcontainer folder containing the Dockerfile and compose file.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Build: docker compose build creates the cs357 image from the Dockerfile.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Run: docker compose run --rm cs357 starts the container and opens a shell inside it.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "Build and Enter Container",
+ "version": 1
+}

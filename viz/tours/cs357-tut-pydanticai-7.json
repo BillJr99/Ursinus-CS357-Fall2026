@@ -1,0 +1,27 @@
+{
+ "code": "# step4_output.py: the answer as a validated object. The model extracts; your code computes.\nimport traceback\nfrom datetime import date\n\nfrom pydantic import BaseModel, Field\nfrom pydantic_ai import Agent, ModelRetry, NativeOutput, UsageLimits\n\nfrom common import make_model\n\n\nclass Deadline(BaseModel):\n    event: str = Field(description=\"What the deadline is, in a few words\")\n    target: date\n\n\nagent = Agent(\n    make_model(),\n    output_type=NativeOutput(Deadline),   # Ollama constrains the reply to this JSON schema\n    retries=3,\n    instructions=\"Extract the deadline the user names.\",\n    model_settings={\"temperature\": 0.0, \"seed\": 42},\n)\n\n\n@agent.output_validator\ndef not_in_the_past(output: Deadline) -> Deadline:\n    # A rule the schema cannot express: valid dates can still be wrong for this task.\n    if output.target < date.today():\n        raise ModelRetry(f\"{output.target} has already passed; re-read the year in the request.\")\n    return output\n\n\ntry:\n    result = agent.run_sync(\"Countdown to the last day of classes, 2026-12-07.\",\n                            usage_limits=UsageLimits(request_limit=4))\n    d = result.output\n    print(repr(d))\n    print(f\"{d.event}: {(d.target - date.today()).days} days left\")   # arithmetic stays in code\nexcept Exception as e:\n    print(f\"[step4_output:main] {e}\")\n    traceback.print_exc()",
+ "description": "The model extracts a typed Deadline object constrained by NativeOutput, an output validator checks that the date has not passed, and Python computes the day count.",
+ "example": "cs357-tut-pydanticai-7",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "Deadline defines event and target fields, and the Agent uses NativeOutput(Deadline) so Ollama constrains the reply to that JSON schema.",
+   "kind": "reveal",
+   "lines": "1-22"
+  },
+  {
+   "description": "The @agent.output_validator function not_in_the_past checks that output.target is not before today and raises ModelRetry if it is.",
+   "kind": "reveal",
+   "lines": "25-30"
+  },
+  {
+   "description": "After agent.run_sync returns the validated Deadline instance d, line 38 computes (d.target - date.today()).days in Python rather than asking the model to do arithmetic.",
+   "kind": "reveal",
+   "lines": "33-41"
+  }
+ ],
+ "title": "Structured extraction with NativeOutput and an output validator",
+ "version": 1
+}

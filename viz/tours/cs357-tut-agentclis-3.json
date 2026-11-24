@@ -1,0 +1,27 @@
+{
+ "code": "docker run -it --rm \\\n  -v \"$PWD:/work\" \\\n  -v \"$HOME/notes/vault:/reference:ro\" \\\n  --add-host=host.docker.internal:host-gateway \\\n  --cap-drop ALL --security-opt no-new-privileges \\\n  course-agent opencode",
+ "description": "Three one-line checks confirm the required tools before installing any agent CLI: Node 20+, Python 3.10+, and Git.",
+ "example": "cs357-tut-agentclis-3",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "Each line checks one prerequisite: node for Node-based tools, python3 for Python-based tools, and git which every tool assumes.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Line 1 notes you can skip to the container section if you prefer not to install Node on your host.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "answer": "skip to §2c and run the tool in a container instead",
+   "kind": "predict",
+   "question": "What is the alternative if node is missing?"
+  }
+ ],
+ "title": "Prerequisites: Node, Python, Git",
+ "version": 1
+}

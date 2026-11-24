@@ -1,0 +1,8 @@
+turn 1: {"action": "call", "agent": "extractor", "input": "Chess club meets Thursday at 7pm 
+   extractor -> Chess club | Thursday | 7pm | Olin 107 / Hawk Hacks | Saturd...  check=-
+turn 2: {"action": "call", "agent": "extractor", "input": "Chess club meets Thursday at 7pm 
+-> stubborn: stopped: repeated call to extractor (turns: 2, model calls: 3)
+
+turn 1: Sure! First I will extract the events, then write the digest.
+-> chatty: stopped: malformed decision (turns: 1, model calls: 1)
+

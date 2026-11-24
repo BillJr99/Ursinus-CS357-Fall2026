@@ -1,0 +1,42 @@
+{
+ "code": "import json\nimport traceback\n\nimport requests\nfrom token_usage import OLLAMA_URL, MODEL\n\ndef ollama_chat_stream(messages, temperature=0.7):\n    \"\"\"Streaming version.  The counts arrive only in the last chunk, the one with done=true.\"\"\"\n    text, final = [], {}\n    try:\n        with requests.post(OLLAMA_URL, json={\n            \"model\": MODEL,\n            \"messages\": messages,\n            \"stream\": True,\n            \"options\": {\"temperature\": temperature}\n        }, stream=True, timeout=120) as r:\n            r.raise_for_status()\n            for line in r.iter_lines():\n                if not line:\n                    continue\n                chunk = json.loads(line)\n                piece = (chunk.get(\"message\") or {}).get(\"content\", \"\")\n                print(piece, end=\"\", flush=True)\n                text.append(piece)\n                if chunk.get(\"done\"):\n                    final = chunk            # prompt_eval_count and eval_count live here\n        print()\n        if final:\n            final[\"message\"] = {\"role\": \"assistant\", \"content\": \"\".join(text)}\n        return final\n    except Exception as e:\n        print(f\"[token_usage:ollama_chat_stream] {e}\")\n        traceback.print_exc()\n        return {}",
+ "description": "A streaming Ollama helper that reads each chunk, prints the text as it arrives, and keeps the final chunk where the token counts live.",
+ "example": "cs357-tut-observability-6",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The imports and the function definition. `OLLAMA_URL` and `MODEL` come from `token_usage`. The docstring states the key fact: with streaming, the counts arrive only in the last chunk, the one with `done=true`.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "The request posts to `OLLAMA_URL` with `\"stream\": True` and the temperature in `options`, and reads the response as a stream.",
+   "kind": "focus",
+   "lines": "11-16"
+  },
+  {
+   "description": "The loop reads the response line by line, parses each chunk, prints its content piece as it arrives, and appends the piece to `text`.",
+   "kind": "focus",
+   "lines": "18-24"
+  },
+  {
+   "description": "When a chunk has `done` true, the code keeps it in `final`. The comment says `prompt_eval_count` and `eval_count` live in that chunk.",
+   "kind": "focus",
+   "lines": "25-26"
+  },
+  {
+   "description": "After the loop, if a final chunk was kept, the full text is attached to it as the message, and the chunk is returned so the counts are not thrown away.",
+   "kind": "focus",
+   "lines": "28-30"
+  },
+  {
+   "answer": "the text",
+   "kind": "predict",
+   "question": "The page says the most common reason a token table has zeros is a helper that stops reading early or keeps only what?"
+  }
+ ],
+ "title": "A Streaming Helper That Keeps the Counts",
+ "version": 1
+}

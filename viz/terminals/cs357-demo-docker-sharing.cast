@@ -1,0 +1,13 @@
+{"version": 2, "width": 100, "height": 30, "title": "Write through a Docker bind mount", "code_viz_provenance": "recorded", "duration": 1.121}
+[0.0, "m", "Create the shared directory"]
+[0.0, "o", "$ mkdir -p \"$HOME/agents/work\"\r\n"]
+[0.0, "o", ""]
+[0.001, "m", "Mount the directory"]
+[0.001, "o", "$ docker run --rm -v \"$HOME/agents/work:/work\" alpine:3.20 ls /work\r\n"]
+[0.001, "o", ""]
+[0.602, "m", "Write from the container"]
+[0.602, "o", "$ docker run --rm -v \"$HOME/agents/work:/work\" alpine:3.20 sh -c 'touch /work/hello && echo wrote'\r\n"]
+[0.984, "o", "wrote\r\n"]
+[1.103, "m", "Check from the host"]
+[1.103, "o", "$ ls \"$HOME/agents/work\"\r\n"]
+[1.12, "o", "hello\r\n"]

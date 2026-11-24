@@ -1,0 +1,42 @@
+{
+ "code": "\n# .github/workflows/deploy.yml  (DELIBERATELY FLAWED, do not copy)\non:\n  push:                                   # (defect) which branches? any branch can deploy\njobs:\n  deploy:\n    runs-on: ubuntu-latest                # (defect) no environment, no actor check\n    steps:\n      - uses: actions/checkout@main\n      - run: |\n          echo \"token is $CLOUDFLARE_API_TOKEN\"   # (defect) prints the secret past the mask\n          ./deploy.sh\n        env:\n          CLOUDFLARE_API_TOKEN: cf_live_9s8d7f6g5h4j3k2l1   # (defect) hardcoded secret in the repo",
+ "description": "An audit exercise. This workflow is labeled deliberately flawed, and each of its own comments points at a defect for you to find.",
+ "example": "cs357-tut-cloudflare-26",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the first of two files in the audit exercise. Line 2 marks it as `DELIBERATELY FLAWED, do not copy`, so the defects are intended, and line 3 starts the `on` block.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "`push:` has no branch restriction. Its own comment is the defect note: which branches, since any branch can deploy.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "The job runs on `ubuntu-latest`. Its comment is the defect note: there is no environment and no actor check.",
+   "kind": "focus",
+   "lines": "7"
+  },
+  {
+   "description": "The `run` block echoes the token. Its comment is the defect note: it prints the secret past the mask.",
+   "kind": "focus",
+   "lines": "11"
+  },
+  {
+   "description": "The `env` block sets `CLOUDFLARE_API_TOKEN` to a literal value. Its comment is the defect note: a hardcoded secret in the repo.",
+   "kind": "focus",
+   "lines": "14"
+  },
+  {
+   "answer": "five",
+   "kind": "predict",
+   "question": "The exercise says the two files together contain how many distinct defects to find?"
+  }
+ ],
+ "title": "Exercise 6: A Deliberately Flawed Workflow",
+ "version": 1
+}

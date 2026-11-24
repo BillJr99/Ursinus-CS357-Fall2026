@@ -1,0 +1,32 @@
+{
+ "code": "async function getAIEvaluation(providerConfig, fen) {\n  const prompt = `You are a chess engine. Given this FEN, estimate the evaluation from White's` +\n    ` perspective as a single number (positive = White advantage, negative = Black advantage).` +\n    ` Respond ONLY with a JSON object like {\"eval\": 0.5} where the number is in pawns. FEN: ${fen}`;\n\n  const text = await callTextModel(providerConfig, prompt, { maxTokens: 120, temperature: 0 });\n\n  // Models often wrap JSON in ```json fences or add stray words. Strip fences, then parse safely.\n  const parsed = safeJsonParse(text.replace(/```json|```/g, \"\").trim(), {});\n  return typeof parsed.eval === \"number\" ? parsed.eval : 0;   // fall back to 0 if anything is off\n}\n\nfunction safeJsonParse(text, fallback) {\n  try { return JSON.parse(text); } catch { return fallback; }\n}",
+ "description": "The evaluation call that demands a JSON number, plus the safe parser that returns a fallback instead of throwing.",
+ "example": "cs357-tut-chessaicoach-8",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "`getAIEvaluation` builds a prompt that asks for the evaluation from White's perspective as a single number, in pawns, and says to respond only with a JSON object like `{\"eval\": 0.5}`.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "It calls `callTextModel` with `maxTokens: 120` and `temperature: 0`. The page says temperature 0 is part of asking precisely.",
+   "kind": "focus",
+   "lines": "6"
+  },
+  {
+   "description": "The comment says models often wrap JSON in fences or add stray words, so the code strips the fences, parses safely, and returns `parsed.eval` only when it is a number, falling back to 0.",
+   "kind": "focus",
+   "lines": "8-10"
+  },
+  {
+   "description": "`safeJsonParse` tries `JSON.parse` and returns the fallback on any error. The page says never trust the parse, so this returns a fallback instead of throwing.",
+   "kind": "focus",
+   "lines": "13-15"
+  }
+ ],
+ "title": "Structured Output for the Evaluation Bar",
+ "version": 1
+}

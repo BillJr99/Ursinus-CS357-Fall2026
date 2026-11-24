@@ -1,0 +1,32 @@
+{
+ "code": "import csv\nimport traceback\nimport requests\nfrom collections import Counter\nfrom lab4 import load_config, extract_answer, run_debate, majority_vote\n\nconfig = load_config()\n\nSHOOTOUT_TASKS = [\n    {\"id\": \"S01\", \"question\": \"A shirt costs $40 and is on sale for 25% off. You also have a coupon for 10% off the sale price. What is the final price?\", \"answer\": \"27.00\"},\n    {\"id\": \"S02\", \"question\": \"If you fold a piece of paper in half 10 times, how many layers thick is it?\", \"answer\": \"1024\"},\n    {\"id\": \"S03\", \"question\": \"A store buys a jacket for $60 and marks the price up by 50%. During a sale, the marked-up price is then reduced by 50%. What is the sale price?\", \"answer\": \"45.00\"},\n    {\"id\": \"S04\", \"question\": \"Three friends split a $75 dinner bill evenly, and then each person adds a $5 tip of their own. How much does each person pay in total?\", \"answer\": \"30.00\"},\n    {\"id\": \"S05\", \"question\": \"A town's population of 8,000 grows by 10% one year and then shrinks by 10% the next year. What is the population after both years?\", \"answer\": \"7920\"},\n    {\"id\": \"S06\", \"question\": \"How many bones are in the typical adult human body?\", \"answer\": \"206\"},\n    {\"id\": \"S07\", \"question\": \"What is the capital city of Australia?\", \"answer\": \"Canberra\"},\n    {\"id\": \"S08\", \"question\": \"In what year did humans first walk on the Moon?\", \"answer\": \"1969\"},\n    {\"id\": \"S09\", \"question\": \"A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost, in cents?\", \"answer\": \"5\"},\n    {\"id\": \"S10\", \"question\": \"A patch of lily pads doubles in size every day. It covers the entire lake after 48 days. After how many days did it cover half the lake?\", \"answer\": \"47\"},\n]\n# S03-S05 are arithmetic word problems with a trap step; S06-S08 are short factual\n# questions with verifiable answers; S09-S10 are classic reasoning puzzles where the\n# intuitive-but-wrong answer (10 cents; 24 days) is a well-known misconception:\n# good candidates for a correlated failure, where every agent agrees on the same\n# wrong answer. Feel free to swap in questions of your own, keeping this mix.",
+ "description": "shootout.py imports the debate helpers, loads the config, and defines ten labeled questions with checkable answers, mixing arithmetic traps, short facts, and classic puzzles.",
+ "example": "cs357-tut-multiagentmeasurement-9",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The script imports `csv`, `traceback`, `requests`, and `Counter`, and pulls `load_config`, `extract_answer`, `run_debate`, and `majority_vote` from `lab4`. The config is loaded once.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "`SHOOTOUT_TASKS` is a list of ten entries, `S01` through `S10`. Each has an `id`, a `question`, and a checkable `answer`, such as `27.00` for a sale-price problem.",
+   "kind": "focus",
+   "lines": "9-20"
+  },
+  {
+   "description": "The closing comment groups the tasks. `S03` to `S05` are arithmetic word problems with a trap step, `S06` to `S08` are short factual questions with verifiable answers, and `S09` and `S10` are classic puzzles where the intuitive-but-wrong answer is a well-known misconception.",
+   "kind": "focus",
+   "lines": "21-25"
+  },
+  {
+   "answer": "a correlated failure",
+   "kind": "predict",
+   "question": "The page says the puzzle questions are good candidates for what kind of failure, where every agent agrees on the same wrong answer?"
+  }
+ ],
+ "title": "The Shootout Task Set",
+ "version": 1
+}

@@ -1,0 +1,27 @@
+{
+ "code": "#!/usr/bin/env bash\n# Runs the committed project's tests in a throwaway container. Nothing is left behind.\nset -euo pipefail\ncd \"$(git rev-parse --show-toplevel)\"\ngit archive --format=tar HEAD | docker run --rm -i node:22-bookworm bash -c \\\n  'mkdir /app && cd /app && tar -x && npm ci --no-audit --no-fund >/dev/null && npm test'",
+ "description": "Skill for tearing down Cloudflare resources: creates D1 database, applies migrations, deploys, then deletes database and resets ID.",
+ "example": "cs357-tut-fullstackwithagents-7",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Cloudflare-teardown skill content.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "Metadata: name is cloudflare-teardown.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Steps: D1 create with yes, copy database_id to wrangler.jsonc and commit, deploy commands with yes, check deletion, reset database_id to zeros.",
+   "kind": "focus",
+   "lines": "2-6"
+  }
+ ],
+ "title": "cloudflare-teardown SKILL.md",
+ "version": 1
+}

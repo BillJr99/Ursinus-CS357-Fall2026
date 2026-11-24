@@ -1,0 +1,33 @@
+{
+ "code": "grep \"ERROR\" agent.log | wc -l\n\n# grep searches agent.log for lines containing \"ERROR\" and passes them to wc\n\n# wc -l counts the number of lines received; result is the total error count\n\nls -la | sort -k5 -n | tail -3\n\n# ls -la lists files with details; sort -k5 -n sorts by the 5th column (file size) numerically\n\n# tail -3 keeps only the last 3 lines; result is the three largest files\n\ncat results.csv | grep \"fail\" | head -10\n\n# cat prints results.csv; grep keeps only lines containing \"fail\"\n\n# head -10 keeps only the first 10 of those; result is the first ten failures",
+ "description": "These pipelines connect search, counting, sorting, and filtering commands with pipes.",
+ "example": "cs357-tut-shell-1",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: copilot free model",
+ "steps": [
+  {
+   "description": "grep selects lines containing ERROR from agent.log, and wc -l counts those selected lines.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "answer": "The pipeline keeps the three largest files from the listing.",
+   "kind": "predict",
+   "lines": "7",
+   "question": "Which files remain after sorting the detailed listing by size and keeping the last three lines?"
+  },
+  {
+   "description": "ls -la produces detailed rows. sort uses the numeric fifth column, and tail keeps the final three rows.",
+   "kind": "reveal",
+   "lines": "7-11"
+  },
+  {
+   "description": "cat sends results.csv to grep, which keeps lines containing fail. head then keeps the first ten of those lines.",
+   "kind": "reveal",
+   "lines": "13-17"
+  }
+ ],
+ "title": "Compose shell pipelines",
+ "version": 1
+}

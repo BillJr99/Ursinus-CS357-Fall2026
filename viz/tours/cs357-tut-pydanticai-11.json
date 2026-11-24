@@ -1,0 +1,27 @@
+{
+ "code": "# calendar_server.py: the same two tools, served over real MCP (JSON-RPC over stdio).\nfrom datetime import date\n\nfrom fastmcp import FastMCP\n\nmcp = FastMCP(\"calendar\")\n\n\n@mcp.tool\ndef get_today() -> str:\n    \"\"\"Returns today's date in ISO format (YYYY-MM-DD).\"\"\"\n    return date.today().isoformat()\n\n\n@mcp.tool\ndef days_until(target: date) -> int:\n    \"\"\"Returns the number of days from today until the target date (positive means the future).\"\"\"\n    return (target - date.today()).days\n\n\nif __name__ == \"__main__\":\n    mcp.run(show_banner=False)          # stdio by default: the client starts this process",
+ "description": "calendar_server.py exposes get_today and days_until over the Model Context Protocol (MCP) using JSON-RPC over standard input and output.",
+ "example": "cs357-tut-pydanticai-11",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "Import FastMCP and create the 'calendar' MCP server instance.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "Decorate get_today and days_until with @mcp.tool so FastMCP publishes their names, docstrings, and typed schemas to any connected MCP client.",
+   "kind": "reveal",
+   "lines": "9-18"
+  },
+  {
+   "description": "mcp.run(show_banner=False) runs the server over stdio so a client process can start it and communicate with it.",
+   "kind": "reveal",
+   "lines": "21-22"
+  }
+ ],
+ "title": "Serving date tools over MCP with FastMCP",
+ "version": 1
+}

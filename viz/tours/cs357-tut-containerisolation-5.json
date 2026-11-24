@@ -1,0 +1,47 @@
+{
+ "code": "id\nls /home\ncat /etc/shadow\ntouch /etc/x\nfind / -name decoy-secret.txt 2>/dev/null\ncat /workspace/README.txt\necho \"written from inside the container\" > /workspace/from-container.txt\nomp --version\nexit",
+ "description": "Nine commands to test isolation: user identity, directory listing, restricted file access, read-only filesystem, and workspace verification.",
+ "example": "cs357-tut-containerisolation-5",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "All nine verification commands to run inside the container.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "User identity: id command shows non-root user.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Home directory: ls /home shows minimal contents, cat /etc/shadow is permission denied.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "Read-only filesystem: touch /etc/x fails with Read-only file system error.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "Isolation: find cannot locate decoy-secret.txt outside the mounted workspace.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "description": "Workspace access: cat README.txt works, writing to /workspace/from-container.txt succeeds.",
+   "kind": "focus",
+   "lines": "6-7"
+  },
+  {
+   "description": "Agent: omp --version checks the agent is available, exit leaves the container.",
+   "kind": "focus",
+   "lines": "8-9"
+  }
+ ],
+ "title": "Container Verification Commands",
+ "version": 1
+}

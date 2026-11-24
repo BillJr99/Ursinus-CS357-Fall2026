@@ -1,0 +1,32 @@
+{
+ "code": "{\n  \"permission\": {\n    \"skill\": {\n      \"*\": \"ask\",\n      \"pr-review\": \"allow\",\n      \"experimental-*\": \"deny\"\n    }\n  }\n}",
+ "description": "A permission block that controls whether skills load, using allow, deny, and ask. The last matching rule wins, so order the rules from general to specific.",
+ "example": "cs357-tut-agentskills-1",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a `permission` block in `opencode.json`. It controls skills, which no longer live in the config file; the file still holds permissions.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "`skill` names the category. The keys are skill names or patterns, and the values decide what happens: `ask` prompts you, `allow` loads the skill without asking, and `deny` hides it.",
+   "kind": "focus",
+   "lines": "3-6"
+  },
+  {
+   "answer": "deny",
+   "kind": "predict",
+   "question": "Which value hides a skill from the agent entirely?"
+  },
+  {
+   "description": "The last matching rule wins, so order these from general to specific. `\"*\": \"ask\"` is the general rule that covers every skill.",
+   "kind": "focus",
+   "lines": "4"
+  }
+ ],
+ "title": "Skill Permissions in opencode.json",
+ "version": 1
+}

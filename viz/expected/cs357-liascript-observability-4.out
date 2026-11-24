@@ -1,0 +1,4 @@
+read   412 input tokens  in 0.61 s  (675 tokens/s)
+wrote   41 output tokens in 2.10 s  (19.5 tokens/s)
+total 2.77 s, and writing was 76% of it
+{'trace_id': 't-77b0', 'step': 1, 'phase': 'plan', 'prompt_tokens': 412, 'completion_tokens': 41, 'latency_ms': 2773, 'finish_reason': 'stop'}

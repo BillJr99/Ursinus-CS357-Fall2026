@@ -1,0 +1,58 @@
+{
+ "code": "import json, requests\n\ndef chat(messages, temperature=0.0):\n    \"\"\"One turn against a local OpenAI-compatible chat endpoint.\n    messages: the running list of {\"role\": ..., \"content\": ...} dicts.\n    Returns the assistant's text. Illustrative; run locally only.\"\"\"\n    r = requests.post(\"http://localhost:11434/v1/chat/completions\", json={\n        \"model\": \"llama3.2\", \"temperature\": temperature, \"messages\": messages,\n    }, timeout=120)\n    return r.json()[\"choices\"][0][\"message\"][\"content\"].strip()\n\n# The ROSTER is YOURS: the fixed menu of sub-agents the supervisor may call.\n# Each value is a one-sentence system prompt: the same small-context\n# discipline as the pipeline stages in Part II.\nROSTER = {\n    \"researcher\": \"You gather facts for a narrow question. Return exactly 3 bullet points.\",\n    \"writer\":     \"You turn bullet points into one tight paragraph. Output only the paragraph.\",\n    \"critic\":     \"You list concrete problems with a paragraph, or reply exactly 'OK' if none.\",\n}\n\nSPAWN_BUDGET = 6   # YOURS: a hard cap on sub-agent calls, the stop condition of last resort.\n\ndef supervise(task):\n    \"\"\"The supervisor LLM decides, each turn, which sub-agent to run next, or to STOP.\"\"\"\n    transcript = []\n    for _ in range(SPAWN_BUDGET):          # the budget caps runaway spawning\n        decision = chat([\n            {\"role\": \"system\", \"content\":\n                \"You are an orchestrator. Choose the next step and reply with ONLY JSON. \"\n                f\"Available sub-agents: {list(ROSTER)}. \"\n                'Reply {\"action\":\"call\",\"agent\":\"<name>\",\"input\":\"<text>\"} '\n                'to delegate, or {\"action\":\"stop\",\"answer\":\"<final text>\"} when done.'},\n            {\"role\": \"user\", \"content\":\n                f\"TASK: {task}\\n\\nTRANSCRIPT SO FAR:\\n{json.dumps(transcript, indent=2)}\"},\n        ])\n        try:\n            step = json.loads(decision)\n        except json.JSONDecodeError:\n            break                          # malformed decision -> stop safely (YOUR guard)\n        if not isinstance(step, dict):\n            break                          # valid JSON that is not an object: stop safely too\n\n        if step.get(\"action\") == \"stop\":\n            return step.get(\"answer\", \"\")  # the supervisor decided the work is done\n\n        agent = step.get(\"agent\")\n        if agent not in ROSTER:            # closed-set guard, exactly like the Part II router\n            transcript.append({\"agent\": agent, \"error\": \"unknown sub-agent\"})\n            continue\n\n        # Dispatch: the sub-agent runs in its OWN tiny context, isolation by construction,\n        # so one sub-agent's scratch work never leaks into another's prompt.\n        result = chat([\n            {\"role\": \"system\", \"content\": ROSTER[agent]},\n            {\"role\": \"user\",   \"content\": step.get(\"input\", \"\")},\n        ])\n        transcript.append({\"agent\": agent, \"input\": step.get(\"input\"), \"result\": result})\n\n    # Budget exhausted without a STOP: return what we have, and FLAG that we were cut off.\n    return f\"[stopped: spawn budget of {SPAWN_BUDGET} reached]\\n{json.dumps(transcript, indent=2)}\"\n\nprint(supervise(\"Write one tight paragraph on why local models matter, then have it reviewed.\"))",
+ "description": "A supervisor loop delegates to a fixed roster of sub-agents (researcher, writer, critic) with a hard spawn budget cap. It shows the three levers that keep a dynamic system safe: roster, budget, and stop condition.",
+ "example": "cs357-liascript-orchestrationworkshop-3",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: omp free model + edit: codex",
+ "steps": [
+  {
+   "description": "The chat function makes one request to a local OpenAI-compatible endpoint (Ollama at localhost:11434) and returns the assistant's text response.",
+   "kind": "reveal",
+   "lines": "1-10"
+  },
+  {
+   "description": "The ROSTER dictionary defines three sub-agents with one-sentence system prompts: researcher gathers 3 bullet points, writer makes one paragraph, critic lists problems or says OK.",
+   "kind": "reveal",
+   "lines": "12-19"
+  },
+  {
+   "description": "SPAWN_BUDGET = 6 sets a hard cap on sub-agent calls, the stop condition of last resort.",
+   "kind": "focus",
+   "lines": "21-21"
+  },
+  {
+   "description": "The supervise function runs a loop up to SPAWN_BUDGET times. Each iteration asks the supervisor LLM for a JSON decision: call a sub-agent or stop with an answer.",
+   "kind": "reveal",
+   "lines": "23-41"
+  },
+  {
+   "description": "The supervisor prompt lists available sub-agents from ROSTER and specifies the exact JSON format for call or stop actions.",
+   "kind": "focus",
+   "lines": "36-38"
+  },
+  {
+   "answer": "the loop breaks safely with a JSONDecodeError catch",
+   "kind": "predict",
+   "question": "What happens if the supervisor's reply is not valid JSON?"
+  },
+  {
+   "description": "On a valid call action, the code checks the agent is in ROSTER (closed-set guard). It then dispatches the sub-agent with its system prompt and input, appending the result to the transcript.",
+   "kind": "reveal",
+   "lines": "46-57"
+  },
+  {
+   "description": "If the budget exhausts without a stop action, the function returns the transcript with a flag showing it was cut off.",
+   "kind": "focus",
+   "lines": "59-60"
+  },
+  {
+   "description": "The final line runs supervise on a sample task, producing a researched paragraph that has been critiqued and approved.",
+   "kind": "run",
+   "lines": "62",
+   "trace_step": 1
+  }
+ ],
+ "title": "Supervisor Orchestration with Roster and Spawn Budget",
+ "version": 1
+}

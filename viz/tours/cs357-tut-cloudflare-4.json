@@ -1,0 +1,42 @@
+{
+ "code": "// src/index.js: a tiny JSON API with three routes and error handling\nexport default {\n  async fetch(request, env, ctx) {\n    try {\n      // Parse the incoming request URL to check the path\n      const url = new URL(request.url);\n\n      // Route 1: health check, useful for confirming the Worker is running\n      if (url.pathname === \"/health\") {\n        return Response.json({ ok: true, at: new Date().toISOString() });\n      }\n\n      // Route 2: greeting, reads a query parameter (?name=Alice)\n      if (url.pathname === \"/greet\") {\n        const name = url.searchParams.get(\"name\") || \"world\";\n        return Response.json({ greeting: `hello, ${name}`, course: \"CS357\" });\n      }\n\n      // Default: return a 404 for any path we do not handle\n      return Response.json({ error: \"not found\" }, { status: 404 });\n\n    } catch (e) {\n      // Course exception pattern: log details for you, clean message for the caller\n      console.error(`[hello-worker:fetch] ${e}`);\n      return Response.json({ error: \"internal error\" }, { status: 500 });\n    }\n  },\n};",
+ "description": "A complete Worker that exports a fetch handler, answers three routes, and returns a clean error when something throws.",
+ "example": "cs357-tut-cloudflare-4",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "A Worker exports a `fetch` handler. An HTTP request comes in, the handler runs, a response goes out. It parses the request URL to check the path.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "Route 1 is a health check at `/health`. It returns JSON with `ok: true` and the current time, which confirms the Worker is running.",
+   "kind": "focus",
+   "lines": "8-11"
+  },
+  {
+   "description": "Route 2 is `/greet`. It reads the `name` query parameter and falls back to `world`, then returns a greeting.",
+   "kind": "focus",
+   "lines": "13-17"
+  },
+  {
+   "description": "Any other path returns a 404 JSON error. That is the default for paths the Worker does not handle.",
+   "kind": "focus",
+   "lines": "19-20"
+  },
+  {
+   "description": "The `catch` block follows the course exception pattern: it logs details for you and returns a clean message to the caller, with status 500.",
+   "kind": "focus",
+   "lines": "22-26"
+  },
+  {
+   "answer": "env",
+   "kind": "predict",
+   "question": "The page says secrets and configuration variables arrive on which parameter?"
+  }
+ ],
+ "title": "A JSON API Worker with Three Routes",
+ "version": 1
+}

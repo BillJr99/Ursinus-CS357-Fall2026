@@ -1,0 +1,62 @@
+{
+ "code": "# common.py: the model, plus a hook that shows exactly what goes into the context window.\nimport os\n\nfrom pydantic_ai.capabilities import Hooks\nfrom pydantic_ai.models.openai import OpenAIChatModel\nfrom pydantic_ai.providers.ollama import OllamaProvider\n\nWINDOWS = []  # one entry per model request: (instructions, messages, tools)\nwatch = Hooks()\n\n\n@watch.on.before_model_request\nasync def record(ctx, request_context):\n    msgs = request_context.messages\n    tools = request_context.model_request_parameters.function_tools\n    instructions = getattr(msgs[-1], \"instructions\", None) if msgs else None\n    WINDOWS.append((instructions, list(msgs), list(tools)))\n    return request_context\n\n\ndef make_model():\n    \"\"\"llama3.2 on your local Ollama server, through its OpenAI-compatible endpoint.\"\"\"\n    provider = OllamaProvider(base_url=os.environ.get(\"BASE_URL\", \"http://localhost:11434/v1\"),\n                              api_key=os.environ.get(\"API_KEY\"))\n    return OpenAIChatModel(os.environ.get(\"MODEL\", \"llama3.2\"), provider=provider)\n\n\ndef show_context(i=-1):\n    \"\"\"Print everything the model received on request i: instructions, messages, tools.\"\"\"\n    instructions, msgs, tools = WINDOWS[i]\n    n = i + 1 if i >= 0 else len(WINDOWS) + i + 1\n    print(f\"--- request {n} of {len(WINDOWS)}: the context window ---\")\n    if instructions:\n        print(f\"[instructions] {instructions!r}\")\n    for m in msgs:\n        for part in m.parts:\n            text = str(getattr(part, \"content\", None) or getattr(part, \"args\", \"\"))\n            print(f\"[{part.part_kind}] {text[:150]!r}{' ...' if len(text) > 150 else ''}\")\n    for t in tools:\n        print(f\"[tool offered] {t.name}: {t.description}\")",
+ "description": "Hook-based observation of model requests: records instructions, messages, and tools for each request to the WINDOWS list.",
+ "example": "cs357-tut-agentframeworks-10",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete common.py helper with model, hook, and context display.",
+   "kind": "reveal",
+   "lines": "1-40"
+  },
+  {
+   "description": "Imports: os, Hooks, OpenAIChatModel, and OllamaProvider.",
+   "kind": "focus",
+   "lines": "1-7"
+  },
+  {
+   "description": "Global state: WINDOWS list stores tuples of instructions, messages, tools.",
+   "kind": "focus",
+   "lines": "8-9"
+  },
+  {
+   "description": "Hook: before_model_request decorator, extract messages, tools, instructions, append to WINDOWS.",
+   "kind": "focus",
+   "lines": "12-18"
+  },
+  {
+   "description": "Make_model: creates OllamaProvider with base_url and api_key from env, returns OpenAIChatModel.",
+   "kind": "focus",
+   "lines": "21-25"
+  },
+  {
+   "description": "Show_context function for printing the context window.",
+   "kind": "reveal",
+   "lines": "28-40"
+  },
+  {
+   "description": "Request indexing: handles negative indices, prints request number.",
+   "kind": "focus",
+   "lines": "28-32"
+  },
+  {
+   "description": "Instructions: prints [instructions] with repr if present.",
+   "kind": "focus",
+   "lines": "33-34"
+  },
+  {
+   "description": "Messages: iterates through parts, prints part_kind and truncated content.",
+   "kind": "focus",
+   "lines": "35-38"
+  },
+  {
+   "description": "Tools: prints [tool offered] with name and description for each tool.",
+   "kind": "focus",
+   "lines": "39-40"
+  }
+ ],
+ "title": "Pydantic AI: Context Window Hook",
+ "version": 1
+}

@@ -1,0 +1,27 @@
+{
+ "code": "\n# The value is entered interactively (not typed on the command line where it could appear in shell history)\n\n# It goes directly to Cloudflare's secure storage, not to any local file\nnpx wrangler secret put UPSTREAM_API_KEY",
+ "description": "One command that sends a secret straight to Cloudflare's secure storage, never to a local file.",
+ "example": "cs357-tut-cloudflare-6",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This command stores a secret on Cloudflare. `npx wrangler secret put UPSTREAM_API_KEY` sends the value straight to Cloudflare's secure storage, not to any local file.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "You enter the value interactively, so it never appears on the command line or in your shell history.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "The value goes to Cloudflare's storage, so no file in your repository holds it.",
+   "kind": "focus",
+   "lines": "4"
+  }
+ ],
+ "title": "Storing a Secret with wrangler",
+ "version": 1
+}

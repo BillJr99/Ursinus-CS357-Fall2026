@@ -1,0 +1,42 @@
+{
+ "code": "{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"provider\": {\n    \"ollama\": {\n      \"npm\": \"@ai-sdk/openai-compatible\",\n      \"name\": \"Ollama\",\n      \"options\": { \"baseURL\": \"http://localhost:11434/v1\" },\n      \"models\": { \"llama3.2\": { \"name\": \"llama3.2\", \"tools\": true } }\n    }\n  },\n  \"model\": \"ollama/llama3.2\",\n  \"mcp\": {\n    \"word-tools\": {\n      \"type\": \"local\",\n      \"command\": [\"python3\", \"word_count_server.py\"],\n      \"enabled\": true\n    }\n  }\n}",
+ "description": "A project opencode.json that names the Ollama provider, sets the default model, and points at the word-tools MCP server.",
+ "example": "cs357-tut-setupbasics-3",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a project `opencode.json`. It sets the schema, one provider, and the default model. The page says to save it as `opencode.json` in your project.",
+   "kind": "reveal",
+   "lines": "1-11"
+  },
+  {
+   "description": "`$schema` points at `https://opencode.ai/config.json`, so an editor knows which keys are legal.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "The `provider` map holds `ollama`. `npm` is the adapter package, `name` is the display label, `options.baseURL` is `http://localhost:11434/v1`, and `models` lists `llama3.2` with `tools` set to true.",
+   "kind": "focus",
+   "lines": "3-9"
+  },
+  {
+   "description": "`model` sets the default to `ollama/llama3.2`.",
+   "kind": "focus",
+   "lines": "10-11"
+  },
+  {
+   "description": "The `mcp` map defines the `word-tools` server. `type` is `local`, `command` runs `python3 word_count_server.py`, and `enabled` is true.",
+   "kind": "focus",
+   "lines": "12-18"
+  },
+  {
+   "answer": "empty",
+   "kind": "predict",
+   "question": "The page says if `opencode mcp list` says no servers are configured, run it a second time, because the first listing in a new folder can come back what?"
+  }
+ ],
+ "title": "An OpenCode Config with a Local Model and an MCP Server",
+ "version": 1
+}

@@ -1,0 +1,47 @@
+{
+ "code": "#!/usr/bin/env bash\n# devbox.sh: open the project in the dev container. Usage, from the project folder:\n#   devbox/devbox.sh            a shell\n#   devbox/devbox.sh opencode   OpenCode\n#   devbox/devbox.sh omp        Oh My Pi\n# The container sees only this folder (at /work). Pass a model key and, only when you\n# mean to deploy, Cloudflare credentials, through the environment: e.g.\n#   OPENROUTER_API_KEY=... devbox/devbox.sh opencode\nset -euo pipefail\ncd \"$(dirname \"$0\")/..\"\ndocker build -q -t cs357-devbox devbox >/dev/null\npass=()\nfor v in OPENROUTER_API_KEY ANTHROPIC_API_KEY OPENAI_API_KEY CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID; do\n  if [ -n \"${!v:-}\" ]; then pass+=(-e \"$v\"); fi\ndone\nexec docker run --rm -it --read-only \\\n  --tmpfs /tmp:exec --tmpfs /home/dev:exec,mode=1777 \\\n  --cap-drop=ALL --security-opt no-new-privileges --pids-limit 512 --memory 2g \\\n  --user \"$(id -u):$(id -g)\" -e HOME=/home/dev \\\n  -e GIT_AUTHOR_NAME=\"$(git config user.name)\" -e GIT_AUTHOR_EMAIL=\"$(git config user.email)\" \\\n  -e GIT_COMMITTER_NAME=\"$(git config user.name)\" -e GIT_COMMITTER_EMAIL=\"$(git config user.email)\" \\\n  \"${pass[@]}\" -p 127.0.0.1:8787:8787 \\\n  -v \"$PWD:/work\" -w /work cs357-devbox \"$@\"",
+ "description": "Bash script to build and run the dev container with strict isolation, forwarding API keys and git identity.",
+ "example": "cs357-tut-fullstackwithagents-2",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete devbox.sh script.",
+   "kind": "reveal",
+   "lines": "1-23"
+  },
+  {
+   "description": "Usage: shebang, description, and usage examples for shell, opencode, omp.",
+   "kind": "focus",
+   "lines": "1-8"
+  },
+  {
+   "description": "Safety: set -euo pipefail for strict error handling.",
+   "kind": "focus",
+   "lines": "9"
+  },
+  {
+   "description": "Directory: cd to project folder using dirname.",
+   "kind": "focus",
+   "lines": "10"
+  },
+  {
+   "description": "Build: docker build -q -t cs357-devbox devbox with output suppressed.",
+   "kind": "focus",
+   "lines": "11"
+  },
+  {
+   "description": "API keys: loop through OPENROUTER, ANTHROPIC, OPENAI, CLOUDFLARE credentials and pass non-empty ones.",
+   "kind": "focus",
+   "lines": "12-15"
+  },
+  {
+   "description": "Isolation: read-only filesystem, tmpfs mounts, cap drop ALL, no new privileges, pids limit, memory limit, user mapping, git identity, volume mount.",
+   "kind": "focus",
+   "lines": "16-23"
+  }
+ ],
+ "title": "devbox.sh: Container Entry Script",
+ "version": 1
+}

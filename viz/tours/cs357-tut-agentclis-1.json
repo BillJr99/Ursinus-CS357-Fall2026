@@ -1,0 +1,32 @@
+{
+ "code": "node --version                                # 1. confirm Node 20+\nnpm install -g @anthropic-ai/claude-code      # 2. install\ncd ~/projects/my-first-agent-project          # 3. ALWAYS start in the project dir\nclaude                                        # 4. launch; authenticate when prompted",
+ "description": "Four commands take you from a fresh machine to a running Claude Code session: confirm Node 20+, install the package globally, change into your project directory, and launch with authentication.",
+ "example": "cs357-tut-agentclis-1",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The block shows the complete first-session sequence: node version check, global npm install, project directory change, and claude launch.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Line 3 is the most common beginner error: launching from ~ instead of the project directory grants the agent your entire home directory.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "answer": "launching from ~ and granting an agent your entire home directory",
+   "kind": "predict",
+   "question": "What does the comment on line 3 warn against?"
+  },
+  {
+   "description": "Line 4 launches the tool and prompts for authentication on first run; this is the only interactive step in the sequence.",
+   "kind": "focus",
+   "lines": "4"
+  }
+ ],
+ "title": "First Session: Install and Launch Claude Code",
+ "version": 1
+}

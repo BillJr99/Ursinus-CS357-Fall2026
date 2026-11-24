@@ -1,0 +1,42 @@
+{
+ "code": "# rag_agent.py: the same RAG system through Pydantic AI, first explicit, then as a typed tool.\nimport sys\nimport traceback\nfrom dataclasses import dataclass\n\nfrom pydantic import BaseModel, Field\nfrom pydantic_ai import Agent, ModelRetry, NativeOutput, RunContext, UsageLimits\n\nsys.path.insert(0, \"../pai\")\nfrom common import make_model, show_trace  # noqa: E402\nfrom ask import retrieve  # noqa: E402\n\n\nclass RAGAnswer(BaseModel):\n    answer: str = Field(description=\"One or two sentences, or 'not in my documents'\")\n    citations: list[str] = Field(description=\"Source IDs such as equipment-0 that support the answer\")\n\n\n@dataclass\nclass Evidence:\n    ids: set[str]\n\n\n# Path 1: retrieval happens in your code, before the model is called. No tool calling needed.\nexplicit = Agent(make_model(), output_type=NativeOutput(RAGAnswer), deps_type=Evidence, retries=2,\n                 instructions=\"Answer only from the sources in the prompt. Cite their IDs. \"\n                              \"If they do not contain the answer, answer 'not in my documents' with no citations.\",\n                 model_settings={\"temperature\": 0.0, \"seed\": 42})\n\n\n@explicit.output_validator\ndef citations_were_retrieved(ctx: RunContext[Evidence], out: RAGAnswer) -> RAGAnswer:\n    unknown = [c for c in out.citations if c not in ctx.deps.ids]\n    if unknown:\n        raise ModelRetry(f\"You cited {unknown}, which were not retrieved. Cite only: {sorted(ctx.deps.ids)}\")\n    abstained = out.answer.lower().startswith(\"not in my documents\")\n    if abstained and out.citations:\n        raise ModelRetry(\"An abstention cites nothing. Remove the citations or answer the question.\")\n    if not abstained and not out.citations:\n        raise ModelRetry(\"An answer needs at least one citation, or say 'not in my documents'.\")\n    return out   # structurally sound. Whether the cited text SUPPORTS the answer is still unchecked.\n\n\ndef ask_explicit(question: str) -> RAGAnswer:\n    evidence = retrieve(question)\n    for i, doc, dist in evidence:\n        print(f\"  evidence [{i}] d={dist:.3f} {doc[:70]!r}\")\n    sources = \"\\n\\n\".join(f\"[{i}] {doc}\" for i, doc, _ in evidence)\n    result = explicit.run_sync(f\"Sources:\\n{sources}\\n\\nQuestion: {question}\",\n                               deps=Evidence({i for i, _, _ in evidence}),\n                               usage_limits=UsageLimits(request_limit=3))\n    return result.output\n\n\n# Path 2: retrieval as a tool the model decides to call. Needs a model that calls tools reliably.\n@dataclass\nclass Library:\n    seen: set[str]\n\n\ntooled = Agent(make_model(), deps_type=Library,\n               instructions=\"Call search before answering any question about the makerspace. \"\n                            \"Answer from what search returns and cite the IDs in square brackets. \"\n                            \"If search finds nothing relevant, say 'not in my documents'.\",\n               model_settings={\"temperature\": 0.0, \"seed\": 42})\n\n\n@tooled.tool\ndef search(ctx: RunContext[Library], query: str) -> str:\n    \"\"\"Searches the makerspace handbook and returns the closest passages with their IDs.\"\"\"\n    hits = retrieve(query)\n    ctx.deps.seen.update(i for i, _, _ in hits)\n    return \"\\n\\n\".join(f\"[{i}] {doc}\" for i, doc, _ in hits)\n\n\nif __name__ == \"__main__\":\n    q = \" \".join(sys.argv[1:]) or \"Can the laser cutter cut PVC?\"\n    try:\n        print(\"Path 1, explicit retrieval:\")\n        print(\" \", ask_explicit(q))\n        print(\"Path 2, retrieval as a tool:\")\n        lib = Library(seen=set())\n        result = tooled.run_sync(q, deps=lib, usage_limits=UsageLimits(request_limit=4, tool_calls_limit=2))\n        print(\" \", result.output)\n        print(\"  IDs the tool actually returned:\", sorted(lib.seen))\n        show_trace(result.all_messages())\n    except Exception as e:\n        print(f\"[rag_agent:main] {e}\")\n        traceback.print_exc()\n        sys.exit(1)",
+ "description": "The same RAG system through Pydantic AI, first with retrieval in your code, then with retrieval as a typed tool the model calls.",
+ "example": "cs357-tut-offlineragfinetuning-8",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The header comment says this is the same RAG system through Pydantic AI, first explicit, then as a typed tool. It imports the Pydantic AI pieces, inserts a path, and pulls `make_model`, `show_trace`, and `retrieve`.",
+   "kind": "reveal",
+   "lines": "1-11"
+  },
+  {
+   "description": "`RAGAnswer` is a typed model with an `answer` and a list of `citations`. `Evidence` carries the retrieved IDs. The `explicit` agent, Path 1, takes the answer model as output, uses `Evidence` as deps, allows 2 retries, and instructs the model to answer only from the prompt's sources and cite their IDs.",
+   "kind": "focus",
+   "lines": "14-28"
+  },
+  {
+   "description": "The output validator enforces two structural rules: every cited ID must have been retrieved, and an abstention must cite nothing. The closing comment notes it is structurally sound but that whether the cited text supports the answer is still unchecked.",
+   "kind": "focus",
+   "lines": "31-41"
+  },
+  {
+   "description": "`ask_explicit` retrieves evidence, prints it with distances, formats the sources, and runs the agent with a request limit of 3. It returns the typed output.",
+   "kind": "focus",
+   "lines": "44-52"
+  },
+  {
+   "description": "Path 2 defines a `Library` deps class and a `tooled` agent that instructs the model to call search before answering. The `search` tool retrieves passages, records the IDs it returned in `ctx.deps.seen`, and returns them as bracketed sources.",
+   "kind": "focus",
+   "lines": "55-73"
+  },
+  {
+   "description": "The entry point runs both paths on the question, defaulting to the PVC question. It prints the Path 1 answer, runs Path 2 with request and tool-call limits, prints the answer, prints the IDs the tool actually returned, and shows the trace.",
+   "kind": "focus",
+   "lines": "76-90"
+  }
+ ],
+ "title": "RAG Through Pydantic AI",
+ "version": 1
+}

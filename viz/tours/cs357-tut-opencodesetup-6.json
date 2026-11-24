@@ -1,0 +1,42 @@
+{
+ "code": "{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"providers\": {\n    \"custom\": {\n      \"name\": \"Custom AI\",\n      \"env\": [\"MY_API_KEY\"],\n      \"package\": \"@opencode/ai/providers/openai-compatible\",\n      \"settings\": {\n        \"baseURL\": \"YOUR URL HERE\"\n      },\n      \"models\": {\n        \"cloudflare_ai_gateway.anthropic/claude-sonnet-5\": {\n          \"name\": \"Claude Sonnet 5 (Custom AI)\"\n        }\n      }\n    }\n  },\n  \"model\": \"custom/cloudflare_ai_gateway.anthropic/claude-sonnet-5\"\n}",
+ "description": "The OpenCode v2 spelling of a provider block: providers (plural), the adapter under package, the address under settings, and the credential in an env list.",
+ "example": "cs357-tut-opencodesetup-6",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a v2 configuration for an OpenAI-compatible endpoint such as an AI gateway. The page says it goes in your global config file, `~/.config/opencode/opencode.jsonc`.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "In v2 the block is `providers` (plural). The provider has a `name`, an `env` list naming `MY_API_KEY`, and the adapter under `package`.",
+   "kind": "focus",
+   "lines": "4-7"
+  },
+  {
+   "description": "The address sits under `settings`, as `baseURL`, a placeholder for your URL.",
+   "kind": "focus",
+   "lines": "8-10"
+  },
+  {
+   "description": "`models` maps the gateway's model id to a display name.",
+   "kind": "focus",
+   "lines": "11-15"
+  },
+  {
+   "description": "The top-level `model` key sets the default to `custom/cloudflare_ai_gateway.anthropic/claude-sonnet-5`.",
+   "kind": "focus",
+   "lines": "18"
+  },
+  {
+   "answer": "providers (plural)",
+   "kind": "predict",
+   "question": "The page says that in OpenCode v2 the provider block is spelled how?"
+  }
+ ],
+ "title": "A v2 Provider Through an AI Gateway",
+ "version": 1
+}

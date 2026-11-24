@@ -1,0 +1,32 @@
+{
+ "code": "python -m venv .venv && source .venv/bin/activate\npip install \"pydantic-ai-slim[openai]==2.54.0\" \"chromadb==1.5.9\"\nollama pull qwen2.5:3b",
+ "description": "Three commands that prepare a virtual environment with the lab's pinned library versions and the local model the Part II scripts call.",
+ "example": "cs357-tut-ragfromzero-2",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "These three commands set up Part II once. The page says Part II uses the lab's code, models, and versions, and warns that these scripts talk to Chroma on disk and to the Ollama server on your own laptop, so run them in your course container or on your own machine, not in a web page.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "`python -m venv .venv && source .venv/bin/activate` creates a virtual environment in `.venv` and turns it on. The `&&` runs the second command only if the first succeeds.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "`pip install \"pydantic-ai-slim[openai]==2.54.0\" \"chromadb==1.5.9\"` installs the two libraries at those exact versions. `pydantic-ai-slim[openai]` is the agent library with its OpenAI-compatible extra, and `chromadb` is the library the scripts use to talk to Chroma.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "`ollama pull qwen2.5:3b` downloads the `qwen2.5:3b` model into your local Ollama server, so the scripts have a model to call.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "Setting Up Part II",
+ "version": 1
+}

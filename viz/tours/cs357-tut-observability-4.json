@@ -1,0 +1,37 @@
+{
+ "code": "{\"model\": \"llama3.2\", \"done\": true, \"done_reason\": \"stop\",\n \"total_duration\": 2773000000, \"load_duration\": 12000000,\n \"prompt_eval_count\": 412, \"prompt_eval_duration\": 610000000,\n \"eval_count\": 41, \"eval_duration\": 2100000000}",
+ "description": "A trimmed non-streaming response from Ollama that carries its own usage counters and timing durations.",
+ "example": "cs357-tut-observability-4",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a trimmed response from Ollama's `/api/chat` or `/api/generate`. Every non-streaming response carries its own usage counters.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "`prompt_eval_count` is the input token count, 412 here. `prompt_eval_duration` is the time to read the prompt, which grows with the history you resend.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "`eval_count` is the output token count, 41 here. `eval_duration` is the generation time, so speed is `eval_count / eval_duration * 10**9`.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "`total_duration` is the whole call, and `load_duration` is the cost of loading the model, paid once when it is cold.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "answer": "nanoseconds",
+   "kind": "predict",
+   "question": "The page says every duration in this response is in what unit?"
+  }
+ ],
+ "title": "An Ollama Response with Usage Counters",
+ "version": 1
+}

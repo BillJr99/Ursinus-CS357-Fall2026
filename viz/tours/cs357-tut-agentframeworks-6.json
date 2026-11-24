@@ -1,0 +1,42 @@
+{
+ "code": "from langchain_core.messages import SystemMessage, HumanMessage\n\nclarifier = ChatOllama(model=\"llama3.2\", temperature=0)\nexecutor  = ChatOllama(model=\"llama3.2\", temperature=0.3)\n\nquestion = \"Summarize why local models matter.\"\n\n# Agent 1: turn a vague request into a precise, self-contained brief\nbrief = clarifier.invoke([\n    SystemMessage(\"You are a clarifier. Rewrite the user's request as a precise, \"\n                  \"self-contained brief: audience, length, and three points to \"\n                  \"cover. Output only the brief.\"),\n    HumanMessage(question),\n]).content\n\n# The handoff: the executor's ENTIRE context is the clarifier's output\nanswer = executor.invoke([\n    SystemMessage(\"You are an executor. Fulfill the brief exactly as written.\"),\n    HumanMessage(brief),\n]).content\nprint(answer)",
+ "description": "Two differently-prompted ChatOllama models where clarifier's output becomes executor's entire context, ensuring clean separation.",
+ "example": "cs357-tut-agentframeworks-6",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Handoff pattern: clarifier creates a brief, executor fulfills it with only that brief as context.",
+   "kind": "reveal",
+   "lines": "1-21"
+  },
+  {
+   "description": "Model instances: two ChatOllama models with different temperatures.",
+   "kind": "focus",
+   "lines": "3-5"
+  },
+  {
+   "description": "Question: the user's vague request to summarize why local models matter.",
+   "kind": "focus",
+   "lines": "6-7"
+  },
+  {
+   "description": "Agent 1: clarifier with SystemMessage to rewrite request as precise brief, HumanMessage with the question.",
+   "kind": "focus",
+   "lines": "8-14"
+  },
+  {
+   "description": "Handoff: executor's ENTIRE context is clarifier's output, with its own SystemMessage and the brief as HumanMessage.",
+   "kind": "focus",
+   "lines": "16-20"
+  },
+  {
+   "description": "Result: print the executor's answer.",
+   "kind": "focus",
+   "lines": "21"
+  }
+ ],
+ "title": "LangChain: Multi-Agent Handoff",
+ "version": 1
+}

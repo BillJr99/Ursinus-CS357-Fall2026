@@ -1,0 +1,32 @@
+{
+ "code": "mkdir -p iso/workspace && cd iso\necho \"Hello from the one host directory this container is allowed to see.\" > workspace/README.txt\necho \"decoy: grades.csv would be here\" > decoy-secret.txt",
+ "description": "Create iso/workspace directory with a visible README and a decoy secret file that the container should not see.",
+ "example": "cs357-tut-containerisolation-2",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "All three commands for demo folder setup.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Directory creation: mkdir -p iso/workspace creates the nested structure.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Visible file: echo writes a message to workspace/README.txt that the container can see.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Decoy: echo creates decoy-secret.txt beside the workspace directory, not inside it.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "Demo Folder Setup",
+ "version": 1
+}

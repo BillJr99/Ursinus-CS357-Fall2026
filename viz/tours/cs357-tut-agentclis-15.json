@@ -1,0 +1,27 @@
+{
+ "code": "# In your terminal, before launching the tool:\nexport ANTHROPIC_BASE_URL=http://localhost:4000   # redirect to local gateway\nexport ANTHROPIC_API_KEY=sk-litellm-local         # placeholder key for the proxy\ncd ~/cs357-exercise4\nclaude   # now talking to the gateway\n# Inside the session, type: \"What model are you?\"\n# Then: /model    (to see available models and switch)",
+ "description": "Five commands launch Claude Code with --allowedTools for read_file and --disallowedTools for write_file and execute_command, then inside the session you ask it to read, create, and run a file to hit each gate behavior.",
+ "example": "cs357-tut-agentclis-15",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The launch flags configure reads as auto-approved, writes and shell commands as gated. Inside the session, the three actions (read README.md, create hello.py, run it) each hit a different gate.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "Line 3 shows the disallowed tools: write_file and execute_command both require approval while read_file passes silently.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "answer": "(a) a file read that passed silently, (b) a file write gate prompt, and (c) a shell command gate prompt",
+   "kind": "predict",
+   "question": "What three screenshots should you capture?"
+  }
+ ],
+ "title": "Exercise 3: Gate Calibration with allowedTools",
+ "version": 1
+}

@@ -1,0 +1,81 @@
+{
+ "code": "import json\nimport os\nimport time\nimport hashlib\n\nTRACE_PATH = \"trace.jsonl\"\nTRACE_ID = \"t-4c1e\"\n\nif os.path.exists(TRACE_PATH):\n    os.remove(TRACE_PATH)   # fresh file for the demo; a real agent only appends\n\ndef log_event(step, phase, **fields):\n    \"\"\"Append one JSON object per line.  Identifiers and measurements only.\"\"\"\n    record = {\"ts\": round(time.time(), 3), \"trace_id\": TRACE_ID,\n              \"step\": step, \"phase\": phase}\n    record.update(fields)\n    with open(TRACE_PATH, \"a\") as f:\n        f.write(json.dumps(record) + \"\\n\")\n\ndef fake_llm(prompt):\n    # Stands in for the model call.  Change finish_reason to \"length\" and rerun.\n    return {\"text\": \"CALL search(query='Ursinus College founding year')\",\n            \"prompt_tokens\": len(prompt.split()), \"completion_tokens\": 9,\n            \"finish_reason\": \"stop\"}\n\ndef fake_tool(name, query):\n    return \"Ursinus College was founded in 1869 in Collegeville, Pennsylvania.\"\n\nquestion = \"When was Ursinus College founded?\"\nprompt = \"You are a research agent.  Cite before you claim.\\nQuestion: \" + question\nstep = 1\n\n# Perceive: what came in, hashed rather than stored\nlog_event(step, \"perceive\",\n          query_hash=hashlib.sha1(question.encode()).hexdigest()[:8],\n          prompt_tokens_est=len(prompt.split()))\n\n# Plan: the model call, with its cost and how it ended\nt0 = time.time()\nreply = fake_llm(prompt)\nlog_event(step, \"plan\", model=\"hermes-3\",\n          latency_ms=int((time.time() - t0) * 1000),\n          prompt_tokens=reply[\"prompt_tokens\"],\n          completion_tokens=reply[\"completion_tokens\"],\n          finish_reason=reply[\"finish_reason\"],\n          decision=\"tool_call\", tool_name=\"search\")\n\n# Act: the tool call, and the rule that allowed it\nobservation = fake_tool(\"search\", \"Ursinus College founding year\")\nlog_event(step, \"act\", tool_name=\"search\", success=True,\n          result_chars=len(observation),\n          rule=\"CHARTER.md#cite-before-claim\")\n\nprint(\"Answer:\", observation)\nprint(\"\\nTrace:\")\nprint(open(TRACE_PATH).read())",
+ "description": "This example shows how to emit a structured trace for a single perceive-plan-act loop step, writing one JSON object per line to a file that can be searched and appended indefinitely.",
+ "example": "cs357-liascript-observability-3",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: pi free model",
+ "steps": [
+  {
+   "description": "Imports and setup: TRACE_PATH is the output file, TRACE_ID groups events from one task.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "The demo removes any existing trace file so each run starts fresh. A real agent would only append.",
+   "kind": "reveal",
+   "lines": "9-10"
+  },
+  {
+   "description": "log_event appends one JSON line with a timestamp, trace_id, step number, phase, and any extra fields. This is the core logging function.",
+   "kind": "reveal",
+   "lines": "12-18"
+  },
+  {
+   "description": "Every event gets the same trace_id and step number, so all three phases of one loop step can be queried together.",
+   "kind": "focus",
+   "lines": "14-16"
+  },
+  {
+   "description": "fake_llm stands in for a model call. It returns a tool call decision with token counts and a finish_reason. Changing finish_reason to 'length' shows how the trace captures the difference.",
+   "kind": "reveal",
+   "lines": "20-24"
+  },
+  {
+   "description": "fake_tool simulates a search tool that returns a factual answer about Ursinus College's founding.",
+   "kind": "reveal",
+   "lines": "26-27"
+  },
+  {
+   "description": "The perceive phase hashes the question instead of storing it, logs the hash and estimated prompt tokens.",
+   "kind": "reveal",
+   "lines": "29-36"
+  },
+  {
+   "description": "The plan phase calls fake_llm, measures latency, and logs the model name, token counts, finish_reason, and the decision to call a tool.",
+   "kind": "reveal",
+   "lines": "38-46"
+  },
+  {
+   "description": "The act phase calls fake_tool, then logs the tool name, success, result size, and the rule that authorized the action (CHARTER.md#cite-before-claim).",
+   "kind": "reveal",
+   "lines": "48-52"
+  },
+  {
+   "answer": "One line for perceive with the query hash, one for plan with the model call details, and one for act with the tool result and the governing rule.",
+   "kind": "predict",
+   "lines": "54-56",
+   "question": "What three lines appear in the trace file after one loop step?"
+  },
+  {
+   "description": "The perceive event is logged with the question hash (12fb6d74) and estimated prompt tokens (15).",
+   "kind": "run",
+   "lines": "34-36",
+   "trace_step": 17
+  },
+  {
+   "description": "The plan event is logged: model hermes-3, 0ms latency, 15 prompt tokens, 9 completion tokens, finish_reason stop, decision tool_call to search.",
+   "kind": "run",
+   "lines": "41-46",
+   "trace_step": 32
+  },
+  {
+   "description": "The act event is logged: search tool succeeded, 66 result characters, rule CHARTER.md#cite-before-claim. The answer and full trace are then printed.",
+   "kind": "run",
+   "lines": "50-52",
+   "trace_step": 50
+  }
+ ],
+ "title": "JSON Lines trace for one agent loop step",
+ "version": 1
+}

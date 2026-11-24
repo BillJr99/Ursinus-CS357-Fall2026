@@ -1,0 +1,32 @@
+{
+ "code": "{\n  \"base_model\": \"HuggingFaceTB/SmolLM2-360M-Instruct\",\n  \"revision\": \"a10cc1512eabd3dde888204e902eca88bddb4951\",\n  \"adapter_dir\": \"./adapters/makerspace-format\",\n  \"r\": 8,\n  \"alpha\": 16,\n  \"dropout\": 0.05,\n  \"target_modules\": [\n    \"q_proj\",\n    \"k_proj\",\n    \"v_proj\",\n    \"o_proj\"\n  ],\n  \"epochs\": 4,\n  \"batch_size\": 4,\n  \"learning_rate\": 0.001,\n  \"max_new_tokens\": 48,\n  \"seed\": 42\n}",
+ "description": "The config file that pins the base model, the adapter output path, and the LoRA training settings.",
+ "example": "cs357-tut-offlineragfinetuning-9",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The file pins `base_model` to SmolLM2-360M-Instruct, its exact `revision` commit hash, and the `adapter_dir` where the saved adapter goes.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Three LoRA settings: `r` is the rank, `alpha` scales the update, and `dropout` drops a few adapter inputs during training. The page says `lora_alpha=16` scales the update by alpha over r, which is 2.",
+   "kind": "focus",
+   "lines": "5-7"
+  },
+  {
+   "description": "`target_modules` lists the four attention projections the adapter attaches to: `q_proj`, `k_proj`, `v_proj`, and `o_proj`, in every layer.",
+   "kind": "focus",
+   "lines": "8-13"
+  },
+  {
+   "description": "The training loop settings: `epochs` at 4, `batch_size` at 4, `learning_rate` at 0.001, `max_new_tokens` at 48, and `seed` at 42.",
+   "kind": "focus",
+   "lines": "14-19"
+  }
+ ],
+ "title": "The LoRA Hyperparameters",
+ "version": 1
+}

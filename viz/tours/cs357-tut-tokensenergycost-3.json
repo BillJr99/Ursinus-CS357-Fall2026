@@ -1,0 +1,42 @@
+{
+ "code": "curl -s http://localhost:11434/api/chat -d '{\n  \"model\": \"llama3.2\",\n  \"messages\": [{\"role\": \"user\", \"content\": \"In one sentence, what is a token?\"}],\n  \"stream\": false\n}' > response.json",
+ "description": "A curl command that sends one chat request to your local Ollama server and saves the whole response, counts included, to response.json.",
+ "example": "cs357-tut-tokensenergycost-3",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This `curl` command saves one response from your local Ollama server to `response.json`. The page says you never have to compute a token count, because the model server counts every token it reads and writes and hands you the number.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`curl -s` posts to `http://localhost:11434/api/chat`, Ollama's chat endpoint. The `-s` flag silences progress output. Inside the course container, change `localhost` to `host.docker.internal`.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "The request body sets `model` to `llama3.2` and sends one `messages` entry, a user message asking what a token is.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "`\"stream\": false` asks for the whole response in one piece.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "The closing `}' > response.json` redirects the response into the file `response.json`.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "answer": "done",
+   "kind": "predict",
+   "question": "The page says with streaming on, the counts arrive only in the last chunk, the one with which flag set to true?"
+  }
+ ],
+ "title": "Saving One Ollama Response",
+ "version": 1
+}

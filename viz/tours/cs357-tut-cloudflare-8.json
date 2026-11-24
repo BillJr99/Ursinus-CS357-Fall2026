@@ -1,0 +1,27 @@
+{
+ "code": "// In the handler, secrets and vars both arrive on the env object, same syntax, different storage\nconst key = env.UPSTREAM_API_KEY;            // secret: stored by wrangler secret put, never in files\nconst model = env.MODEL_NAME;                // plain var: stored in wrangler.toml, committed to repo",
+ "description": "Two lines that read a secret and a plain var from the env object, using the same syntax for different storage.",
+ "example": "cs357-tut-cloudflare-8",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Inside the handler, both secrets and vars arrive on the `env` object. You read them with the same syntax.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "`env.UPSTREAM_API_KEY` is a secret. It came from `wrangler secret put` and never sits in a file.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "`env.MODEL_NAME` is a plain var. It came from `wrangler.toml`, which is committed to the repository.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "Secrets and Vars on the env Object",
+ "version": 1
+}

@@ -1,0 +1,37 @@
+{
+ "code": "import whisper  # pip install openai-whisper\n\n# Load model (first run downloads ~1.5 GB for \"medium\", ~150 MB for \"tiny\")\nmodel = whisper.load_model(\"medium\")  # or \"tiny\" for speed, \"large\" for accuracy\n\n# Transcribe\nresult = model.transcribe(\"meeting_recording.mp3\")\ntranscript = result[\"text\"]\nprint(f\"Transcript ({len(transcript.split())} words): {transcript[:200]}...\")\n\n# Extract action items with an LLM\nfrom openai import OpenAI\nclient = OpenAI()\n\nextraction_prompt = f\"\"\"From this meeting transcript, extract all action items.\nReturn ONLY valid JSON with this schema:\n{% raw %}{{\"action_items\": [{{\"description\": str, \"assignee\": str, \"due_date\": str or null}}]}}{% endraw %}\n\nTranscript:\n{transcript}\"\"\"\n\nresponse = client.chat.completions.create(\n    model=\"gpt-4o-mini\",  # cheaper model for extraction tasks\n    messages=[{\"role\": \"user\", \"content\": extraction_prompt}],\n    temperature=0\n)\nimport json\naction_items = json.loads(response.choices[0].message.content)\nprint(f\"Found {len(action_items['action_items'])} action items\")\nfor item in action_items['action_items']:\n    print(f\"  - {item['description']} (Owner: {item['assignee']}, Due: {item['due_date']})\")",
+ "description": "The starter pipeline for the audio exercise: transcribe a meeting recording with Whisper, then ask an LLM to extract action items as JSON.",
+ "example": "cs357-tut-multimodalagents-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Import Whisper and load a model. The comments note the install command and that the first run downloads about 1.5 GB for the `medium` model, about 150 MB for `tiny`. The line picks `medium`, with `tiny` for speed and `large` for accuracy as alternatives.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Transcribe the recording and pull the text out of the result. The print line reports the word count and shows the first 200 characters of the transcript.",
+   "kind": "focus",
+   "lines": "6-9"
+  },
+  {
+   "description": "Build the extraction prompt for the LLM. It asks for all action items and demands only valid JSON with a schema of an `action_items` list, where each item has `description`, `assignee`, and `due_date`. The transcript is pasted verbatim into the prompt.",
+   "kind": "focus",
+   "lines": "11-20"
+  },
+  {
+   "description": "Send the prompt with `chat.completions.create`. The comment marks `gpt-4o-mini` as a cheaper model for extraction tasks, and `temperature=0` keeps the output deterministic.",
+   "kind": "focus",
+   "lines": "22-26"
+  },
+  {
+   "description": "Parse the reply with `json.loads`, print the number of action items found, then loop over them and print each description with its owner and due date.",
+   "kind": "focus",
+   "lines": "27-31"
+  }
+ ],
+ "title": "Audio to Action Items",
+ "version": 1
+}

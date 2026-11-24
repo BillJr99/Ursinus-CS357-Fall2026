@@ -1,0 +1,32 @@
+{
+ "code": "# merge_lora.py: fold the adapter into a copy of the base weights, and check nothing changed.\nimport json\nimport os\nimport sys\nimport traceback\n\nos.environ.setdefault(\"HF_HUB_OFFLINE\", \"1\")\nfrom infer_lora import CFG, generate, load\n\nOUT = \"./merged/makerspace-360m\"\n\ntry:\n    tok, model = load(with_adapter=True)\n    q = \"What are the Saturday hours?\"\n    before = generate(tok, model, q)\n    merged = model.merge_and_unload()          # W <- W + (alpha/r) * B @ A, then drop the adapter\n    after = generate(tok, merged, q)\n    print(\"adapter attached:\", before)\n    print(\"merged weights  :\", after)\n    merged.save_pretrained(OUT)\n    tok.save_pretrained(OUT)\n    size = sum(os.path.getsize(os.path.join(OUT, f)) for f in os.listdir(OUT)) / 1e6\n    print(f\"saved a full {size:.0f} MB model to {OUT} (the adapter alone was a few MB)\")\nexcept Exception as e:\n    print(f\"[merge_lora:main] {e}\")\n    traceback.print_exc()\n    sys.exit(1)",
+ "description": "The script that folds the adapter into a copy of the base weights, checks the answers still match, and saves a full-size model.",
+ "example": "cs357-tut-offlineragfinetuning-12",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The header comment says the script folds the adapter into a copy of the base weights and checks nothing changed. It sets `HF_HUB_OFFLINE`, imports the pieces from `infer_lora`, and sets the output path `./merged/makerspace-360m`.",
+   "kind": "reveal",
+   "lines": "1-10"
+  },
+  {
+   "description": "It loads the model with the adapter attached, generates an answer before merging, then calls `merge_and_unload` to fold the adapter into the weights. The comment gives the update as `W` plus `(alpha/r) * B @ A`, then the adapter is dropped.",
+   "kind": "focus",
+   "lines": "12-17"
+  },
+  {
+   "description": "It prints the answer before and after to show they match, saves the merged model and tokenizer, then prints the total size of the saved folder next to the note that the adapter alone was a few MB.",
+   "kind": "focus",
+   "lines": "18-23"
+  },
+  {
+   "description": "The try block catches any error, prints a labeled message and the traceback, and exits with status 1.",
+   "kind": "focus",
+   "lines": "24-27"
+  }
+ ],
+ "title": "Merging the Adapter",
+ "version": 1
+}

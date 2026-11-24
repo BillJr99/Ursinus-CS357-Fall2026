@@ -1,0 +1,42 @@
+{
+ "code": "npm create cloudflare@latest hello-worker\ncd hello-worker\n\n# Replace src/index.js with the three-route example from Section 4\nnpx wrangler dev                  # test locally first\n\n# curl http://localhost:8787/health\n\n# curl http://localhost:8787/greet?name=yourname\n\n# curl http://localhost:8787/anything\nnpx wrangler deploy               # deploy when local tests pass",
+ "description": "A starter hint that scaffolds the Hello World Worker, swaps in the three-route example, tests it locally with curl, and deploys when the local tests pass.",
+ "example": "cs357-tut-cloudflare-21",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The first two lines scaffold a Worker named `hello-worker` from the official template and enter its directory.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "The comment tells you to replace `src/index.js` with the three-route example from Section 4.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "`npx wrangler dev` starts the local server. The comment says to test locally first.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "description": "These commented-out `curl` lines are the local checks for the three routes: `/health`, `/greet?name=yourname`, and an unknown path. You run each against `http://localhost:8787`.",
+   "kind": "focus",
+   "lines": "7-11"
+  },
+  {
+   "description": "`npx wrangler deploy` publishes the Worker. The comment says to deploy when the local tests pass.",
+   "kind": "focus",
+   "lines": "12"
+  },
+  {
+   "answer": "the 404",
+   "kind": "predict",
+   "question": "The exercise asks you to keep the curl outputs for all three routes, including which status?"
+  }
+ ],
+ "title": "Exercise 1: Scaffold, Test, Deploy",
+ "version": 1
+}

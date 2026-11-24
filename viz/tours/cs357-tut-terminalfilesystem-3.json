@@ -1,0 +1,27 @@
+{
+ "code": "\n# Student B mounts ONLY the researcher's specific workspace directory\n\n# :ro at the end means read-only; even if the agent tries to write, it will get a permission error\n\n# The agent inside the container sees /workspace, which contains ONLY:\n\n#   - The files the researcher was given to work with\n\n#   - Nothing else from the host machine\ndocker run --rm \\\n  -v /home/user/agents/researcher:/workspace:ro \\    # <-- ONLY the researcher dir, read-only\n  my-researcher-image \\\n  python agent.py",
+ "description": "Student A mounts entire home directory into container, exposing SSH keys, AWS credentials, git config, and all projects to the agent.",
+ "example": "cs357-tut-terminalfilesystem-3",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Student A's Docker command with full home directory mount.",
+   "kind": "reveal",
+   "lines": "1-14"
+  },
+  {
+   "description": "Comments: the agent sees entire /home/user including SSH keys, AWS credentials, git config, and all projects.",
+   "kind": "focus",
+   "lines": "2-12"
+  },
+  {
+   "description": "Problem: docker run with -v /home/user:/home/user mounts the entire home directory, flagged as the problem.",
+   "kind": "focus",
+   "lines": "13-14"
+  }
+ ],
+ "title": "Student A: Over-Mounted Home Directory",
+ "version": 1
+}

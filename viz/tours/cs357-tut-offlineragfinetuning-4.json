@@ -1,0 +1,32 @@
+{
+ "code": "# preflight.py: check every local asset before the offline stage. It never downloads anything.\nimport importlib.metadata as md\nimport sys\n\nimport requests\n\nfrom rag_common import CFG\n\nPINNED = {\"chromadb\": \"1.5.9\", \"ollama\": \"0.6.3\", \"pydantic-ai-slim\": \"2.54.0\"}\nproblems = []\n\nfor pkg, want in PINNED.items():\n    try:\n        have = md.version(pkg)\n        if have != want:\n            problems.append(f\"{pkg} is {have}, the tutorial was tested with {want}\")\n    except md.PackageNotFoundError:\n        problems.append(f\"{pkg} is not installed; install it during the online stage\")\n\ntry:\n    tags = requests.get(f\"{CFG['ollama_url']}/api/tags\", timeout=5).json()\n    have = {m[\"name\"].split(\":\")[0] for m in tags[\"models\"]} | {m[\"name\"] for m in tags[\"models\"]}\n    for model in (CFG[\"embed_model\"], CFG[\"chat_model\"]):\n        if model not in have:\n            problems.append(f\"Ollama has no {model}; run `ollama pull {model}` during the online stage\")\nexcept Exception as e:\n    problems.append(f\"cannot reach Ollama at {CFG['ollama_url']} ({type(e).__name__}); start `ollama serve`\")\n\nif problems:\n    print(\"PREFLIGHT FAILED:\\n  \" + \"\\n  \".join(problems))\n    sys.exit(1)\nprint(\"preflight ok: packages pinned, Ollama local, both models present\")",
+ "description": "A script that checks every local asset before the offline stage and never downloads anything.",
+ "example": "cs357-tut-offlineragfinetuning-4",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The header comment says this checks every local asset before the offline stage and never downloads anything. It imports `importlib.metadata`, `sys`, and `requests`, pulls the config with `CFG`, and defines the `PINNED` package versions the tutorial was tested with.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "Loop over the pinned packages and compare the installed version to the wanted one. A mismatch or a missing package appends a message to `problems` instead of raising.",
+   "kind": "focus",
+   "lines": "10-18"
+  },
+  {
+   "description": "Ask Ollama for its model tags with `GET /api/tags`, build the set of available names, and check that both the embed model and the chat model are present. If Ollama cannot be reached, the code records a message naming the error and suggesting `ollama serve`.",
+   "kind": "focus",
+   "lines": "20-27"
+  },
+  {
+   "description": "If any problem was collected, print `PREFLIGHT FAILED` with each message and exit with status 1. Otherwise print that preflight is ok: packages pinned, Ollama local, both models present.",
+   "kind": "focus",
+   "lines": "29-32"
+  }
+ ],
+ "title": "Preflight Check",
+ "version": 1
+}

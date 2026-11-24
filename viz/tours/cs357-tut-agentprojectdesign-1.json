@@ -1,0 +1,32 @@
+{
+ "code": "{\n  \"permission\": {\n    \"*\": \"allow\"\n  }\n}",
+ "description": "A configuration-file block that sets every permission to allow, switching off an agent's gates for every session until you change it back.",
+ "example": "cs357-tut-agentprojectdesign-1",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a permissive `permission` block, the configuration-file way to switch off an agent's gates. It applies to every session until you change it back.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`permission` holds the rules. Its value is an object that maps each permission name to a decision.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "The key `\"*\"` matches every permission, and the value `\"allow\"` approves each one, so the agent stops asking.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "answer": "The flag",
+   "kind": "predict",
+   "question": "The page compares this block with the `--auto` flag. Which of the two is the safer choice, because it expires when the command does?"
+  }
+ ],
+ "title": "A Permissive Permission Block",
+ "version": 1
+}

@@ -1,0 +1,27 @@
+{
+ "code": "\n# Should print \"Read-only file system\"\ndocker run --rm -v \"$HOME/notes/vault:/reference:ro\" course-agent \\\n  sh -c 'touch /reference/breakme || echo BLOCKED-as-expected'\n\n# Should fail: no network\ndocker run --rm --network none course-agent \\\n  sh -c 'getent hosts api.anthropic.com || echo NO-NETWORK-as-expected'\n\n# Should show only /work as a writable bind mount\ndocker run --rm -v \"$HOME/agents/project:/work\" course-agent mount | grep /work",
+ "description": "Three checks that prove the container's boundaries hold, each written to fail loudly when the fence is working.",
+ "example": "cs357-tut-docker-10",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The first check mounts the notes vault read-only and tries to touch a file in it. The comment says it should print Read-only file system, and the command echoes `BLOCKED-as-expected` when the write fails.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "The second check runs with `--network none` and tries to resolve `api.anthropic.com`. The comment says it should fail, and the command echoes `NO-NETWORK-as-expected`.",
+   "kind": "focus",
+   "lines": "6-8"
+  },
+  {
+   "description": "The third check runs `mount` and greps for `/work`. The comment says it should show only `/work` as a writable bind mount. The page says to test the flags rather than take them on faith.",
+   "kind": "focus",
+   "lines": "10-11"
+  }
+ ],
+ "title": "Verify the Fence",
+ "version": 1
+}

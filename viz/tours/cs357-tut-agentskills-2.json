@@ -1,0 +1,32 @@
+{
+ "code": "pi install npm:@someone/pi-tools\npi install git:github.com/someone/their-skills\npi install git:github.com/someone/their-skills -l   # project-local",
+ "description": "Three pi install commands that add skills from npm or a Git host, with a flag that keeps the install project-local.",
+ "example": "cs357-tut-agentskills-2",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "`pi install` adds extensions and skills from a package registry or a Git host.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Line 1 installs an npm package; line 2 installs from GitHub. Both go to your home directory by default.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "The `-l` flag scopes the install to the current project instead of your home directory.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "answer": "-l",
+   "kind": "predict",
+   "question": "Which flag scopes an install to the current project?"
+  }
+ ],
+ "title": "Installing Skills with pi",
+ "version": 1
+}

@@ -1,0 +1,32 @@
+{
+ "code": "capabilities = show.get(\"capabilities\")\nreasoning = config[\"reasoning\"] == \"on\" or (\n    config[\"reasoning\"] == \"auto\" and \"thinking\" in (capabilities or []))\nthinking = config[\"thinkingLevel\"] if reasoning else \"off\"",
+ "description": "Checks if the model supports reasoning/thinking capability and configures it accordingly.",
+ "example": "cs357-tut-terminalfilesystem-19",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Reasoning capability detection logic.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Capabilities extraction: gets model capabilities from show response.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Reasoning logic: enabled if config says on, or if auto and model has thinking capability.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "Thinking level: uses config if reasoning enabled, otherwise off.",
+   "kind": "focus",
+   "lines": "4"
+  }
+ ],
+ "title": "Reasoning Capability Check",
+ "version": 1
+}

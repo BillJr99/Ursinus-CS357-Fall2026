@@ -1,0 +1,32 @@
+{
+ "code": "curl -fsSL -O https://www.billmongan.com/Ursinus-CS357-Fall2026/files/small-model-orchestrator.skill\nunzip -l small-model-orchestrator.skill          # list the contents without extracting\nunzip -p small-model-orchestrator.skill small-model-orchestrator/SKILL.md | head -40",
+ "description": "Commands to inspect the small-model-orchestrator skill archive before installing it.",
+ "example": "cs357-tut-terminalfilesystem-17",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Inspection commands.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Download: curl downloads the skill archive.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "List contents: unzip -l shows archive contents without extracting.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Preview SKILL.md: unzip -p extracts SKILL.md to stdout, head shows first 40 lines.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "Skill Archive Inspection Commands",
+ "version": 1
+}

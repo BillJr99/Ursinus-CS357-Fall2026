@@ -1,0 +1,61 @@
+{
+ "code": "SAMPLES = {\n    \"s01\": (\"The library should stay open until 2 a.m. during finals week. Seventy-one percent of students \"\n            \"surveyed last spring said they studied past midnight at least three times during finals \"\n            \"(Student Life Survey, 2025). Late closing also cuts noise complaints in the residence halls, \"\n            \"which rose 40 percent during finals last year (Residence Life Report, 2025). Some argue the \"\n            \"added staffing costs too much, but two student workers for four extra hours cost less than one \"\n            \"noise incident investigation. The extension is cheap, and it is what students already need.\"),\n    \"s02\": (\"A lot of people study late during finals, and longer hours would help them. I think the library \"\n            \"should probably stay open later. Some students have said they wish it was open longer. It might \"\n            \"cost a bit more, but that is probably worth it.\"),\n    \"s03\": (\"Finals week is stressful for everyone. There are many places to study on campus, and each has its \"\n            \"own advantages. The library is a nice building with good lighting. Everyone should find the study \"\n            \"spot that works best for them.\"),\n}\nPAD = (\"This essay was written with great care and attention to detail.  \"\n       \"The author is deeply knowledgeable about campus issues.\")\n\ndef stand_in_judge(text):\n    \"\"\"A crude toy judge.  The length bonus on directness is planted on purpose.\"\"\"\n    first = text.split(\".\")[0]\n    levels = {\n        \"claims_cited\": min(4, 1 + text.count(\"(\")),\n        \"directness\": 4 if \"should\" in first else (2 if \"should\" in text else 1),\n        \"counterargument\": 4 if (\"Some argue\" in text and \"but\" in text) else (2 if \"but\" in text else 1),\n    }\n    if len(text.split()) > 50:\n        levels[\"directness\"] = min(4, levels[\"directness\"] + 1)\n    return levels\n\nprint(\"sample  words  criterion        before  after  delta\")\nfor name, text in SAMPLES.items():\n    before, after = stand_in_judge(text), stand_in_judge(text + \" \" + PAD)\n    for criterion in before:\n        print(f\"{name:6}  {len(text.split()):5}  {criterion:15}  {before[criterion]:6}  \"\n              f\"{after[criterion]:5}  {after[criterion] - before[criterion]:+5}\")",
+ "description": "A pure-Python probe that appends a padding string to three essays and watches whether a crude judge rewards the extra words.",
+ "example": "cs357-tut-biasprobes-4",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: opencode free model + edit: codex",
+ "steps": [
+  {
+   "description": "`SAMPLES` holds three short essays. `s01` is a long argument that cites two sources and answers an objection. `s02` is a short hedged version, and `s03` stays general and off the question.",
+   "kind": "reveal",
+   "lines": "1-14"
+  },
+  {
+   "description": "`PAD` is two sentences of praise that add words without adding substance. The probe appends it to each essay to see whether the judge rewards length.",
+   "kind": "reveal",
+   "lines": "15-16"
+  },
+  {
+   "description": "`stand_in_judge` takes a text and splits off its first sentence. The docstring says the length bonus on directness is planted on purpose, so this judge carries a known flaw to find.",
+   "kind": "reveal",
+   "lines": "18-20"
+  },
+  {
+   "description": "`levels` scores three criteria with simple string checks. `claims_cited` counts open parentheses and caps at 4. `directness` looks for `should` in the first sentence and falls back to anywhere in the text. `counterargument` looks for `Some argue` together with `but`.",
+   "kind": "focus",
+   "lines": "21-24"
+  },
+  {
+   "answer": "Nothing. The bonus raises directness by one level but caps at 4, and `s01` is already there, so its directness stays put and its delta is zero.",
+   "kind": "predict",
+   "lines": "26-28",
+   "question": "The judge adds a length bonus when the text runs over 50 words. `s01` is already 89 words and already at directness 4. What does the bonus do for `s01`?"
+  },
+  {
+   "description": "The header prints the column names, then the loop judges each essay twice: once as written and once with `PAD` appended. The inner loop prints one row per criterion with the before level, the after level, and the signed delta.",
+   "kind": "reveal",
+   "lines": "30-35"
+  },
+  {
+   "description": "Run it. The header prints, and the loop starts with the first sample.",
+   "kind": "run",
+   "lines": "30",
+   "trace_step": 6
+  },
+  {
+   "description": "Inside `stand_in_judge`, the first sentence is split off so the directness check can look at it on its own.",
+   "kind": "run",
+   "lines": "20",
+   "trace_step": 9
+  },
+  {
+   "description": "The rows print. `directness` rises by 1 for `s02` and `s03` but stays flat for `s01`. The length bonus had nowhere to go on a sample already over 50 words and already at level 4.",
+   "kind": "run",
+   "lines": "35",
+   "trace_step": 29
+  }
+ ],
+ "title": "Padding Probe on a Stand-In Judge",
+ "version": 1
+}

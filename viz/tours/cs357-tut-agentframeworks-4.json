@@ -1,0 +1,27 @@
+{
+ "code": "\n# pip install langchain-ollama langchain-core\nfrom langchain_ollama import ChatOllama\n\nllm = ChatOllama(model=\"llama3.2\", temperature=0)\nprint(llm.invoke(\"In one sentence: what is an agent?\").content)",
+ "description": "ChatOllama wraps a local Ollama server, providing a common chat interface with invoke() for sending requests and receiving responses.",
+ "example": "cs357-tut-agentframeworks-4",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete model setup: import, model instantiation, and a sample invoke call.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "Imports: langchain-ollama and langchain-core packages.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "Model creation: ChatOllama with llama3.2 model and temperature=0, then invoke with a question about agents.",
+   "kind": "focus",
+   "lines": "5-6"
+  }
+ ],
+ "title": "LangChain: Model Object Wrapper",
+ "version": 1
+}

@@ -1,0 +1,27 @@
+{
+ "code": "cd ~\ngit clone https://github.com/YOURUSERNAME/cs357-work.git\ncd cs357-work\ngit remote -v",
+ "description": "Clone your private cs357-work repository from GitHub into your home folder for Docker Desktop compatibility.",
+ "example": "cs357-tut-coursecontainer-1",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Four commands to clone and verify the repository.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Clone: cd to home, then git clone with your username's cs357-work repo.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Verification: cd into cs357-work, then git remote -v to show origin URL.",
+   "kind": "focus",
+   "lines": "3-4"
+  }
+ ],
+ "title": "Clone cs357-work Repository",
+ "version": 1
+}

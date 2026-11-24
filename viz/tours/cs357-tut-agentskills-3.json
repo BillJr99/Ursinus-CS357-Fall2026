@@ -1,0 +1,37 @@
+{
+ "code": "git clone --depth 1 https://github.com/someone/their-skills /tmp/their-skills\nless /tmp/their-skills/skills/commit-tidy/SKILL.md     # read it BEFORE it is installed\nls /tmp/their-skills/skills/commit-tidy/scripts        # and read anything executable\nmkdir -p .agents/skills\ncp -r /tmp/their-skills/skills/commit-tidy .agents/skills/",
+ "description": "A five-line recipe that clones a skills repository shallowly, reads the skill before installing it, and copies out the one directory you want.",
+ "example": "cs357-tut-agentskills-3",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This recipe installs one skill from a repository that holds many. It clones shallowly into a scratch directory and copies out the single skill directory.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`git clone --depth 1` fetches only the latest revision, which is enough when you want one skill.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "The middle two lines are the point of the detour. Line 2 reads the `SKILL.md`, and line 3 lists the `scripts/` directory so you can read anything executable. A skill can tell the agent to run what is in there.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "`mkdir -p .agents/skills` creates the discovery path, and `cp -r` copies the skill directory into it.",
+   "kind": "focus",
+   "lines": "4-5"
+  },
+  {
+   "answer": "the whole directory",
+   "kind": "predict",
+   "question": "When you read a skill before installing it, what do you read?"
+  }
+ ],
+ "title": "Installing One Skill from a Repository",
+ "version": 1
+}

@@ -1,0 +1,22 @@
+{
+ "code": "docker run -it --rm \\\n  --add-host=host.docker.internal:host-gateway \\\n  -v \"$PWD:/workspace:rw\" \\\n  -v \"$HOME/agents/knowledgebase:/reference:ro\" \\\n  -v pi-config:/home/agent/.config \\\n  --cap-drop ALL --security-opt no-new-privileges \\\n  course-pi",
+ "description": "Single command to build the pi image with tag course-pi from the Dockerfile in current directory.",
+ "example": "cs357-tut-terminalfilesystem-6",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Docker build command and context.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "Command: docker build -t course-pi . builds image from current directory.",
+   "kind": "focus",
+   "lines": "1-2"
+  }
+ ],
+ "title": "Docker Build Command",
+ "version": 1
+}

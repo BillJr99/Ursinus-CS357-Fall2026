@@ -1,0 +1,37 @@
+{
+ "code": "TEMPLATE = \"\"\"You are a concise study-planning assistant.\n\nConversation so far:\n{history}\n\nUser's new message: {question}\nAnswer:\"\"\"",
+ "description": "A string with two labelled blanks that you fill in each turn. It shows that an agent's memory is prompt-building: you rebuild the prompt and paste the prior context back in.",
+ "example": "cs357-tut-memorycontext-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a prompt template: a string with labelled `{}` blanks that you fill in each turn. The page calls this the clearest way to see that memory is string-building.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "The first line sets the assistant's role: a concise study-planning assistant.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "`Conversation so far:` labels the `{history}` blank. This is where prior turns get pasted, so the model sees the context you rebuild on every call.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "`{question}` is the user's new message, and `Answer:` cues the model to respond. The model sees only whatever ends up inside the filled-in string.",
+   "kind": "focus",
+   "lines": "6-7"
+  },
+  {
+   "answer": "a stranger meeting you for the first time",
+   "kind": "predict",
+   "question": "The page says that if {history} is blank, the model is what, no matter how many times you have talked before?"
+  }
+ ],
+ "title": "A Prompt Template with Blanks",
+ "version": 1
+}

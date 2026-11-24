@@ -1,0 +1,42 @@
+{
+ "code": "# measure.py: score the lab's index and agent on the golden set, then compare retrieval off and on.\nimport traceback\n\nfrom pydantic_ai import Agent, UsageLimits\nfrom rag_agent import agent, collection, model   # all three are defined at the top of rag_agent.py\n\nGOLDEN = [   # the same golden set as Cell 1; rewrite it for your own corpus\n    (\"How much does a membership cost for a student?\", \"pay $10\", \"$10\"),\n    (\"When is the workshop open on Saturday?\", \"Saturday from 10am\", \"10am to 2pm\"),\n    (\"Can I take a pump home overnight?\", \"borrow a pump\", \"$5\"),\n    (\"What do I need before using a repair stand?\", \"30-minute orientation\", \"orientation\"),\n    (\"Who do I tell if I get hurt?\", \"Report any injury\", \"shift volunteer\"),\n    (\"Does the co-op sell new bikes?\", None, None),\n]\n\nclosed_book = Agent(   # the same model and rules, but no search tool: retrieval off\n    model,\n    instructions=(\n        \"Answer questions about the user's notes. Name the source file for each fact. \"\n        \"If you cannot answer from the notes, say: I could not find that in your notes.\"\n    ),\n    model_settings={\"temperature\": 0.0, \"seed\": 42},\n)\n\n\ndef top_k(question, k):\n    \"\"\"The k passages Chroma returns for a question, as plain text.\"\"\"\n    try:\n        hits = collection.query(query_texts=[question], n_results=k)\n    except Exception as e:\n        print(\"[measure:top_k]\", e)\n        traceback.print_exc()\n        raise\n    return hits[\"documents\"][0]\n\n\ndef recall_at_k(k):\n    answerable = [(q, ev) for q, ev, _ in GOLDEN if ev]\n    return sum(any(ev in text for text in top_k(q, k)) for q, ev in answerable) / len(answerable)\n\n\ndef ask(which, question):\n    \"\"\"Run one agent once; return its answer and the search results it was given.\"\"\"\n    try:\n        result = which.run_sync(question, usage_limits=UsageLimits(request_limit=4))\n    except Exception as e:\n        print(\"[measure:ask]\", e)\n        traceback.print_exc()\n        raise\n    returned = [str(part.content) for message in result.all_messages()\n                for part in message.parts if part.part_kind == \"tool-return\"]\n    return result.output, \"\\n\".join(returned)\n\n\nif __name__ == \"__main__\":\n    print(f\"recall@1 = {recall_at_k(1):.2f}   recall@3 = {recall_at_k(3):.2f}\")\n    for question, evidence, fact in GOLDEN:\n        answer, returned = ask(agent, question)\n        abstained = \"could not find\" in answer.lower()\n        right = abstained if fact is None else (fact.lower() in answer.lower() and not abstained)\n        print(f\"\\nQ: {question}\\n  searched={bool(returned)}  right={right}\\n  A: {answer}\")\n    question = GOLDEN[1][0]\n    for label, which in ((\"OFF\", closed_book), (\"ON\", agent)):\n        answer, returned = ask(which, question)\n        print(f\"\\nretrieval {label}  searched={bool(returned)}\\n  Q: {question}\\n  A: {answer}\")",
+ "description": "measure.py scores the lab's index and agent on the golden set, then asks one question twice to compare retrieval off and retrieval on.",
+ "example": "cs357-tut-ragfromzero-3",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is `measure.py`. It scores the lab's index and agent on the golden set, then compares retrieval off and on. It imports `Agent` and `UsageLimits` from `pydantic_ai`, and reuses `agent`, `collection`, and `model` from `rag_agent.py`.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`GOLDEN` is the same golden set as Cell 1: each row holds a question, a piece of evidence, and the fact an answer should contain. The last row has `None` for both evidence and fact, so the notes cannot answer it and the agent should abstain.",
+   "kind": "focus",
+   "lines": "7-14"
+  },
+  {
+   "description": "`closed_book` is a second agent with the same model and rules but no search tool, so retrieval is off. Its instructions say to name the source file for each fact and to answer `I could not find that in your notes.` when the notes cannot answer.",
+   "kind": "focus",
+   "lines": "16-23"
+  },
+  {
+   "description": "`top_k` asks `collection.query` for the `k` passages Chroma returns for a question and hands back their text. `recall_at_k` keeps only the answerable rows, the ones with evidence, and measures the share where the evidence appears in the top `k` passages. `ask` runs one agent once under a request limit of four, collects every `tool-return` part as the search results it was given, and returns the answer with those results.",
+   "kind": "focus",
+   "lines": "26-52"
+  },
+  {
+   "description": "The `__main__` block prints `recall@1` and `recall@3`, then asks every golden question of the real agent, marking whether it searched and whether the answer is right. It ends by asking the Saturday-hours question twice: once with `closed_book` (OFF) and once with the real agent (ON).",
+   "kind": "focus",
+   "lines": "55-65"
+  },
+  {
+   "answer": "you",
+   "kind": "predict",
+   "question": "The page says the script checks recall, whether the agent searched, and whether the answer holds the right fact or abstains when it should, but it cannot check that the file an answer names actually says the claim. Who makes that check?"
+  }
+ ],
+ "title": "Scoring the Index and Comparing Retrieval",
+ "version": 1
+}

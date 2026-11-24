@@ -1,0 +1,32 @@
+{
+ "code": "\n# Native install (preferred: keeps model I/O off the Docker path)\ncurl -fsSL https://ollama.com/install.sh | sh\nollama pull qwen2.5:3b && ollama pull llama3 && ollama pull hermes3:8b\ncurl http://localhost:11434/api/tags        # verify: lists your models",
+ "description": "Native install keeps model I/O off the Docker path; download and verify models via curl.",
+ "example": "cs357-tut-agentstack-1",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete installation and verification commands.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "Native install: the script installs Ollama directly on the host.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "Pulling models: qwen2.5:3b, llama3, and hermes3:8b are downloaded for inference.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "Verification: curl to localhost:11434/api/tags lists the installed models.",
+   "kind": "focus",
+   "lines": "5"
+  }
+ ],
+ "title": "Ollama Native Installation",
+ "version": 1
+}

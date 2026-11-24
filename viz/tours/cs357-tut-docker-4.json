@@ -1,0 +1,32 @@
+{
+ "code": "\n# docker-compose.yml\nservices:\n  gateway:\n    image: ghcr.io/berriai/litellm:main-latest\n    ports:\n      - \"4000:4000\"\n    volumes:\n      - ./litellm_config.yaml:/app/config.yaml:ro\n    extra_hosts:\n      - \"host.docker.internal:host-gateway\"\n    restart: unless-stopped\n\n  webui:\n    image: ghcr.io/open-webui/open-webui:main\n    ports:\n      - \"3000:8080\"\n    volumes:\n      - ./webui-data:/app/backend/data\n    extra_hosts:\n      - \"host.docker.internal:host-gateway\"\n    depends_on:\n      - gateway",
+ "description": "One YAML file that declares a two-service stack: the LiteLLM gateway and Open WebUI.",
+ "example": "cs357-tut-docker-4",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The comment names the file `docker-compose.yml`, and the `services:` key begins the list of services. The page says Compose declares the whole stack in one YAML file.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "The first service is `gateway`, running the LiteLLM image. It publishes port 4000, mounts the config file read-only with `:ro`, adds the `host.docker.internal` host entry, and restarts unless stopped.",
+   "kind": "focus",
+   "lines": "4-12"
+  },
+  {
+   "description": "The second service is `webui`, running the Open WebUI image. It publishes host port 3000 to container port 8080 and bind-mounts `./webui-data` into the app's data directory, so chats persist.",
+   "kind": "focus",
+   "lines": "14-19"
+  },
+  {
+   "description": "The `webui` service gets the same `extra_hosts` entry and a `depends_on` on `gateway`, so it waits for the gateway. The page says services reach each other by name, because Compose puts them on a private network together.",
+   "kind": "focus",
+   "lines": "20-23"
+  }
+ ],
+ "title": "A Docker Compose Stack",
+ "version": 1
+}

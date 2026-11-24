@@ -1,0 +1,47 @@
+{
+ "code": "<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Questions Board</title>\n  <style>\n    body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; }\n    form { display: flex; gap: .5rem; } input { flex: 1; padding: .5rem; } button { padding: .5rem .8rem; }\n    li { display: flex; justify-content: space-between; gap: 1rem; padding: .5rem 0; border-bottom: 1px solid #ddd; }\n  </style>\n</head>\n<body>\n  <h1>Questions Board</h1>\n  <form id=\"ask\">\n    <input id=\"text\" maxlength=\"280\" placeholder=\"Ask a question\" required>\n    <button>Ask</button>\n  </form>\n  <p id=\"problem\" role=\"alert\"></p>\n  <ul id=\"list\"></ul>\n  <script>\n    const list = document.getElementById(\"list\");\n    const problem = document.getElementById(\"problem\");\n    async function load() {\n      const questions = await (await fetch(\"/api/questions\")).json();\n      list.replaceChildren(...questions.map((q) => {\n        const li = document.createElement(\"li\");\n        const text = document.createElement(\"span\");\n        text.textContent = q.text;\n        const vote = document.createElement(\"button\");\n        vote.textContent = \"▲ \" + q.votes;\n        vote.onclick = async () => { await fetch(`/api/questions/${q.id}/upvote`, { method: \"POST\" }); load(); };\n        li.append(text, vote);\n        return li;\n      }));\n    }\n    document.getElementById(\"ask\").onsubmit = async (e) => {\n      e.preventDefault();\n      const box = document.getElementById(\"text\");\n      const r = await fetch(\"/api/questions\", { method: \"POST\", headers: { \"content-type\": \"application/json\" }, body: JSON.stringify({ text: box.value }) });\n      problem.textContent = r.ok ? \"\" : (await r.json()).error;\n      if (r.ok) { box.value = \"\"; load(); }\n    };\n    load();\n  </script>\n</body>\n</html>",
+ "description": "Static HTML page with form for asking questions, list display with upvote buttons, and JavaScript that calls the API without innerHTML for XSS safety.",
+ "example": "cs357-tut-fullstackwithagents-15",
+ "lang": "html",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete index.html page.",
+   "kind": "reveal",
+   "lines": "1-47"
+  },
+  {
+   "description": "Structure: doctype, html lang, head with charset, viewport, title, and CSS styles.",
+   "kind": "focus",
+   "lines": "1-12"
+  },
+  {
+   "description": "Body: h1 Questions Board, form with input and button, alert paragraph, ul for list.",
+   "kind": "focus",
+   "lines": "13-20"
+  },
+  {
+   "description": "DOM references: list and problem elements.",
+   "kind": "focus",
+   "lines": "21-24"
+  },
+  {
+   "description": "Load: fetches /api/questions, maps to li elements with text span and vote button using textContent for safety.",
+   "kind": "focus",
+   "lines": "25-36"
+  },
+  {
+   "description": "Submit: prevents default, posts to /api/questions, shows error or clears form and reloads.",
+   "kind": "focus",
+   "lines": "37-43"
+  },
+  {
+   "description": "Startup: load() called on page load.",
+   "kind": "focus",
+   "lines": "44"
+  }
+ ],
+ "title": "public/index.html: Questions Board Page",
+ "version": 1
+}

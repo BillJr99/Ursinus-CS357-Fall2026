@@ -1,0 +1,47 @@
+{
+ "code": "# Constants defined at the top, easy to adjust per deployment\nMAX_ITERATIONS = 25    # Maximum number of plan-act-verify cycles before forced stop\nMAX_TOOL_CALLS = 50    # Maximum total tool calls across all iterations\n\ntool_call_count = 0    # Running counter, incremented each time a tool is called\n\nfor iteration in range(MAX_ITERATIONS):\n    action = agent.decide(context)    # Ask the LLM what to do next (one API call)\n\n    # Safety gate 1: some actions cannot be undone; ask a human before proceeding\n    # Examples of irreversible actions: deleting files, sending emails, making purchases\n    if action.is_irreversible():\n        confirmed = human_checkpoint(action)    # Show the action to a human and wait\n        if not confirmed:\n            # Human said no; stop cleanly rather than forcing through\n            return AgentResult(status=\"halted\", reason=\"user declined\")\n\n    # Safety gate 2: if the action involves running code, check it first\n    # sandbox_validates() might run static analysis tools like bandit or pylint\n    if action.type == \"code_execution\":\n        if not sandbox_validates(action.code):\n            # Code failed static analysis; tell the agent and let it try a different approach\n            context.add(\"Rejected: code failed static analysis\")\n            continue    # Skip to the next iteration; do not execute the bad code\n\n    # Safety gate 3: enforce a total tool-call budget to limit cost and prevent infinite loops\n    tool_call_count += 1\n    if tool_call_count > MAX_TOOL_CALLS:\n        # Budget exhausted; stop and report; do not silently discard progress\n        return AgentResult(status=\"budget_exceeded\")\n\n    # Execute the action with a hard per-action timeout (30 seconds)\n    # timeout=30 prevents a single action (like a slow network call) from blocking forever\n    result = sandbox.execute(action, timeout=30)\n\n    if result.failed():\n        # Add the failure to context so the agent can reason about it\n        # Do NOT retry the same action blindly; that would loop forever on a broken action\n        context.add(f\"Action failed: {result.error}\")",
+ "description": "Code-level safety rails for LLM agents: human checkpoint for irreversible actions, static analysis for generated code, and hard tool-call budget.",
+ "example": "cs357-tut-containerisolation-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Constants and counters: MAX_ITERATIONS=25, MAX_TOOL_CALLS=50, and tool_call_count initialized to 0.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "Constants: easy to adjust per deployment, define maximum cycles and total tool calls.",
+   "kind": "focus",
+   "lines": "1-4"
+  },
+  {
+   "description": "Loop: for iteration in range(MAX_ITERATIONS) with three safety gates in sequence.",
+   "kind": "focus",
+   "lines": "7-39"
+  },
+  {
+   "description": "Safety gate 1: human checkpoint for irreversible actions like deleting files or sending emails.",
+   "kind": "focus",
+   "lines": "10-16"
+  },
+  {
+   "description": "Safety gate 2: static analysis via sandbox_validates for code execution actions, rejects bad code and continues.",
+   "kind": "focus",
+   "lines": "18-24"
+  },
+  {
+   "description": "Safety gate 3: tool-call budget enforced with running counter, returns budget_exceeded when exhausted.",
+   "kind": "focus",
+   "lines": "26-30"
+  },
+  {
+   "description": "Execution: sandbox.execute with 30-second timeout, failure added to context for agent reasoning.",
+   "kind": "focus",
+   "lines": "32-39"
+  }
+ ],
+ "title": "Agent Loop with Three Safety Gates",
+ "version": 1
+}

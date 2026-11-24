@@ -1,0 +1,37 @@
+{
+ "code": "{\n  \"provider_url\": \"http://localhost:11434\",\n  \"api_key\": null,\n  \"model\": \"llama3.2\",\n  \"temperature\": 0.2,\n  \"history_path\": \"history.json\",\n  \"skill_path\": \".agents/skills/terse-helper/SKILL.md\",\n  \"allowed_commands\": [\"ls\", \"pwd\", \"date\", \"wc\", \"head\", \"cat\", \"grep\", \"python3\"],\n  \"command_timeout\": 20,\n  \"max_commands_per_turn\": 3,\n  \"log_level\": \"INFO\"\n}",
+ "description": "JSON configuration file with all settings you might want to change without editing code: provider URL, model, temperature, history path, skill path, allowed commands, and logging.",
+ "example": "cs357-tut-localagentfromscratch-1",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete config.json file.",
+   "kind": "reveal",
+   "lines": "1-12"
+  },
+  {
+   "description": "Provider settings: URL, API key, model, and temperature for the LLM.",
+   "kind": "focus",
+   "lines": "2-5"
+  },
+  {
+   "description": "File paths: history_path for memory, log_level for verbosity.",
+   "kind": "focus",
+   "lines": "6,11"
+  },
+  {
+   "description": "Skill_path: points to the SKILL.md file for the agent's instructions.",
+   "kind": "focus",
+   "lines": "7"
+  },
+  {
+   "description": "Command safety: allowed_commands list, timeout, and max commands per turn.",
+   "kind": "focus",
+   "lines": "8-10"
+  }
+ ],
+ "title": "Agent Configuration File",
+ "version": 1
+}

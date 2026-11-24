@@ -1,0 +1,37 @@
+{
+ "code": "\n# Create a new Worker project from the official template\nnpm create cloudflare@latest hello-worker\n\n# When prompted: choose \"Hello World\" Worker, JavaScript, skip git questions if unsure\n\n# Enter the project directory\ncd hello-worker\n\n# Start the local development server (hot-reload: edit, save, test, repeat)\nnpx wrangler dev\n\n# Your Worker runs at http://localhost:8787 - open it in a browser or use curl",
+ "description": "Commands that create a new Worker project from the official template and start the local development server.",
+ "example": "cs357-tut-cloudflare-2",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "`npm create cloudflare@latest hello-worker` scaffolds a new Worker project from the official template.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "The comment names the prompts: choose the Hello World Worker, JavaScript, and skip the git questions if unsure.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "description": "`cd hello-worker` enters the new project directory.",
+   "kind": "focus",
+   "lines": "7-8"
+  },
+  {
+   "description": "`npx wrangler dev` starts the local development server. It hot-reloads on every save, so you edit, save, and test without redeploying.",
+   "kind": "focus",
+   "lines": "10-11"
+  },
+  {
+   "answer": "http://localhost:8787",
+   "kind": "predict",
+   "question": "The page says your local Worker runs at which address?"
+  }
+ ],
+ "title": "Scaffold a Worker and Run It Locally",
+ "version": 1
+}

@@ -1,0 +1,32 @@
+{
+ "code": "import path from \"node:path\";\nimport { cloudflareTest, readD1Migrations } from \"@cloudflare/vitest-plugin\";\nimport { defineConfig } from \"vitest/config\";\n\nexport default defineConfig(async () => {\n  // The same migrations the deploy applies, so tests run against the real schema.\n  const migrations = await readD1Migrations(path.join(import.meta.dirname, \"migrations\"));\n  return {\n    plugins: [\n      cloudflareTest({\n        wrangler: { configPath: \"./wrangler.jsonc\" },\n        miniflare: { bindings: { TEST_MIGRATIONS: migrations } },\n      }),\n    ],\n    test: { setupFiles: [\"./test/apply-migrations.js\"] },\n  };\n});",
+ "description": "Vitest configuration that uses cloudflare/vitest-plugin to run tests in Workers runtime with local D1 database.",
+ "example": "cs357-tut-fullstackwithagents-11",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete vitest.config.js.",
+   "kind": "reveal",
+   "lines": "1-17"
+  },
+  {
+   "description": "Imports: path, cloudflareTest, readD1Migrations, defineConfig.",
+   "kind": "focus",
+   "lines": "1-4"
+  },
+  {
+   "description": "Export: async defineConfig reads migrations, returns cloudflareTest plugin with wrangler config and miniflare bindings.",
+   "kind": "focus",
+   "lines": "5-15"
+  },
+  {
+   "description": "Setup: test setupFiles includes apply-migrations.js.",
+   "kind": "focus",
+   "lines": "16"
+  }
+ ],
+ "title": "vitest.config.js: Test Configuration",
+ "version": 1
+}

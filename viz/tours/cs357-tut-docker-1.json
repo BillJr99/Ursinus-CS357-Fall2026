@@ -1,0 +1,22 @@
+{
+ "code": "docker run -d --name webui \\\n  -p 3000:8080 \\\n  -v \"$HOME/agents/openwebui/data:/app/backend/data\" \\\n  ghcr.io/open-webui/open-webui:main",
+ "description": "The docker run line that publishes a container port to the host, using the -p HOST:CONTAINER flag.",
+ "example": "cs357-tut-docker-1",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Run the Open WebUI image detached with `-d`, name the container `webui`, and publish the port with `-p 3000:8080`. The page says a containerized server listens on a port inside the container, invisible to your browser until you publish it.",
+   "kind": "reveal",
+   "lines": "1"
+  },
+  {
+   "description": "The comment reads the mapping: Open WebUI listens on 8080 inside, and your browser visits `http://localhost:3000`. The page says to read `-p 3000:8080` as host port 3000 forwards to container port 8080, and the host side is yours to choose.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "Publish a Container Port",
+ "version": 1
+}

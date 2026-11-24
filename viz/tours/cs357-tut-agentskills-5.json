@@ -1,0 +1,42 @@
+{
+ "code": "import sys\nimport traceback\n\nimport requests\n\nOLLAMA_URL = \"http://localhost:11434/api/chat\"\nMODEL = \"llama3.2\"\n\n\ndef load_skill(path):\n    \"\"\"Read SKILL.md and return its body, without the front matter.\"\"\"\n    with open(path, \"r\", encoding=\"utf-8\") as f:\n        text = f.read()\n    if text.startswith(\"---\"):\n        # The front matter sits between the first two --- lines.\n        text = text.split(\"---\", 2)[2]\n    return text.strip()\n\n\ndef chat(messages):\n    \"\"\"Send the conversation so far to Ollama and return the reply text.\"\"\"\n    response = requests.post(\n        OLLAMA_URL,\n        json={\"model\": MODEL, \"messages\": messages, \"stream\": False},\n        timeout=300,\n    )\n    response.raise_for_status()\n    return response.json()[\"message\"][\"content\"]\n\n\ndef main():\n    try:\n        skill = load_skill(sys.argv[1])\n    except Exception as e:\n        print(f\"[run_skill:load_skill] {e}\")\n        traceback.print_exc()\n        return\n\n    messages = [{\"role\": \"system\", \"content\": skill}]\n    print(\"Type your request.  Type 'quit' to stop.\")\n    while True:\n        user = input(\"> \").strip()\n        if user.lower() == \"quit\":\n            break\n        messages.append({\"role\": \"user\", \"content\": user})\n        try:\n            reply = chat(messages)\n        except Exception as e:\n            print(f\"[run_skill:chat] {e}\")\n            traceback.print_exc()\n            break\n        messages.append({\"role\": \"assistant\", \"content\": reply})\n        print(reply)\n\n\nif __name__ == \"__main__\":\n    main()",
+ "description": "A short script that loads a SKILL.md file, sends its body to a local Ollama model as the system message, and runs a chat loop.",
+ "example": "cs357-tut-agentskills-5",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This script loads a skill and hands it to a local model through Ollama. `OLLAMA_URL` is the chat endpoint, and `MODEL` names the model to use.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "`load_skill` reads the file and strips the front matter. It splits on `---` and keeps the body, so the model sees the instructions and not the metadata.",
+   "kind": "focus",
+   "lines": "10-17"
+  },
+  {
+   "description": "`chat` sends the conversation to Ollama with `stream` off and returns the reply text.",
+   "kind": "focus",
+   "lines": "20-28"
+  },
+  {
+   "description": "`main` loads the skill from the command-line argument and runs an input loop that reads your request until you type `quit`.",
+   "kind": "focus",
+   "lines": "31-45"
+  },
+  {
+   "description": "Line 39 puts the skill body in the system message. That is what the agent does under the hood: the body of `SKILL.md` becomes the system message.",
+   "kind": "focus",
+   "lines": "39"
+  },
+  {
+   "answer": "the whole conversation",
+   "kind": "predict",
+   "question": "What does the script send to the model on every turn?"
+  }
+ ],
+ "title": "Run a Skill from Python Against Ollama",
+ "version": 1
+}

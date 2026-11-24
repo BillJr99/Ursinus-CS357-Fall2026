@@ -1,0 +1,54 @@
+{
+ "code": "import math\nimport random\n\n# --------------------------------------------------------------\n\n# Simulation parameters, adjust these to model your hardware\n\n# --------------------------------------------------------------\n\n# Empirical estimates for a mid-range GPU (e.g., RTX 3090) with a ~7B model at 4-bit\nPREFILL_MS_PER_TOKEN = 0.25    # ms per input token during prefill (parallel, fast)\nDECODE_MS_PER_TOKEN  = 12.0    # ms per output token during decode (sequential, slower)\n\n# Batching reduces effective per-token decode time because the GPU is better utilized:\nBATCH_SPEEDUP = {1: 1.0, 4: 0.45, 8: 0.28}  # multiplier on DECODE_MS_PER_TOKEN\n\nrandom.seed(42)\n\n# Generate a realistic queue of 32 requests with varied prompt/response lengths\nrequests = []\nfor i in range(32):\n    prompt_tokens  = random.randint(50, 800)   # short chat to long RAG prompt\n    output_tokens  = random.randint(30, 300)   # brief answer to detailed response\n    requests.append({\"id\": i, \"prompt\": prompt_tokens, \"output\": output_tokens})\n\ntotal_output_tokens = sum(r[\"output\"] for r in requests)\n\n# --------------------------------------------------------------\n\n# Static batching: process requests in fixed-size batches.\n\n# Each batch runs until the *slowest* request finishes.\n\n# --------------------------------------------------------------\ndef static_batching(requests, batch_size, decode_speedup):\n    total_ms = 0.0\n    for batch_start in range(0, len(requests), batch_size):\n        batch = requests[batch_start : batch_start + batch_size]\n        # Prefill: the batch's slowest (longest) prompt sets the wall-clock prefill time\n        max_prefill_tokens = max(r[\"prompt\"] for r in batch)\n        prefill_ms = max_prefill_tokens * PREFILL_MS_PER_TOKEN\n        # Decode: the batch runs until the longest output finishes\n        max_output_tokens = max(r[\"output\"] for r in batch)\n        decode_ms = max_output_tokens * DECODE_MS_PER_TOKEN * decode_speedup\n        total_ms += prefill_ms + decode_ms\n    return total_ms\n\n# --------------------------------------------------------------\n\n# Continuous batching: model each forward pass as a scheduling\n\n# event. Finished requests free their slot immediately.\n\n# This is a simplified token-step simulation.\n\n# --------------------------------------------------------------\ndef continuous_batching(requests, batch_size, decode_speedup):\n    queue = list(requests)          # waiting to start\n    active = []                     # currently in a batch slot\n    completed_tokens = {}           # tokens generated so far per request id\n    total_ms = 0.0\n\n    # Seed initial batch\n    while len(active) < batch_size and queue:\n        r = queue.pop(0)\n        # Prefill this request immediately\n        total_ms += r[\"prompt\"] * PREFILL_MS_PER_TOKEN\n        completed_tokens[r[\"id\"]] = 0\n        active.append(r)\n\n    # Simulate token-by-token decode steps\n    while active:\n        step_ms = DECODE_MS_PER_TOKEN * decode_speedup\n        total_ms += step_ms\n        finished = []\n        for r in active:\n            completed_tokens[r[\"id\"]] += 1\n            if completed_tokens[r[\"id\"]] >= r[\"output\"]:\n                finished.append(r)\n        for r in finished:\n            active.remove(r)\n            # Immediately slot in next waiting request (continuous batching)\n            if queue:\n                new_r = queue.pop(0)\n                total_ms += new_r[\"prompt\"] * PREFILL_MS_PER_TOKEN\n                completed_tokens[new_r[\"id\"]] = 0\n                active.append(new_r)\n\n    return total_ms\n\n# --------------------------------------------------------------\n\n# Run and report\n\n# --------------------------------------------------------------\nprint(f\"{'Strategy':<25} {'Batch':>5} {'Time (s)':>10} {'Throughput (tok/s)':>20}\")\nprint(\"-\" * 65)\n\nfor bs in [1, 4, 8]:\n    speedup = BATCH_SPEEDUP[bs]\n\n    static_ms = static_batching(requests, bs, speedup)\n    static_tps = total_output_tokens / (static_ms / 1000.0)\n    print(f\"{'Static batching':<25} {bs:>5} {static_ms/1000:>10.2f} {static_tps:>20.1f}\")\n\n    cont_ms = continuous_batching(requests, bs, speedup)\n    cont_tps = total_output_tokens / (cont_ms / 1000.0)\n    print(f\"{'Continuous batching':<25} {bs:>5} {cont_ms/1000:>10.2f} {cont_tps:>20.1f}\")\n\nprint()\nprint(f\"Total output tokens across all 32 requests: {total_output_tokens}\")\nprint()\nprint(\"Observation: Larger batch sizes improve throughput but do NOT\")\nprint(\"directly improve any individual request's TTFT or TPOT.\")",
+ "description": "This simulation estimates time and throughput for static and continuous request batching.",
+ "example": "cs357-tut-llmserving-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: copilot free model",
+ "steps": [
+  {
+   "description": "The parameters set prefill and decode estimates plus a decode multiplier for each batch size. A seeded loop creates 32 requests with varied prompt and output lengths.",
+   "kind": "reveal",
+   "lines": "10-26"
+  },
+  {
+   "description": "static_batching groups requests into fixed-size batches. The longest prompt and longest output in each batch set its wall-clock times.",
+   "kind": "reveal",
+   "lines": "35-46"
+  },
+  {
+   "description": "continuous_batching keeps a waiting queue and active slots. It prefills requests as it fills the initial batch.",
+   "kind": "reveal",
+   "lines": "57-69"
+  },
+  {
+   "answer": "It removes the finished request and immediately prefills the next queued request into that slot.",
+   "kind": "predict",
+   "lines": "80-87",
+   "question": "When an active request finishes, what does continuous batching do with its slot if work is waiting?"
+  },
+  {
+   "description": "Each decode step advances every active request by one token. Finished requests free slots for waiting requests until no requests remain.",
+   "kind": "reveal",
+   "lines": "71-89"
+  },
+  {
+   "description": "The reporting loop tests batch sizes 1, 4, and 8. It calculates time and output-token throughput for both strategies.",
+   "kind": "reveal",
+   "lines": "96-108"
+  },
+  {
+   "description": "The output prints one static and one continuous row for each batch size.",
+   "kind": "run",
+   "lines": "96-108",
+   "trace_step": 205
+  },
+  {
+   "description": "The final lines print the total output tokens and state that larger batches improve throughput without directly improving an individual request's TTFT or TPOT.",
+   "kind": "reveal",
+   "lines": "110-114"
+  }
+ ],
+ "title": "Compare batching schedulers",
+ "version": 1
+}

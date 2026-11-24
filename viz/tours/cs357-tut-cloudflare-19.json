@@ -1,0 +1,32 @@
+{
+ "code": "on:\n  push:\n    branches: [main]                 # not every branch\n    paths: [\"src/**\", \"deploy.sh\"]   # skip runs when only docs/images change\n  workflow_dispatch:                 # expensive path stays manual/on-demand",
+ "description": "An `on` block that restricts automatic runs to one branch and a set of paths, and keeps the expensive path on manual dispatch.",
+ "example": "cs357-tut-cloudflare-19",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the `on` block, the triggers for a workflow. It scopes automatic runs so a docs-only edit does not start a full build.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`push` fires on a push, and `branches: [main]` narrows it to `main`. The comment notes this is not every branch.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "`paths` limits the run to changes under `src/**` or to `deploy.sh`. The comment states the point: skip runs when only docs or images change.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "`workflow_dispatch` lets a person start the run on demand. The comment calls this the expensive path that stays manual.",
+   "kind": "focus",
+   "lines": "5"
+  }
+ ],
+ "title": "Scoping Automatic Triggers",
+ "version": 1
+}

@@ -1,0 +1,56 @@
+{
+ "code": "def add(a, b):\n    return a + b\n\n# Always returns 5, no exceptions, no surprises.\nprint(add(2, 3))",
+ "description": "This tour walks through the sampling tutorial: deterministic systems with reproducible output, probabilistic systems that sample from distributions, and the implications for testing and trusting AI systems.",
+ "example": "cs357-tut-sampling-1",
+ "lang": "python",
+ "name": "walkthrough",
+ "reviewed": false,
+ "source": "draft: pi free model",
+ "stages": {
+  "cs357-tut-sampling-2": {
+   "code": "import random\n\ndef flip_coin():\n    return random.choice([\"heads\", \"tails\"])\n\n# Could return either, by design.\nprint(flip_coin())",
+   "lang": "python"
+  }
+ },
+ "steps": [
+  {
+   "description": "Deterministic function add(a, b) returns a + b. Same input always produces same output, no randomness.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "answer": "5",
+   "kind": "predict",
+   "question": "What does add(2, 3) return?"
+  },
+  {
+   "description": "The function executes and returns 5.",
+   "kind": "run",
+   "lines": "2",
+   "trace_step": 2
+  },
+  {
+   "description": "Move to probabilistic systems.",
+   "kind": "stage",
+   "stage": "cs357-tut-sampling-2"
+  },
+  {
+   "description": "Probabilistic function flip_coin uses random.choice to sample from ['heads', 'tails']. Output varies by design even with identical input.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "answer": "heads or tails",
+   "kind": "predict",
+   "question": "What are the two possible outputs of flip_coin()?"
+  },
+  {
+   "description": "random.choice selects one element from the list. The recorded run returned tails.",
+   "kind": "run",
+   "lines": "4",
+   "trace_step": 3
+  }
+ ],
+ "title": "Deterministic vs probabilistic systems, sampling, temperature, and generation",
+ "version": 1
+}

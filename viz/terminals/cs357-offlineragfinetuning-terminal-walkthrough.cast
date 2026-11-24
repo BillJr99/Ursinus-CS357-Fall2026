@@ -1,0 +1,10 @@
+{"version": 2, "width": 100, "height": 30, "title": "Prepare the generator and embedding models", "code_viz_provenance": "scripted", "duration": 0.003}
+[0.0, "m", "Download the embedding model"]
+[0.0, "o", "$ ollama pull nomic-embed-text\r\n"]
+[0.0, "o", "pulling manifest\nwriting manifest\nsuccess\n"]
+[0.001, "m", "Download the generator model"]
+[0.001, "o", "$ ollama pull llama3.2\r\n"]
+[0.001, "o", "pulling manifest\nwriting manifest\nsuccess\n"]
+[0.002, "m", "Confirm both are available"]
+[0.002, "o", "$ ollama list\r\n"]
+[0.002, "o", "NAME                       ID          SIZE     MODIFIED\nllama3.2:latest             <model-id>  2.0 GB   <time>\nnomic-embed-text:latest     <model-id>  274 MB   <time>\n"]

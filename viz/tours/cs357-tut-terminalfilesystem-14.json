@@ -1,0 +1,42 @@
+{
+ "code": "pi.on(\"turn_end\", async (event, ctx) => {\n  if ([\"length\", \"error\", \"aborted\"].includes(event.message?.stopReason)) {\n    record(ctx, \"interrupted-turn\", { stopReason: event.message.stopReason, ... });\n    ctx.ui.notify(\"Interrupted turn recorded. Check disk state before retrying.\", \"warning\");\n  }\n});\n\npi.on(\"session_compact_failed\", async (event, ctx) => {\n  record(ctx, \"compaction-failed\", { reason: event.reason, ... });\n});",
+ "description": "Event handlers that record interrupted turns and compaction failures to disk for recovery.",
+ "example": "cs357-tut-terminalfilesystem-14",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Both event handlers.",
+   "kind": "reveal",
+   "lines": "1-10"
+  },
+  {
+   "description": "Turn_end handler: triggers on length, error, or aborted stopReason.",
+   "kind": "focus",
+   "lines": "1-6"
+  },
+  {
+   "description": "Condition: checks if stopReason is in the failure set.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "Record: calls record function with stopReason context.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "Notification: warns user to check disk state before retrying.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "Session_compact_failed handler: records compaction failure with reason.",
+   "kind": "focus",
+   "lines": "8-10"
+  }
+ ],
+ "title": "pi Event Handlers for Interruption",
+ "version": 1
+}

@@ -1,0 +1,5297 @@
+{
+ "course": "cs357",
+ "site": "https://billjr99.github.io/Ursinus-CS357-Fall2026",
+ "built": "2026-11-24 20:48",
+ "examples": [
+  {
+   "id": "cs357-liascript-agentloop-1",
+   "viz": "agent",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-agentloop.md",
+   "line": 71,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-agentloop",
+   "error": null,
+   "steps": 1,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-biasdata-3",
+   "viz": "agent",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-biasdata.md",
+   "line": 146,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-biasdata",
+   "error": null,
+   "steps": 56,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-biasdata-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-biasdata.md",
+   "line": 421,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-biasdata",
+   "error": null,
+   "steps": 21,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-biasdata-2",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-biasdata.md",
+   "line": 743,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-biasdata",
+   "error": null,
+   "steps": 19,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-critiqueconsensusjudge-1",
+   "viz": "agent",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-critiqueconsensusjudge.md",
+   "line": 135,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-critiqueconsensusjudge",
+   "error": null,
+   "steps": 18,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-critiqueconsensusjudge-2",
+   "viz": "agent",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-critiqueconsensusjudge.md",
+   "line": 316,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-critiqueconsensusjudge",
+   "error": null,
+   "steps": 16,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-evaluatingoutputs-1",
+   "viz": "agent",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-evaluatingoutputs.md",
+   "line": 119,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-evaluatingoutputs",
+   "error": null,
+   "steps": 11,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-iterationloops-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-iterationloops.md",
+   "line": 584,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-iterationloops",
+   "error": null,
+   "steps": 108,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-iterationloops-2",
+   "viz": "agent",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-iterationloops.md",
+   "line": 859,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-iterationloops",
+   "error": null,
+   "steps": 5,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-mcp-2",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-mcp.md",
+   "line": 246,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-mcp",
+   "error": null,
+   "steps": 9,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-observability-1",
+   "viz": "agent",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-observability.md",
+   "line": 77,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-observability",
+   "error": null,
+   "steps": 4,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-observability-2",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-observability.md",
+   "line": 386,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-observability",
+   "error": null,
+   "steps": 92,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-observability-3",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-observability.md",
+   "line": 526,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-observability",
+   "error": null,
+   "steps": 66,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-observability-4",
+   "viz": "agent",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-observability.md",
+   "line": 880,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-observability",
+   "error": null,
+   "steps": 4,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-orchestrationworkshop-2",
+   "viz": "agent",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-orchestrationworkshop.md",
+   "line": 165,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-orchestrationworkshop",
+   "error": null,
+   "steps": 33,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-orchestrationworkshop-3",
+   "viz": "agent",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-orchestrationworkshop.md",
+   "line": 463,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-orchestrationworkshop",
+   "error": null,
+   "steps": 10,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-orchestrationworkshop-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-orchestrationworkshop.md",
+   "line": 612,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-orchestrationworkshop",
+   "error": null,
+   "steps": 39,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-orchestrationworkshop-4",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-orchestrationworkshop.md",
+   "line": 686,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-orchestrationworkshop",
+   "error": null,
+   "steps": 44,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-orchestrationworkshop-5",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-orchestrationworkshop.md",
+   "line": 743,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-orchestrationworkshop",
+   "error": null,
+   "steps": 50,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-orchestrationworkshop-6",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-orchestrationworkshop.md",
+   "line": 791,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-orchestrationworkshop",
+   "error": null,
+   "steps": 177,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-orchestrationworkshop-7",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-orchestrationworkshop.md",
+   "line": 880,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-orchestrationworkshop",
+   "error": null,
+   "steps": 18,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-rag-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-rag.md",
+   "line": 289,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-rag",
+   "error": null,
+   "steps": 58,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-ragworkshop-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-ragworkshop.md",
+   "line": 91,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-ragworkshop",
+   "error": null,
+   "steps": 86,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-rubricworkshop-2",
+   "viz": "agent",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-rubricworkshop.md",
+   "line": 111,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-rubricworkshop",
+   "error": null,
+   "steps": 3,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-rubricworkshop-1",
+   "viz": "cast",
+   "lang": "shell",
+   "page": "_pages/Activities/liascript-rubricworkshop.md",
+   "line": 244,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-rubricworkshop",
+   "error": null,
+   "steps": 4,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-liascript-tooluse-1",
+   "viz": "agent",
+   "lang": "python",
+   "page": "_pages/Activities/liascript-tooluse.md",
+   "line": 164,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Activities/liascript-tooluse",
+   "error": null,
+   "steps": 5,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-demo-overview-setup",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Assignments/asmt-overview.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentcasestudies-1",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentcasestudies.md",
+   "line": 686,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentcasestudies",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentcasestudies-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentcasestudies.md",
+   "line": 743,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentcasestudies",
+   "error": null,
+   "steps": 8,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-1",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 92,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-2",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 111,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-3",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 175,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-4",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 297,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-5",
+   "viz": "show",
+   "lang": "toml",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 309,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-6",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 322,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-7",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 360,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-8",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 402,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-9",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 449,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-10",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 472,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-11",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 496,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-12",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 607,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-13",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 623,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-14",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 641,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-15",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 658,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-16",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 677,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentclis-17",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentclis.md",
+   "line": 695,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentclis",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentdebugging-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentdebugging.md",
+   "line": 279,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentdebugging",
+   "error": null,
+   "steps": 9,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-1",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 96,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-2",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 130,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-3",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 170,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-4",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 296,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-5",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 309,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-6",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 342,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-7",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 387,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-8",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 468,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-9",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 554,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-10",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 565,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-11",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 617,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-12",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 642,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-13",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 691,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-14",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 746,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-15",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 779,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-16",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 799,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-17",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 830,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-18",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 945,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentframeworks-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentframeworks.md",
+   "line": 1046,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentframeworks",
+   "error": null,
+   "steps": 7,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentgovernance-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentgovernance.md",
+   "line": 389,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentgovernance",
+   "error": null,
+   "steps": 6,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-agenticopenwebui-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agenticopenwebui.md",
+   "line": 375,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agenticopenwebui",
+   "error": null,
+   "steps": 8,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentprojectdesign-1",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-agentprojectdesign.md",
+   "line": 131,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentprojectdesign",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentprojectdesign-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentprojectdesign.md",
+   "line": 174,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentprojectdesign",
+   "error": null,
+   "steps": 10,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentskills-1",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-agentskills.md",
+   "line": 132,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentskills",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentskills-2",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentskills.md",
+   "line": 152,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentskills",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentskills-3",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentskills.md",
+   "line": 164,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentskills",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentskills-4",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentskills.md",
+   "line": 297,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentskills",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentskills-5",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentskills.md",
+   "line": 387,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentskills",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentskills-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentskills.md",
+   "line": 499,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentskills",
+   "error": null,
+   "steps": 9,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-agentstack-terminal-walkthrough",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentstack.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentstack-1",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentstack.md",
+   "line": 110,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentstack",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentstack-2",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-agentstack.md",
+   "line": 130,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentstack",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentstack-3",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-agentstack.md",
+   "line": 147,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentstack",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentstack-4",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentstack.md",
+   "line": 199,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentstack",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentstack-5",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentstack.md",
+   "line": 218,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentstack",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentstack-6",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-agentstack.md",
+   "line": 273,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentstack",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentteams-1",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-agentteams.md",
+   "line": 91,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentteams",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-agentteams-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-agentteams.md",
+   "line": 279,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-agentteams",
+   "error": null,
+   "steps": 6,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-aiaccessibility-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-aiaccessibility.md",
+   "line": 226,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-aiaccessibility",
+   "error": null,
+   "steps": 7,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-aibyhand-6",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-aibyhand.md",
+   "line": 111,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-aibyhand",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-aibyhand-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-aibyhand.md",
+   "line": 200,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-aibyhand",
+   "error": null,
+   "steps": 11,
+   "tours": [
+    "",
+    "walkthrough"
+   ],
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-aibyhand-2",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-aibyhand.md",
+   "line": 318,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-aibyhand",
+   "error": null,
+   "steps": 27,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-aibyhand-3",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-aibyhand.md",
+   "line": 478,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-aibyhand",
+   "error": null,
+   "steps": 19,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-aibyhand-4",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-aibyhand.md",
+   "line": 514,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-aibyhand",
+   "error": null,
+   "steps": 264,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-aibyhand-5",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-aibyhand.md",
+   "line": 637,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-aibyhand",
+   "error": null,
+   "steps": 25,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-aimaker-1",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-aimaker.md",
+   "line": 86,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-aimaker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-aimaker-2",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-aimaker.md",
+   "line": 172,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-aimaker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-aimaker-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-aimaker.md",
+   "line": 303,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-aimaker",
+   "error": null,
+   "steps": 9,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-biasprobes-4",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-biasprobes.md",
+   "line": 325,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-biasprobes",
+   "error": null,
+   "steps": 106,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-chessaicoach-1",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-chessaicoach.md",
+   "line": 62,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-chessaicoach",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-chessaicoach-2",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-chessaicoach.md",
+   "line": 162,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-chessaicoach",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-chessaicoach-3",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-chessaicoach.md",
+   "line": 182,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-chessaicoach",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-chessaicoach-4",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-chessaicoach.md",
+   "line": 221,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-chessaicoach",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-chessaicoach-5",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-chessaicoach.md",
+   "line": 253,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-chessaicoach",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-chessaicoach-6",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-chessaicoach.md",
+   "line": 271,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-chessaicoach",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-chessaicoach-7",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-chessaicoach.md",
+   "line": 390,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-chessaicoach",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-chessaicoach-8",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-chessaicoach.md",
+   "line": 456,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-chessaicoach",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-chessaicoach-9",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-chessaicoach.md",
+   "line": 490,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-chessaicoach",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-chessaicoach-10",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-chessaicoach.md",
+   "line": 505,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-chessaicoach",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-chessaicoach-11",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-chessaicoach.md",
+   "line": 609,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-chessaicoach",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-chessaicoach-12",
+   "viz": "show",
+   "lang": "jsx",
+   "page": "_pages/Tutorials/tut-chessaicoach.md",
+   "line": 693,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-chessaicoach",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-chessaicoach-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-chessaicoach.md",
+   "line": 792,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-chessaicoach",
+   "error": null,
+   "steps": 7,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-cloudflare-terminal-walkthrough",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-1",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 75,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-2",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 106,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-3",
+   "viz": "show",
+   "lang": "toml",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 126,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-4",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 142,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-5",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 181,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-6",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 210,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-7",
+   "viz": "show",
+   "lang": "toml",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 220,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-8",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 230,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-9",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 271,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-10",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 352,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-11",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 383,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-12",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 447,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-13",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 457,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-14",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 471,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-15",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 529,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-16",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 551,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-17",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 593,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-18",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 645,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-19",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 710,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-20",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 724,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-21",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 769,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-22",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 794,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-23",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 813,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-24",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 832,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-25",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 859,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-26",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 885,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-27",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 904,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-cloudflare-28",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-cloudflare.md",
+   "line": 924,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-cloudflare",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-codingagentsecurity-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-codingagentsecurity.md",
+   "line": 296,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-codingagentsecurity",
+   "error": null,
+   "steps": 10,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-containerisolation-onefolder",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-containerisolation.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "simulate"
+   ]
+  },
+  {
+   "id": "cs357-tut-containerisolation-onefolder-terminal",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-containerisolation.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "simulate",
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-agent-containers-walkthrough",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-containerisolation.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "simulate",
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-tut-containerisolation-1",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-containerisolation.md",
+   "line": 120,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-containerisolation",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-containerisolation-2",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-containerisolation.md",
+   "line": 218,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-containerisolation",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-containerisolation-3",
+   "viz": "show",
+   "lang": "dockerfile",
+   "page": "_pages/Tutorials/tut-containerisolation.md",
+   "line": 230,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-containerisolation",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-containerisolation-4",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-containerisolation.md",
+   "line": 252,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-containerisolation",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-containerisolation-5",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-containerisolation.md",
+   "line": 281,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-containerisolation",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-containerisolation-6",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-containerisolation.md",
+   "line": 299,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-containerisolation",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-coursecontainer-terminal-walkthrough",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-coursecontainer.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "simulate",
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-tut-coursecontainer-1",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-coursecontainer.md",
+   "line": 90,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-coursecontainer",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-coursecontainer-2",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-coursecontainer.md",
+   "line": 137,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-coursecontainer",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-coursecontainer-3",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-coursecontainer.md",
+   "line": 195,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-coursecontainer",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-coursecontainer-4",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-coursecontainer.md",
+   "line": 243,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-coursecontainer",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-coursecontainer-5",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-coursecontainer.md",
+   "line": 279,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-coursecontainer",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-coursecontainer-6",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-coursecontainer.md",
+   "line": 345,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-coursecontainer",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-datacards-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-datacards.md",
+   "line": 215,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-datacards",
+   "error": null,
+   "steps": 9,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-demoday-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-demoday.md",
+   "line": 112,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-demoday",
+   "error": null,
+   "steps": 9,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-bindmount",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "simulate"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-disappearing-file",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "simulate"
+   ]
+  },
+  {
+   "id": "cs357-demo-docker-sharing",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "simulate",
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-1",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 143,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-docker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-2",
+   "viz": "show",
+   "lang": "dockerfile",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 184,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-docker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-3",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 217,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-docker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-4",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 245,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-docker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-5",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 273,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-docker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-6",
+   "viz": "show",
+   "lang": "dockerfile",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 407,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-docker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-7",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 450,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-docker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-8",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 483,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-docker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-9",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 509,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-docker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-10",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 540,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-docker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-11",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 595,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-docker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-12",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 634,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-docker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-docker-13",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-docker.md",
+   "line": 656,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-docker",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-ethicalframeworks-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-ethicalframeworks.md",
+   "line": 274,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-ethicalframeworks",
+   "error": null,
+   "steps": 10,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-explainability-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-explainability.md",
+   "line": 211,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-explainability",
+   "error": null,
+   "steps": 5,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-explainabilitydeep-1",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-explainabilitydeep.md",
+   "line": 229,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-explainabilitydeep",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-explainabilitydeep-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-explainabilitydeep.md",
+   "line": 316,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-explainabilitydeep",
+   "error": null,
+   "steps": 10,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-1",
+   "viz": "show",
+   "lang": "dockerfile",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 97,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-2",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 117,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-3",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 187,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-4",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 222,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-5",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 389,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-6",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 457,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-7",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 514,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-8",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 525,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-9",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 615,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-10",
+   "viz": "show",
+   "lang": "jsonc",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 639,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-11",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 674,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-12",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 696,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-13",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 748,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-14",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 802,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-15",
+   "viz": "show",
+   "lang": "html",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 874,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-16",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 939,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-17",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 982,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-18",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 1049,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-19",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 1160,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-20",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 1262,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-fullstackwithagents-21",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-fullstackwithagents.md",
+   "line": 1272,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-fullstackwithagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-githubpowertools-terminal-walkthrough",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-githubpowertools.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-gmailreadonly-cli-terminal",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-gmailreadonly.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-gmailreadonly-terminal-walkthrough",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-gmailreadonly.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-tut-groupcharter-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-groupcharter.md",
+   "line": 234,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-groupcharter",
+   "error": null,
+   "steps": 7,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-handoffprotocols-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-handoffprotocols.md",
+   "line": 131,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-handoffprotocols",
+   "error": null,
+   "steps": 197,
+   "tours": [
+    "",
+    "walkthrough"
+   ],
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-handoffprotocols-2",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-handoffprotocols.md",
+   "line": 258,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-handoffprotocols",
+   "error": null,
+   "steps": 800,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-hardware-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-hardware.md",
+   "line": 371,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-hardware",
+   "error": null,
+   "steps": 9,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-karpathycoding-1",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-karpathycoding.md",
+   "line": 125,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-karpathycoding",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-karpathycoding-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-karpathycoding.md",
+   "line": 397,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-karpathycoding",
+   "error": null,
+   "steps": 9,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-llmjudges-3",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-llmjudges.md",
+   "line": 31,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-llmjudges",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-llmjudges-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-llmjudges.md",
+   "line": 73,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-llmjudges",
+   "error": null,
+   "steps": 87,
+   "tours": [
+    "",
+    "walkthrough"
+   ],
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-llmjudges-4",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-llmjudges.md",
+   "line": 266,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-llmjudges",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-llmjudges-2",
+   "viz": "cast",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-llmjudges.md",
+   "line": 286,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-llmjudges",
+   "error": null,
+   "steps": 4,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-llmjudges-5",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-llmjudges.md",
+   "line": 294,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-llmjudges",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-llmjudges-6",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-llmjudges.md",
+   "line": 467,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-llmjudges",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-llmpretraining-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-llmpretraining.md",
+   "line": 213,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-llmpretraining",
+   "error": null,
+   "steps": 800,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-llmserving-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-llmserving.md",
+   "line": 128,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-llmserving",
+   "error": null,
+   "steps": 800,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-localagentfromscratch-1",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-localagentfromscratch.md",
+   "line": 64,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-localagentfromscratch",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-localagentfromscratch-2",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-localagentfromscratch.md",
+   "line": 93,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-localagentfromscratch",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-localagentfromscratch-3",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-localagentfromscratch.md",
+   "line": 344,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-localagentfromscratch",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-localagentfromscratch-4",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-localagentfromscratch.md",
+   "line": 415,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-localagentfromscratch",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-localagentfromscratch-5",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-localagentfromscratch.md",
+   "line": 508,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-localagentfromscratch",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-localagentfromscratch-6",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-localagentfromscratch.md",
+   "line": 602,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-localagentfromscratch",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-localagentfromscratch-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-localagentfromscratch.md",
+   "line": 742,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-localagentfromscratch",
+   "error": null,
+   "steps": 5,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-localmodels-terminal-walkthrough",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-localmodels.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-tut-localmodels-1",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-localmodels.md",
+   "line": 187,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-localmodels",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-localmodels-2",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-localmodels.md",
+   "line": 219,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-localmodels",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-localmodels-3",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-localmodels.md",
+   "line": 267,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-localmodels",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-localmodels-4",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-localmodels.md",
+   "line": 333,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-localmodels",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-mcpoauth-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-mcpoauth.md",
+   "line": 185,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-mcpoauth",
+   "error": null,
+   "steps": 8,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-memorycontext-1",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-memorycontext.md",
+   "line": 91,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-memorycontext",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-memorycontext-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-memorycontext.md",
+   "line": 541,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-memorycontext",
+   "error": null,
+   "steps": 14,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-modeltypes-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-modeltypes.md",
+   "line": 293,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-modeltypes",
+   "error": null,
+   "steps": 12,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-multiagentmeasurement-2",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-multiagentmeasurement.md",
+   "line": 81,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-multiagentmeasurement",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-multiagentmeasurement-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-multiagentmeasurement.md",
+   "line": 110,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-multiagentmeasurement",
+   "error": null,
+   "steps": 5,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-multiagentmeasurement-3",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-multiagentmeasurement.md",
+   "line": 141,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-multiagentmeasurement",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-multiagentmeasurement-4",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-multiagentmeasurement.md",
+   "line": 258,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-multiagentmeasurement",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-multiagentmeasurement-5",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-multiagentmeasurement.md",
+   "line": 352,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-multiagentmeasurement",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-multiagentmeasurement-6",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-multiagentmeasurement.md",
+   "line": 483,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-multiagentmeasurement",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-multiagentmeasurement-7",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-multiagentmeasurement.md",
+   "line": 516,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-multiagentmeasurement",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-multiagentmeasurement-8",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-multiagentmeasurement.md",
+   "line": 670,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-multiagentmeasurement",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-multiagentmeasurement-9",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-multiagentmeasurement.md",
+   "line": 725,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-multiagentmeasurement",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-multiagentmeasurement-10",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-multiagentmeasurement.md",
+   "line": 914,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-multiagentmeasurement",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-multimodalagents-1",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-multimodalagents.md",
+   "line": 294,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-multimodalagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-multimodalagents-2",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-multimodalagents.md",
+   "line": 345,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-multimodalagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-multimodalagents-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-multimodalagents.md",
+   "line": 396,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-multimodalagents",
+   "error": null,
+   "steps": 10,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-observability-1",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-observability.md",
+   "line": 126,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-observability",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-observability-2",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-observability.md",
+   "line": 217,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-observability",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-observability-3",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-observability.md",
+   "line": 227,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-observability",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-observability-4",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-observability.md",
+   "line": 268,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-observability",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-observability-5",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-observability.md",
+   "line": 397,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-observability",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-observability-6",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-observability.md",
+   "line": 419,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-observability",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-observability-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-observability.md",
+   "line": 578,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-observability",
+   "error": null,
+   "steps": 9,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-obsidiansync-terminal-walkthrough",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-obsidiansync.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "simulate",
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-tut-obsidiansync-2",
+   "viz": "show",
+   "lang": "gitignore",
+   "page": "_pages/Tutorials/tut-obsidiansync.md",
+   "line": 74,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-obsidiansync",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-obsidiansync-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-obsidiansync.md",
+   "line": 205,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-obsidiansync",
+   "error": null,
+   "steps": 14,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-obsidiansync-3",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-obsidiansync.md",
+   "line": 410,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-obsidiansync",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-offlineragfinetuning-terminal-walkthrough",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-tut-offlineragfinetuning-2",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 62,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-offlineragfinetuning",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-offlineragfinetuning-3",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 105,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-offlineragfinetuning",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-offlineragfinetuning-4",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 124,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-offlineragfinetuning",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-offlineragfinetuning-5",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 235,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-offlineragfinetuning",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-offlineragfinetuning-6",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 271,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-offlineragfinetuning",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-offlineragfinetuning-7",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 348,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-offlineragfinetuning",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-offlineragfinetuning-8",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 448,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-offlineragfinetuning",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-offlineragfinetuning-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 575,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-offlineragfinetuning",
+   "error": null,
+   "steps": 261,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-offlineragfinetuning-9",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 652,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-offlineragfinetuning",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-offlineragfinetuning-10",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 676,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-offlineragfinetuning",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-offlineragfinetuning-11",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 789,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-offlineragfinetuning",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-offlineragfinetuning-12",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 855,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-offlineragfinetuning",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-offlineragfinetuning-13",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-offlineragfinetuning.md",
+   "line": 922,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-offlineragfinetuning",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-1",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 139,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-2",
+   "viz": "show",
+   "lang": "powershell",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 152,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-3",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 185,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-4",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 221,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-5",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 294,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-6",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 325,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-7",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 391,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-8",
+   "viz": "show",
+   "lang": "powershell",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 408,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-9",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 425,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-10",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 445,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-11",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 516,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-12",
+   "viz": "show",
+   "lang": "powershell",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 534,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-13",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 555,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-14",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 577,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-15",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 648,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-16",
+   "viz": "show",
+   "lang": "dockerfile",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 707,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-17",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 748,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-18",
+   "viz": "show",
+   "lang": "powershell",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 763,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-19",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 794,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-20",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 806,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-21",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 827,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-opencodesetup-22",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-opencodesetup.md",
+   "line": 891,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-opencodesetup",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-orchestrationpatterns-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-orchestrationpatterns.md",
+   "line": 55,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-orchestrationpatterns",
+   "error": null,
+   "steps": 39,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-peerreview-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-peerreview.md",
+   "line": 230,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-peerreview",
+   "error": null,
+   "steps": 9,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-personapipeline-1",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-personapipeline.md",
+   "line": 152,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-personapipeline",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-personapipeline-2",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-personapipeline.md",
+   "line": 196,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-personapipeline",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-personapipeline-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-personapipeline.md",
+   "line": 693,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-personapipeline",
+   "error": null,
+   "steps": 10,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-philosophyai-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-philosophyai.md",
+   "line": 241,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-philosophyai",
+   "error": null,
+   "steps": 7,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-productionassistant-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-productionassistant.md",
+   "line": 392,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-productionassistant",
+   "error": null,
+   "steps": 9,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-projectcoordination-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-projectcoordination.md",
+   "line": 96,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-projectcoordination",
+   "error": null,
+   "steps": 8,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-npm-pack",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "simulate"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-1",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 101,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-2",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 133,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-3",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 174,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-4",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 187,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-5",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 220,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-6",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 251,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-7",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 331,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-8",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 353,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-9",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 373,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-10",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 392,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-11",
+   "viz": "show",
+   "lang": "toml",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 434,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-12",
+   "viz": "show",
+   "lang": "toml",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 446,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-13",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 475,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-14",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 502,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-15",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 521,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-publishing-16",
+   "viz": "show",
+   "lang": "toml",
+   "page": "_pages/Tutorials/tut-publishing.md",
+   "line": 546,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-publishing",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-1",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 52,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-2",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 72,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-3",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 123,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-4",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 196,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-5",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 258,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-6",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 329,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-7",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 393,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-8",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 455,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-9",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 541,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-10",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 610,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-11",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 694,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-12",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 723,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-13",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 783,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-14",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 875,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pydanticai-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pydanticai.md",
+   "line": 944,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pydanticai",
+   "error": null,
+   "steps": 11,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-pythonessentials-9",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-pythonessentials.md",
+   "line": 27,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pythonessentials",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pythonessentials-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pythonessentials.md",
+   "line": 49,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pythonessentials",
+   "error": null,
+   "steps": 14,
+   "tours": [
+    "",
+    "walkthrough"
+   ],
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pythonessentials-2",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pythonessentials.md",
+   "line": 112,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pythonessentials",
+   "error": null,
+   "steps": 11,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pythonessentials-3",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pythonessentials.md",
+   "line": 139,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pythonessentials",
+   "error": null,
+   "steps": 6,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pythonessentials-4",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pythonessentials.md",
+   "line": 161,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pythonessentials",
+   "error": null,
+   "steps": 15,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pythonessentials-5",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pythonessentials.md",
+   "line": 210,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pythonessentials",
+   "error": null,
+   "steps": 4,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pythonessentials-6",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pythonessentials.md",
+   "line": 223,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pythonessentials",
+   "error": null,
+   "steps": 6,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pythonessentials-7",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pythonessentials.md",
+   "line": 248,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pythonessentials",
+   "error": null,
+   "steps": 12,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-pythonessentials-8",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-pythonessentials.md",
+   "line": 282,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-pythonessentials",
+   "error": null,
+   "steps": 14,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-ragfromzero-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-ragfromzero.md",
+   "line": 52,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-ragfromzero",
+   "error": null,
+   "steps": 19,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-ragfromzero-2",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-ragfromzero.md",
+   "line": 326,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-ragfromzero",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-ragfromzero-3",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-ragfromzero.md",
+   "line": 366,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-ragfromzero",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-redteaming-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-redteaming.md",
+   "line": 403,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-redteaming",
+   "error": null,
+   "steps": 4,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-regulation-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-regulation.md",
+   "line": 206,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-regulation",
+   "error": null,
+   "steps": 11,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-restllmapi-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-restllmapi.md",
+   "line": 882,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-restllmapi",
+   "error": null,
+   "steps": 5,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-rlhf-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-rlhf.md",
+   "line": 207,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-rlhf",
+   "error": null,
+   "steps": 91,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-sampling-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-sampling.md",
+   "line": 762,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-sampling",
+   "error": null,
+   "steps": 5,
+   "tours": [
+    "",
+    "walkthrough"
+   ],
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-sampling-2",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-sampling.md",
+   "line": 785,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-sampling",
+   "error": null,
+   "steps": 6,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-sampling-3",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-sampling.md",
+   "line": 922,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-sampling",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-secondbrain-2",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-secondbrain.md",
+   "line": 244,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-secondbrain",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-secondbrain-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-secondbrain.md",
+   "line": 268,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-secondbrain",
+   "error": null,
+   "steps": 13,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-secondbrain-3",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-secondbrain.md",
+   "line": 332,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-secondbrain",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-setupbasics-terminal-walkthrough",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-setupbasics.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "simulate",
+    "terminal"
+   ]
+  },
+  {
+   "id": "cs357-tut-setupbasics-1",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-setupbasics.md",
+   "line": 36,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-setupbasics",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-setupbasics-2",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-setupbasics.md",
+   "line": 204,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-setupbasics",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-setupbasics-3",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-setupbasics.md",
+   "line": 229,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-setupbasics",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-setupbasics-4",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-setupbasics.md",
+   "line": 257,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-setupbasics",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-setupbasics-5",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-setupbasics.md",
+   "line": 295,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-setupbasics",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-setupbasics-6",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-setupbasics.md",
+   "line": 323,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-setupbasics",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-setupbasics-7",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-setupbasics.md",
+   "line": 341,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-setupbasics",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-setupbasics-8",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-setupbasics.md",
+   "line": 407,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-setupbasics",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-setupbasics-9",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-setupbasics.md",
+   "line": 417,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-setupbasics",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-setupbasics-10",
+   "viz": "show",
+   "lang": "json",
+   "page": "_pages/Tutorials/tut-setupbasics.md",
+   "line": 451,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-setupbasics",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-shell-basics",
+   "viz": "session",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-shell.md",
+   "line": 0,
+   "page_url": "",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "simulate"
+   ]
+  },
+  {
+   "id": "cs357-tut-shell-2",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-shell.md",
+   "line": 83,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-shell",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-shell-1",
+   "viz": "cast",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-shell.md",
+   "line": 182,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-shell",
+   "error": null,
+   "steps": 6,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-shell-3",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-shell.md",
+   "line": 206,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-shell",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-shell-4",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-shell.md",
+   "line": 283,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-shell",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-shell-5",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-shell.md",
+   "line": 333,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-shell",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-shipit-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-shipit.md",
+   "line": 160,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-shipit",
+   "error": null,
+   "steps": 7,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-1",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 86,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-2",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 220,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-3",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 243,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-4",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 282,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-5",
+   "viz": "show",
+   "lang": "dockerfile",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 333,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-6",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 373,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-7",
+   "viz": "show",
+   "lang": "dockerfile",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 419,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-8",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 507,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-9",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 544,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-10",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 580,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-11",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 637,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-12",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 651,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-13",
+   "viz": "show",
+   "lang": "powershell",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 660,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-14",
+   "viz": "show",
+   "lang": "js",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 683,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-15",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 723,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-16",
+   "viz": "show",
+   "lang": "powershell",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 735,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-17",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 783,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-18",
+   "viz": "show",
+   "lang": "yaml",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 793,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-terminalfilesystem-19",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-terminalfilesystem.md",
+   "line": 984,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-terminalfilesystem",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-testingagents-1",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-testingagents.md",
+   "line": 179,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-testingagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-testingagents-2",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-testingagents.md",
+   "line": 206,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-testingagents",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-testingagents-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-testingagents.md",
+   "line": 261,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-testingagents",
+   "error": null,
+   "steps": 8,
+   "modes": [
+    "run"
+   ]
+  },
+  {
+   "id": "cs357-tut-textgen2nn-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-textgen2nn.md",
+   "line": 252,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-textgen2nn",
+   "error": null,
+   "steps": 91,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-tokensembeddings-2",
+   "viz": "show",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-tokensembeddings.md",
+   "line": 143,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-tokensembeddings",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-tokensembeddings-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-tokensembeddings.md",
+   "line": 728,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-tokensembeddings",
+   "error": null,
+   "steps": 57,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-tokensenergycost-3",
+   "viz": "show",
+   "lang": "shell",
+   "page": "_pages/Tutorials/tut-tokensenergycost.md",
+   "line": 68,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-tokensenergycost",
+   "error": null,
+   "steps": 0,
+   "modes": [
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-tokensenergycost-1",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-tokensenergycost.md",
+   "line": 159,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-tokensenergycost",
+   "error": null,
+   "steps": 186,
+   "tours": [
+    "",
+    "walkthrough"
+   ],
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-tokensenergycost-2",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-tokensenergycost.md",
+   "line": 255,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-tokensenergycost",
+   "error": null,
+   "steps": 42,
+   "modes": [
+    "run",
+    "explain"
+   ]
+  },
+  {
+   "id": "cs357-tut-visualagents-practice-viz",
+   "viz": "env",
+   "lang": "python",
+   "page": "_pages/Tutorials/tut-visualagents.md",
+   "line": 314,
+   "page_url": "https://billjr99.github.io/Ursinus-CS357-Fall2026/Tutorials/tut-visualagents",
+   "error": null,
+   "steps": 11,
+   "modes": [
+    "run"
+   ]
+  }
+ ]
+}

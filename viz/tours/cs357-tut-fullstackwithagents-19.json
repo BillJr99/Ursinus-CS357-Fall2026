@@ -1,0 +1,32 @@
+{
+ "code": "# tstack: the three pull-request skills, at one commit\nTSTACK=11e37a74d0a6868c121cd0910ab2b3bd9873b92a\ngit clone -q https://github.com/t3dotgg/tstack /tmp/tstack\ngit -C /tmp/tstack checkout -q \"$TSTACK\"\nmkdir -p .agents/skills\nfor s in file-pr babysit-pr leaving-pr-comments; do cp -R \"/tmp/tstack/skills/$s\" .agents/skills/; done\ncp /tmp/tstack/LICENSE .agents/skills/LICENSE-tstack.txt\n\n# pstack: five skills, from Cursor's plugin repository at one commit (only the pstack folder is downloaded)\nPSTACK=3dbd22ff12742fb28c9700b9760baa29ed41dc13\ngit clone -q --filter=blob:none --no-checkout https://github.com/cursor/plugins /tmp/cursor-plugins\ngit -C /tmp/cursor-plugins sparse-checkout set pstack\ngit -C /tmp/cursor-plugins checkout -q \"$PSTACK\"\nfor s in in-your-own-words how architect blast-radius principle-prove-it-works; do cp -R \"/tmp/cursor-plugins/pstack/skills/$s\" .agents/skills/; done\ncp /tmp/cursor-plugins/pstack/LICENSE .agents/skills/LICENSE-pstack.txt",
+ "description": "Script to clone and install tstack skills (file-pr, babysit-pr, leaving-pr-comments) and pstack skills (in-your-own-words, how, architect, blast-radius, principle-prove-it-works) at pinned commits.",
+ "example": "cs357-tut-fullstackwithagents-19",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete skill installation script.",
+   "kind": "reveal",
+   "lines": "1-15"
+  },
+  {
+   "description": "Tstack: TSTACK commit hash, clone t3dotgg/tstack, checkout commit, copy three skills to .agents/skills/.",
+   "kind": "focus",
+   "lines": "1-7"
+  },
+  {
+   "description": "Separator: blank line between tstack and pstack sections.",
+   "kind": "focus",
+   "lines": "8"
+  },
+  {
+   "description": "Pstack: PSTACK commit hash, clone cursor/plugins with filter, sparse-checkout pstack, checkout commit, copy five skills, copy LICENSE.",
+   "kind": "focus",
+   "lines": "9-15"
+  }
+ ],
+ "title": "Install Skills: tstack and pstack",
+ "version": 1
+}

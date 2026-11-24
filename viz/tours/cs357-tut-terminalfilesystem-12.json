@@ -1,0 +1,37 @@
+{
+ "code": "mkdir -p .agents/skills\ncurl -fsSL -o smo.skill https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/files/small-model-orchestrator.skill\nunzip -q smo.skill -d .agents/skills/ && rm smo.skill\nls .agents/skills/small-model-orchestrator/SKILL.md",
+ "description": "Creates .agents/skills directory, downloads the skill archive, extracts it, and verifies SKILL.md exists.",
+ "example": "cs357-tut-terminalfilesystem-12",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete bash install sequence.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Directory creation: mkdir -p .agents/skills.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Download: curl fetches the skill archive from GitHub Pages.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Extraction: unzip into .agents/skills/ and remove the archive.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "Verification: ls confirms SKILL.md is at the expected path.",
+   "kind": "focus",
+   "lines": "4"
+  }
+ ],
+ "title": "Download and Install small-model-orchestrator Skill (bash)",
+ "version": 1
+}

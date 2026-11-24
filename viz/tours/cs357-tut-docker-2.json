@@ -1,0 +1,42 @@
+{
+ "code": "FROM python:3.12-slim\n\n# Start FROM a base image: Python preinstalled on slim Debian.\n\nWORKDIR /app\n\n# All later commands run here; created automatically.\n\nCOPY requirements.txt .\nRUN pip install --no-cache-dir -r requirements.txt\n\n# Copy ONLY the dependency list first, then install. Docker caches layers:\n\n# as long as requirements.txt is unchanged, rebuilds skip the slow install.\n\nCOPY . .\n\n# Now copy the application code (changes often, so it goes LAST).\n\nEXPOSE 8000\n\n# Documentation of the listening port (publishing still needs -p at run time).\n\nCMD [\"python\", \"server.py\"]\n\n# The default command a container runs at start.",
+ "description": "A complete Dockerfile for a small Python agent service, ordered so stable layers come first and volatile layers last.",
+ "example": "cs357-tut-docker-2",
+ "lang": "dockerfile",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Start from the `python:3.12-slim` base image. The comment says this is Python preinstalled on slim Debian, and the page calls a Dockerfile the recipe that builds an image.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Set `WORKDIR /app`. The comment says all later commands run here, and Docker creates the directory automatically.",
+   "kind": "focus",
+   "lines": "5-8"
+  },
+  {
+   "description": "Copy only `requirements.txt` and install it with `pip install --no-cache-dir -r`. The comments explain the cache rule: as long as `requirements.txt` is unchanged, rebuilds skip the slow install.",
+   "kind": "focus",
+   "lines": "9-14"
+  },
+  {
+   "description": "Copy the application code last with `COPY . .`. The comment says the code changes often, so it goes last, which keeps the expensive install layer cached.",
+   "kind": "focus",
+   "lines": "16-18"
+  },
+  {
+   "description": "`EXPOSE 8000` documents the listening port. The comment notes that publishing still needs `-p` at run time, so EXPOSE is documentation, not a publish.",
+   "kind": "focus",
+   "lines": "20-22"
+  },
+  {
+   "description": "The `CMD` instruction sets the default command a container runs at start, here `python server.py`. The page says the ordering rule, stable layers first and volatile layers last, is the most useful Dockerfile habit.",
+   "kind": "focus",
+   "lines": "24-26"
+  }
+ ],
+ "title": "A Python Agent Dockerfile",
+ "version": 1
+}

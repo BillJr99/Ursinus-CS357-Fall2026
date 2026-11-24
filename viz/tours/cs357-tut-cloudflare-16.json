@@ -1,0 +1,27 @@
+{
+ "code": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [{\n    \"Effect\": \"Allow\",\n    \"Action\": [\"s3:PutObject\", \"cloudfront:CreateInvalidation\"],\n    \"Resource\": [\"arn:aws:s3:::<YOUR-SITE-BUCKET>/*\", \"arn:aws:cloudfront::<ACCOUNT_ID>:distribution/<DIST_ID>\"]\n  }]\n}",
+ "description": "The permission policy a deploy role grants, limited to only the actions the deploy performs.",
+ "example": "cs357-tut-cloudflare-16",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the permission policy the role grants. It should be least-privilege: only the actions the deploy performs.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "`Action` lists exactly two actions, `s3:PutObject` and `cloudfront:CreateInvalidation`, never `\"*\"`.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "description": "`Resource` narrows each action to a specific bucket and distribution, so the role can touch nothing else.",
+   "kind": "focus",
+   "lines": "6"
+  }
+ ],
+ "title": "A Least-Privilege Permission Policy",
+ "version": 1
+}

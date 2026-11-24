@@ -1,0 +1,37 @@
+{
+ "code": "{\n  \"$schema\": \"node_modules/wrangler/config-schema.json\",\n  \"name\": \"questions-board\",\n  \"main\": \"src/index.js\",\n  \"compatibility_date\": \"2026-11-01\",\n  // The page in public/ is served as static files; only /api/* reaches the Worker code.\n  \"assets\": { \"directory\": \"./public\", \"binding\": \"ASSETS\", \"run_worker_first\": [\"/api/*\"] },\n  \"d1_databases\": [\n    {\n      \"binding\": \"DB\",\n      \"database_name\": \"questions-board\",\n      // Replaced by the cloudflare-deploy skill with the id that `wrangler d1 create` prints.\n      \"database_id\": \"00000000-0000-0000-0000-000000000000\",\n      \"migrations_dir\": \"migrations\"\n    }\n  ]\n}",
+ "description": "Wrangler config describing Worker entry point, assets binding, and D1 database with placeholder ID for cloudflare-deploy skill to replace.",
+ "example": "cs357-tut-fullstackwithagents-10",
+ "lang": "jsonc",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete wrangler.jsonc.",
+   "kind": "reveal",
+   "lines": "1-17"
+  },
+  {
+   "description": "Metadata: schema reference, name questions-board, main src/index.js.",
+   "kind": "focus",
+   "lines": "1-3"
+  },
+  {
+   "description": "Compatibility: date 2026-11-01.",
+   "kind": "focus",
+   "lines": "4-5"
+  },
+  {
+   "description": "Assets: static files from public/, binding ASSETS, run_worker_first for /api/*.",
+   "kind": "focus",
+   "lines": "6-7"
+  },
+  {
+   "description": "D1 database: binding DB, database_name questions-board, placeholder database_id, migrations_dir.",
+   "kind": "focus",
+   "lines": "8-16"
+  }
+ ],
+ "title": "wrangler.jsonc: Worker Configuration",
+ "version": 1
+}

@@ -1,0 +1,62 @@
+{
+ "code": "import numpy as np\n\na = np.array([2.0, 1.0, 0.0, 2.0])\nb = np.array([1.0, 1.0, 1.0, 1.0])\n\ndef cosine_sim(x, y):\n    return np.dot(x, y) / (np.linalg.norm(x) * np.linalg.norm(y))\n\nprint(f\"cos(a, b) = {cosine_sim(a, b):.3f}\")\nprint(f\"cos(a, 3a) = {cosine_sim(a, 3*a):.3f}\")",
+ "description": "The Python check for the hand-worked cosine similarity: two four-dimensional vectors, a dot product over the product of norms, and two printed scores.",
+ "example": "cs357-tut-aibyhand-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: opencode free model",
+ "steps": [
+  {
+   "description": "The page works cosine similarity by hand, then verifies it here in Python. `numpy` gives us `dot` and `norm` in one line each.",
+   "kind": "reveal",
+   "lines": "1"
+  },
+  {
+   "description": "`a` is `(2, 1, 0, 2)` and `b` is `(1, 1, 1, 1)`, the same two vectors from the worked problem. `np.array` makes each one a float array of four values.",
+   "kind": "reveal",
+   "lines": "3-4"
+  },
+  {
+   "description": "`cosine_sim` returns `np.dot(x, y)` divided by the product of the two norms. That is exactly the hand calculation: the dot product on top, the two lengths multiplied on the bottom.",
+   "kind": "reveal",
+   "lines": "6-7"
+  },
+  {
+   "description": "The first print calls `cosine_sim(a, b)` and formats the result to three decimals.",
+   "kind": "reveal",
+   "lines": "9"
+  },
+  {
+   "answer": "1.000. Multiplying `a` by 3 stretches its length but keeps its direction, and cosine similarity depends on direction, so the two vectors line up exactly.",
+   "kind": "predict",
+   "lines": "10",
+   "question": "The second print computes `cos(a, 3a)`. What value do you expect?"
+  },
+  {
+   "description": "Run it. The environment starts by importing `numpy`.",
+   "kind": "run",
+   "lines": "1",
+   "trace_step": 0
+  },
+  {
+   "description": "The first print runs and shows `cos(a, b) = 0.833`, matching the hand result of 5/6.",
+   "kind": "run",
+   "lines": "9",
+   "trace_step": 4
+  },
+  {
+   "description": "The second call enters `cosine_sim`, which takes the dot product and divides by the two norms.",
+   "kind": "run",
+   "lines": "7",
+   "trace_step": 5
+  },
+  {
+   "description": "The second print shows `cos(a, 3a) = 1.000`. Scaling a vector leaves the angle unchanged, so the similarity is exactly 1.",
+   "kind": "run",
+   "lines": "10",
+   "trace_step": 7
+  }
+ ],
+ "title": "Cosine Similarity in NumPy",
+ "version": 1
+}

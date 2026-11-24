@@ -1,0 +1,13 @@
+K1  w=3  meets                        results sorted by score descending
+K2  w=2  meets                        max_results limits the count
+K3  w=2  meets                        empty query exits 2
+K4  w=3  DOES NOT MEET                missing knowledge base exits 3
+K5  w=2  meets                        no matches returns [] and exits 0
+K6  w=2  DOES NOT MEET                default max_results is 5
+K7  w=3  meets                        only the allowed files changed
+K8  w=4  meets                        no eval, exec, or network
+K9  w=2  DOES NOT MEET                a test per testing criterion
+N1  w=1  does not meet (non-material) docstrings say Returns
+
+weighted score 16/24 = 0.67, threshold 0.85
+revise: material criteria failed: K4, K6, K9

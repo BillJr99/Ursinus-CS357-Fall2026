@@ -1,0 +1,22 @@
+{
+ "code": "# step8_mcp.py: discover the server's tools over MCP, then hand them to an agent.\nimport asyncio\nfrom pathlib import Path\n\nfrom fastmcp import Client\nfrom pydantic_ai import Agent, UsageLimits\nfrom pydantic_ai.mcp import MCPToolset\n\nfrom common import make_model, show_trace\n\n\nasync def inspect_server():\n    async with Client(Path(\"calendar_server.py\")) as client:          # starts the server over stdio\n        for tool in await client.list_tools():\n            print(f\"tools/list -> {tool.name}: {tool.input_schema}\")\n        result = await client.call_tool(\"days_until\", {\"target\": \"2026-12-07\"})\n        print(\"tools/call ->\", result.data)\n        try:\n            await client.call_tool(\"days_until\", {\"target\": \"next Tuesday\"})\n        except Exception as e:\n            print(\"tools/call with a bad date ->\", type(e).__name__, str(e).splitlines()[0])\n\n\nasyncio.run(inspect_server())\n\nagent = Agent(make_model(), toolsets=[MCPToolset(Path(\"calendar_server.py\"))],\n              instructions=\"Use the tools for dates; never guess them.\",\n              model_settings={\"temperature\": 0.0, \"seed\": 42})\nresult = agent.run_sync(\"How many days until 2026-12-07?\", usage_limits=UsageLimits(request_limit=4))\nprint(result.output)\nshow_trace(result.all_messages())",
+ "description": "This script inspects and calls calendar_server.py directly with a FastMCP Client, then attaches the same server to a Pydantic AI Agent with MCPToolset.",
+ "example": "cs357-tut-pydanticai-12",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "inspect_server() starts calendar_server.py over stdio, lists its tools and schemas, calls days_until with a valid date, and shows that the server rejects 'next Tuesday'.",
+   "kind": "reveal",
+   "lines": "1-24"
+  },
+  {
+   "description": "Passing toolsets=[MCPToolset(Path('calendar_server.py'))] gives the Agent access to the server's tools during agent.run_sync.",
+   "kind": "reveal",
+   "lines": "26-31"
+  }
+ ],
+ "title": "Calling an MCP server directly and through MCPToolset",
+ "version": 1
+}

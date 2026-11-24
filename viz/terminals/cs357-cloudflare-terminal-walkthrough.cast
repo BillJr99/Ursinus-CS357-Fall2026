@@ -1,0 +1,13 @@
+{"version": 2, "width": 100, "height": 30, "title": "Preview a Worker locally", "code_viz_provenance": "scripted", "duration": 0.004}
+[0.0, "m", "Install the CLI"]
+[0.0, "o", "$ npm install -g wrangler\r\n"]
+[0.0, "o", "added packages\n"]
+[0.001, "m", "Enter the Worker project"]
+[0.001, "o", "$ cd hello-worker\r\n"]
+[0.001, "o", ""]
+[0.002, "m", "Start the local server"]
+[0.002, "o", "$ npx wrangler dev\r\n"]
+[0.002, "o", "Ready on http://localhost:8787\n"]
+[0.003, "m", "Call the health route in a second terminal"]
+[0.003, "o", "$ curl -i http://localhost:8787/health\r\n"]
+[0.003, "o", "HTTP/1.1 200 OK\n\n"]

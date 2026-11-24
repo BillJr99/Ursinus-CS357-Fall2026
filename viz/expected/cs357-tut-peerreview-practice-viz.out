@@ -1,0 +1,3 @@
+The draft omits an empty-input test.
+What should empty input return?
+Add a test for that result.

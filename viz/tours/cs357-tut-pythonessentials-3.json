@@ -1,0 +1,50 @@
+{
+ "code": "import json\n\nreply = '{\"action\": \"lookup\", \"args\": {\"term\": \"agent\"}}'\ndata = json.loads(reply)\nprint(data[\"action\"], data[\"args\"][\"term\"])\nprint(json.dumps({\"ok\": True, \"n\": 3}))",
+ "description": "json.loads turns text into Python data structures; json.dumps turns Python data back into text.",
+ "example": "cs357-tut-pythonessentials-3",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe free model",
+ "steps": [
+  {
+   "description": "Reveal import: json module for serialization.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "Reveal loads: parse JSON string into Python dict with nested structure.",
+   "kind": "reveal",
+   "lines": "3-4"
+  },
+  {
+   "answer": "lookup",
+   "kind": "predict",
+   "lines": "5",
+   "question": "What does data['action'] contain after json.loads?"
+  },
+  {
+   "description": "Reveal first print: access action and nested term from the parsed data.",
+   "kind": "reveal",
+   "lines": "5"
+  },
+  {
+   "description": "Reveal dumps: convert Python dict with boolean and number to JSON string.",
+   "kind": "reveal",
+   "lines": "6"
+  },
+  {
+   "description": "Run to show lookup agent from the parsed JSON.",
+   "kind": "run",
+   "lines": "5",
+   "trace_step": 3
+  },
+  {
+   "description": "Run to show the serialized JSON output.",
+   "kind": "run",
+   "lines": "6",
+   "trace_step": 4
+  }
+ ],
+ "title": "JSON Data as Text",
+ "version": 1
+}

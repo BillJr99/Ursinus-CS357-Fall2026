@@ -1,0 +1,10 @@
+{"version": 2, "width": 100, "height": 30, "title": "Create a Python virtual environment", "code_viz_provenance": "recorded", "duration": 4.603}
+[0.0, "m", "Check Python"]
+[0.0, "o", "$ python3 --version\r\n"]
+[0.055, "o", "Python 3.12.16\r\n"]
+[0.101, "m", "Create the environment"]
+[0.101, "o", "$ python3 -m venv .venv\r\n"]
+[0.101, "o", ""]
+[3.802, "m", "Confirm pip belongs to the environment"]
+[3.802, "o", "$ .venv/bin/python -m pip --version\r\n"]
+[4.51, "o", "pip 25.0.1 from ~/.venv/lib/python3.12/site-packages/pip (python 3.12)\r\n"]

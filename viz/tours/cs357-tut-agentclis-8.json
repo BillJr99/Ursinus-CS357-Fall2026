@@ -1,0 +1,27 @@
+{
+ "code": "pi install npm:@billjr99/pi-openai-compat\n# or, straight from source:\n# pi install git:github.com/BillJr99/pi-openai-compat",
+ "description": "After configuring opencode, start it and run /models to see both Ollama and OpenWebUI entries listed with their distinct name fields, then set the agent (build or plan) which the config does not set.",
+ "example": "cs357-tut-agentclis-8",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The block instructs you to start opencode, run /models to verify both providers appear, and then manually select the agent (build or plan) in the UI or terminal.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "The /models command shows the union of models from both providers, distinguishable by the name field you set in the config.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "answer": "build (may edit files and run commands) and plan (may read and propose only)",
+   "kind": "predict",
+   "question": "What two agents does opencode provide?"
+  }
+ ],
+ "title": "Running opencode and Checking /models",
+ "version": 1
+}

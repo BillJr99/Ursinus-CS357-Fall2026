@@ -1,0 +1,37 @@
+{
+ "code": "\n# Create the directory and initialize the package with your scoped username\nmkdir hello-agent && cd hello-agent\nnpm init --scope=@yourusername -y      # scoped to your username: collision-proof",
+ "description": "Multiple choice options for GHCR pull failure, with the correct answer being that new packages default to private.",
+ "example": "cs357-tut-publishing-3",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "All four multiple choice options.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Propagation myth: GHCR requires 24-hour propagation period is false.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Latest tag myth: image tag must be latest for public pulls is false.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Answer: new GHCR packages default to private visibility and must be changed to public.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "Credential myth: Docker Hub credentials interfering is false.",
+   "kind": "focus",
+   "lines": "4"
+  }
+ ],
+ "title": "GHCR Visibility Troubleshooting",
+ "version": 1
+}

@@ -1,0 +1,27 @@
+{
+ "code": "mkdir ~/cs357-exercise2 && cd ~/cs357-exercise2\nclaude   # run your task; save transcript as transcript-no-context.txt\n# now add the context file:\n# create CLAUDE.md in ~/cs357-exercise2 with the starter from Section 3\nclaude   # run the identical task again; save as transcript-with-context.txt\n# open both transcripts side by side and note where they diverge",
+ "description": "Four commands create a directory, install Claude Code, install a second tool (example shows Gemini CLI), and start a Claude Code session in the fresh directory.",
+ "example": "cs357-tut-agentclis-13",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The starter hint runs mkdir, installs Claude Code via npm, installs a second tool (Gemini CLI as example), then launches claude with /login if prompted.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Line 1 creates an isolated exercise directory so each tool runs in a clean workspace.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "answer": "two transcript files saved, each showing the full exchange to a working Python script, and a comparison paragraph naming at least one specific difference in permission gates or file reads",
+   "kind": "predict",
+   "question": "What is the success criterion for this exercise?"
+  }
+ ],
+ "title": "Exercise 1: Install Two Tools and Compare",
+ "version": 1
+}

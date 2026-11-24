@@ -1,0 +1,42 @@
+{
+ "code": "docker run --rm -it --name hermes \\\n  --add-host=host.docker.internal:host-gateway \\\n  -e GITHUB_TOKEN=\"$VAULT_PAT\" \\\n  -v \"$HOME/agents/hermes/home:/opt/data\" \\\n  -v \"$HOME/agents/workspace:/workspace\" \\\n  nousresearch/hermes-agent:latest",
+ "description": "Docker command to launch hermes agent with GITHUB_TOKEN, host gateway, and volume mounts for data and workspace.",
+ "example": "cs357-tut-secondbrain-3",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete docker run command.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "Container: docker run --rm -it --name hermes for isolated, removable container.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Host gateway: --add-host=host.docker.internal:host-gateway enables container to reach host services.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Token: -e GITHUB_TOKEN with VAULT_PAT environment variable, never inline in prompt.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "Volumes: hermes home directory and workspace mounted for persistence.",
+   "kind": "focus",
+   "lines": "4-5"
+  },
+  {
+   "description": "Image: nousresearch/hermes-agent:latest as the agent implementation.",
+   "kind": "focus",
+   "lines": "6"
+  }
+ ],
+ "title": "hermes Docker Run Command",
+ "version": 1
+}

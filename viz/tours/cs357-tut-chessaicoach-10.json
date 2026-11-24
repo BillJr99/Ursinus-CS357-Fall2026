@@ -1,0 +1,22 @@
+{
+ "code": "const currentProviderConfig = providerConfigRef.current; // always the latest, even mid-await\nconst currentAIEnabled = aiEnabledRef.current;\n// ...a useEffect keeps providerConfigRef.current in sync whenever the settings change.",
+ "description": "The two lines that read the current provider config and AI flag from refs at call time, avoiding stale settings.",
+ "example": "cs357-tut-chessaicoach-10",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Read `providerConfigRef.current` and `aiEnabledRef.current` at call time. The comment says this is always the latest value, even mid-await, so a slow API call cannot use stale settings.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "The comment explains a `useEffect` keeps `providerConfigRef.current` in sync whenever the settings change, which is why the ref holds the current config.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "Reading Config from a Ref",
+ "version": 1
+}

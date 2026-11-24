@@ -1,0 +1,42 @@
+{
+ "code": "\n# Dockerfile.agent\nFROM node:22-slim\n\n# git and ripgrep are what coding agents reach for constantly\nRUN apt-get update && apt-get install -y --no-install-recommends \\\n      git ripgrep ca-certificates curl \\\n    && rm -rf /var/lib/apt/lists/*\n\n# Install whichever agent CLI you are using. opencode is the course default:\n# it speaks to any OpenAI-compatible backend, so it talks to your host Ollama\n# with no account and no API key, and it is what the course image ships.\nRUN npm install -g opencode-ai\n\n# Oh My Pi, a second agent, so you can compare two on one task.\nRUN curl -fsSL https://omp.sh/install | PI_INSTALL_DIR=/usr/local/bin sh -s -- --binary\n\n# RUN npm install -g @anthropic-ai/claude-code\n\n# RUN npm install -g @google/gemini-cli\n\n# RUN npm install -g @openai/codex\n\n# (Aider is Python: pip install aider-chat)\n\n# Never run as root inside a container you are handing to an agent\nRUN useradd -m agent\nUSER agent\nWORKDIR /work\nCMD [\"bash\"]",
+ "description": "A Dockerfile that installs coding-agent tools into an image and drops root, so the tool and its dependencies stay disposable.",
+ "example": "cs357-tut-docker-6",
+ "lang": "dockerfile",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The comment names the file `Dockerfile.agent`, and the build starts from the `node:22-slim` base image.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Install `git`, `ripgrep`, `ca-certificates`, and `curl` with apt, then clear the apt lists. The comment says git and ripgrep are what coding agents reach for constantly.",
+   "kind": "focus",
+   "lines": "5-8"
+  },
+  {
+   "description": "Install the `opencode-ai` CLI globally. The comments say opencode is the course default because it speaks to any OpenAI-compatible backend, so it talks to your host Ollama with no account and no API key.",
+   "kind": "focus",
+   "lines": "10-13"
+  },
+  {
+   "description": "Install a second agent, Oh My Pi, so you can compare two on one task. The line pipes its install script to `sh` and sets the install directory.",
+   "kind": "focus",
+   "lines": "15-16"
+  },
+  {
+   "description": "The commented lines list other agents you could install instead: Claude Code, Gemini CLI, Codex, and Aider. The note marks Aider as Python, installed with `pip install aider-chat`.",
+   "kind": "focus",
+   "lines": "18-24"
+  },
+  {
+   "description": "Create a non-root user `agent`, switch to it with `USER agent`, set `WORKDIR /work`, and default to `bash`. The comment says never run as root inside a container you hand to an agent.",
+   "kind": "focus",
+   "lines": "26-30"
+  }
+ ],
+ "title": "A Small Agent Image",
+ "version": 1
+}

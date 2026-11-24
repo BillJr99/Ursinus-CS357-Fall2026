@@ -1,0 +1,32 @@
+{
+ "code": "docker run -d --name open-webui -p 3000:8080 \\\n  --add-host=host.docker.internal:host-gateway \\\n  -v \"$HOME/agents/openwebui/data:/app/backend/data\" \\\n  ghcr.io/open-webui/open-webui:main\n\n# Then in its Admin Settings -> Connections -> OpenAI:\n\n#   URL http://host.docker.internal:4000/v1, key sk-litellm-local",
+ "description": "From the host, curl the gateway to verify it answers and knows its configured models.",
+ "example": "cs357-tut-agentstack-4",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Verification command and its context.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "Verification step: curl to localhost:4000/models with Bearer authorization.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Checkpoint: expected answer is a JSON object with data array listing llama3 and qwen2.5-3b.",
+   "kind": "focus",
+   "lines": "3-7"
+  },
+  {
+   "answer": "A JSON object whose data array lists the two configured model names, llama3 and qwen2.5-3b",
+   "kind": "predict",
+   "question": "What should curl -s http://localhost:4000/models return?"
+  }
+ ],
+ "title": "Verify Gateway Models",
+ "version": 1
+}

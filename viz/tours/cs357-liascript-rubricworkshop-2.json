@@ -1,0 +1,66 @@
+{
+ "code": "import json\nimport requests\n\nRUBRIC = {\n  \"criteria\": [\n    {\"name\": \"claims_cited\", \"weight\": 50,\n     \"levels\": {\"1\": \"no claims cite evidence\", \"2\": \"some claims cite evidence\",\n                \"3\": \"most claims cite evidence\", \"4\": \"every claim cites evidence\"}},\n    {\"name\": \"directness\", \"weight\": 30,\n     \"levels\": {\"1\": \"never states a position\", \"2\": \"position implied\",\n                \"3\": \"position stated\", \"4\": \"position stated in the first sentence\"}},\n    {\"name\": \"counterargument\", \"weight\": 20,\n     \"levels\": {\"1\": \"absent\", \"2\": \"mentioned\", \"3\": \"engaged\", \"4\": \"engaged and rebutted\"}},\n  ]\n}\n\ndef judge(artifact, rubric=RUBRIC, model=\"llama3.2\"):\n    system = (\"You are a strict grader. Score the artifact on EACH criterion by choosing a level 1-4 \"\n              \"that matches the level descriptions. Quote the sentence that justifies each score. \"\n              \"Respond ONLY with JSON: \"\n              '{\"scores\": {\"<criterion>\": {\"level\": int, \"evidence\": str}}}')\n    user = f\"RUBRIC:\\n{json.dumps(rubric, indent=1)}\\n\\nARTIFACT:\\n{artifact}\"\n    try:\n        r = requests.post(\"http://localhost:11434/api/chat\", json={\n            \"model\": model, \"stream\": False,\n            \"options\": {\"temperature\": 0.0, \"seed\": 42},\n            \"messages\": [{\"role\": \"system\", \"content\": system},\n                         {\"role\": \"user\", \"content\": user}]}, timeout=180)\n        raw = r.json()[\"message\"][\"content\"]\n        data = json.loads(raw.replace(\"```json\", \"\").replace(\"```\", \"\"))\n        total = sum(c[\"weight\"] * data[\"scores\"][c[\"name\"]][\"level\"] / 4\n                    for c in rubric[\"criteria\"])\n        return total, data\n    except Exception as e:\n        print(f\"[judge:parse] {e}\")\n        import traceback; traceback.print_exc()\n        return None, {\"error\": str(e)}\n\nessay = (\"Campus dining should extend weekend hours. The biggest reason is that 64 percent of \"\n         \"surveyed students reported missing breakfast on Saturdays (Dining Survey, 2025). \"\n         \"Some argue costs would rise, but the survey shows staffing two extra hours costs less \"\n         \"than the lost meal-plan value. Therefore the change pays for itself.\")\n\ntotal, detail = judge(essay)\nprint(f\"weighted score: {total}/100\")\nprint(json.dumps(detail, indent=1))",
+ "description": "A script that sends an essay and a three-criterion rubric to a local Ollama model, parses the JSON scores it returns, and turns them into a weighted total out of 100.",
+ "example": "cs357-liascript-rubricworkshop-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: opencode free model + edit: codex",
+ "steps": [
+  {
+   "description": "The script imports `json` to read and write the rubric and reply, and `requests` to call the Ollama server on your laptop at `localhost:11434`. The page notes this cell runs on your machine, not in the deck.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "`RUBRIC` holds three criteria, each with a name, a weight, and four level descriptions. `claims_cited` carries weight 50, `directness` 30, and `counterargument` 20, so the weights add to 100.",
+   "kind": "reveal",
+   "lines": "4-15"
+  },
+  {
+   "description": "`judge` takes the artifact, the rubric, and a default model. The system prompt calls the model a strict grader and tells it to score every criterion by choosing a level 1 to 4. It also tells it to quote the sentence that justifies each score and respond only with JSON. The user prompt pastes in the rubric and the artifact.",
+   "kind": "reveal",
+   "lines": "17-22"
+  },
+  {
+   "description": "Inside the `try`, `requests.post` sends the chat to `http://localhost:11434/api/chat` with `stream` off, `temperature` 0.0, `seed` 42, and the system and user messages. The 180-second timeout gives the local model room to answer.",
+   "kind": "focus",
+   "lines": "23-28"
+  },
+  {
+   "description": "`r.json()[\"message\"][\"content\"]` pulls the reply text, the two `replace` calls strip any code fences, and `json.loads` parses it. The total multiplies each criterion's weight by its level divided by 4, so a level 4 on every criterion earns the full weight.",
+   "kind": "focus",
+   "lines": "29-33"
+  },
+  {
+   "answer": "The `except` catches it: it prints a `[judge:parse]` line and the traceback, then returns `None` and an error dictionary. A bad reply fails closed instead of producing a score.",
+   "kind": "predict",
+   "lines": "34-37",
+   "question": "What does the script do if the model's reply is not valid JSON?"
+  },
+  {
+   "description": "`essay` is the sample the script grades, a short argument for extending weekend dining hours that cites a survey and answers a cost objection. Then `total, detail = judge(essay)` calls the judge on that essay and unpacks the weighted score and the parsed detail.",
+   "kind": "reveal",
+   "lines": "39-44"
+  },
+  {
+   "description": "Now the script runs. `judge` reaches the `requests.post` call and sends the system prompt, the rubric, and the essay to the local Ollama server.",
+   "kind": "run",
+   "lines": "24",
+   "trace_step": 0
+  },
+  {
+   "description": "The weighted score prints as `weighted score: 100.0/100`. Every criterion scored a level 4, so each one contributes its full weight.",
+   "kind": "run",
+   "lines": "45",
+   "trace_step": 1
+  },
+  {
+   "description": "The detail prints as indented JSON, listing each criterion with its level 4 and the matching level description as evidence, such as `every claim cites evidence`.",
+   "kind": "run",
+   "lines": "46",
+   "trace_step": 2
+  }
+ ],
+ "title": "A Weighted Rubric Judge",
+ "version": 1
+}

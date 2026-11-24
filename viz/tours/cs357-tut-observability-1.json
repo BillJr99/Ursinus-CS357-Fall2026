@@ -1,0 +1,37 @@
+{
+ "code": "from opentelemetry import trace\nfrom opentelemetry.sdk.trace import TracerProvider\nfrom opentelemetry.sdk.trace.export import BatchSpanProcessor\nfrom opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter\n\n# --- Setup (done once at application startup) ---\nprovider = TracerProvider()\nexporter = OTLPSpanExporter(endpoint=\"http://otel-collector:4317\")\nprovider.add_span_processor(BatchSpanProcessor(exporter))\ntrace.set_tracer_provider(provider)\n\ntracer = trace.get_tracer(\"cs357.agent\")\n\n# --- Per-request instrumentation ---\ndef handle_query(user_query: str, user_id: str) -> str:\n    with tracer.start_as_current_span(\"handle_query\") as root:\n        root.set_attribute(\"user_id\", user_id)\n        root.set_attribute(\"query_length\", len(user_query))\n        # NOTE: we store query_length (a number), not query text (raw content)\n\n        with tracer.start_as_current_span(\"llm_generate\") as llm_span:\n            response = call_llm(user_query)\n            llm_span.set_attribute(\"model_name\", response.model)\n            llm_span.set_attribute(\"prompt_tokens\", response.usage.prompt_tokens)\n            llm_span.set_attribute(\"completion_tokens\", response.usage.completion_tokens)\n            llm_span.set_attribute(\"finish_reason\", response.finish_reason)\n            # finish_reason values: \"stop\" (normal), \"length\" (truncated),\n            # \"content_filter\" (blocked by safety policy)\n\n        return response.text",
+ "description": "Pseudocode that instruments an agent call with OpenTelemetry. The setup runs once at startup, and each instrumented function opens a span and records attributes.",
+ "example": "cs357-tut-observability-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The imports and the setup block. OpenTelemetry (OTel) is a vendor-neutral standard for collecting and exporting traces, metrics, and logs. The setup runs once at startup: it creates a `TracerProvider`, points an `OTLPSpanExporter` at the collector, adds a `BatchSpanProcessor`, and gets a tracer named `cs357.agent`.",
+   "kind": "reveal",
+   "lines": "1-12"
+  },
+  {
+   "description": "This is the setup block the page calls out as done once at application startup. It wires up the exporter, so the rest of the code only opens spans.",
+   "kind": "focus",
+   "lines": "6-10"
+  },
+  {
+   "description": "`handle_query` opens the root span. It records `user_id` and `query_length`. The comment states the choice: we store `query_length`, a number, not the raw query text, so sensitive content is deliberately omitted.",
+   "kind": "focus",
+   "lines": "16-19"
+  },
+  {
+   "description": "The child span `llm_generate` calls the model and records `model_name`, `prompt_tokens`, `completion_tokens`, and `finish_reason`. The comment lists the `finish_reason` values: `stop` for normal, `length` for truncated, and `content_filter` for blocked by safety policy.",
+   "kind": "focus",
+   "lines": "21-28"
+  },
+  {
+   "answer": "query_length",
+   "kind": "predict",
+   "question": "The page notes the raw query text is deliberately omitted. Which attribute is recorded instead?"
+  }
+ ],
+ "title": "Wrapping an Agent with OpenTelemetry",
+ "version": 1
+}

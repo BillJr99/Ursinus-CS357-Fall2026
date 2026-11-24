@@ -1,0 +1,37 @@
+{
+ "code": "# Each property is a function: output (str) -> bool\ndef has_citation(output: str) -> bool:\n    \"\"\"The response must include at least one citation or source reference.\"\"\"\n    # Look for common citation patterns\n    import re\n    return bool(re.search(r'\\[\\d+\\]|\\(.*\\d{4}\\)', output))\n\ndef is_on_topic(output: str, keywords: list) -> bool:\n    \"\"\"The response must mention at least one course-relevant keyword.\"\"\"\n    output_lower = output.lower()\n    return any(kw.lower() in output_lower for kw in keywords)\n\n# Run each property and report results\nresults = {prop.__name__: prop(output) for prop in [has_citation, ...]}\npass_rate = sum(results.values()) / len(results)",
+ "description": "The starter pattern for property-based tests: each property takes an agent output string and returns True or False, and one uses a regex so it matches different citation formats.",
+ "example": "cs357-tut-testingagents-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "These are the starter property functions for Exercise 1. The page says the code shows the pattern for all property functions: each one takes a string, the agent's output, and returns True or False. The comment on the first line states that pattern.",
+   "kind": "reveal",
+   "lines": "1-15"
+  },
+  {
+   "description": "`has_citation` returns True when the output holds at least one citation or source reference. It searches with the regex `r'\\[\\d+\\]|\\(.*\\d{4}\\)'`, so it matches several citation formats instead of one exact string.",
+   "kind": "focus",
+   "lines": "2-6"
+  },
+  {
+   "description": "`is_on_topic` returns True when the output mentions at least one course-relevant keyword. It lowercases the output, then checks whether any keyword, also lowercased, appears in it.",
+   "kind": "focus",
+   "lines": "8-11"
+  },
+  {
+   "description": "The last lines run each property and report results. `results` maps each function's name to its result, and `pass_rate` divides the count of True results by the total. The list on the `results` line is a placeholder for your set of functions.",
+   "kind": "focus",
+   "lines": "13-15"
+  },
+  {
+   "answer": "different citation formats",
+   "kind": "predict",
+   "question": "The page says `has_citation` uses a regex rather than exact matching, which makes the test robust to what?"
+  }
+ ],
+ "title": "Starter Property Functions",
+ "version": 1
+}

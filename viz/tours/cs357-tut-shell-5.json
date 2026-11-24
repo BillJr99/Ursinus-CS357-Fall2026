@@ -1,0 +1,32 @@
+{
+ "code": "some_long_command\n\n# Runs in the foreground; your prompt disappears and waits until the command finishes\n\nCtrl+C\n\n# Sends an interrupt signal to the foreground process; politely asks it to stop immediately\n\nsome_server &\n\n# The & at the end runs the command in the background; your prompt returns immediately\n\n# The shell prints the background job's PID (process ID number) so you can track it\n\nps aux | grep ollama\n\n# ps aux lists every running process on the system with details\n\n# grep ollama filters to only lines mentioning \"ollama\"; shows PID, CPU, memory\n\nkill 12345\n\n# Sends a polite termination signal (SIGTERM) to process number 12345\n\n# Replace 12345 with the actual PID from ps aux\n\nkill -9 12345\n\n# Sends an immediate, uncatchable kill signal (SIGKILL); use only if kill 12345 fails\n\n# The process cannot clean up after itself, so use this as a last resort",
+ "description": "Walk through stopping foreground commands, starting background servers with &, finding process IDs with ps and grep, and stopping processes with kill.",
+ "example": "cs357-tut-shell-5",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: agy",
+ "steps": [
+  {
+   "description": "A normal command runs in the foreground and holds your prompt until it finishes. Pressing `Ctrl+C` sends an interrupt signal (`SIGINT`) that asks the foreground process to stop immediately.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "Adding `&` at the end of `some_server &` starts the process in the background, prints its numeric Process ID (PID), and gives your shell prompt right back.",
+   "kind": "reveal",
+   "lines": "9-13"
+  },
+  {
+   "description": "`ps aux | grep ollama` lists every running process on the machine and filters for lines mentioning `ollama` so you can find its PID, CPU usage, and memory usage.",
+   "kind": "reveal",
+   "lines": "15-19"
+  },
+  {
+   "description": "`kill 12345` sends a polite termination signal (`SIGTERM`) so PID `12345` can clean up and exit. If the process is frozen and ignores `kill`, `kill -9 12345` sends `SIGKILL` to force the operating system to stop it immediately.",
+   "kind": "reveal",
+   "lines": "21-31"
+  }
+ ],
+ "title": "Managing foreground and background processes",
+ "version": 1
+}

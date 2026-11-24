@@ -1,0 +1,32 @@
+{
+ "code": "if [[ \"$PI_RUN_AS\" == user ]]; then\n    chown -R \"$PI_USER_UID:$PI_USER_GID\" \"$PI_HOME\"\n    exec setpriv --reuid=\"$PI_USER_UID\" --regid=\"$PI_USER_GID\" --clear-groups \\\n        --bounding-set=-all --inh-caps=-all --ambient-caps=-all \\\n        env HOME=\"$PI_HOME\" PATH=\"/opt/pi/node_modules/.bin:$PATH\" \\\n        python3 /opt/pi-launcher/launcher.py\nfi",
+ "description": "Comparison table showing direct laptop vs container URLs for Ollama and OpenWebUI, with Linux-specific caveats.",
+ "example": "cs357-tut-terminalfilesystem-9",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Endpoints table with run commands.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "Header: Ollama and OpenWebUI endpoint comparison.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Direct: localhost:11434/v1 for Ollama, localhost:3000/api/v1 for OpenWebUI.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "Container: host.docker.internal replaces localhost for container-to-host access.",
+   "kind": "focus",
+   "lines": "5-6"
+  }
+ ],
+ "title": "Ollama/OpenWebUI Endpoints Table",
+ "version": 1
+}

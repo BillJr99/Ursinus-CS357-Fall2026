@@ -1,0 +1,32 @@
+{
+ "code": "promptfoo --version\npython3 -c \"import spacy; nlp = spacy.load('en_core_web_sm'); print('spacy OK:', nlp('Agents plan and act.')[0].pos_)\"\nopencode --version",
+ "description": "Run three graded checks at the container prompt: promptfoo version, spacy NLP model, and opencode version.",
+ "example": "cs357-tut-coursecontainer-4",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Three verification commands for required tools.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Promptfoo: promptfoo --version checks Node.js and promptfoo are wired correctly.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Spacy: python3 one-liner loads en_core_web_sm model and prints part-of-speech tag for a test sentence.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Opencode: opencode --version confirms the coding agent is baked into the image.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "Verify Tools Inside Container",
+ "version": 1
+}

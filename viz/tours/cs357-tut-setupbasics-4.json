@@ -1,0 +1,37 @@
+{
+ "code": "\"ursinus\": {\n  \"npm\": \"@ai-sdk/openai-compatible\",\n  \"name\": \"Ursinus AI\",\n  \"options\": {\n    \"baseURL\": \"https://ursinus.ai/api/v1\",\n    \"apiKey\": \"{env:URSINUSAI_API_KEY}\"\n  },\n  \"models\": { \"MODEL-NAME\": { \"name\": \"Ursinus model\", \"tools\": true } }\n}",
+ "description": "A second provider added beside ollama for any OpenAI-compatible service. The file names the variable that holds your key and never holds the key itself.",
+ "example": "cs357-tut-setupbasics-4",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a second provider entry, added next to `ollama` inside `provider`. Any service with an OpenAI-compatible address can go here, and the page says the file names the variable that holds your key and never holds the key itself.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "The provider is named `ursinus`. `npm` is the same adapter package, and `name` is the display label, `Ursinus AI`.",
+   "kind": "focus",
+   "lines": "1-3"
+  },
+  {
+   "description": "`options` holds `baseURL` at `https://ursinus.ai/api/v1` and `apiKey` set to `\"{env:URSINUSAI_API_KEY}\"`. That is the name of a variable, not its value.",
+   "kind": "focus",
+   "lines": "4-7"
+  },
+  {
+   "description": "`models` maps `MODEL-NAME` to a display name, with `tools` set to true. The page says to replace `MODEL-NAME` with a model your key can use and choose it with `/models` inside opencode.",
+   "kind": "focus",
+   "lines": "8"
+  },
+  {
+   "answer": "the key itself",
+   "kind": "predict",
+   "question": "The page says the file names the variable that holds your key, and never holds what?"
+  }
+ ],
+ "title": "A Custom Provider Entry",
+ "version": 1
+}

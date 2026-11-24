@@ -1,0 +1,42 @@
+{
+ "code": "import json\nimport re\nfrom critique_refine import critique_draft, load_config, load_rubric\n\ndef run_calibration(calibration_file, config, rubric):\n    with open(calibration_file) as f:\n        drafts = json.load(f)\n\n    results = []\n    for d in drafts:\n        critique = critique_draft(d[\"draft\"], rubric, config)\n        results.append({\n            \"id\": d[\"id\"],\n            \"planted_defect\": d[\"defect\"],\n            \"critic_verdict\": critique[\"verdict\"],\n            \"critic_issues\": critique[\"issues\"]\n        })\n        print(f\"{d['id']} (defect={d['defect']}): critic says {critique['verdict']}\")\n\n    return results\n\ndef compute_rates(results, rubric):\n    criteria_ids = [c[\"id\"] for c in rubric[\"criteria\"]]\n    rates = {}\n\n    for cid in criteria_ids:\n        # A draft counts as positive for THIS criterion only if its planted defect names it\n        # (for example \"missing_C4\" is positive for C4 and negative for C1, C2, and C3).\n        # True positives: this criterion has a planted defect AND the critic flagged it\n        # False negatives: this criterion has a planted defect AND the critic missed it\n        # False positives: this criterion has NO planted defect AND the critic flagged it\n        # True negatives: this criterion has NO planted defect AND the critic stayed quiet\n        tp = fp = fn = tn = 0\n\n        for r in results:\n            has_defect = re.search(rf\"\\b{cid}\\b\", r[\"planted_defect\"].replace(\"_\", \" \"), re.IGNORECASE) is not None\n            # Simplification: check if any issue string mentions the criterion ID\n            critic_flagged = any(cid in issue for issue in r[\"critic_issues\"])\n\n            if has_defect:\n                if critic_flagged:\n                    tp += 1\n                else:\n                    fn += 1\n            else:\n                if critic_flagged:\n                    fp += 1\n                else:\n                    tn += 1\n\n        detection_rate = tp / (tp + fn) if (tp + fn) > 0 else float(\"nan\")\n        fp_rate = fp / (fp + tn) if (fp + tn) > 0 else float(\"nan\")\n        rates[cid] = {\"detection_rate\": detection_rate, \"false_positive_rate\": fp_rate}\n        print(f\"  {cid}: detection={detection_rate:.2f}, fp_rate={fp_rate:.2f}\")\n\n    return rates\n\nif __name__ == \"__main__\":\n    config = load_config()\n    rubric = load_rubric(config)\n    results = run_calibration(\"calibration_drafts.json\", config, rubric)\n    compute_rates(results, rubric)",
+ "description": "calibrate.py runs the critic on the planted-defect set, counts true and false positives and negatives per criterion, and prints a detection rate and a false positive rate for each.",
+ "example": "cs357-tut-multiagentmeasurement-3",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The script imports `json` and `re`, and pulls `critique_draft`, `load_config`, and `load_rubric` from `critique_refine`, the lab module.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "`run_calibration` loads the calibration file, calls `critique_draft` on each draft, and records its `id`, `planted_defect`, `critic_verdict`, and `critic_issues`. It prints one line per draft.",
+   "kind": "focus",
+   "lines": "5-20"
+  },
+  {
+   "description": "`compute_rates` reads the criteria ids from the rubric and starts four counts per criterion: `tp`, `fp`, `fn`, and `tn`. The comments define each case, including that a draft counts as positive for a criterion only if its planted defect names it.",
+   "kind": "focus",
+   "lines": "22-33"
+  },
+  {
+   "description": "The inner loop decides two things. `has_defect` searches the planted-defect string for the criterion id, and `critic_flagged` checks whether any issue string mentions the id. The four `if` branches then increment the matching count.",
+   "kind": "focus",
+   "lines": "35-49"
+  },
+  {
+   "description": "`detection_rate` is `tp` over `tp + fn`, and `fp_rate` is `fp` over `fp + tn`. Each falls back to `nan` when its denominator is zero. Both are stored and printed per criterion.",
+   "kind": "focus",
+   "lines": "51-54"
+  },
+  {
+   "answer": "no draft tested that case",
+   "kind": "predict",
+   "question": "The page says a printed nan means what?"
+  }
+ ],
+ "title": "Computing the Critic's Rates",
+ "version": 1
+}

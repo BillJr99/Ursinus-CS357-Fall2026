@@ -1,0 +1,37 @@
+{
+ "code": "\n# deploy.sh  (DELIBERATELY FLAWED, do not copy)\nset -x                                    # (defect) echoes every command + expanded secret\nread -p \"Deploy now? [y/N] \" ok           # (defect) hangs forever in CI, no human to answer\nnpx wrangler deploy --api-token GLOBAL_KEY # (over-broad: a global key, not a scoped token)",
+ "description": "The second file in the audit exercise. Its own comments mark each defect, and it is labeled deliberately flawed, do not copy.",
+ "example": "cs357-tut-cloudflare-27",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is `deploy.sh`, the second file in the audit. Line 2 marks it as `DELIBERATELY FLAWED, do not copy`.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`set -x` echoes every command with its expanded values. Its own comment is the defect note: it echoes every command plus the expanded secret.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "`read -p \"Deploy now? [y/N] \" ok` waits for input. Its own comment is the defect note: it hangs forever in CI, where there is no human to answer.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "The deploy passes `--api-token GLOBAL_KEY`. Its own comment notes the credential is over-broad: a global key, not a scoped token.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "answer": "five",
+   "kind": "predict",
+   "question": "The exercise asks you to name which single defect you would fix first if you could fix only one. How many defects are there in total?"
+  }
+ ],
+ "title": "Exercise 6: A Deliberately Flawed deploy.sh",
+ "version": 1
+}

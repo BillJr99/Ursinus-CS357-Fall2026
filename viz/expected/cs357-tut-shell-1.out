@@ -1,0 +1,6 @@
+0
+grep: agent.log: No such file or directory
+-rw-rw-r--  1 1000 1000  576 Nov 14 02:37 main.sh
+drwx------ 61 1000 1000 4096 Nov 14 02:37 ..
+drwxrwxr-x  2 1000 1000 4096 Nov 14 02:37 .
+cat: results.csv: No such file or directory

@@ -1,0 +1,3 @@
+recall@1 = 0.40   missed: ['Q3', 'Q4', 'Q5']
+recall@2 = 0.60   missed: ['Q4', 'Q5']
+recall@3 = 0.80   missed: ['Q5']

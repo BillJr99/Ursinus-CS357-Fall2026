@@ -1,0 +1,32 @@
+{
+ "code": "# Oh My Pi project settings. Same intent as opencode.json, written for Oh My Pi's rules:\n# the FIRST matching pattern wins here (opencode uses the LAST), so denials come first.\ntools:\n  approvalMode: always-ask\nbash:\n  patterns:\n    - { match: \"rm *\", approval: deny }\n    - { match: \"mv *\", approval: deny }\n    - { match: \"rmdir *\", approval: deny }\n    - { match: \"npx wrangler deploy*\", approval: prompt }\n    - { match: \"npx wrangler delete*\", approval: prompt }\n    - { match: \"npx wrangler d1 delete*\", approval: prompt }\n    - { match: \"git push *\", approval: prompt }\n    - { match: \"git clean *\", approval: prompt }\n    - { match: \"git reset --hard*\", approval: prompt }\n    - { match: \"git *\", approval: allow }\n    - { match: \"npm test*\", approval: allow }\n    - { match: \"npx vitest *\", approval: allow }\n    - { match: \"npm ci\", approval: allow }",
+ "description": "Oh My Pi permission rules with first-match-wins: denials first, then git, test commands, and always-ask default for tools.",
+ "example": "cs357-tut-fullstackwithagents-4",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete .omp/config.yml for Oh My Pi.",
+   "kind": "reveal",
+   "lines": "1-19"
+  },
+  {
+   "description": "Header: comment explaining first-match-wins rule and that denials come first.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Tools: approvalMode always-ask sets the default for tools.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "Bash patterns: denials first (rm, mv, rmdir), then deploy commands ask, then git with push/clean/reset-hard ask, test commands allow.",
+   "kind": "focus",
+   "lines": "5-19"
+  }
+ ],
+ "title": "Oh My Pi Permissions: .omp/config.yml",
+ "version": 1
+}

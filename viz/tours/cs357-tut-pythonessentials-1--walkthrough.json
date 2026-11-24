@@ -1,0 +1,206 @@
+{
+ "code": "message = {\"role\": \"user\", \"content\": \"Hello\"}\nprint(message[\"role\"])              # look up one key\nprint(message.get(\"tool\", \"none\"))  # .get gives a default when the key is missing\n\nmessages = []                       # an empty list\nmessages.append(message)            # add to the end\nmessages.append({\"role\": \"assistant\", \"content\": \"Hi!\"})\nprint(len(messages))\nprint(messages[-1][\"content\"])      # the last item, then one of its keys\n\nfor m in messages:\n    print(m[\"role\"], \"said\", m[\"content\"])",
+ "description": "This tour walks through Python basics for AI labs: lists, dictionaries, pathlib, JSON, error handling, regex, Counter, NumPy arrays, and async/await.",
+ "example": "cs357-tut-pythonessentials-1",
+ "lang": "python",
+ "name": "walkthrough",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "stages": {
+  "cs357-tut-pythonessentials-2": {
+   "code": "from pathlib import Path\n\nfolder = Path(\"demo_notes\")\nfolder.mkdir(exist_ok=True)\n(folder / \"a.txt\").write_text(\"alpha\\n\", encoding=\"utf-8\")\n(folder / \"b.txt\").write_text(\"beta\\n\", encoding=\"utf-8\")\n\nfor doc in sorted(folder.glob(\"*.txt\")):\n    print(doc.name, doc.stem, doc.read_text(encoding=\"utf-8\").strip())",
+   "lang": "python"
+  },
+  "cs357-tut-pythonessentials-3": {
+   "code": "import json\n\nreply = '{\"action\": \"lookup\", \"args\": {\"term\": \"agent\"}}'\ndata = json.loads(reply)\nprint(data[\"action\"], data[\"args\"][\"term\"])\nprint(json.dumps({\"ok\": True, \"n\": 3}))",
+   "lang": "python"
+  },
+  "cs357-tut-pythonessentials-4": {
+   "code": "import json\n\ndef parse_reply(text):\n    try:\n        return json.loads(text)\n    except json.JSONDecodeError as e:\n        print(\"not JSON:\", e.msg)\n        return None\n\nprint(parse_reply('{\"ok\": 1}'))\nprint(parse_reply(\"Sure! Here is the JSON\"))",
+   "lang": "python"
+  },
+  "cs357-tut-pythonessentials-5": {
+   "code": "import re\n\ntext = \"SCORE: 3\\nsome reasoning\\nSCORE: 5\"\nprint(re.findall(r\"SCORE:\\s*(\\d+)\", text))",
+   "lang": "python"
+  },
+  "cs357-tut-pythonessentials-6": {
+   "code": "from collections import Counter\n\nvotes = Counter([\"red\", \"blue\", \"red\"])\nprint(votes)\nprint(votes.most_common(1))\nprint(votes.most_common(1)[0][0])",
+   "lang": "python"
+  },
+  "cs357-tut-pythonessentials-7": {
+   "code": "import numpy as np\n\nvectors = np.array([[3.0, 4.0], [0.0, 2.0], [1.0, 0.0]])\nlengths = np.linalg.norm(vectors, axis=1, keepdims=True)\nnormed = vectors / lengths                  # every row now has length 1\nprint(normed[0])\ngroup = [0, 1]                              # a list of row numbers\nprint(normed[group])                        # just those rows\naverage = normed[group].mean(axis=0)        # average down the columns\nprint(average)\nprint(round(float(normed[0] @ normed[1]), 2))\nprint(int(np.argmax([0.2, 0.9, 0.5])))",
+   "lang": "python"
+  },
+  "cs357-tut-pythonessentials-8": {
+   "code": "import asyncio\n\nasync def fetch(name):\n    await asyncio.sleep(0.01)       # stand-in for waiting on a server\n    return f\"got {name}\"\n\nasync def main():\n    print(await fetch(\"tools\"))\n\nasyncio.run(main())",
+   "lang": "python"
+  }
+ },
+ "steps": [
+  {
+   "description": "A message dictionary with role and content, demonstrating key lookup, .get with default, an empty list, appending dictionaries, length, indexing the last item, and a for loop over the list.",
+   "kind": "reveal",
+   "lines": "1-12"
+  },
+  {
+   "answer": "none",
+   "kind": "predict",
+   "question": "What does message.get(\"tool\", \"none\") return?"
+  },
+  {
+   "description": "Output shows: user, none, 2, Hi!, user said Hello, assistant said Hi!",
+   "kind": "run",
+   "lines": "8-12",
+   "trace_step": 7
+  },
+  {
+   "description": "Move to files and folders with pathlib.",
+   "kind": "stage",
+   "stage": "cs357-tut-pythonessentials-2"
+  },
+  {
+   "description": "Using Path to create a directory, write two text files, and iterate over sorted glob results printing name, stem, and content.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "answer": "a",
+   "kind": "predict",
+   "question": "What does doc.stem return for a.txt?"
+  },
+  {
+   "description": "Output shows: a.txt a alpha, b.txt b beta",
+   "kind": "run",
+   "lines": "5-9",
+   "trace_step": 5
+  },
+  {
+   "description": "Move to JSON data as text.",
+   "kind": "stage",
+   "stage": "cs357-tut-pythonessentials-3"
+  },
+  {
+   "description": "A JSON string parsed with json.loads, printing nested values, and a Python dict serialized with json.dumps showing lowercase true.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "answer": "{\"ok\": true, \"n\": 3}",
+   "kind": "predict",
+   "question": "What does json.dumps produce for {\"ok\": True, \"n\": 3}?"
+  },
+  {
+   "description": "Output shows: lookup agent, then the JSON string with true lowercase",
+   "kind": "run",
+   "lines": "4-6",
+   "trace_step": 3
+  },
+  {
+   "description": "Move to try and except for error handling.",
+   "kind": "stage",
+   "stage": "cs357-tut-pythonessentials-4"
+  },
+  {
+   "description": "A parse_reply function that tries json.loads and catches JSONDecodeError, returning the parsed dict on success or None and printing the error message on failure.",
+   "kind": "reveal",
+   "lines": "1-11"
+  },
+  {
+   "answer": "None",
+   "kind": "predict",
+   "question": "What does parse_reply return for the invalid JSON string?"
+  },
+  {
+   "description": "Output shows: {'ok': 1}, not JSON: Expecting value, None",
+   "kind": "run",
+   "lines": "10-11",
+   "trace_step": 10
+  },
+  {
+   "description": "Move to finding text with regex.",
+   "kind": "stage",
+   "stage": "cs357-tut-pythonessentials-5"
+  },
+  {
+   "description": "Using re.findall with a capture group to extract digits after SCORE: from a multi-line string, returning a list of the captured numbers.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "answer": "['3', '5']",
+   "kind": "predict",
+   "question": "What does re.findall return for the given text?"
+  },
+  {
+   "description": "Output shows: ['3', '5']",
+   "kind": "run",
+   "lines": "3-4",
+   "trace_step": 2
+  },
+  {
+   "description": "Move to counting with Counter.",
+   "kind": "stage",
+   "stage": "cs357-tut-pythonessentials-6"
+  },
+  {
+   "description": "A Counter created from a list of votes, printing the full counter, most_common(1) as a list of one pair, and extracting the winner with [0][0].",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "answer": "red",
+   "kind": "predict",
+   "question": "What is the most common vote?"
+  },
+  {
+   "description": "Output shows: Counter({'red': 2, 'blue': 1}), [('red', 2)], red",
+   "kind": "run",
+   "lines": "4-6",
+   "trace_step": 3
+  },
+  {
+   "description": "Move to arrays with NumPy.",
+   "kind": "stage",
+   "stage": "cs357-tut-pythonessentials-7"
+  },
+  {
+   "description": "A 2D NumPy array of vectors, normalized to unit length by dividing by row norms, selecting rows with a list index, computing the column-wise mean, dot product for cosine similarity, and argmax for the largest value.",
+   "kind": "reveal",
+   "lines": "1-12"
+  },
+  {
+   "answer": "0.8",
+   "kind": "predict",
+   "question": "What is the cosine similarity between the first two normalized vectors?"
+  },
+  {
+   "description": "Output shows: [0.6 0.8], the two selected rows, [0.3 0.9], 0.8, 1",
+   "kind": "run",
+   "lines": "8-12",
+   "trace_step": 8
+  },
+  {
+   "description": "Move to async and await.",
+   "kind": "stage",
+   "stage": "cs357-tut-pythonessentials-8"
+  },
+  {
+   "description": "An async fetch function that awaits a sleep as a stand-in for network I/O, an async main that awaits fetch, and asyncio.run to start the event loop.",
+   "kind": "reveal",
+   "lines": "1-10"
+  },
+  {
+   "answer": "got tools",
+   "kind": "predict",
+   "question": "What does the program print?"
+  },
+  {
+   "description": "Output shows: got tools",
+   "kind": "run",
+   "lines": "8-10",
+   "trace_step": 4
+  }
+ ],
+ "title": "Python Essentials for CS357 Labs",
+ "version": 1
+}

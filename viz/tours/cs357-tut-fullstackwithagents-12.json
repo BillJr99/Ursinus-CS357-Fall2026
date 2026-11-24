@@ -1,0 +1,32 @@
+{
+ "code": "import { applyD1Migrations } from \"cloudflare:test\";\nimport { env } from \"cloudflare:workers\";\n\n// Safe to run more than once: only migrations not yet applied are run.\nawait applyD1Migrations(env.DB, env.TEST_MIGRATIONS);",
+ "description": "Applies D1 migrations to the test database using cloudflare:test API, safe to run multiple times as only unapplied migrations execute.",
+ "example": "cs357-tut-fullstackwithagents-12",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete apply-migrations.js script.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "Imports: applyD1Migrations from cloudflare:test, env from cloudflare:workers.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Safety: comment noting idempotency - only unapplied migrations run.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "Execution: await applyD1Migrations with env.DB and env.TEST_MIGRATIONS.",
+   "kind": "focus",
+   "lines": "5"
+  }
+ ],
+ "title": "test/apply-migrations.js: Migration Setup",
+ "version": 1
+}

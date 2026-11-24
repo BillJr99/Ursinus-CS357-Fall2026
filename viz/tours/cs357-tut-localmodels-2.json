@@ -1,0 +1,32 @@
+{
+ "code": "{\n  \"tool_call\": {\n    \"name\": \"get_weather\",\n    \"arguments\": {\n      \"city\": \"Philadelphia\"\n    }\n  }\n}",
+ "description": "The output a function-calling-optimized model returns for the weather query: valid JSON that names the tool and its argument, ready to parse and execute.",
+ "example": "cs357-tut-localmodels-2",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the output from a function-calling-optimized model, the page's example being `hermes3:8b`. It is valid JSON conforming to the tool schema, so the agent framework can parse, validate, and execute it directly.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "The `tool_call` object names the tool to run: `get_weather`, the function defined in the previous block.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "The `arguments` object supplies the one required parameter, `city`, set to `\"Philadelphia\"`. That is the value the framework passes to the tool.",
+   "kind": "focus",
+   "lines": "4-6"
+  },
+  {
+   "answer": "a 70B general model",
+   "kind": "predict",
+   "question": "The page says a 7B model fine-tuned for function calling reliably outperforms what on structured tool-call tasks?"
+  }
+ ],
+ "title": "A Parseable Tool-Call Output",
+ "version": 1
+}

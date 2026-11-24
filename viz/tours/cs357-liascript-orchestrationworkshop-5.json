@@ -1,0 +1,43 @@
+{
+ "code": "# Step 2: a router.  One classification per message, a closed set, and a loud failure.\nROUTES = {\"event\": \"digest\", \"change\": \"digest (marked UPDATED)\", \"question\": \"FAQ queue\"}\n\ndef route(message):\n    label = llm(CLASSIFY, message).strip().lower()\n    if label not in ROUTES:            # closed-set guard: fail closed, and say so\n        return label, \"needs_human\"\n    return label, ROUTES[label]\n\nCALLS.clear()\nfor_digest = []\nfor message in MESSAGES:\n    label, destination = route(message)\n    print(f\"{label:<13} -> {destination:<24} {message[:44]}\")\n    if destination.startswith(\"digest\"):\n        for_digest.append(message)\nprint(f\"\\nmodel calls: {len(CALLS)}; {len(for_digest)} of {len(MESSAGES)} messages go on to the pipeline\")",
+ "description": "A route function classifies each message with a model call and checks the label against a closed set of known routes. It fails closed by sending unknown labels to a human queue instead of silently misclassifying.",
+ "example": "cs357-liascript-orchestrationworkshop-5",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: omp free model + edit: codex",
+ "steps": [
+  {
+   "description": "The ROUTES dictionary maps three known labels (event, change, question) to their destinations: digest, digest (marked UPDATED), and FAQ queue.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "The route function calls the model with CLASSIFY prompt, strips and lowercases the label, then checks if it is in ROUTES.",
+   "kind": "reveal",
+   "lines": "4-8"
+  },
+  {
+   "description": "Lines 6-7 are the closed-set guard: if the label is not in ROUTES, it returns the unknown label with 'needs_human' destination, failing closed and making the failure loud.",
+   "kind": "focus",
+   "lines": "6-7"
+  },
+  {
+   "answer": "needs_human, because announcement is not in the ROUTES dictionary",
+   "kind": "predict",
+   "question": "What destination does an 'announcement' label get, and why?"
+  },
+  {
+   "description": "The loop iterates through MESSAGES, calls route for each, prints the label and destination, and collects messages destined for digest into for_digest list.",
+   "kind": "reveal",
+   "lines": "10-17"
+  },
+  {
+   "description": "The output shows 5 messages classified: 2 events to digest, 1 change to digest (UPDATED), 1 question to FAQ queue, 1 announcement to needs_human. Of these, 3 of 5 go to the pipeline with 5 model calls.",
+   "kind": "run",
+   "lines": "10-17",
+   "trace_step": 4
+  }
+ ],
+ "title": "Router with Closed-Set Guard and Fail-Closed",
+ "version": 1
+}

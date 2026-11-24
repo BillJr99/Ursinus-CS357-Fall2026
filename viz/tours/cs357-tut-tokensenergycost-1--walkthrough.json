@@ -1,0 +1,66 @@
+{
+ "code": "import json\nfrom collections import defaultdict\n\n# Practice trace: one run, two tasks, two agents.  The planner rows are Model 4's two\n# plan steps from the Observability session; the critic rows are made up for practice.\nTRACE = \"\"\"\\\n{\"run_id\": \"t-77b0\", \"task\": \"T1\", \"agent\": \"planner\", \"model\": \"hermes-3\", \"prompt_tokens\": 412, \"completion_tokens\": 41, \"latency_ms\": 2773, \"measured\": true}\n{\"run_id\": \"t-77b0\", \"task\": \"T1\", \"agent\": \"critic\", \"model\": \"hermes-3\", \"prompt_tokens\": 980, \"completion_tokens\": 60, \"latency_ms\": 1900, \"measured\": true}\n{\"run_id\": \"t-77b0\", \"task\": \"T2\", \"agent\": \"planner\", \"model\": \"hermes-3\", \"prompt_tokens\": 3690, \"completion_tokens\": 512, \"latency_ms\": 8422, \"measured\": true}\n{\"run_id\": \"t-77b0\", \"task\": \"T2\", \"agent\": \"critic\", \"model\": \"hermes-3\", \"prompt_tokens\": 4310, \"completion_tokens\": 88, \"latency_ms\": 4600, \"measured\": true}\n\"\"\"\nwith open(\"practice_trace.jsonl\", \"w\") as f:\n    f.write(TRACE)\n\nwith open(\"practice_trace.jsonl\") as f:\n    rows = [json.loads(line) for line in f if line.strip()]\n\nunmeasured = [r for r in rows if not r.get(\"measured\")]\nif unmeasured:\n    print(f\"WARNING: {len(unmeasured)} rows are estimates, not measurements\")\n\ndef total_by(key):\n    sums = defaultdict(lambda: {\"calls\": 0, \"in\": 0, \"out\": 0, \"s\": 0.0})\n    for r in rows:\n        t = sums[r[key]]\n        t[\"calls\"] += 1\n        t[\"in\"] += r[\"prompt_tokens\"]\n        t[\"out\"] += r[\"completion_tokens\"]\n        t[\"s\"] += r[\"latency_ms\"] / 1000\n    return sums\n\nfor key in [\"run_id\", \"task\", \"agent\"]:\n    print(f\"\\nper {key}\")\n    print(f\"{key:<8} {'calls':>5} {'input':>7} {'output':>7} {'seconds':>8}\")\n    for name, t in total_by(key).items():\n        print(f\"{name:<8} {t['calls']:>5} {t['in']:>7} {t['out']:>7} {t['s']:>8.1f}\")\n\ntasks = total_by(\"task\")\navg_in = sum(t[\"in\"] for t in tasks.values()) / len(tasks)\navg_out = sum(t[\"out\"] for t in tasks.values()) / len(tasks)\nprint(f\"\\naverage per task: {avg_in:.0f} input, {avg_out:.0f} output tokens\")",
+ "description": "Walk through code that aggregates token usage and estimates energy, carbon, and cost.",
+ "example": "cs357-tut-tokensenergycost-1",
+ "lang": "python",
+ "name": "walkthrough",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "stages": {
+  "cs357-tut-tokensenergycost-2": {
+   "code": "# Run t-77b0, totaled in the previous cell\ninput_tokens = 9392\noutput_tokens = 701\ngeneration_seconds = 17.695\n\n# ---- Parameters: every assumption has a name, a unit, and a source.  Replace them. ----\nLB_TO_G = 453.592\nP = {\n    # MEASURE: no source in the course gives your machine's draw.  Use a plug-in meter,\n    # nvidia-smi, or powermetrics on a Mac, and write down which.\n    \"machine_watts\": None,\n    # SOURCE: EPA eGRID2023 U.S. total output rate, 770.9 lb CO2e/MWh, as cited in Part VII\n    # of the Cost of Inference session.  Replace with your region (epa.gov/egrid/power-profiler).\n    \"grid_g_per_kwh\": 770.9 * LB_TO_G / 1000,\n    # SOURCE: energy-profiles.json, offline profile (0.0005 g per local query midpoint).\n    \"g_per_input_token\": 5.3e-7,\n    \"g_per_output_token\": 1.6e-6,\n    # LOOK UP: a comparable hosted model's published price, in dollars per million tokens.\n    # Write down the model, the page, and the date you read it.\n    \"price_in_per_million\": None,\n    \"price_out_per_million\": None,\n    # LOOK UP: the rate on your electricity bill, in dollars per kWh.\n    \"dollars_per_kwh\": None,\n}\n\nmissing = [name for name, value in P.items() if value is None]\n\ndef need(*names):\n    \"\"\"True only when every named parameter has a value.\"\"\"\n    return all(P[n] is not None for n in names)\n\nkwh = None\nif need(\"machine_watts\"):\n    kwh = P[\"machine_watts\"] * generation_seconds / 3600 / 1000\n    print(f\"Energy: {kwh * 1000:.3f} Wh\")\n    print(f\"Carbon from measured time: {kwh * P['grid_g_per_kwh']:.4f} g CO2e\")\n\ncarbon_tokens = input_tokens * P[\"g_per_input_token\"] + output_tokens * P[\"g_per_output_token\"]\nprint(f\"Carbon from per-token rates: {carbon_tokens:.4f} g CO2e\")\n\nif need(\"price_in_per_million\", \"price_out_per_million\"):\n    hosted = (input_tokens / 1e6) * P[\"price_in_per_million\"] + (output_tokens / 1e6) * P[\"price_out_per_million\"]\n    print(f\"Hosted price avoided: ${hosted:.4f}\")\nif kwh is not None and need(\"dollars_per_kwh\"):\n    print(f\"Electricity: ${kwh * P['dollars_per_kwh']:.6f}\")\n\nprint(f\"grid intensity in use: {P['grid_g_per_kwh']:.1f} g CO2e per kWh\")\nprint(\"still to fill and source:\", \", \".join(missing) if missing else \"nothing\")",
+   "lang": "python"
+  }
+ },
+ "steps": [
+  {
+   "description": "Import json, define practice trace with four rows",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "Define total_by that aggregates calls, input, output, and seconds by key",
+   "kind": "focus",
+   "lines": "22-30"
+  },
+  {
+   "answer": "average per task: 4696 input, 350 output tokens",
+   "kind": "predict",
+   "question": "What is the average per task?"
+  },
+  {
+   "description": "Print per agent summary",
+   "kind": "run",
+   "lines": "36",
+   "trace_step": 54
+  },
+  {
+   "description": "Move to energy estimation",
+   "kind": "stage",
+   "stage": "cs357-tut-tokensenergycost-2"
+  },
+  {
+   "description": "Define input_tokens, output_tokens, generation_seconds",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Define parameters dictionary P with sources",
+   "kind": "focus",
+   "lines": "8-24"
+  },
+  {
+   "answer": "Carbon from per-token rates: 0.0061 g CO2e",
+   "kind": "predict",
+   "question": "What is carbon from per-token rates?"
+  },
+  {
+   "description": "Print carbon from per-token rates",
+   "kind": "run",
+   "lines": "39",
+   "trace_step": 30
+  }
+ ],
+ "title": "Tokens, Energy, and Cost: Measuring What Your Agent Spends",
+ "version": 1
+}

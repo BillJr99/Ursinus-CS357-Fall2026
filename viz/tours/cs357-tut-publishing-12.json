@@ -1,0 +1,32 @@
+{
+ "code": "[project]\nname = \"my-agent\"\nversion = \"0.1.0\"\ndescription = \"A local LLM research agent for CS357.\"\nreadme = \"README.md\"\nrequires-python = \">=3.11\"\ndependencies = [\n    \"requests>=2.31.0\",\n]",
+ "description": "Project metadata for PyPI: name, version, description, readme, Python requirement, and dependencies array.",
+ "example": "cs357-tut-publishing-12",
+ "lang": "toml",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete [project] section.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "Section header: [project] contains package metadata.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Identity: name my-agent, version 0.1.0, description, readme file.",
+   "kind": "focus",
+   "lines": "2-5"
+  },
+  {
+   "description": "Requirements: requires-python >=3.11, dependencies array with requests>=2.31.0.",
+   "kind": "focus",
+   "lines": "6-7"
+  }
+ ],
+ "title": "pyproject.toml: Project Metadata",
+ "version": 1
+}

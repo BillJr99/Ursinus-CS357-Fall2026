@@ -1,0 +1,47 @@
+{
+ "code": "FROM node:20-slim\n\n# git is not optional: every coding agent assumes it, and pi uses it to show\n# you changes before it writes anything\nRUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates \\\n    && rm -rf /var/lib/apt/lists/*\n\n# Run as a non-root user. If the agent ever does escape its mount, it should\n# land as nobody-in-particular rather than as root on your host's UID 0.\nRUN useradd --create-home --shell /bin/bash agent\nUSER agent\nENV HOME=/home/agent\n\n# The agent itself\nRUN npm install -g --prefix \"$HOME/.npm-global\" @mariozechner/pi-coding-agent\nENV PATH=\"$HOME/.npm-global/bin:$PATH\"\n\n# The provider plugin. This must run AFTER USER and HOME are set, or the\n# plugin installs into root's home and the agent user never sees it.\nRUN pi install npm:@billjr99/pi-openai-compat\n\nWORKDIR /workspace\nCMD [\"pi\"]",
+ "description": "Node 20-based image with non-root user, git, pi-coding-agent, and pi-openai-compat plugin for Ollama/OpenWebUI endpoints.",
+ "example": "cs357-tut-terminalfilesystem-5",
+ "lang": "dockerfile",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete Dockerfile for pi agent.",
+   "kind": "reveal",
+   "lines": "1-23"
+  },
+  {
+   "description": "Base: node:20-slim for lightweight Node environment.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Git: apt-get install git and ca-certificates, clean apt lists to minimize image size.",
+   "kind": "focus",
+   "lines": "3-6"
+  },
+  {
+   "description": "Security: create non-root agent user, switch USER, set HOME to prevent privilege escalation.",
+   "kind": "focus",
+   "lines": "8-12"
+  },
+  {
+   "description": "Pi: npm install pi-coding-agent globally with prefix in agent's home, update PATH.",
+   "kind": "focus",
+   "lines": "14-16"
+  },
+  {
+   "description": "Plugin: pi install pi-openai-compat must run AFTER USER and HOME are set so plugin installs to agent's home.",
+   "kind": "focus",
+   "lines": "18-21"
+  },
+  {
+   "description": "Runtime: WORKDIR /workspace, CMD pi for interactive use.",
+   "kind": "focus",
+   "lines": "22-23"
+  }
+ ],
+ "title": "Dockerfile for pi with OpenAI Compat",
+ "version": 1
+}

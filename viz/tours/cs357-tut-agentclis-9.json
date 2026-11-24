@@ -1,0 +1,27 @@
+{
+ "code": "docker run --rm -it \\\n  --add-host=host.docker.internal:host-gateway \\\n  -v \"$HOME/agents/commercial/claude/home:/home/agent\" \\\n  -v \"$HOME/agents/workspace:/workspace\" \\\n  -w /workspace \\\n  commercial-ai:latest claude",
+ "description": "Three commands install the pi-openai-compat plugin either from npm or from the GitHub source, which registers arbitrary OpenAI-compatible endpoints as first-class pi providers.",
+ "example": "cs357-tut-agentclis-9",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "Line 1 installs the plugin from npm; lines 2-3 show the alternative git install from the GitHub repository.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "The plugin enables pi to connect to Ollama and OpenWebUI simultaneously, so their models appear in pi's own /model picker.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "answer": "@billjr99/pi-openai-compat",
+   "kind": "predict",
+   "question": "What is the plugin name for npm install?"
+  }
+ ],
+ "title": "Installing the pi OpenAI-Compatible Plugin",
+ "version": 1
+}

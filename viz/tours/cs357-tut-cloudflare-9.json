@@ -1,0 +1,32 @@
+{
+ "code": "\n# Build your static site first (if needed), then deploy the output directory\nnpx wrangler pages deploy ./dist --project-name=cs357-demo\n\n# Output: -> https://cs357-demo.pages.dev\n\n# Every subsequent deploy creates a new version with a unique preview URL:\n\n# -> https://abc123.cs357-demo.pages.dev  (preview link for this specific deploy)\n\n# -> https://cs357-demo.pages.dev         (stable production URL, always latest)",
+ "description": "One command that deploys a static site to Cloudflare Pages, with a preview URL for each deploy and a stable production URL.",
+ "example": "cs357-tut-cloudflare-9",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This command deploys a static site to Pages. `npx wrangler pages deploy ./dist --project-name=cs357-demo` publishes the built output directory, and the first run creates the project.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "Build your static site first if it needs a build, then point `pages deploy` at the output directory.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "Every later deploy creates a new version. Each gets a unique preview URL, and the stable production URL always points at the latest deploy.",
+   "kind": "focus",
+   "lines": "7-11"
+  },
+  {
+   "answer": "production",
+   "kind": "predict",
+   "question": "The page says to share the preview URL with a teammate to get feedback before promoting to what?"
+  }
+ ],
+ "title": "Deploying a Static Site to Pages",
+ "version": 1
+}

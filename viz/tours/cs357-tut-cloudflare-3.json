@@ -1,0 +1,32 @@
+{
+ "code": "name = \"hello-worker\"            # becomes the subdomain: hello-worker.<you>.workers.dev\nmain = \"src/index.js\"            # the entry point file that Cloudflare runs\ncompatibility_date = \"2026-06-01\"  # pins runtime behavior to a specific date",
+ "description": "Three keys in wrangler.toml that give a Worker project its identity: its name, its entry point, and its runtime compatibility date.",
+ "example": "cs357-tut-cloudflare-3",
+ "lang": "toml",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the project's configuration file, `wrangler.toml`. Three keys give the project its identity.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "`name` becomes the subdomain: `hello-worker.<you>.workers.dev`.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "`main` names the entry point file that Cloudflare runs.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "`compatibility_date` pins runtime behavior to a specific date, so future platform updates cannot silently change your deployed behavior.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "The Worker Configuration File",
+ "version": 1
+}

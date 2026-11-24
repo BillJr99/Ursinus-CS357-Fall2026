@@ -1,0 +1,37 @@
+{
+ "code": "# === Agno (lightweight framework) ===\n# pip install agno duckduckgo-search\nfrom agno.agent import Agent\nfrom agno.models.openai import OpenAIChat\nfrom agno.tools.duckduckgo import DuckDuckGoTools\n\nagent = Agent(\n    model=OpenAIChat(id=\"gpt-4o-mini\"),\n    tools=[DuckDuckGoTools()],\n    show_tool_calls=True\n)\nagent.print_response(\"Who won the 2024 Tour de France?\")",
+ "description": "Agno agent with OpenAIChat model and DuckDuckGoTools for web search, show_tool_calls displays the tool interactions.",
+ "example": "cs357-tut-agentframeworks-18",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Agno example: imports, Agent creation with model and tools, print_response.",
+   "kind": "reveal",
+   "lines": "1-12"
+  },
+  {
+   "description": "Pip install: agno and duckduckgo-search packages.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Imports: Agent from agno.agent, OpenAIChat from agno.models.openai, DuckDuckGoTools from agno.tools.duckduckgo.",
+   "kind": "focus",
+   "lines": "3-5"
+  },
+  {
+   "description": "Agent: Agent with OpenAIChat model (gpt-4o-mini), DuckDuckGoTools list, show_tool_calls=True.",
+   "kind": "focus",
+   "lines": "7-11"
+  },
+  {
+   "description": "Execution: print_response with Tour de France question triggers web search.",
+   "kind": "focus",
+   "lines": "12"
+  }
+ ],
+ "title": "Agno: Lightweight Framework",
+ "version": 1
+}

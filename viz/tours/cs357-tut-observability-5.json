@@ -1,0 +1,37 @@
+{
+ "code": "from token_usage import metered, ollama_chat, summarize\n\nplanner_call = metered(\"planner\")(ollama_chat)\ncritic_call = metered(\"critic\")(ollama_chat)\n\ndef chat(messages, temperature=0.7, call=planner_call):\n    \"\"\"Drop-in replacement for the course helper: same arguments, same return value.\"\"\"\n    data = call(messages, temperature)\n    return (data.get(\"message\") or {}).get(\"content\", \"\")\n\nplan = chat([{\"role\": \"user\", \"content\": \"In two sentences, plan how to find when Ursinus College was founded.\"}])\nreview = chat([{\"role\": \"user\", \"content\": \"Critique this plan in one sentence: \" + plan}], call=critic_call)\nsummarize()",
+ "description": "A drop-in chat helper that counts every model call by wrapping the inner call once per agent, so the existing loop needs no change.",
+ "example": "cs357-tut-observability-5",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The script imports `metered`, `ollama_chat`, and `summarize` from `token_usage`. It wraps the inner call once per agent: `planner_call` and `critic_call`. Each agent's tokens land in the CSV under its own name.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "`chat` is a drop-in replacement for the course helper: same arguments, same return value. It calls the wrapped `call` and returns the message content as text.",
+   "kind": "focus",
+   "lines": "6-9"
+  },
+  {
+   "description": "`plan` is one `chat` call on the default planner. `review` passes `call=critic_call`, so that call is counted under the critic.",
+   "kind": "focus",
+   "lines": "11-12"
+  },
+  {
+   "description": "`summarize()` ends the run with a per-agent table and a run total.",
+   "kind": "focus",
+   "lines": "13"
+  },
+  {
+   "answer": "run_id",
+   "kind": "predict",
+   "question": "The page says running the script three times leaves three runs in the CSV, separated by what?"
+  }
+ ],
+ "title": "Wrapping an Agent Loop for Token Counting",
+ "version": 1
+}

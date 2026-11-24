@@ -1,0 +1,48 @@
+{
+ "code": "# The other two stop conditions, each fired on purpose by a misbehaving stand-in supervisor.\ndef stubborn(task, transcript):        # asks for the same extraction forever\n    return json.dumps({\"action\": \"call\", \"agent\": \"extractor\", \"input\": task})\n\ndef chatty(task, transcript):          # answers in prose instead of the required JSON\n    return \"Sure! First I will extract the events, then write the digest.\"\n\nfor name, decide in [(\"stubborn\", stubborn), (\"chatty\", chatty)]:\n    CALLS.clear()\n    result = supervise(\"\\n\".join(for_digest), decide)\n    print(f\"-> {name}: {result['status']} (turns: {result['turns']}, model calls: {len(CALLS)})\\n\")",
+ "description": "Two misbehaving stand-in supervisors trigger the remaining stop conditions: stubborn repeats the same extractor call (idempotency check fires), and chatty replies in prose instead of JSON (malformed decision fires).",
+ "example": "cs357-liascript-orchestrationworkshop-7",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The stubborn supervisor always returns a call action for extractor with the same input, causing the same (agent, text) pair to be seen twice.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Lines 2-3: stubborn ignores the transcript and always asks for extraction, which triggers the idempotency guard on turn 2.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "The chatty supervisor returns a plain English sentence instead of the required JSON format, triggering the JSONDecodeError catch.",
+   "kind": "reveal",
+   "lines": "5-6"
+  },
+  {
+   "description": "Lines 5-6: chatty replies with prose, so json.loads fails and the loop stops immediately with 'malformed decision'.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "answer": "idempotency (repeated call) fires on turn 2",
+   "kind": "predict",
+   "question": "Which stop condition fires first for stubborn, and on which turn?"
+  },
+  {
+   "description": "The loop iterates over both supervisors, clears CALLS each time, runs supervise, and prints the status, turns, and model calls.",
+   "kind": "reveal",
+   "lines": "8-11"
+  },
+  {
+   "description": "stubborn runs: turn 1 extracts, turn 2 repeats extractor -> stopped: repeated call to extractor (2 turns, 3 model calls). chatty runs: turn 1 returns prose -> stopped: malformed decision (1 turn, 1 model call).",
+   "kind": "run",
+   "lines": "8-11",
+   "trace_step": 2
+  }
+ ],
+ "title": "Two More Stop Conditions: Idempotency and Malformed Decision",
+ "version": 1
+}

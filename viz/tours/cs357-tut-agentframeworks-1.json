@@ -1,0 +1,37 @@
+{
+ "code": "from langgraph.graph import StateGraph, END\nfrom typing import TypedDict\n\nclass PipelineState(TypedDict):\n    question: str\n    passages: list[str]\n    draft: str\n    revision_notes: str\n\ngraph = StateGraph(PipelineState)\ngraph.add_node(\"researcher\", researcher_chain)  # LCEL: prompt | llm | parser\ngraph.add_node(\"drafter\",    drafter_chain)\ngraph.add_node(\"critic\",     critic_chain)\ngraph.add_edge(\"researcher\", \"drafter\")\n\n# Conditional edge: if revision needed, loop back to drafter; otherwise end\ngraph.add_conditional_edges(\"critic\", should_revise, {\"yes\": \"drafter\", \"no\": END})\napp = graph.compile()\nresult = app.invoke({\"question\": q})",
+ "description": "Stateful pipeline with Researcher, Drafter, and Critic nodes connected via StateGraph, with conditional edges for revision loops.",
+ "example": "cs357-tut-agentframeworks-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "PipelineState TypedDict that carries question, passages, draft, and revision_notes through the graph.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "Three node additions: researcher, drafter, and critic chains that form the pipeline stages.",
+   "kind": "focus",
+   "lines": "10-13"
+  },
+  {
+   "description": "Edges: researcher to drafter is direct, while critic has conditional routing.",
+   "kind": "focus",
+   "lines": "14-15"
+  },
+  {
+   "description": "Conditional edge: should_revise decides whether to loop back to drafter or end.",
+   "kind": "focus",
+   "lines": "16-17"
+  },
+  {
+   "description": "Compilation and invocation: graph.compile() creates the app, then app.invoke() runs it with the question.",
+   "kind": "focus",
+   "lines": "18-19"
+  }
+ ],
+ "title": "LangChain/LangGraph: Three-Agent Pipeline",
+ "version": 1
+}

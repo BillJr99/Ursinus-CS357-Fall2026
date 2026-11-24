@@ -1,0 +1,37 @@
+{
+ "code": "New-Item -ItemType Directory -Force -Path .agents\\skills | Out-Null\ncurl.exe -fsSL -o smo.zip https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/files/small-model-orchestrator.skill\nExpand-Archive -Path smo.zip -DestinationPath .agents\\skills -Force; Remove-Item smo.zip\nGet-Item .agents\\skills\\small-model-orchestrator\\SKILL.md",
+ "description": "PowerShell equivalent: creates .agents/skills, downloads archive, extracts it, and verifies SKILL.md.",
+ "example": "cs357-tut-terminalfilesystem-13",
+ "lang": "powershell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete PowerShell install sequence.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Directory creation: New-Item -ItemType Directory -Force.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Download: curl.exe fetches the skill archive, saved as .zip.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Extraction: Expand-Archive extracts to .agents/skills, then removes the zip.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "Verification: Get-Item confirms SKILL.md path exists.",
+   "kind": "focus",
+   "lines": "4"
+  }
+ ],
+ "title": "Download and Install small-model-orchestrator Skill (PowerShell)",
+ "version": 1
+}

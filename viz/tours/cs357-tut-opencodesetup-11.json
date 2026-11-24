@@ -1,0 +1,42 @@
+{
+ "code": "mkdir -p .agents/skills/commit-message\ncat > .agents/skills/commit-message/SKILL.md <<'MD'\n---\nname: commit-message\ndescription: Write a git commit message from staged changes. Use when the user asks for a commit message or runs git commit without one.\n---\n\nRead the staged files with `git status --short`, then open them.  Write a subject line under\nseventy characters saying what changed and why, then a blank line, then the\nreasoning if it is not obvious.  Do not describe the change line by line.\nMD",
+ "description": "A shell heredoc that creates .agents/skills/commit-message and writes its SKILL.md. A skill is just a directory holding a SKILL.md, so installing one is putting a folder where opencode looks.",
+ "example": "cs357-tut-opencodesetup-11",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This installs the `commit-message` skill into the project path. A skill is a directory containing a `SKILL.md`, and that is the entire mechanism: opencode walks the filesystem, reads each `SKILL.md`, and offers the skill to the model.",
+   "kind": "reveal",
+   "lines": "1-11"
+  },
+  {
+   "description": "`mkdir -p .agents/skills/commit-message` makes the skill directory. The page recommends `.agents/skills/`, which both opencode and pi read, so your skills are not welded to one tool.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "`cat > .agents/skills/commit-message/SKILL.md <<'MD'` writes the file from the heredoc that follows. The quoted delimiter keeps the contents literal.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "The front matter between the `---` fences holds two fields. `name` is `commit-message`, and `description` states when to use the skill: for a commit message, or when the user runs `git commit` without one.",
+   "kind": "focus",
+   "lines": "3-6"
+  },
+  {
+   "description": "The body is the instruction the model follows. It reads the staged files with `git status --short`, writes a subject line under seventy characters saying what changed and why, adds a blank line and the reasoning if it is not obvious, and does not describe the change line by line.",
+   "kind": "focus",
+   "lines": "8-10"
+  },
+  {
+   "answer": "the name: field",
+   "kind": "predict",
+   "question": "The page says the directory name must match which field, or the skill silently never loads?"
+  }
+ ],
+ "title": "Installing a Skill in the Project",
+ "version": 1
+}

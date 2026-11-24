@@ -1,0 +1,10 @@
+{"version": 2, "width": 100, "height": 30, "title": "Create and inspect a repository digest", "code_viz_provenance": "scripted", "duration": 0.003}
+[0.0, "m", "Install the digest tool"]
+[0.0, "o", "$ pip install gitingest\r\n"]
+[0.0, "o", "Successfully installed gitingest and dependencies\n"]
+[0.001, "m", "Summarize a local project"]
+[0.001, "o", "$ gitingest ./sample-project\r\n"]
+[0.001, "o", "Digest saved to digest.txt\n"]
+[0.002, "m", "Find the result"]
+[0.002, "o", "$ ls digest.txt\r\n"]
+[0.002, "o", "digest.txt\n"]

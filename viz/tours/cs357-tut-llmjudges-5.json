@@ -1,0 +1,42 @@
+{
+ "code": "# promptfooconfig-rubric.yaml\n# Judge: ollama llama3.2, temperature 0\ndescription: \"Rubric Workshop: the three-criterion rubric as promptfoo assertions\"\n\nprompts:\n  - file://prompt.txt\n\nproviders:\n  - echo\n\ndefaultTest:\n  options:\n    # The judge model that grades every llm-rubric assertion:\n    provider: ollama:chat:llama3.2\n  assert:\n    - type: llm-rubric\n      value: >\n        Criterion claims_cited: PASS only if most or every factual claim in the\n        answer cites evidence (a named source, survey, or report). FAIL otherwise.\n    - type: llm-rubric\n      value: >\n        Criterion directness: PASS only if the answer states its position outright,\n        anywhere in the text. FAIL if the position is only implied or never stated.\n    - type: llm-rubric\n      value: >\n        Criterion counterargument: PASS only if the answer engages an opposing view\n        in a full sentence, with or without a rebuttal. FAIL if the opposing view is\n        absent or mentioned only in passing.\n\ntests: file://dataset.csv",
+ "description": "A promptfoo configuration that states the judge as data: a prompt, an echo provider, a judge model, three rubric assertions, and the dataset.",
+ "example": "cs357-tut-llmjudges-5",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is `promptfooconfig-rubric.yaml`. The page says the no-code path says the same thing in a configuration file: here are the outputs, here is the judge, here are the assertions. The header comments name the file and the judge, `ollama llama3.2` at temperature 0.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "`prompts` points at `file://prompt.txt`, the one-line template that echoes each stored answer straight through.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "description": "`providers` is `echo`. With the echo provider nothing generates a fresh reply, so the judge grades your dataset rather than a newly generated answer.",
+   "kind": "focus",
+   "lines": "8-9"
+  },
+  {
+   "description": "`defaultTest` sets the judge that grades every assertion. Its `provider` is `ollama:chat:llama3.2`, the comment calling it the judge model that grades every `llm-rubric` assertion.",
+   "kind": "focus",
+   "lines": "11-14"
+  },
+  {
+   "description": "The `assert` list holds three `llm-rubric` assertions, one per criterion: `claims_cited`, `directness`, and `counterargument`. Each `value` states a PASS and a FAIL condition in plain text.",
+   "kind": "focus",
+   "lines": "15-28"
+  },
+  {
+   "description": "`tests: file://dataset.csv` supplies the rows to grade. The page says `dataset.csv` holds one row per sample with columns `id` and `answer`.",
+   "kind": "focus",
+   "lines": "30"
+  }
+ ],
+ "title": "The Rubric as a promptfoo Config",
+ "version": 1
+}

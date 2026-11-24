@@ -1,0 +1,37 @@
+{
+ "code": "\n# 1. Authenticate; the PAT must have the write:packages scope\n\n#    Store your PAT in the CR_PAT environment variable (never type it directly)\necho $CR_PAT | docker login ghcr.io -u yourusername --password-stdin\n\n# 2. Build with the full registry name as the image name\n\n#    (or tag an image you have already built locally)\ndocker build -t ghcr.io/yourusername/agent-eval:0.1.0 .\n\n#    Alternative if already built:\n\n#    docker tag agent-eval:0.1.0 ghcr.io/yourusername/agent-eval:0.1.0\n\n# 3. Push to the registry\ndocker push ghcr.io/yourusername/agent-eval:0.1.0\n\n# 4. Verify from a clean slate, simulating what a stranger would experience\ndocker rmi ghcr.io/yourusername/agent-eval:0.1.0   # remove local copy\ndocker pull ghcr.io/yourusername/agent-eval:0.1.0   # pull as a stranger would",
+ "description": "Complete publish-and-verify cycle for GHCR: authenticate with PAT, build with registry name, push, verify from clean slate.",
+ "example": "cs357-tut-publishing-1",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete four-step GHCR publishing process.",
+   "kind": "reveal",
+   "lines": "1-21"
+  },
+  {
+   "description": "Step 1: authenticate with CR_PAT environment variable via docker login to ghcr.io.",
+   "kind": "focus",
+   "lines": "2-5"
+  },
+  {
+   "description": "Step 2: build with full registry name, using docker build -t or docker tag for existing images.",
+   "kind": "focus",
+   "lines": "7-14"
+  },
+  {
+   "description": "Step 3: push to registry with docker push.",
+   "kind": "focus",
+   "lines": "16-17"
+  },
+  {
+   "description": "Step 4: verify by removing local copy and pulling as a stranger would to simulate first-time user experience.",
+   "kind": "focus",
+   "lines": "19-21"
+  }
+ ],
+ "title": "GHCR Publish Cycle: Four Steps",
+ "version": 1
+}

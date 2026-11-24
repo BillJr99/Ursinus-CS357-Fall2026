@@ -1,0 +1,32 @@
+{
+ "code": "# test_agents.py: test the plumbing with no model at all. Run with: python -m pytest -q test_agents.py\nfrom datetime import date\nfrom pathlib import Path\n\nimport pytest\nfrom pydantic_ai import DeferredToolRequests, ModelResponse, TextPart, ToolCallPart, UsageLimitExceeded, UsageLimits\nfrom pydantic_ai.models.function import AgentInfo, FunctionModel\nfrom pydantic_ai.models.test import TestModel\n\nfrom step3_deps import Deps, agent as deadline_agent\n\n\ndef deps(tmp_path: Path) -> Deps:\n    return Deps(today=date(2026, 10, 7), notes_dir=tmp_path)\n\n\ndef test_every_tool_gets_called_with_schema_valid_arguments(tmp_path):\n    # TestModel calls each tool once with arguments generated from its schema.\n    with deadline_agent.override(model=TestModel(call_tools=[\"days_until\"])):\n        result = deadline_agent.run_sync(\"anything\", deps=deps(tmp_path))\n    returns = [p for m in result.all_messages() for p in m.parts if p.part_kind == \"tool-return\"]\n    assert returns and returns[0].tool_name == \"days_until\"\n\n\ndef scripted(*turns):\n    \"\"\"A fake model that plays back the given tool calls, then a final answer.\"\"\"\n    turns = list(turns)\n\n    def respond(messages, info: AgentInfo) -> ModelResponse:\n        if turns:\n            name, args = turns.pop(0)\n            return ModelResponse(parts=[ToolCallPart(name, args)])\n        return ModelResponse(parts=[TextPart(\"done\")])\n    return FunctionModel(respond)\n\n\ndef test_days_until_uses_the_injected_today(tmp_path):\n    with deadline_agent.override(model=scripted((\"days_until\", {\"target\": \"2026-12-07\"}))):\n        result = deadline_agent.run_sync(\"q\", deps=deps(tmp_path))\n    ret = [p for m in result.all_messages() for p in m.parts if p.part_kind == \"tool-return\"][0]\n    assert ret.content == 61\n\n\ndef test_a_bad_date_goes_back_to_the_model_as_a_retry(tmp_path):\n    with deadline_agent.override(model=scripted((\"days_until\", {\"target\": \"next Tuesday\"}))):\n        result = deadline_agent.run_sync(\"q\", deps=deps(tmp_path))\n    kinds = [p.part_kind for m in result.all_messages() for p in m.parts]\n    assert \"retry-prompt\" in kinds and \"tool-return\" not in kinds\n\n\ndef test_valid_arguments_are_not_permission(tmp_path):\n    call = (\"save_deadline\", {\"course\": \"HIST101\", \"due\": \"2026-11-17\", \"title\": \"essay\"})\n    with deadline_agent.override(model=scripted(call)):\n        result = deadline_agent.run_sync(\"q\", deps=deps(tmp_path))\n    ret = [p for m in result.all_messages() for p in m.parts if p.part_kind == \"tool-return\"][0]\n    assert ret.content.startswith(\"refused\") and not list(tmp_path.iterdir())\n\n\ndef test_a_write_pauses_for_approval(tmp_path):\n    call = (\"save_deadline\", {\"course\": \"CS357\", \"due\": \"2026-11-12\", \"title\": \"RAG lab\"})\n    with deadline_agent.override(model=scripted(call)):\n        result = deadline_agent.run_sync(\"q\", deps=deps(tmp_path))\n    assert isinstance(result.output, DeferredToolRequests) and not list(tmp_path.iterdir())\n\n\ndef test_request_limit_and_tool_call_limit_are_different(tmp_path):\n    many = [(\"days_until\", {\"target\": \"2026-12-07\"})] * 3\n    with deadline_agent.override(model=scripted(*many)):\n        with pytest.raises(UsageLimitExceeded, match=\"request_limit\"):\n            deadline_agent.run_sync(\"q\", deps=deps(tmp_path), usage_limits=UsageLimits(request_limit=2))\n    with deadline_agent.override(model=scripted(*many)):\n        with pytest.raises(UsageLimitExceeded, match=\"tool_calls_limit\"):\n            deadline_agent.run_sync(\"q\", deps=deps(tmp_path), usage_limits=UsageLimits(tool_calls_limit=2))",
+ "description": "test_agents.py replaces the language model with TestModel and a scripted FunctionModel so pytest can verify tool calls, validation retries, permissions, approval gates, and usage limits without Ollama.",
+ "example": "cs357-tut-pydanticai-13",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "deps(tmp_path) pins today to 2026-10-07 and points notes_dir at a temporary folder. The first test uses TestModel to verify that days_until can be called with schema-generated arguments.",
+   "kind": "reveal",
+   "lines": "1-23"
+  },
+  {
+   "description": "scripted(*turns) wraps a callback in FunctionModel to replay predetermined ToolCallPart responses. The next two tests verify that days_until uses the injected date and that an invalid date string produces a retry-prompt.",
+   "kind": "reveal",
+   "lines": "25-49"
+  },
+  {
+   "description": "These two tests verify that saving a deadline for an unpermitted course ('HIST101') is refused without writing a file, and that a permitted course ('CS357') pauses with DeferredToolRequests.",
+   "kind": "reveal",
+   "lines": "51-64"
+  },
+  {
+   "description": "The final test replays three tool calls under request_limit=2 and tool_calls_limit=2 to confirm that each limit raises UsageLimitExceeded.",
+   "kind": "reveal",
+   "lines": "66-73"
+  }
+ ],
+ "title": "Testing agent plumbing with TestModel and FunctionModel",
+ "version": 1
+}

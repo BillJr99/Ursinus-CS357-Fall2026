@@ -1,0 +1,42 @@
+{
+ "code": "# ingest.py: load, chunk, embed, and store. Safe to rerun: same text, same ID, no duplicates.\nimport hashlib\nimport sys\nimport traceback\nfrom pathlib import Path\n\nfrom rag_common import CFG, log, open_collection\n\n\ndef chunks(text: str, size: int):\n    \"\"\"Paragraph chunks, merged until they reach about `size` characters.\"\"\"\n    out, buf = [], \"\"\n    for para in [p.strip() for p in text.split(\"\\n\\n\") if p.strip()]:\n        if buf and len(buf) + len(para) > size:\n            out.append(buf)\n            buf = \"\"\n        buf = f\"{buf}\\n\\n{para}\".strip()\n    if buf:\n        out.append(buf)\n    return out\n\n\ndef ingest():\n    col = open_collection()\n    for path in sorted(Path(CFG[\"corpus_dir\"]).glob(\"*.md\")):\n        doc = path.stem\n        pieces = chunks(path.read_text(), CFG[\"chunk_chars\"])\n        ids = [f\"{doc}-{i}\" for i in range(len(pieces))]                 # stable source IDs\n        hashes = [hashlib.sha256(p.encode()).hexdigest()[:12] for p in pieces]\n\n        existing = col.get(where={\"source\": doc}, include=[\"metadatas\"])\n        old = dict(zip(existing[\"ids\"], (m[\"sha\"] for m in existing[\"metadatas\"])))\n        stale = [i for i in old if i not in ids]\n        if stale:\n            col.delete(ids=stale)                                         # the document got shorter\n        changed = [k for k, (i, h) in enumerate(zip(ids, hashes)) if old.get(i) != h]\n        if changed:\n            col.upsert(ids=[ids[k] for k in changed],\n                       documents=[pieces[k] for k in changed],\n                       metadatas=[{\"source\": doc, \"chunk\": k, \"sha\": hashes[k], \"path\": path.name}\n                                  for k in changed])\n        log.info(\"%s: %d chunks, %d embedded, %d unchanged, %d removed\",\n                 doc, len(ids), len(changed), len(ids) - len(changed), len(stale))\n    print(f\"collection {CFG['collection']!r} now holds {col.count()} chunks\")\n\n\nif __name__ == \"__main__\":\n    try:\n        ingest()\n    except Exception as e:\n        print(f\"[ingest:main] {e}\")\n        traceback.print_exc()\n        sys.exit(1)",
+ "description": "The ingest script that loads the corpus, chunks it, embeds only what changed, and stays safe to rerun.",
+ "example": "cs357-tut-offlineragfinetuning-6",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The header comment says the script loads, chunks, embeds, and stores, and that it is safe to rerun: same text, same ID, no duplicates. It imports `hashlib`, `sys`, `traceback`, `Path`, and the shared module pieces.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "`chunks` splits text on blank lines into paragraphs, then merges them until they reach about `size` characters. The docstring calls these paragraph chunks.",
+   "kind": "focus",
+   "lines": "10-20"
+  },
+  {
+   "description": "`ingest` opens the collection, then loops over the markdown files in the corpus directory. Each chunk gets a stable source ID like `equipment-0` and a short SHA-256 hash of its text.",
+   "kind": "focus",
+   "lines": "23-29"
+  },
+  {
+   "description": "It reads the existing metadata for the document and finds IDs no longer present. The comment marks the delete as the case where the document got shorter, so leftover chunks are removed.",
+   "kind": "focus",
+   "lines": "31-35"
+  },
+  {
+   "description": "It computes which chunks changed by comparing hashes, then `upsert`s only those, which replaces rather than duplicates. A log line reports chunks, embedded, unchanged, and removed, and a final print reports the collection total.",
+   "kind": "focus",
+   "lines": "36-44"
+  },
+  {
+   "description": "The entry point calls `ingest` inside a try block, and on any error prints a labeled message, prints the traceback, and exits with status 1.",
+   "kind": "focus",
+   "lines": "47-53"
+  }
+ ],
+ "title": "Ingest: Chunk, Label, Embed, Store",
+ "version": 1
+}

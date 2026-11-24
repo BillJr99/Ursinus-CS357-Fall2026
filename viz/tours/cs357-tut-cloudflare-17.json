@@ -1,0 +1,42 @@
+{
+ "code": "\n# .github/workflows/deploy.yml\nname: deploy\n\non:\n  workflow_dispatch:                 # manual: a human (or an authorized skill) clicks/calls Run\n    inputs:\n      environment:\n        description: \"Target environment\"\n        default: production\n  push:\n    branches: [main]                 # GATE 1 (branch): auto-deploy only from main\n\nconcurrency:                         # rate/serialize: no overlapping production deploys\n  group: deploy-production\n  cancel-in-progress: false\n\njobs:\n  deploy:\n    runs-on: ubuntu-latest\n    environment: production          # GATE 3: required-reviewer approval + environment secrets\n    # GATE 2 (actor allowlist): only these users may actually run the deploy\n    if: contains(fromJSON('[\"<YOUR-GH-USERNAME>\"]'), github.actor)\n    permissions:\n      contents: read\n      id-token: write                # only needed for the OIDC path (Section 10)\n    steps:\n      - uses: actions/checkout@<PINNED_SHA_OR_TAG>   # TODO: pin the action version\n      - uses: actions/setup-node@<PINNED_SHA_OR_TAG>\n        with:\n          node-version: \"20\"\n      - name: Deploy\n        run: ./deploy.sh             # the workflow orchestrates; the script does the work\n        env:\n          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}   # environment secret, masked\n          WORKER_NAME: ${{ vars.WORKER_NAME }}                        # plain variable",
+ "description": "A workflow with every guardrail wired in: a branch restriction, an actor allowlist, an environment with required reviewers, and a concurrency group.",
+ "example": "cs357-tut-cloudflare-17",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the full guarded workflow. It runs on manual dispatch or on a push to `main`, and a `concurrency` group keeps two production deploys from overlapping.",
+   "kind": "reveal",
+   "lines": "1-17"
+  },
+  {
+   "description": "The `on` block holds the triggers. `workflow_dispatch` needs a person to click Run, and `push: branches: [main]` is GATE 1, the branch restriction.",
+   "kind": "focus",
+   "lines": "5-12"
+  },
+  {
+   "description": "The `concurrency` group serializes deploys, and `cancel-in-progress: false` keeps a live deploy from being interrupted.",
+   "kind": "focus",
+   "lines": "14-16"
+  },
+  {
+   "description": "GATE 3 is `environment: production`, which requires reviewer approval. GATE 2 is the `if` line, an actor allowlist of who may run the deploy.",
+   "kind": "focus",
+   "lines": "21-23"
+  },
+  {
+   "description": "`permissions` grants `contents: read` and `id-token: write`. The comment notes the OIDC token is only needed for that path.",
+   "kind": "focus",
+   "lines": "24-26"
+  },
+  {
+   "description": "The Deploy step runs `./deploy.sh` and passes the token from secrets and the Worker name from a plain variable.",
+   "kind": "focus",
+   "lines": "32-36"
+  }
+ ],
+ "title": "The Full Guarded Deploy Workflow",
+ "version": 1
+}

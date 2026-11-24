@@ -1,0 +1,37 @@
+{
+ "code": "#!/usr/bin/env bash\n\n# deploy.sh - the deploy LOGIC. The workflow only decides WHEN to run this.\n\n# Runs identically on your laptop and in CI, which makes it testable.\nset -euo pipefail          # -e: stop on any error  -u: error on unset var  -o pipefail: catch errors mid-pipe\n\n# The token arrives in the environment (from `wrangler secret`-style CI injection),\n\n# NOT as a command-line argument and NOT hardcoded here. Fail loudly if it is missing.\n: \"${CLOUDFLARE_API_TOKEN:?CLOUDFLARE_API_TOKEN is not set}\"\n\nWORKER_NAME=\"${WORKER_NAME:-<YOUR-WORKER-NAME>}\"   # TODO: set via a plain (non-secret) variable\n\necho \"Deploying ${WORKER_NAME}...\"   # safe: prints the NAME, never the token\n\n# Idempotent + non-interactive: wrangler reads CLOUDFLARE_API_TOKEN from the env automatically.\n\n# </dev/null guarantees no step can block waiting for keyboard input in CI.\nnpx wrangler deploy --name \"${WORKER_NAME}\" </dev/null\n\necho \"Deploy complete.\"",
+ "description": "A deploy script that holds all the deploy logic, fails fast, reads the token from the environment, and never prints it.",
+ "example": "cs357-tut-cloudflare-10",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is `deploy.sh`, the entire deploy logic. The shebang names bash, and `set -euo pipefail` makes the script fail fast: stop on any error, error on an unset variable, and catch errors mid-pipe.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "The token arrives in the environment, never as a command-line argument and never hardcoded. The `: \"${CLOUDFLARE_API_TOKEN:?...}\"` line fails loudly if the token is missing.",
+   "kind": "focus",
+   "lines": "8-11"
+  },
+  {
+   "description": "`WORKER_NAME` comes from a plain variable, and the `echo` prints only the name, never the token.",
+   "kind": "focus",
+   "lines": "13-15"
+  },
+  {
+   "description": "`npx wrangler deploy --name \"${WORKER_NAME}\" </dev/null` is non-interactive. The `</dev/null` guarantees no step can block waiting for input in CI.",
+   "kind": "focus",
+   "lines": "17-20"
+  },
+  {
+   "description": "The comment states the point: the workflow only decides when to run this, and the script runs identically on your laptop and in CI, which makes it testable.",
+   "kind": "focus",
+   "lines": "3-5"
+  }
+ ],
+ "title": "The deploy.sh Deploy Script",
+ "version": 1
+}

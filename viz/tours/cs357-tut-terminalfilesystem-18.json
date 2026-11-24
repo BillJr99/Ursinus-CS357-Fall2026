@@ -1,0 +1,42 @@
+{
+ "code": "---\nname: small-model-orchestrator\ndescription: Reliability and orchestration protocol for difficult coding, tool-use,\n  research, data, document, and mixed tasks, especially with small local or offline\n  language models. Use when correctness matters more than latency or token cost and\n  the agent should plan progressively, keep an always-current RESUME.md handoff\n  checkpoint, version its work with Git, compact context proactively, verify every\n  consequential action, diagnose failures, retry and replan, and perform adversarial\n  gauntlet review before declaring success.\nlicense: MIT\nmetadata:\n  author: Bill + OpenAI\n  version: \"0.4.0-platform-agnostic\"\n  primary-use-case: \"local-offline-private-models\"\n  optimization-target: \"maximum-verified-task-success\"\n---",
+ "description": "YAML frontmatter defining the skill's name, description, purpose, and metadata.",
+ "example": "cs357-tut-terminalfilesystem-18",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete YAML frontmatter.",
+   "kind": "reveal",
+   "lines": "1-16"
+  },
+  {
+   "description": "Document start: YAML frontmatter delimiters.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Name and start of description.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "Description: lists trigger conditions and behaviors for when to use the skill.",
+   "kind": "focus",
+   "lines": "3-9"
+  },
+  {
+   "description": "License and metadata: author, version, primary-use-case.",
+   "kind": "focus",
+   "lines": "10-13"
+  },
+  {
+   "description": "Optimization target: maximum-verified-task-success.",
+   "kind": "focus",
+   "lines": "14-15"
+  }
+ ],
+ "title": "small-model-orchestrator SKILL.md Frontmatter",
+ "version": 1
+}

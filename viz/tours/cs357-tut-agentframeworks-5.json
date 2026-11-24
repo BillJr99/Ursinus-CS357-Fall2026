@@ -1,0 +1,47 @@
+{
+ "code": "from langchain_core.tools import tool\nfrom langchain_core.messages import HumanMessage, ToolMessage\n\n@tool\ndef days_between(start_iso: str, end_iso: str) -> str:\n    \"\"\"Returns the number of days between two ISO dates (YYYY-MM-DD).\"\"\"\n    from datetime import date\n    d0, d1 = date.fromisoformat(start_iso), date.fromisoformat(end_iso)\n    return str((d1 - d0).days)\n\nllm_with_tools = llm.bind_tools([days_between])\nregistry = {\"days_between\": days_between}   # still YOUR security boundary\n\nmessages = [HumanMessage(\"How many days between 2026-08-31 and 2026-12-07?\")]\nfor _ in range(4):                          # perceive-plan-act, same as Local Agent Lab\n    ai = llm_with_tools.invoke(messages)    # framework: HTTP, formatting, parsing\n    messages.append(ai)\n    if not ai.tool_calls:                   # yours: the stopping decision\n        print(ai.content)\n        break\n    for call in ai.tool_calls:              # yours: execution and its gates\n        result = registry[call[\"name\"]].invoke(call[\"args\"])\n        print(f\"[tool] {call['name']}({call['args']}) -> {result}\")\n        messages.append(ToolMessage(content=result, tool_call_id=call[\"id\"]))",
+ "description": "Tool decorator generates JSON schema from type hints and docstring; bind_tools attaches schemas; explicit loop mirrors Local Agent Lab structure.",
+ "example": "cs357-tut-agentframeworks-5",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Tool definition: days_between with type hints and docstring for schema generation.",
+   "kind": "reveal",
+   "lines": "1-10"
+  },
+  {
+   "description": "Tool: @tool decorator, function signature with start_iso and end_iso parameters, docstring, and datetime computation.",
+   "kind": "focus",
+   "lines": "4-9"
+  },
+  {
+   "description": "Binding: llm.bind_tools attaches the days_between schema, registry maps tool names to functions.",
+   "kind": "focus",
+   "lines": "11-12"
+  },
+  {
+   "description": "Agent loop: perceive-plan-act pattern with 4 iteration limit.",
+   "kind": "reveal",
+   "lines": "14-24"
+  },
+  {
+   "description": "Loop setup: messages list with initial HumanMessage, 4 iteration cap.",
+   "kind": "focus",
+   "lines": "14-16"
+  },
+  {
+   "description": "Framework work: llm_with_tools.invoke handles HTTP, formatting, and parsing; stopping decision is yours.",
+   "kind": "focus",
+   "lines": "17-20"
+  },
+  {
+   "description": "Your authority: execute tool calls from registry, print results, append ToolMessage to messages.",
+   "kind": "focus",
+   "lines": "21-24"
+  }
+ ],
+ "title": "LangChain: Tool and Agent Loop",
+ "version": 1
+}

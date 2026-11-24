@@ -1,0 +1,42 @@
+{
+ "code": "import csv\nfrom critique_refine import generate_draft, critique_draft, critique_refine_loop, load_config, load_rubric\n\nconfig = load_config()\nrubric = load_rubric(config)\n\nCOMPARISON_TASKS = [\n    \"Write a docstring for a function `binary_search(arr, target)` that searches a sorted list.\",\n    \"Write a docstring for a function `flatten(nested_list)` that recursively flattens nested lists.\",\n    # Worked example of a more complex task - note how it adds competing constraints\n    # (multiple parameters, an exception case, and a default value) that all four\n    # rubric criteria must cover simultaneously:\n    \"Write a docstring for a function `paginate(items, page_size=10, page=1)` that returns one page of a list and raises ValueError when page is out of range.\",\n    # TODO: Add 5 more tasks of increasing complexity, following the pattern above.\n    # Each task is just a plain string in this list. Good sources of \"complexity\":\n    # more parameters, default values, error/exception cases, and edge cases\n    # (empty input, ties, duplicates) that the docstring must document.\n]\n\n# Use your calibrated rubric as the scoring instrument\n# Score: count the number of criteria the critic marks as met (0-4 for a 4-criterion rubric)\ndef score_draft(draft, rubric, config):\n    \"\"\"Returns (numeric_score, critique_dict, calls_made).\"\"\"\n    critique = critique_draft(draft, rubric, config)\n    issues = critique.get(\"issues\", [])\n    # Score = total criteria - number of issues mentioned\n    num_criteria = len(rubric[\"criteria\"])\n    score = max(0, num_criteria - len(issues))\n    return score, critique, 1  # 1 model call for critique\n\nresults = []\nfor i, task in enumerate(COMPARISON_TASKS):\n    # Condition A: single shot\n    single_draft = generate_draft(task, config=config)\n    single_score, _, critique_calls = score_draft(single_draft, rubric, config)\n    single_total_calls = 1 + critique_calls  # 1 generate + 1 critique\n\n    # Condition B: critique and refine loop\n    loop_draft, loop_critique, rounds, reason = critique_refine_loop(task, config, rubric)\n    loop_score, _, final_critique_calls = score_draft(loop_draft, rubric, config)\n    # Calls: rounds * (1 generate + 1 critique) + 1 final scoring critique\n    loop_total_calls = rounds * 2 + final_critique_calls\n\n    results.append({\n        \"task_id\": f\"T{i+1:02d}\",\n        \"single_score\": single_score,\n        \"single_calls\": single_total_calls,\n        \"loop_score\": loop_score,\n        \"loop_calls\": loop_total_calls,\n        \"loop_rounds\": rounds,\n        \"loop_reason\": reason,\n    })\n    print(f\"T{i+1:02d}: single={single_score}/4 ({single_total_calls} calls) | loop={loop_score}/4 ({loop_total_calls} calls, {rounds} rounds)\")\n\n# Write results CSV\nwith open(\"comparison_results.csv\", \"w\", newline=\"\") as f:\n    writer = csv.DictWriter(f, fieldnames=results[0].keys())\n    writer.writeheader()\n    writer.writerows(results)\n\navg_single = sum(r[\"single_score\"] for r in results) / len(results)\navg_loop = sum(r[\"loop_score\"] for r in results) / len(results)\navg_single_calls = sum(r[\"single_calls\"] for r in results) / len(results)\navg_loop_calls = sum(r[\"loop_calls\"] for r in results) / len(results)\nprint(f\"\\nSingle-shot: avg score={avg_single:.2f}, avg calls={avg_single_calls:.1f}\")\nprint(f\"Loop: avg score={avg_loop:.2f}, avg calls={avg_loop_calls:.1f}\")",
+ "description": "compare.py runs each task two ways: one generator call, then the full critique-and-refine loop. It scores both with the calibrated critic and records the calls each condition spent.",
+ "example": "cs357-tut-multiagentmeasurement-5",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The script imports `csv` and the `critique_refine` helpers, then loads the config and the rubric once.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`COMPARISON_TASKS` starts with three tasks. The comments say to add five more of increasing complexity, so you have at least eight. The third task is a worked example that adds competing constraints all four criteria must cover at once.",
+   "kind": "focus",
+   "lines": "7-18"
+  },
+  {
+   "description": "`score_draft` is your calibrated critic as a scorer. It counts the criteria the critic did not complain about: `num_criteria` minus the number of issues, floored at 0. It returns the score, the critique, and 1 call for the critique.",
+   "kind": "focus",
+   "lines": "20-29"
+  },
+  {
+   "description": "The loop runs both conditions per task. Condition A is single shot: one `generate_draft` plus one critique. Condition B runs `critique_refine_loop` and then one final scoring critique. Each result records the scores, calls, rounds, and reason, and prints one line.",
+   "kind": "focus",
+   "lines": "31-53"
+  },
+  {
+   "description": "The results are written to `comparison_results.csv`. Then the script prints the average score and average calls for each condition.",
+   "kind": "focus",
+   "lines": "55-66"
+  },
+  {
+   "answer": "0 to 4",
+   "kind": "predict",
+   "question": "The page says the scorer counts the criteria the critic did not complain about, so a four-criterion rubric scores what range?"
+  }
+ ],
+ "title": "Comparing the Loop with Single-Shot",
+ "version": 1
+}

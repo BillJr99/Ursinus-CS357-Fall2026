@@ -1,0 +1,9 @@
+A claims: True
+B claims: False
+  inbox/: []
+  claimed/: ['task-7.md', 'task-7.md.claim']
+  done/: []
+B takes stale claim: True
+  inbox/: []
+  claimed/: []
+  done/: ['task-7.md', 'task-7.result.md']

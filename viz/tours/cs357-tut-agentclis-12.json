@@ -1,0 +1,27 @@
+{
+ "code": "mkdir ~/cs357-exercise1 && cd ~/cs357-exercise1\nnpm install -g @anthropic-ai/claude-code   # install Claude Code\nnpm install -g @google/gemini-cli          # example: install Gemini CLI as your second tool\nclaude                                     # start Claude Code session; /login if prompted",
+ "description": "Three commands install Tailscale, bring up the interface with browser sign-in, and print the stable 100.x tailnet address that other devices use to reach this machine.",
+ "example": "cs357-tut-agentclis-12",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "Line 1 runs the install script (macOS and Windows have installers instead). Line 2 authenticates via browser. Line 3 prints the machine's tailnet IPv4 address.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Line 3 outputs a stable address like 100.92.14.7 that does not change; write it down for SSH from other devices.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "answer": "this machine's tailnet address (e.g., 100.92.14.7)",
+   "kind": "predict",
+   "question": "What does the tailscale ip -4 command print?"
+  }
+ ],
+ "title": "Tailscale Setup for Tailnet Access",
+ "version": 1
+}

@@ -1,0 +1,37 @@
+{
+ "code": "\n# From the HOST: is each service alive?\ncurl -s http://localhost:11434/api/tags | head -3        # ollama\ncurl -s http://localhost:4000/models -H \"Authorization: Bearer sk-litellm-local\" | head -3\ncurl -s -o /dev/null -w \"%{http_code}\\n\" http://localhost:3000   # open-webui\n\n# From INSIDE a container: does the host alias resolve and answer?\ndocker exec -it open-webui curl -s http://host.docker.internal:4000/models \\\n  -H \"Authorization: Bearer sk-litellm-local\" | head -3\n\n# End to end: one chat completion through the whole chain\ncurl -s http://localhost:4000/v1/chat/completions \\\n  -H \"Authorization: Bearer sk-litellm-local\" -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"qwen2.5-3b\",\"messages\":[{\"role\":\"user\",\"content\":\"Say STACK OK.\"}]}'",
+ "description": "Pull hermes-agent, create identity directory, run setup once, then start with mounted volumes.",
+ "example": "cs357-tut-agentstack-6",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete hermes-agent Docker commands.",
+   "kind": "reveal",
+   "lines": "1-14"
+  },
+  {
+   "description": "Pull: docker pull nousresearch/hermes-agent:latest fetches the image.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Identity directory: mkdir creates $HOME/agents/hermes/home for persistent data.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Setup: --rm -it container with volume mount runs setup wizard to write config and keys.",
+   "kind": "focus",
+   "lines": "4-7"
+  },
+  {
+   "description": "Run: thereafter, start hermes with identity and workspace volumes mounted.",
+   "kind": "focus",
+   "lines": "9-14"
+  }
+ ],
+ "title": "Hermes Agent Setup",
+ "version": 1
+}

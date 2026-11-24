@@ -1,0 +1,60 @@
+{
+ "code": "import math\n\ndef softmax_temp(logits, temperature):\n    scaled = [l / temperature for l in logits]\n    max_l = max(scaled)\n    exp_vals = [math.exp(l - max_l) for l in scaled]\n    total = sum(exp_vals)\n    return [e / total for e in exp_vals]\n\ndef entropy(probs):\n    return -sum(p * math.log(p + 1e-10) for p in probs)\n\n# Toy example: 5 tokens with raw logit scores\nVOCAB = [\"Paris\", \"Lyon\", \"London\", \"banana\", \"croissant\"]\nLOGITS = [4.5, 2.1, 1.8, 0.3, -0.5]\n\nprint(f\"{'T':>5}  {'Paris':>8}  {'Lyon':>8}  {'London':>8}  {'banana':>8}  {'croissant':>10}  {'entropy':>8}\")\nprint(\"-\" * 72)\nfor T in [0.1, 0.5, 1.0, 1.5, 2.0]:\n    probs = softmax_temp(LOGITS, T)\n    H = entropy(probs)\n    print(f\"{T:>5.1f}  \" + \"  \".join(f\"{p:>8.4f}\" for p in probs) + f\"  {H:>8.4f}\")",
+ "description": "A sweep over five temperatures for five tokens, printing each softmax distribution and its entropy so you can see the shape flatten as temperature rises.",
+ "example": "cs357-tut-aibyhand-4",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: opencode free model",
+ "steps": [
+  {
+   "description": "`math` gives us `exp` and `log` for this sweep.",
+   "kind": "reveal",
+   "lines": "1"
+  },
+  {
+   "description": "`softmax_temp` scales the logits by the temperature, subtracts the maximum for numerical stability, exponentiates, and divides by the sum. It returns a probability for each token.",
+   "kind": "reveal",
+   "lines": "3-8"
+  },
+  {
+   "description": "`entropy` returns the negative sum of `p * log(p)`. The tiny `1e-10` inside the log keeps a zero probability from making the log blow up. High entropy means a flat, uncertain distribution; low entropy means a peaked, confident one.",
+   "kind": "reveal",
+   "lines": "10-11"
+  },
+  {
+   "description": "`VOCAB` names five tokens and `LOGITS` gives each a raw score. `Paris` leads at 4.5, and `croissant` trails at -0.5.",
+   "kind": "reveal",
+   "lines": "14-15"
+  },
+  {
+   "description": "The first print lays out the table header, and the second prints a line of dashes under it.",
+   "kind": "reveal",
+   "lines": "17-18"
+  },
+  {
+   "description": "The loop walks five temperatures from 0.1 to 2.0. For each one it calls `softmax_temp` to get the probabilities and `entropy` to summarize them into a single number.",
+   "kind": "reveal",
+   "lines": "19-21"
+  },
+  {
+   "answer": "`Paris` shows about 1.0000 and the entropy about 0.0000. A very low temperature concentrates almost all the probability on the top logit.",
+   "kind": "predict",
+   "lines": "22",
+   "question": "Each pass prints one row. At `T = 0.1`, what do you expect the row to show for `Paris` and for the entropy?"
+  },
+  {
+   "description": "Run it. The loop reaches the first temperature, `T = 0.1`.",
+   "kind": "run",
+   "lines": "19",
+   "trace_step": 7
+  },
+  {
+   "description": "The first row prints. Across the five rows, `Paris` slides from 1.0000 to 0.5666 while the entropy climbs from 0.0000 to 1.2332, the flattening the sketch was meant to predict.",
+   "kind": "run",
+   "lines": "22",
+   "trace_step": 45
+  }
+ ],
+ "title": "A Temperature Sweep with Entropy",
+ "version": 1
+}

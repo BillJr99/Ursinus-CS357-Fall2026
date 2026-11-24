@@ -1,0 +1,37 @@
+{
+ "code": "\n# Student A mounts their ENTIRE home directory into the container\n\n# The agent inside the container sees /home/user, which includes:\n\n#   - SSH private keys at ~/.ssh/id_rsa (used to authenticate to servers)\n\n#   - AWS credentials at ~/.aws/credentials (used to access cloud services)\n\n#   - Git config at ~/.gitconfig (contains name, email, and sometimes tokens)\n\n#   - Every project, download, and document in the home directory\ndocker run --rm \\\n  -v /home/user:/home/user \\    # <-- THIS is the problem: the entire home is mounted\n  my-researcher-image \\\n  python agent.py",
+ "description": "Four options for what identity directories provide, with the correct answer being isolated space per agent to prevent accidental cross-contamination.",
+ "example": "cs357-tut-terminalfilesystem-2",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "All four multiple choice options.",
+   "kind": "reveal",
+   "lines": "1-16"
+  },
+  {
+   "description": "Full access: giving entire home directory for flexibility is wrong.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Model artifacts: storing model weights in identity directory is not the primary purpose.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Correct answer: isolated space for config, memory, logs, workspace prevents accidental access to each other's state.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "Docker replacement: identity directories are not a replacement for Docker isolation.",
+   "kind": "focus",
+   "lines": "4"
+  }
+ ],
+ "title": "Identity Directories: Multiple Choice",
+ "version": 1
+}

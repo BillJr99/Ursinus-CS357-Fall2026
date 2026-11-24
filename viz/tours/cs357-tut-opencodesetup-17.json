@@ -1,0 +1,42 @@
+{
+ "code": "cd ~/cs357-work        # a git repository, with a GitHub remote\n\ndocker run -it --rm \\\n  --add-host=host.docker.internal:host-gateway \\\n  -v \"$PWD:/workspace\" \\\n  -w /workspace \\\n  --cap-drop ALL --security-opt no-new-privileges \\\n  course-agent",
+ "description": "The docker run that gives the container exactly one directory and nothing else, with the flags that bound what it can reach.",
+ "example": "cs357-tut-opencodesetup-17",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This mounts one directory into the container and nothing else. The page says the container sees your project because you mount it, and sees nothing else because you do not.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "`cd ~/cs357-work` enters the project, which is a git repository with a GitHub remote, so every change is one you can read and revert.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "`docker run -it --rm` opens an interactive container that is deleted on exit, so an experiment cleans up after itself. `--add-host=host.docker.internal:host-gateway` makes `host.docker.internal` resolve on Linux, where Docker Engine does not provide it for free.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "`-v \"$PWD:/workspace\"` is the only door: the current directory is mounted at `/workspace`. `-w /workspace` makes that directory the agent's world from the first keystroke.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "description": "`--cap-drop ALL` and `--security-opt no-new-privileges` remove kernel capabilities the agent has no use for.",
+   "kind": "focus",
+   "lines": "7"
+  },
+  {
+   "answer": "they were never in the container to begin with",
+   "kind": "predict",
+   "question": "The page says `--rm` deletes the container on exit, and your files survive because of what?"
+  }
+ ],
+ "title": "Mounting One Directory",
+ "version": 1
+}

@@ -1,0 +1,27 @@
+{
+ "code": "git tag v0.2.0\ngit push origin v0.2.0   # this triggers the workflow\n\n# Then go to your repository's Actions tab to watch it run\n\n# After it completes, verify:\ndocker pull ghcr.io/yourusername/hello-cs357:v0.2.0",
+ "description": "Make a fix, bump version with npm version patch, republish, verify both old and new versions are installable by exact version.",
+ "example": "cs357-tut-publishing-10",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Exercise 3 starter commands.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "Bump and publish: npm version patch increments 0.1.0 to 0.1.1, then npm publish.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Verification: npm install both versions explicitly to confirm they work and produce different outputs.",
+   "kind": "focus",
+   "lines": "4-7"
+  }
+ ],
+ "title": "Exercise 3: Version Walk",
+ "version": 1
+}

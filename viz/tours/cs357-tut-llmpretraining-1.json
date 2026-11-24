@@ -1,0 +1,55 @@
+{
+ "code": "\n# Character-level CLM cross-entropy loss, manual implementation\n\n# This shows exactly what a language model's training objective computes\n\n# No neural network needed: we use random \"model probabilities\" to illustrate\n\nimport math\nimport random\n\nrandom.seed(42)\n\n# -----------------------------------------------------------------------\n\n# Step 1: Build a character-level vocabulary from a small corpus\n\n# -----------------------------------------------------------------------\ncorpus = \"the cat sat on the mat the cat napped\"\nchars = sorted(set(corpus))\nvocab = {ch: i for i, ch in enumerate(chars)}\nvocab_size = len(vocab)\nid_to_char = {i: ch for ch, i in vocab.items()}\n\nprint(f\"Corpus: '{corpus}'\")\nprint(f\"Vocabulary ({vocab_size} characters): {chars}\\n\")\n\n# -----------------------------------------------------------------------\n\n# Step 2: Tokenize the corpus into a sequence of integer token IDs\n\n# -----------------------------------------------------------------------\ntokens = [vocab[ch] for ch in corpus]\nprint(f\"Token sequence (first 20): {tokens[:20]}\")\nprint(f\"Decoded: {''.join(id_to_char[t] for t in tokens[:20])}\\n\")\n\n# -----------------------------------------------------------------------\n\n# Step 3: Compute CLM cross-entropy loss manually\n\n# For each position t, we need P(true_token | context).\n\n# Instead of a real model, we simulate two \"models\":\n\n#   - random_model: assigns uniform probability to all vocab entries\n\n#   - better_model: assigns higher probability to more frequent tokens\n\n# -----------------------------------------------------------------------\n\n# Compute token frequencies for the \"better model\"\nfrom collections import Counter\nfreq = Counter(tokens)\ntotal = sum(freq.values())\nbetter_probs = {tok: (freq[tok] / total) for tok in range(vocab_size)}\n\n# Uniform probabilities for the random model\nuniform_prob = 1.0 / vocab_size\n\ndef clm_loss(token_sequence, model_type=\"uniform\"):\n    \"\"\"Compute average cross-entropy loss for a token sequence under CLM.\"\"\"\n    total_loss = 0.0\n    n = 0\n    for t in range(1, len(token_sequence)):  # start at t=1 (first \"next token\")\n        true_token = token_sequence[t]\n        if model_type == \"uniform\":\n            p = uniform_prob\n        elif model_type == \"frequency\":\n            p = better_probs[true_token]\n        else:\n            raise ValueError(\"Unknown model type\")\n        # Cross-entropy for this position: -log(P(true_token))\n        loss_t = -math.log(p + 1e-10)  # add small epsilon to avoid log(0)\n        total_loss += loss_t\n        n += 1\n    avg_loss = total_loss / n\n    perplexity = math.exp(avg_loss)\n    return avg_loss, perplexity\n\nloss_uniform, ppl_uniform = clm_loss(tokens, model_type=\"uniform\")\nloss_freq,    ppl_freq    = clm_loss(tokens, model_type=\"frequency\")\n\nprint(\"=== CLM Cross-Entropy Loss Comparison ===\\n\")\nprint(f\"Uniform model (random guessing among {vocab_size} chars):\")\nprint(f\"  Average loss: {loss_uniform:.4f}   Perplexity: {ppl_uniform:.2f}\")\nprint()\nprint(f\"Frequency model (always assigns P = token_frequency):\")\nprint(f\"  Average loss: {loss_freq:.4f}   Perplexity: {ppl_freq:.2f}\")\nprint()\nprint(f\"Theoretical minimum loss for uniform model: log({vocab_size}) = {math.log(vocab_size):.4f}\")\nprint()\n\n# -----------------------------------------------------------------------\n\n# Step 4: Show a few positions in detail\n\n# -----------------------------------------------------------------------\nprint(\"=== Per-position loss (first 10 positions, frequency model) ===\\n\")\nprint(f\"{'t':>4}  {'Context (last 5 chars)':25}  {'True next':>10}  {'P(true)':>8}  {'-log P':>8}\")\nprint(\"-\" * 65)\ncontext_len = 5\nfor t in range(1, min(11, len(tokens))):\n    ctx_tokens = tokens[max(0, t - context_len):t]\n    ctx_str = ''.join(id_to_char[tok] for tok in ctx_tokens)\n    true_tok = tokens[t]\n    true_char = id_to_char[true_tok]\n    p = better_probs[true_tok]\n    loss_t = -math.log(p + 1e-10)\n    print(f\"{t:>4}  {repr(ctx_str):25}  {repr(true_char):>10}  {p:>8.4f}  {loss_t:>8.4f}\")\n\nprint()\nprint(\"=== STUDENT EXERCISES ===\")\nprint(\"1. The frequency model does NOT use the context; it just uses global token frequency.\")\nprint(\"   A real LM would use context. How would 'the' in 'on the' vs 'sat the' differ?\")\nprint()\nprint(\"2. Modify the corpus string above and re-run. How does a repeated pattern\")\nprint(\"   (e.g., 'the cat the cat the cat') change the perplexity?\")\nprint()\nprint(\"3. Compute the perplexity of a PERFECT model that assigns P=1.0 to every\")\nprint(\"   correct token. What is -log(1.0)? What is e^0? What does perfect perplexity look like?\")",
+ "description": "This program compares uniform and frequency-based next-character probabilities with cross-entropy loss.",
+ "example": "cs357-tut-llmpretraining-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: copilot free model",
+ "steps": [
+  {
+   "description": "The corpus supplies the training text. The code creates a sorted character vocabulary and prints its size.",
+   "kind": "reveal",
+   "lines": "18-25"
+  },
+  {
+   "description": "Each corpus character becomes an integer token ID. The decoded prefix checks that the IDs map back to the original characters.",
+   "kind": "reveal",
+   "lines": "29-34"
+  },
+  {
+   "description": "Counter counts token frequencies. better_probs assigns each token its corpus frequency, while uniform_prob gives every token the same probability.",
+   "kind": "reveal",
+   "lines": "50-57"
+  },
+  {
+   "description": "clm_loss visits each next token, takes negative log probability, averages the losses, and exponentiates that average for perplexity.",
+   "kind": "reveal",
+   "lines": "59-77"
+  },
+  {
+   "answer": "The frequency model has lower loss because it gives higher probability to more frequent tokens.",
+   "kind": "predict",
+   "lines": "79-80",
+   "question": "Which model has lower loss on this corpus?"
+  },
+  {
+   "description": "The uniform-model call uses one probability for every character.",
+   "kind": "run",
+   "lines": "79",
+   "trace_step": 134
+  },
+  {
+   "description": "The frequency-model call uses each true character's corpus frequency. The output reports lower loss and lower perplexity than the uniform model.",
+   "kind": "run",
+   "lines": "80",
+   "trace_step": 394
+  },
+  {
+   "description": "The final loop shows the first ten positions with a five-character context, the true next character, its frequency probability, and its individual loss.",
+   "kind": "reveal",
+   "lines": "97-108"
+  }
+ ],
+ "title": "Compute character-level CLM loss",
+ "version": 1
+}

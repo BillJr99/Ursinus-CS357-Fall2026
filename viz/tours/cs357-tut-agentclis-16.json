@@ -1,0 +1,27 @@
+{
+ "code": "# Open VS Code in your project directory:\ncode ~/cs357-exercise5\n# Press Ctrl+` to open the integrated terminal\ncd ~/cs357-exercise5\nclaude   # launch the agent in the VS Code terminal\n# When the agent proposes a file edit, look at the change view that appears in the editor pane above",
+ "description": "Seven lines set ANTHROPIC_BASE_URL and ANTHROPIC_API_KEY to route through the local gateway, change to an exercise directory, launch claude, then inside the session ask what model it is and use /model to switch models.",
+ "example": "cs357-tut-agentclis-16",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "Lines 2-3 export the two environment variables that redirect API calls to the local gateway. Lines 4-5 change directory and launch claude. Lines 6-7 are in-session commands: ask the model name, then use /model to see and switch models.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "Lines 2-3 are the gateway redirect: ANTHROPIC_BASE_URL overrides the default endpoint, and ANTHROPIC_API_KEY uses a placeholder the gateway ignores.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "answer": "a model served by your local gateway (not the default Anthropic cloud model)",
+   "kind": "predict",
+   "question": "What should the agent's response to \"what model are you?\" name?"
+  }
+ ],
+ "title": "Exercise 4: Gateway Switch with Environment Variables",
+ "version": 1
+}

@@ -1,0 +1,46 @@
+{
+ "code": "import numpy as np\n\nvectors = np.array([[3.0, 4.0], [0.0, 2.0], [1.0, 0.0]])\nlengths = np.linalg.norm(vectors, axis=1, keepdims=True)\nnormed = vectors / lengths                  # every row now has length 1\nprint(normed[0])\ngroup = [0, 1]                              # a list of row numbers\nprint(normed[group])                        # just those rows\naverage = normed[group].mean(axis=0)        # average down the columns\nprint(average)\nprint(round(float(normed[0] @ normed[1]), 2))\nprint(int(np.argmax([0.2, 0.9, 0.5])))",
+ "description": "NumPy normalizes vector rows, selects rows, averages them, and computes simple vector operations.",
+ "example": "cs357-tut-pythonessentials-7",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: copilot free model",
+ "steps": [
+  {
+   "description": "vectors holds three two-number rows. norm computes one length per row, and division normalizes every row to length 1.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "The first normalized vector prints as [0.6 0.8].",
+   "kind": "run",
+   "lines": "6",
+   "trace_step": 4
+  },
+  {
+   "description": "group names rows 0 and 1. Indexing selects those rows, then mean averages down their columns.",
+   "kind": "reveal",
+   "lines": "7-10"
+  },
+  {
+   "answer": "It computes their dot product.",
+   "kind": "predict",
+   "lines": "11",
+   "question": "What operation does @ perform between the first two normalized rows?"
+  },
+  {
+   "description": "The rounded dot product prints as 0.8.",
+   "kind": "run",
+   "lines": "11",
+   "trace_step": 9
+  },
+  {
+   "description": "argmax returns index 1, the position of 0.9 in the list.",
+   "kind": "run",
+   "lines": "12",
+   "trace_step": 10
+  }
+ ],
+ "title": "Normalize embedding vectors",
+ "version": 1
+}

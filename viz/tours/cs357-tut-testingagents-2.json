@@ -1,0 +1,42 @@
+{
+ "code": "import json, datetime\n\n# test_cases.json format:\n# [{\"id\": \"tc01\", \"input\": \"When is the midterm?\", \"expected_properties\": [\"has_date\", \"is_on_topic\"]}]\n\nwith open(\"test_cases.json\") as f:\n    cases = json.load(f)\n\nresults = []\nfor case in cases:\n    output = run_agent(case[\"input\"])  # your agent call here\n    case_result = {\"id\": case[\"id\"], \"passed\": []}\n    for prop_name in case[\"expected_properties\"]:\n        passed = PROPERTY_FUNCTIONS[prop_name](output)\n        case_result[\"passed\"].append({\"property\": prop_name, \"passed\": passed})\n    results.append(case_result)\n\n# Save timestamped results\ntimestamp = datetime.datetime.now().strftime(\"%Y%m%d_%H%M%S\")\nwith open(f\"eval_results_{timestamp}.json\", \"w\") as f:\n    json.dump(results, f, indent=2)",
+ "description": "A minimal eval harness: load test cases from a JSON file, run each input through the agent, check the property functions, and write a timestamped results file.",
+ "example": "cs357-tut-testingagents-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the starter harness for Exercise 2. The page says it loads test cases from a JSON file, runs each through the agent, checks the defined property functions, and writes a timestamped results file.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "The comment shows the `test_cases.json` format: a list of objects, each with an `id`, an `input`, and an `expected_properties` list naming the properties to check.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "`open(\"test_cases.json\")` reads the file, and `json.load` turns it into the list `cases`.",
+   "kind": "focus",
+   "lines": "6-7"
+  },
+  {
+   "description": "The loop runs each case. `run_agent(case[\"input\"])` produces the output, and the comment marks that line as your agent call. For each property name in the case, it calls `PROPERTY_FUNCTIONS[prop_name]` on the output and records the result under that case's `id`.",
+   "kind": "focus",
+   "lines": "9-16"
+  },
+  {
+   "description": "The last lines save a timestamped file. `datetime.datetime.now().strftime(\"%Y%m%d_%H%M%S\")` builds the timestamp, and the results are written to `eval_results_<timestamp>.json` as indented JSON.",
+   "kind": "focus",
+   "lines": "18-21"
+  },
+  {
+   "answer": "side-by-side",
+   "kind": "predict",
+   "question": "The page says the timestamped results file is what lets you compare two runs how, later?"
+  }
+ ],
+ "title": "Starter Eval Harness",
+ "version": 1
+}

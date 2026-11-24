@@ -1,0 +1,48 @@
+{
+ "code": "# Step 1: a fixed pipeline.  You wrote the order; the code checks the seam the model cannot.\ndef check_times(facts, text):\n    \"\"\"A check in code, not a model: every extracted day and time must survive into the text.\"\"\"\n    missing = []\n    for row in facts.splitlines():\n        name, day, time, _ = [x.strip() for x in row.split(\"|\")]\n        if f\"{day} at {time}\" not in text:\n            missing.append(f\"{name}: {day} at {time}\")\n    return missing\n\ndef digest_pipeline(messages):\n    facts = llm(EXTRACT, \"\\n\".join(messages))\n    print(\"1. EXTRACT ->\\n\" + facts)\n    draft = llm(DRAFT, facts)\n    print(\"2. DRAFT ->\\n\" + draft)\n    final = llm(POLISH, draft)\n    print(\"3. POLISH ->\\n\" + final)\n    missing = check_times(facts, final)\n    print(\"4. CHECK ->\", missing or \"every day and time present\")\n    if missing:                        # stop condition: never ship a digest that lost a fact\n        print(\"   polish broke a fact; returning the draft, with the problem attached\")\n        return draft, missing\n    return final, []\n\nCALLS.clear()\ndigest, problems = digest_pipeline(MESSAGES)\nprint(f\"\\nRESULT: {digest}\\nmodel calls: {len(CALLS)}\")",
+ "description": "A three-stage pipeline (extract, draft, polish) runs with model calls. A check_times function in code verifies every extracted day and time appears in the final text. If any are missing, it returns the draft with the problem attached.",
+ "example": "cs357-liascript-orchestrationworkshop-4",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: omp free model + edit: codex",
+ "steps": [
+  {
+   "description": "The check_times function splits the facts string by lines. It parses each pipe-separated row for name, day, time. It checks that 'day at time' appears in the final text, returning a list of missing facts.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "Lines 6-8 extract the day and time from each fact row and check if the formatted string 'day at time' is present in the polished text.",
+   "kind": "focus",
+   "lines": "6-8"
+  },
+  {
+   "description": "The digest_pipeline function runs three model calls in sequence: EXTRACT, DRAFT, POLISH, printing each intermediate result.",
+   "kind": "reveal",
+   "lines": "11-17"
+  },
+  {
+   "description": "Line 12 calls the model with the EXTRACT prompt on the messages, line 13 prints the extracted facts.",
+   "kind": "focus",
+   "lines": "12-13"
+  },
+  {
+   "answer": "changes Thursday to Friday for the Chess club event",
+   "kind": "predict",
+   "question": "What does the POLISH stage do in the example output that breaks a fact?"
+  },
+  {
+   "description": "After polish, check_times runs on the facts and final text. If missing facts are found, it prints the problem and returns the draft instead of the final, with the missing list attached.",
+   "kind": "reveal",
+   "lines": "18-23"
+  },
+  {
+   "description": "The pipeline runs: extract finds 3 events, and draft includes all correctly. Polish changes Thursday to Friday, and the check catches it. The result returns the draft with 3 model calls.",
+   "kind": "run",
+   "lines": "11-23",
+   "trace_step": 4
+  }
+ ],
+ "title": "Fixed Pipeline with Code-Based Seam Check",
+ "version": 1
+}

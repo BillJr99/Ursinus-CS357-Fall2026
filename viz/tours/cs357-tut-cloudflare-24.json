@@ -1,0 +1,42 @@
+{
+ "code": "// The Worker calls the LLM API on the server side; the browser never sees the key\nif (url.pathname === \"/complete\") {\n  const prompt = url.searchParams.get(\"prompt\") || \"Say hello from CS357\";\n  const response = await fetch(\"https://api.your-llm-provider.com/v1/complete\", {\n    method: \"POST\",\n    headers: {\n      \"Authorization\": `Bearer ${env.LLM_API_KEY}`,  // key stays on Cloudflare's servers\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify({ prompt, max_tokens: 100 })\n  });\n  const result = await response.json();\n  return Response.json({ completion: result.choices[0].text });\n}",
+ "description": "A Worker route that reads a prompt, calls an LLM provider with a key held as a Worker secret, and returns the completion. The key stays server side.",
+ "example": "cs357-tut-cloudflare-24",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the facade route. The comment states the idea: the Worker calls the LLM API on the server side, so the browser never sees the key.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "`url.searchParams.get(\"prompt\")` reads the prompt from the query string, falling back to `\"Say hello from CS357\"`.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "The `fetch` call posts to the provider's API. The method is `POST`, the content type is JSON, and the body sends the prompt and a `max_tokens` limit.",
+   "kind": "focus",
+   "lines": "4-11"
+  },
+  {
+   "description": "The `Authorization` header sends `Bearer ${env.LLM_API_KEY}`. The comment states the key stays on Cloudflare's servers.",
+   "kind": "focus",
+   "lines": "7"
+  },
+  {
+   "description": "The response is parsed as JSON, and the Worker returns `result.choices[0].text` as `completion`.",
+   "kind": "focus",
+   "lines": "12-13"
+  },
+  {
+   "answer": "any outgoing or incoming request visible to the browser",
+   "kind": "predict",
+   "question": "The exercise has you show, in the browser DevTools Network tab, that the key does not appear in what?"
+  }
+ ],
+ "title": "Exercise 4: A Gateway-Facade Worker",
+ "version": 1
+}

@@ -1,0 +1,32 @@
+{
+ "code": "[\n  {\n    \"id\": \"D01\",\n    \"defect\": \"missing_C4\",\n    \"description\": \"No example provided\",\n    \"draft\": \"\\\"\\\"\\\"Merge two sorted lists of integers.\\n\\nArgs:\\n    a (list[int]): First list.\\n    b (list[int]): Second list.\\n\\nReturns:\\n    list[int]: Merged sorted list.\\n\\\"\\\"\\\"\"\n  },\n  {\n    \"id\": \"D02\",\n    \"defect\": \"missing_C2_and_C3\",\n    \"description\": \"No parameter or return descriptions\",\n    \"draft\": \"\\\"\\\"\\\"Merge two sorted lists.\\n\\nExample:\\n    >>> merge_sorted_lists([1, 3], [2, 4])\\n    [1, 2, 3, 4]\\n\\\"\\\"\\\"\"\n  },\n  {\n    \"id\": \"D03\",\n    \"defect\": \"none\",\n    \"description\": \"Defect-free draft\",\n    \"draft\": \"\\\"\\\"\\\"Merge two sorted lists of integers into a single sorted list.\\n\\nArgs:\\n    a (list[int]): First sorted list of integers.\\n    b (list[int]): Second sorted list of integers.\\n\\nReturns:\\n    list[int]: A new sorted list containing all elements from a and b.\\n\\nExample:\\n    >>> merge_sorted_lists([1, 3], [2, 4])\\n    [1, 2, 3, 4]\\n\\\"\\\"\\\"\"\n  }\n]",
+ "description": "The start of calibration_drafts.json. Each entry records a draft, the defect you planted in it, and a short description, so you know the right verdict before the critic sees it.",
+ "example": "cs357-tut-multiagentmeasurement-2",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is `calibration_drafts.json`, a JSON array. Each entry records the draft, the defect you planted, and a short description. `D01` has defect `missing_C4` and the description `No example provided`.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "`D02` has defect `missing_C2_and_C3` and the description `No parameter or return descriptions`. The defect string names the two criteria it breaks.",
+   "kind": "focus",
+   "lines": "8-13"
+  },
+  {
+   "description": "`D03` has defect `none` and the description `Defect-free draft`. The page says you can see false positives only if the set includes drafts with nothing wrong, so include some.",
+   "kind": "focus",
+   "lines": "14-20"
+  },
+  {
+   "answer": "\\n",
+   "kind": "predict",
+   "question": "To fit a multi-line docstring into one JSON string, what stands in for each line break?"
+  }
+ ],
+ "title": "Three Planted-Defect Entries",
+ "version": 1
+}

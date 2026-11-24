@@ -1,0 +1,42 @@
+{
+ "code": "import autogen\n\nllm_config = {\"model\": \"gpt-4o-mini\", \"api_key\": \"...\", \"temperature\": 0}\n\nresearcher = autogen.AssistantAgent(\n    \"researcher\",\n    system_message=\"You search for and retrieve relevant passages on the given question.\",\n    llm_config=llm_config\n)\ndrafter = autogen.AssistantAgent(\n    \"drafter\",\n    system_message=\"You write clear responses using passages provided to you.\",\n    llm_config=llm_config\n)\ncritic = autogen.UserProxyAgent(\n    \"critic\",\n    human_input_mode=\"NEVER\",  # fully automated\n    code_execution_config=False,\n    system_message=\"You identify weaknesses in drafts and return a revision list.\"\n)\n\ngroupchat = autogen.GroupChat(\n    agents=[researcher, drafter, critic],\n    messages=[],\n    max_round=6  # prevents infinite loops\n)\nmanager = autogen.GroupChatManager(groupchat=groupchat, llm_config=llm_config)\nresearcher.initiate_chat(manager, message=q)",
+ "description": "AssistantAgent and UserProxyAgent in a GroupChat where all agents share the same messages list, with GroupChatManager deciding who speaks next.",
+ "example": "cs357-tut-agentframeworks-3",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Three agents: researcher and drafter as AssistantAgent, critic as UserProxyAgent with NEVER human input mode.",
+   "kind": "reveal",
+   "lines": "1-20"
+  },
+  {
+   "description": "Researcher: AssistantAgent with system message for searching and retrieving passages.",
+   "kind": "focus",
+   "lines": "5-9"
+  },
+  {
+   "description": "Drafter: AssistantAgent with system message for writing from provided passages.",
+   "kind": "focus",
+   "lines": "10-14"
+  },
+  {
+   "description": "Critic: UserProxyAgent with system message for identifying weaknesses, no human input, no code execution.",
+   "kind": "focus",
+   "lines": "15-20"
+  },
+  {
+   "description": "GroupChat: agents list, empty messages, max_round=6 to prevent infinite loops.",
+   "kind": "focus",
+   "lines": "22-26"
+  },
+  {
+   "description": "Manager: GroupChatManager with the groupchat, then researcher initiates the chat with the question.",
+   "kind": "focus",
+   "lines": "27-28"
+  }
+ ],
+ "title": "AutoGen: GroupChat with Shared Messages",
+ "version": 1
+}

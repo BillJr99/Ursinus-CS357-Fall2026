@@ -1,0 +1,50 @@
+{
+ "code": "import requests\nimport traceback\n\ntry:\n    r = requests.post(\"http://localhost:8765/tools/call\", json={\"name\": \"weather\", \"arguments\": {}}, timeout=10)\n    print(r.status_code, r.json())\n    r = requests.post(\"http://localhost:8765/tools/call\", json={\"name\": \"hours\", \"arguments\": {\"place\": \"gym\"}}, timeout=10)\n    print(r.status_code, r.json())\nexcept Exception as e:\n    print(f\"[mcpclient:bad_calls] {e}\")\n    traceback.print_exc()",
+ "description": "This example shows two tool calls to a local MCP server; both fail with a connection error because the server is not running.",
+ "example": "cs357-liascript-mcp-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: pi free model",
+ "steps": [
+  {
+   "description": "The script imports requests for HTTP calls and traceback for printing exception details.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "A try block wraps two POST requests to localhost:8765/tools/call. The first calls the weather tool with no arguments. The second calls the hours tool with a place argument.",
+   "kind": "reveal",
+   "lines": "4-8"
+  },
+  {
+   "description": "Each request sends a JSON body with the tool name and arguments. The timeout is 10 seconds.",
+   "kind": "focus",
+   "lines": "5,7"
+  },
+  {
+   "answer": "The connection is refused, the except block catches the exception, and the error message plus a full traceback are printed.",
+   "kind": "predict",
+   "lines": "9-11",
+   "question": "What happens when the server at localhost:8765 is not running?"
+  },
+  {
+   "description": "The except block catches any exception, prints a labeled error line, and prints the full traceback for debugging.",
+   "kind": "reveal",
+   "lines": "9-11"
+  },
+  {
+   "description": "The first POST executes and raises a connection error because no server listens on port 8765. Execution jumps to the except block.",
+   "kind": "run",
+   "lines": "5",
+   "trace_step": 3
+  },
+  {
+   "description": "The except block prints the error: connection refused on localhost:8765. The traceback follows.",
+   "kind": "run",
+   "lines": "9-10",
+   "trace_step": 5
+  }
+ ],
+ "title": "MCP client calls that fail when the server is down",
+ "version": 1
+}

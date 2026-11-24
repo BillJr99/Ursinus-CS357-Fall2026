@@ -1,0 +1,39 @@
+{
+ "code": "import re\n\ntext = \"SCORE: 3\\nsome reasoning\\nSCORE: 5\"\nprint(re.findall(r\"SCORE:\\s*(\\d+)\", text))",
+ "description": "re.findall extracts all matches of a pattern from text, returning captured groups as a list.",
+ "example": "cs357-tut-pythonessentials-5",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe free model",
+ "steps": [
+  {
+   "description": "Reveal import: re module for regular expressions.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "Reveal text: two SCORE lines with digits to extract.",
+   "kind": "reveal",
+   "lines": "3"
+  },
+  {
+   "answer": "any amount of space",
+   "kind": "predict",
+   "lines": "4",
+   "question": "What does \\s* match in the pattern?"
+  },
+  {
+   "description": "Reveal pattern: SCORE:\\s*(\\d+) matches SCORE, optional spaces, and captures digits.",
+   "kind": "reveal",
+   "lines": "4"
+  },
+  {
+   "description": "Run to show the list of captured digit strings.",
+   "kind": "run",
+   "lines": "4",
+   "trace_step": 2
+  }
+ ],
+ "title": "Finding Text with Regular Expressions",
+ "version": 1
+}

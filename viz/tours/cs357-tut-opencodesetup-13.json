@@ -1,0 +1,27 @@
+{
+ "code": "{\n  \"permission\": {\n    \"skill\": { \"*\": \"ask\", \"commit-message\": \"allow\", \"experimental-*\": \"deny\" }\n  }\n}",
+ "description": "A permission block with a skill key that asks by default, allows your own skill by name, and denies any skill whose name starts with experimental-.",
+ "example": "cs357-tut-opencodesetup-13",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This gates which skills an agent may load, through the `skill` key in the `permission` block. It takes the same three values and the same last-matching-rule-wins ordering as the `bash` map from the earlier permission block.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`\"*\": \"ask\"` prompts you before any skill not matched later loads. `\"commit-message\": \"allow\"` allows your own skill by name, and `\"experimental-*\": \"deny\"` denies any skill whose name starts with `experimental-`.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "answer": "ask",
+   "kind": "predict",
+   "question": "The page says the moment you install a skill from someone else, you switch the wildcard to which value and allow your own by name?"
+  }
+ ],
+ "title": "Gating Which Skills Load",
+ "version": 1
+}

@@ -1,0 +1,32 @@
+{
+ "code": "\n# .github/workflows/deploy.yml  (skeleton; full guarded version appears in Section 11)\n- name: Deploy\n  run: ./deploy.sh          # <- the workflow orchestrates; the script does the work\n  env:\n    CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}   # injected, then masked in logs\n    WORKER_NAME: ${{ vars.WORKER_NAME }}                        # plain, non-secret variable",
+ "description": "A short workflow step that orchestrates the deploy script and passes the token and Worker name from GitHub.",
+ "example": "cs357-tut-cloudflare-11",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the workflow step that runs the deploy. It is short because the logic lives in `deploy.sh`.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "The step runs `./deploy.sh`. The workflow orchestrates; the script does the work.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "`CLOUDFLARE_API_TOKEN` comes from GitHub's secrets and is masked in the logs.",
+   "kind": "focus",
+   "lines": "6"
+  },
+  {
+   "description": "`WORKER_NAME` is a plain variable, not a secret.",
+   "kind": "focus",
+   "lines": "7"
+  }
+ ],
+ "title": "The Workflow Step That Runs the Script",
+ "version": 1
+}

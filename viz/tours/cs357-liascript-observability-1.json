@@ -1,0 +1,65 @@
+{
+ "code": "# rag_demo.py: the co-op corpus from Thursday, with a real embedding model.\n# Needs Ollama running and `ollama pull nomic-embed-text:v1.5`. Standard library only.\nimport json, math, sys, urllib.request\n\nCORPUS = {\n    \"hours.md\": \"The co-op workshop is open Tuesday and Thursday from 4pm to 8pm, and Saturday from 10am to 2pm.\\n\\nThe workshop is closed on college holidays. Volunteers post closures on the front door.\",\n    \"membership.md\": \"A semester membership costs $15 and includes unlimited stand time. Students with a college ID pay $10.\\n\\nEvery member completes a 30-minute orientation before using a repair stand.\",\n    \"tools.md\": \"Truing stands and wheel tools stay in the workshop. Members may borrow a pump or a tire lever overnight for a $5 deposit.\\n\\nThe parts washer uses citrus degreaser only. Never pour solvent into the parts washer.\",\n    \"safety.md\": \"Safety glasses are required whenever anyone is cutting a cable or a chain.\\n\\nReport any injury to the shift volunteer, who records it in the incident binder before the shift ends.\",\n}\n\ndef embed(texts):\n    body = json.dumps({\"model\": \"nomic-embed-text:v1.5\", \"input\": texts}).encode()\n    req = urllib.request.Request(\"http://localhost:11434/api/embed\", body,\n                                 {\"Content-Type\": \"application/json\"})\n    return json.load(urllib.request.urlopen(req, timeout=120))[\"embeddings\"]\n\ndef cosine(u, v):\n    return sum(a * b for a, b in zip(u, v)) / (math.sqrt(sum(a * a for a in u)) * math.sqrt(sum(b * b for b in v)))\n\nCHUNKS = [(f\"{name[:-3]}-{i}\", name, p) for name in sorted(CORPUS)\n          for i, p in enumerate(CORPUS[name].split(\"\\n\\n\"))]\nVECTORS = embed([c[2] for c in CHUNKS])\n\ndef search(question, k=3):\n    q = embed([question])[0]\n    scored = sorted(((cosine(q, v), c) for v, c in zip(VECTORS, CHUNKS)), key=lambda x: -x[0])\n    return scored[:k]\n\nif __name__ == \"__main__\":\n    question = sys.argv[1]\n    hits = search(question)\n    for score, (cid, name, text) in hits:\n        print(f\"# {score:.3f} {cid:<13} {text[:60]}\", file=sys.stderr)\n    context = \"\\n\\n\".join(f\"[{name}] {text}\" for _, (_, name, text) in hits)\n    print(\"Answer using ONLY the passages below. Name the source file for each fact.\\n\"\n          \"If the passages do not contain the answer, say: I could not find that in your notes.\\n\\n\"\n          f\"Passages:\\n{context}\\n\\nQuestion: {question}\")",
+ "description": "This example builds a small RAG pipeline: it embeds a corpus with Ollama and retrieves the closest passages for a question. It formats a prompt for an LLM to answer using only those passages.",
+ "example": "cs357-liascript-observability-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: pi free model + edit: codex",
+ "steps": [
+  {
+   "description": "The corpus is four markdown files about a bike co-op: hours, membership, tools, and safety. Each file's text is a single string.",
+   "kind": "reveal",
+   "lines": "1-10"
+  },
+  {
+   "description": "The embed function sends texts to Ollama's /api/embed endpoint and returns the embedding vectors. It uses nomic-embed-text:v1.5.",
+   "kind": "reveal",
+   "lines": "12-16"
+  },
+  {
+   "description": "cosine computes cosine similarity between two vectors using the standard formula.",
+   "kind": "reveal",
+   "lines": "18-19"
+  },
+  {
+   "description": "CHUNKS splits each corpus file into paragraphs (separated by blank lines) and tags each with an id, source file, and text. VECTORS embeds all chunk texts at startup.",
+   "kind": "reveal",
+   "lines": "21-23"
+  },
+  {
+   "description": "Each chunk becomes a tuple: chunk id, source filename, and the paragraph text. VECTORS holds the embedding for every chunk.",
+   "kind": "focus",
+   "lines": "21-23"
+  },
+  {
+   "description": "search embeds the question, computes cosine similarity against every chunk vector, sorts by score descending, and returns the top k.",
+   "kind": "reveal",
+   "lines": "25-28"
+  },
+  {
+   "answer": "It prints a prompt for an LLM that includes the top retrieved passages and instructions to answer using only those passages, naming the source file for each fact.",
+   "kind": "predict",
+   "lines": "30-38",
+   "question": "What does the main block print when run with a question?"
+  },
+  {
+   "description": "The main block reads the question from argv, runs search, and prints the scored chunks to stderr. It builds a context string from the top hits and prints the full prompt with instructions.",
+   "kind": "reveal",
+   "lines": "30-38"
+  },
+  {
+   "description": "search returns the top 3 chunks for 'Who do I tell if I get hurt?'. The injury passage from safety.md ranks first.",
+   "kind": "run",
+   "lines": "28",
+   "trace_step": 2
+  },
+  {
+   "description": "The prompt is printed with the retrieved passages: the injury passage, the safety glasses passage, and the hours passage, followed by the question.",
+   "kind": "run",
+   "lines": "36-38",
+   "trace_step": 3
+  }
+ ],
+ "title": "RAG demo with real embeddings from Ollama",
+ "version": 1
+}

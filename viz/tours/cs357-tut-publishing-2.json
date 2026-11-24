@@ -1,0 +1,32 @@
+{
+ "code": "\n# Interactive login; use your Docker Hub access token as the password, not your account password\ndocker login\n\n# Tag the image with your Docker Hub namespace (no registry prefix; Docker Hub is the default)\ndocker tag agent-eval:0.1.0 yourusername/agent-eval:0.1.0\n\n# Push to Docker Hub\ndocker push yourusername/agent-eval:0.1.0",
+ "description": "Publish to Docker Hub: interactive login with access token, tag with username namespace, push, same verification pattern.",
+ "example": "cs357-tut-publishing-2",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete Docker Hub publishing process.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "Authentication: docker login with Docker Hub access token as password.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "Tagging: tag with yourusername namespace without registry prefix since Docker Hub is default.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "description": "Push: docker push to yourusername namespace.",
+   "kind": "focus",
+   "lines": "8-9"
+  }
+ ],
+ "title": "Docker Hub Publish Cycle",
+ "version": 1
+}

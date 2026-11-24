@@ -1,0 +1,32 @@
+{
+ "code": "./run.sh bash -c 'curl -sS -m 8 -o /dev/null -w \"%{http_code}\\n\" https://example.com'\nNET=none ./run.sh bash -c 'curl -sS -m 8 -o /dev/null -w \"%{http_code}\\n\" https://example.com'\nOPENROUTER_API_KEY=not-a-real-key ./run.sh bash -c 'env | grep -c OPENROUTER_API_KEY'",
+ "description": "Three commands testing network access and environment variable leakage: with network, without network, and API key exposure.",
+ "example": "cs357-tut-containerisolation-6",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "All three test commands for network and environment isolation.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Network access: curl to example.com returns HTTP 200 with default network.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Network blocking: NET=none prefix disables network, curl fails with lookup error and returns 000.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Environment leakage: OPENROUTER_API_KEY=not-a-real-key passed to container is visible via env grep, returning count 1.",
+   "kind": "focus",
+   "lines": "3"
+  }
+ ],
+ "title": "Network and Environment Tests",
+ "version": 1
+}

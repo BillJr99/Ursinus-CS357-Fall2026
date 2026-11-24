@@ -1,0 +1,27 @@
+{
+ "code": "  ursinus:\n    baseUrl: https://ursinus.ai/api/v1\n    api: openai-completions\n    apiKey: URSINUSAI_API_KEY\n    models:\n      - id: \"MODEL-NAME\"\n        name: \"Ursinus model\"\n        reasoning: false\n        input: [text]\n        contextWindow: 128000\n        maxTokens: 4096",
+ "description": "Another entry under providers in models.yml. Here apiKey is the name of the variable that holds the key, not the key.",
+ "example": "cs357-tut-setupbasics-6",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is another entry under `providers` in `~/.omp/agent/models.yml`. The page says to add a custom provider here, and that `apiKey` is the name of the variable, not the key.",
+   "kind": "reveal",
+   "lines": "1-11"
+  },
+  {
+   "description": "The provider is `ursinus`. `baseUrl` is `https://ursinus.ai/api/v1`, `api` is `openai-completions`, and `apiKey` is `URSINUSAI_API_KEY`, the name of the variable.",
+   "kind": "focus",
+   "lines": "1-4"
+  },
+  {
+   "description": "`models` lists one entry, `MODEL-NAME`, with a display name of `Ursinus model`, `reasoning` false, `input` as text, a `contextWindow` of 128000, and `maxTokens` of 4096.",
+   "kind": "focus",
+   "lines": "5-11"
+  }
+ ],
+ "title": "Oh My Pi Custom Provider",
+ "version": 1
+}

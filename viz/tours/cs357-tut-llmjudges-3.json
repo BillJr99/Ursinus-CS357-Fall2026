@@ -1,0 +1,37 @@
+{
+ "code": "curl http://localhost:11434/api/tags\npython3 -c \"import requests; print('requests ok')\"\nnpx promptfoo@latest --version",
+ "description": "Three commands that confirm the tools this tutorial needs: Ollama, the Python requests library, and promptfoo.",
+ "example": "cs357-tut-llmjudges-3",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Each line checks one thing you need. The page lists them as Ollama running with `llama3.2`, Python with `requests` for the code path, and Node.js for the no-code path.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "`curl http://localhost:11434/api/tags` talks to Ollama on its local API port, which confirms the server is running and lists the models it has.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "`python3 -c \"import requests; print('requests ok')\"` imports `requests` and prints `requests ok`, which confirms the code path's library is installed.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "`npx promptfoo@latest --version` runs promptfoo through `npx`, so there is nothing else to install for the no-code path.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "answer": "host.docker.internal:11434",
+   "kind": "predict",
+   "question": "If you work inside the course container, which address do you use wherever the page says localhost:11434?"
+  }
+ ],
+ "title": "Three Checks Before You Start",
+ "version": 1
+}

@@ -1,0 +1,27 @@
+{
+ "code": "cd ~/cs357-exercise3\n# Launch with reads allowed automatically, writes and shell requiring approval:\nclaude --allowedTools \"read_file\" --disallowedTools \"write_file,execute_command\"\n# Then inside the session, ask: \"read README.md, then create hello.py, then run it\"\n# Each of the three actions will hit a different gate behavior",
+ "description": "Six commands run the same task twice in the same directory: first without a context file, then after creating a CLAUDE.md starter from Section 3, saving both transcripts for side-by-side comparison.",
+ "example": "cs357-tut-agentclis-14",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The sequence creates a directory, runs claude and saves transcript-no-context.txt, creates the CLAUDE.md context file, runs claude again and saves transcript-with-context.txt, then compares them.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "Line 4 instructs you to create the CLAUDE.md file with the starter content from Section 3, adapted to your actual task.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "answer": "quote two specific lines (one from each transcript) showing a concrete difference in agent behavior attributable to the context file",
+   "kind": "predict",
+   "question": "What is the success criterion for this exercise?"
+  }
+ ],
+ "title": "Exercise 2: Context File Experiment",
+ "version": 1
+}

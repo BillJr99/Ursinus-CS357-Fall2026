@@ -1,0 +1,37 @@
+{
+ "code": "if (provider === \"anthropic\") {\n  if (!providerConfig.anthropicKey) throw new Error(\"Enter an Anthropic API key.\");\n  const model = providerConfig.anthropicModel || DEFAULT_MODELS.anthropic;\n\n  const res = await fetch(\"https://api.anthropic.com/v1/messages\", {\n    method: \"POST\",\n    headers: {\n      \"content-type\": \"application/json\",\n      \"x-api-key\": providerConfig.anthropicKey,          // <-- auth header (NOT \"Authorization\")\n      \"anthropic-version\": \"2023-06-01\",                 // <-- required API version pin\n      \"anthropic-dangerous-direct-browser-access\": \"true\" // <-- opt-in to call from a browser (see Part IV)\n    },\n    body: JSON.stringify({\n      model,\n      max_tokens: maxTokens,\n      temperature,\n      messages: [{ role: \"user\", content: prompt }],\n    }),\n  });\n\n  const data = await res.json().catch(async () => ({ raw: await res.text() }));\n  if (!res.ok || data?.error) throw new Error(data?.error?.message || data?.raw || res.statusText);\n\n  // Anthropic returns a \"content\" array of blocks; join their text.\n  return data?.content?.map(block => block?.text || \"\").join(\"\").trim() || \"\";\n}",
+ "description": "The Anthropic branch of the dispatcher, showing the Messages endpoint, its own header names, and where the reply text lives.",
+ "example": "cs357-tut-chessaicoach-3",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Enter the Anthropic branch. Throw if no API key is set, then pick the configured model or fall back to the default for Anthropic.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Post to `https://api.anthropic.com/v1/messages`. The headers carry the key in `x-api-key` (not `Authorization`), a required `anthropic-version` pin, and `anthropic-dangerous-direct-browser-access` to opt in to calling from a browser.",
+   "kind": "focus",
+   "lines": "5-12"
+  },
+  {
+   "description": "The body sends the model, `max_tokens`, `temperature`, and a `messages` array holding one user message with the prompt.",
+   "kind": "focus",
+   "lines": "13-18"
+  },
+  {
+   "description": "Parse the JSON response, with a fallback to raw text, and throw an error when the response is not ok or contains an error field.",
+   "kind": "focus",
+   "lines": "21-22"
+  },
+  {
+   "description": "Anthropic returns a `content` array of blocks, so the function maps each block to its `text`, joins them, trims, and returns the string. The page notes the reply text is an array of content blocks, not a single string.",
+   "kind": "focus",
+   "lines": "24-25"
+  }
+ ],
+ "title": "Anthropic Branch",
+ "version": 1
+}

@@ -1,0 +1,37 @@
+{
+ "code": "# campus_server.py\n# campus_server.py: a tiny MCP server. Pydantic AI starts it and talks to it over stdio.\nfrom fastmcp import FastMCP\n\nmcp = FastMCP(\"campus\")\n\n@mcp.tool\ndef library_hours(day: str) -> str:\n    \"\"\"Opening hours of the campus library for a day of the week, such as Monday or Saturday.\"\"\"\n    return \"8am-midnight\" if day.lower() not in (\"saturday\", \"sunday\") else \"10am-6pm\"\n\nif __name__ == \"__main__\":\n    mcp.run(show_banner=False)",
+ "description": "Tool appears twice in context: as offered tool with description from docstring, and as tool-return with the computed result.",
+ "example": "cs357-tut-agentframeworks-15",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete tool example: same days_between as LangChain for side-by-side comparison.",
+   "kind": "reveal",
+   "lines": "1-13"
+  },
+  {
+   "description": "Imports and setup: datetime, Agent, common helpers.",
+   "kind": "focus",
+   "lines": "1-5"
+  },
+  {
+   "description": "Agent with tool usage instructions and watch capability.",
+   "kind": "focus",
+   "lines": "6-7"
+  },
+  {
+   "description": "Tool definition: type hints for start_iso and end_iso, returns int, docstring describes ISO date format.",
+   "kind": "focus",
+   "lines": "8-11"
+  },
+  {
+   "description": "Execution: date range question, output print, show_context reveals tool schema and result.",
+   "kind": "focus",
+   "lines": "13"
+  }
+ ],
+ "title": "Pydantic AI: Tool in Context",
+ "version": 1
+}

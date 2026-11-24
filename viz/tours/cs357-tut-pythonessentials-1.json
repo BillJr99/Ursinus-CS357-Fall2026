@@ -1,0 +1,45 @@
+{
+ "code": "message = {\"role\": \"user\", \"content\": \"Hello\"}\nprint(message[\"role\"])              # look up one key\nprint(message.get(\"tool\", \"none\"))  # .get gives a default when the key is missing\n\nmessages = []                       # an empty list\nmessages.append(message)            # add to the end\nmessages.append({\"role\": \"assistant\", \"content\": \"Hi!\"})\nprint(len(messages))\nprint(messages[-1][\"content\"])      # the last item, then one of its keys\n\nfor m in messages:\n    print(m[\"role\"], \"said\", m[\"content\"])",
+ "description": "Demonstrates dictionary key lookup with and without defaults, list append, length, negative indexing, and iteration.",
+ "example": "cs357-tut-pythonessentials-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe free model",
+ "steps": [
+  {
+   "description": "Reveal dictionary basics: create a message dict and look up role with [] and .get with default.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "answer": "none",
+   "kind": "predict",
+   "lines": "3",
+   "question": "What does message.get('tool', 'none') return when 'tool' is missing?"
+  },
+  {
+   "description": "Reveal list operations: create empty list, append two messages, print length and last item's content.",
+   "kind": "reveal",
+   "lines": "5-9"
+  },
+  {
+   "description": "Reveal iteration: loop through messages printing each role and content.",
+   "kind": "reveal",
+   "lines": "11-12"
+  },
+  {
+   "description": "Run to the loop start showing user said Hello.",
+   "kind": "run",
+   "lines": "11",
+   "trace_step": 8
+  },
+  {
+   "description": "Run to show assistant said Hi! completing the output.",
+   "kind": "run",
+   "lines": "12",
+   "trace_step": 9
+  }
+ ],
+ "title": "Lists and Dictionaries",
+ "version": 1
+}

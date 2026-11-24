@@ -1,0 +1,32 @@
+{
+ "code": "{\n  \"name\": \"questions-board\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"wrangler dev\",\n    \"test\": \"vitest run\",\n    \"db:local\": \"wrangler d1 migrations apply DB --local\",\n    \"db:remote\": \"wrangler d1 migrations apply DB --remote\",\n    \"deploy\": \"wrangler deploy\"\n  },\n  \"devDependencies\": {\n    \"@cloudflare/vitest-plugin\": \"1.8.1\",\n    \"vitest\": \"5.1.0\",\n    \"wrangler\": \"4.161.0\"\n  }\n}",
+ "description": "Project configuration with pinned versions of vitest-plugin, vitest, and wrangler, plus scripts for dev, test, and database operations.",
+ "example": "cs357-tut-fullstackwithagents-9",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete package.json.",
+   "kind": "reveal",
+   "lines": "1-17"
+  },
+  {
+   "description": "Metadata: name questions-board, private true, type module.",
+   "kind": "focus",
+   "lines": "1-4"
+  },
+  {
+   "description": "Scripts: dev, test, db:local, db:remote, deploy commands.",
+   "kind": "focus",
+   "lines": "5-11"
+  },
+  {
+   "description": "DevDependencies: cloudflare/vitest-plugin 1.8.1, vitest 5.1.0, wrangler 4.161.0.",
+   "kind": "focus",
+   "lines": "12-16"
+  }
+ ],
+ "title": "package.json: Pinned Dependencies",
+ "version": 1
+}

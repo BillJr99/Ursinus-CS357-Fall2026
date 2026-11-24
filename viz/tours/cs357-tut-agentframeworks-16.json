@@ -1,0 +1,37 @@
+{
+ "code": "# step5_mcp.py\nfrom pathlib import Path\n\nfrom pydantic_ai import Agent\nfrom pydantic_ai.mcp import MCPToolset\nfrom common import make_model, show_context, watch\n\ncampus = MCPToolset(Path(\"campus_server.py\"))   # the server's tools are discovered at run time\nagent = Agent(make_model(), instructions=\"You are a concise campus assistant.\", toolsets=[campus], capabilities=[watch])\n\nresult = agent.run_sync(\"When is the library open on Saturday?\")\nprint(result.output)\nshow_context()",
+ "description": "MCP server as external tool provider: campus_server.py advertises library_hours tool, discovered at runtime by MCPToolset.",
+ "example": "cs357-tut-agentframeworks-16",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "MCP integration: imports, toolset creation, agent with toolset, and invoke.",
+   "kind": "reveal",
+   "lines": "1-13"
+  },
+  {
+   "description": "Imports: pathlib Path, Agent, MCPToolset, and common helpers.",
+   "kind": "focus",
+   "lines": "1-3"
+  },
+  {
+   "description": "Toolset: MCPToolset with Path to campus_server.py, tools discovered at runtime.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "description": "Agent: Agent with make_model, campus assistant instructions, toolsets list with campus.",
+   "kind": "focus",
+   "lines": "8-9"
+  },
+  {
+   "description": "Execution: run_sync with library hours question, print output, show_context.",
+   "kind": "focus",
+   "lines": "11-13"
+  }
+ ],
+ "title": "Pydantic AI: MCP Toolset",
+ "version": 1
+}

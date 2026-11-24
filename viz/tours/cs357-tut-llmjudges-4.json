@@ -1,0 +1,37 @@
+{
+ "code": "import csv\nimport os\n\nPAD = (\"This essay was written with great care and attention to detail.  \"\n       \"The author is deeply knowledgeable about campus issues.\")\n\nwith open(\"dataset.csv\", \"w\", newline=\"\") as f:\n    w = csv.writer(f)\n    w.writerow([\"id\", \"answer\"])\n    for name in sorted(os.listdir(\"samples\")):\n        w.writerow([name.removesuffix(\".txt\"),\n                    open(os.path.join(\"samples\", name)).read().strip()])\n    w.writerow([\"s02_padded\", open(\"samples/s02.txt\").read().strip() + \" \" + PAD])",
+ "description": "A short script that writes one row per sample into dataset.csv, and adds the padded copy of s02 the later bias check uses.",
+ "example": "cs357-tut-llmjudges-4",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The script imports `csv` to write the file and `os` to list the sample directory. The page says to save it as `make_dataset.py` and run it in the folder that contains `samples/`.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "`PAD` is a fixed block of text: two sentences about care, detail, and campus knowledge. The script appends it to make a padded copy of `s02` for the bias check in Section 7.",
+   "kind": "focus",
+   "lines": "4-5"
+  },
+  {
+   "description": "The `with` block opens `dataset.csv` for writing. It creates a `csv.writer` and writes the header row `[\"id\", \"answer\"]`, the two columns the page names.",
+   "kind": "focus",
+   "lines": "7-9"
+  },
+  {
+   "description": "The loop walks the samples in sorted order. For each file it writes one row: the `id` is the filename without `.txt`, and the `answer` is the file's contents stripped of surrounding whitespace.",
+   "kind": "focus",
+   "lines": "10-12"
+  },
+  {
+   "description": "The last row is `s02_padded`. Its `answer` is the text of `s02` plus a space plus `PAD`, the padded copy the tutorial uses to probe for bias.",
+   "kind": "focus",
+   "lines": "13"
+  }
+ ],
+ "title": "Building dataset.csv from the Samples",
+ "version": 1
+}

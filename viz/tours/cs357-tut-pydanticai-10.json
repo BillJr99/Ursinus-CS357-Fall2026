@@ -1,0 +1,32 @@
+{
+ "code": "# step7_skills.py: a skill menu in the instructions, and a tool that loads one skill on demand.\nfrom datetime import date, timedelta\nfrom pathlib import Path\n\nfrom pydantic import BaseModel\nfrom pydantic_ai import Agent, ModelRetry, UsageLimits\n\nfrom common import make_model, show_trace\n\n\nclass SkillCard(BaseModel):\n    name: str\n    description: str\n\n\ndef read_skill(path: Path) -> tuple[SkillCard, str]:\n    _, front, body = path.read_text().split(\"---\", 2)\n    fields = dict(line.split(\":\", 1) for line in front.strip().splitlines())\n    return SkillCard(**{k.strip(): v.strip() for k, v in fields.items()}), body.strip()\n\n\nSKILLS = {p.parent.name: read_skill(p) for p in sorted(Path(\"skills\").glob(\"*/SKILL.md\"))}\n\nagent = Agent(make_model(), model_settings={\"temperature\": 0.0, \"seed\": 42})\n\n\n@agent.instructions\ndef skill_menu() -> str:\n    menu = \"\\n\".join(f\"- {card.name}: {card.description}\" for card, _ in SKILLS.values())\n    return (\"You are a concise study assistant. When a skill fits the task, call load_skill \"\n            \"first and follow it.\\nSkills:\\n\" + menu)\n\n\n@agent.tool_plain\ndef load_skill(name: str) -> str:\n    \"\"\"Loads the full instructions for one skill by name.\"\"\"\n    if name not in SKILLS:       # the registry, not the path, decides what can be read\n        raise ModelRetry(f\"No skill named {name!r}. Choose one of: {', '.join(SKILLS)}\")\n    return SKILLS[name][1]\n\n\n@agent.tool_plain\ndef days_until(target: date) -> int:\n    \"\"\"Returns the number of days from today until the target date.\"\"\"\n    return (target - date.today()).days\n\n\nexam = (date.today() + timedelta(days=5)).isoformat()   # always five days out, whenever you run it\nresult = agent.run_sync(f\"My calculus exam is on {exam} and covers series, integrals, and limits. Plan my studying.\",\n                        usage_limits=UsageLimits(request_limit=6, tool_calls_limit=4))\nprint(result.output)\nshow_trace(result.all_messages())",
+ "description": "The agent receives a compact menu of skill names and descriptions in its instructions and calls load_skill to fetch a skill's full body only when needed.",
+ "example": "cs357-tut-pydanticai-10",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "SkillCard validates the name and description in each SKILL.md YAML front matter, and SKILLS maps each skill folder name to its (SkillCard, body) pair.",
+   "kind": "reveal",
+   "lines": "1-22"
+  },
+  {
+   "description": "The @agent.instructions function skill_menu lists each skill's one-line description and tells the model to call load_skill when a skill fits the task.",
+   "kind": "reveal",
+   "lines": "24-32"
+  },
+  {
+   "description": "load_skill checks that name is in the SKILLS registry (raising ModelRetry with the valid names if not) before returning the skill body.",
+   "kind": "reveal",
+   "lines": "34-40"
+  },
+  {
+   "description": "Register days_until and run the study-planning request with UsageLimits(request_limit=6, tool_calls_limit=4).",
+   "kind": "reveal",
+   "lines": "42-52"
+  }
+ ],
+ "title": "Loading SKILL.md instructions on demand with a skill menu",
+ "version": 1
+}

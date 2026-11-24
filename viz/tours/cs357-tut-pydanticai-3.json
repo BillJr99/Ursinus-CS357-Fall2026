@@ -1,0 +1,27 @@
+{
+ "code": "# step1_paired.py: the Tool Use deck's two tools, now registered with Pydantic AI.\nfrom datetime import date\n\nfrom pydantic_ai import Agent, UsageLimits\n\nfrom common import make_model, show_trace\n\nagent = Agent(\n    make_model(),\n    instructions=\"Answer date questions. Use the tools for today's date and for day counts; never guess them.\",\n    model_settings={\"temperature\": 0.0, \"seed\": 42},\n)\n\n\n@agent.tool_plain\ndef get_today() -> str:\n    \"\"\"Returns today's date in ISO format (YYYY-MM-DD).\"\"\"\n    return date.today().isoformat()\n\n\n@agent.tool_plain\ndef days_until(target: date) -> int:\n    \"\"\"Returns the number of days from today until the target date (positive means the future).\n\n    Args:\n        target: The target date, for example 2026-12-07.\n    \"\"\"\n    return (target - date.today()).days\n\n\nresult = agent.run_sync(\n    \"How many days until the last day of classes, December 7, 2026?\",\n    usage_limits=UsageLimits(request_limit=4),   # the deck's max_steps=4\n)\nprint(result.output)\nshow_trace(result.all_messages())\nprint(result.usage)",
+ "description": "This script registers get_today and days_until with @agent.tool_plain and runs the agent with a four-request limit.",
+ "example": "cs357-tut-pydanticai-3",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "Create an Agent using make_model(), instructions telling the model to use tools for dates rather than guessing, and deterministic model settings.",
+   "kind": "reveal",
+   "lines": "1-12"
+  },
+  {
+   "description": "@agent.tool_plain registers get_today and days_until as tools. Pydantic AI builds each tool's schema from its type hints and docstring.",
+   "kind": "reveal",
+   "lines": "15-29"
+  },
+  {
+   "description": "agent.run_sync runs the prompt with UsageLimits(request_limit=4), then prints the final answer, the full message trace, and token and request usage.",
+   "kind": "reveal",
+   "lines": "31-37"
+  }
+ ],
+ "title": "Registering date tools on a Pydantic AI agent",
+ "version": 1
+}

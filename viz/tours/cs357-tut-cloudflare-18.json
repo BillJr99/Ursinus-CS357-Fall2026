@@ -1,0 +1,32 @@
+{
+ "code": "\n# Hangs forever in CI; there is no one to press a key:\nread -p \"Deploy to production? [y/N] \" ok      # blocks on stdin; the runner waits, then times out\n\n# Non-interactive and idempotent:\nnpx wrangler deploy --name \"$WORKER_NAME\" </dev/null   # </dev/null => any stray prompt gets EOF\n\n# Idempotent setup, create the KV namespace only if it is absent:\nif ! npx wrangler kv namespace list </dev/null | grep -q \"$KV_TITLE\"; then\n  npx wrangler kv namespace create \"$KV_TITLE\" </dev/null\nfi",
+ "description": "Two rules for a CI-safe script: never wait for input, and be idempotent. This block shows a hang and its fixes.",
+ "example": "cs357-tut-cloudflare-18",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Two rules make a script CI-safe: never wait for input, and be idempotent. Line 3 breaks the first rule.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "`read -p` blocks on stdin. In CI there is no one to press a key, so the runner waits and then times out.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "The fix is non-interactive: `</dev/null` sends any stray prompt EOF, so the command proceeds or fails instead of blocking.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "description": "The `if` block shows the second rule. It creates the KV namespace only when it is absent, so running the script twice reaches the same end state.",
+   "kind": "focus",
+   "lines": "8-11"
+  }
+ ],
+ "title": "Automation-Safe Scripts",
+ "version": 1
+}

@@ -1,0 +1,37 @@
+{
+ "code": "\n# Obsidian workspace state; changes on every open/close, no information value\n.obsidian/workspace.json\n.obsidian/workspace-mobile.json\n\n# Graph layout cache; large, regenerated automatically\n.obsidian/graph.json\n\n# Plugin-generated caches\n.obsidian/plugins/obsidian-git/data.json.bak\n.obsidian/.trash/\n\n# OS noise\n.DS_Store\nThumbs.db",
+ "description": "A minimal .gitignore that keeps noisy, auto-regenerated vault files out of GitHub: workspace state, caches, and OS noise.",
+ "example": "cs357-tut-obsidiansync-2",
+ "lang": "gitignore",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a `.gitignore` for an Obsidian vault. The first section ignores workspace state. The comment says these change on every open and close and carry no information value, so `workspace.json` and `workspace-mobile.json` stay out of version control.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "The second section ignores the graph layout cache, `graph.json`. The comment calls it large and regenerated automatically.",
+   "kind": "focus",
+   "lines": "6-7"
+  },
+  {
+   "description": "The third section ignores plugin-generated caches: the git plugin's `data.json.bak` and the `.trash/` directory.",
+   "kind": "focus",
+   "lines": "9-11"
+  },
+  {
+   "description": "The last section ignores OS noise: `.DS_Store` and `Thumbs.db`, the files your operating system creates on its own.",
+   "kind": "focus",
+   "lines": "13-15"
+  },
+  {
+   "answer": ".obsidian/plugins/ and .obsidian/app.json",
+   "kind": "predict",
+   "question": "The page says to keep which two paths in version control so your plugin settings travel with the vault?"
+  }
+ ],
+ "title": "A .gitignore for Obsidian Vaults",
+ "version": 1
+}

@@ -1,0 +1,42 @@
+{
+ "code": "import pytest\n\nCORPUS = [\n    \"The Myrin Library closes at midnight on weekdays.\",\n    \"First-year students may not bring vehicles to campus.\",\n    \"Wismer Center serves continuous dining from 7am to 8pm.\",\n    \"All students must complete a writing seminar in their first year.\",\n    \"The Bakes Center is open to all students with a valid ID.\",\n]\n\ndef search_memory(query, k):\n    raise NotImplementedError  # agent will replace this\n\ndef test_returns_k_results():\n    results = search_memory(\"library hours\", k=2)\n    assert len(results) == 2\n\ndef test_results_are_from_corpus():\n    results = search_memory(\"library hours\", k=2)\n    for r in results:\n        assert r in CORPUS\n\ndef test_k_exceeds_corpus_raises():\n    with pytest.raises(ValueError):\n        search_memory(\"dining\", k=100)\n\ndef test_empty_query_raises():\n    with pytest.raises(ValueError):\n        search_memory(\"\", k=2)\n\ndef test_k_zero_raises():\n    with pytest.raises(ValueError):\n        search_memory(\"library\", k=0)",
+ "description": "A pytest file that states the contract for search_memory as five tests, written before any implementation exists. Running it now shows the red phase.",
+ "example": "cs357-tut-karpathycoding-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a test file. It imports `pytest` and defines `CORPUS`, the in-memory list of text documents the function will search.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "`CORPUS` holds five documents, each a plain string: library hours, first-year vehicles, Wismer dining, the writing seminar, and the Bakes Center.",
+   "kind": "focus",
+   "lines": "4-8"
+  },
+  {
+   "description": "`search_memory` is a stub. Its body raises `NotImplementedError`, and the comment says the agent will replace this. That is why the tests fail first.",
+   "kind": "focus",
+   "lines": "11-12"
+  },
+  {
+   "description": "The first two tests cover AC-1 and AC-2. `test_returns_k_results` checks that `k=2` returns exactly 2 results, and `test_results_are_from_corpus` checks that every returned string is in `CORPUS`, so no hallucinated text is returned.",
+   "kind": "focus",
+   "lines": "14-21"
+  },
+  {
+   "description": "The last three tests cover AC-3, AC-4, and AC-5. Each uses `pytest.raises(ValueError)` to require an error for `k` larger than the corpus, for an empty query string, and for `k=0`.",
+   "kind": "focus",
+   "lines": "23-33"
+  },
+  {
+   "answer": "five",
+   "kind": "predict",
+   "question": "The page says running pytest on this file before any implementation shows how many FAILED lines?"
+  }
+ ],
+ "title": "A Failing Test File for search_memory",
+ "version": 1
+}

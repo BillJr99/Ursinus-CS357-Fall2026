@@ -1,0 +1,37 @@
+{
+ "code": "#!/usr/bin/env bash\n# Checks Node, installs the project's pinned Wrangler if needed, and prints the versions.\nset -euo pipefail\nif ! command -v node >/dev/null; then echo \"Node.js is not installed. Wrangler needs Node 22.12 or newer.\" >&2; exit 1; fi\nneed=22.12.0\nhave=$(node -p 'process.versions.node')\nif [ \"$(printf '%s\\n%s\\n' \"$need\" \"$have\" | sort -V | head -1)\" != \"$need\" ]; then\n  echo \"Node $have is too old; Wrangler needs $need or newer.\" >&2; exit 1\nfi\n[ -d node_modules/wrangler ] || npm ci --no-audit --no-fund\necho \"node $have\"\nnpx wrangler --version",
+ "description": "Script that verifies Node.js version, installs pinned Wrangler if needed, and prints versions before deployment.",
+ "example": "cs357-tut-fullstackwithagents-6",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete check-tools.sh script.",
+   "kind": "reveal",
+   "lines": "1-12"
+  },
+  {
+   "description": "Header: shebang, comment describing purpose, strict error handling.",
+   "kind": "focus",
+   "lines": "1-3"
+  },
+  {
+   "description": "Node check: verify node is installed, set required version 22.12.0, compare with sort -V.",
+   "kind": "focus",
+   "lines": "4-9"
+  },
+  {
+   "description": "Wrangler: install from node_modules/wrangler if not present, using npm ci.",
+   "kind": "focus",
+   "lines": "10"
+  },
+  {
+   "description": "Output: print Node version and Wrangler version.",
+   "kind": "focus",
+   "lines": "11-12"
+  }
+ ],
+ "title": "cloudflare-deploy: check-tools.sh",
+ "version": 1
+}

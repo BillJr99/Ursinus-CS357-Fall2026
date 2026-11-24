@@ -1,0 +1,61 @@
+{
+ "code": "import os, json, time, shutil\n\nROOT = \"handoff-demo\"\nshutil.rmtree(ROOT, ignore_errors=True)   # fresh folder for the demo\nINBOX, CLAIMED, DONE = (os.path.join(ROOT, \"handoff\", d)\n                        for d in (\"inbox\", \"claimed\", \"done\"))\nTRACE = os.path.join(ROOT, \".ai\", \"trace.jsonl\")\nfor d in (INBOX, CLAIMED, DONE, os.path.dirname(TRACE)):\n    os.makedirs(d, exist_ok=True)\n\nSTALE_AFTER = 300  # seconds with no write before a claim may be broken\nTRACE_ID = \"t-task7\"\n\ndef log_action(agent, action, task, rule, **fields):\n    \"\"\"One JSON line per action.  Names and numbers only, never prompt text.\"\"\"\n    record = {\"ts\": round(time.time(), 3), \"trace_id\": TRACE_ID, \"agent\": agent,\n              \"action\": action, \"task\": task, \"rule\": rule}\n    record.update(fields)\n    with open(TRACE, \"a\") as f:\n        f.write(json.dumps(record) + \"\\n\")\n\ndef post_task(name, text):\n    with open(os.path.join(INBOX, name), \"w\") as f:\n        f.write(text)\n\ndef claim(agent, name):\n    src, dst = os.path.join(INBOX, name), os.path.join(CLAIMED, name)\n    try:\n        os.rename(src, dst)              # atomic on one disk: one caller wins\n    except FileNotFoundError:\n        log_action(agent, \"skip\", name, \"handoff-protocol#9\")\n        return False                     # someone else already moved it\n    with open(dst + \".claim\", \"w\") as f:\n        json.dump({\"claimed_by\": agent, \"claimed_at\": time.time()}, f)\n    log_action(agent, \"claim\", name, \"handoff-protocol#8\")\n    return True\n\ndef note(agent, name, text):\n    \"\"\"Append to the notes file.  Each write also counts as a sign of life.\"\"\"\n    with open(os.path.join(CLAIMED, name + \".notes\"), \"a\") as f:\n        f.write(f\"[{agent}] {text}\\n\")\n    log_action(agent, \"note\", name, \"handoff-protocol#8\")\n\ndef last_write(name):\n    with open(os.path.join(CLAIMED, name + \".claim\")) as f:\n        c = json.load(f)\n    notes = os.path.join(CLAIMED, name + \".notes\")\n    newest = c[\"claimed_at\"]\n    if os.path.exists(notes):\n        newest = max(newest, os.path.getmtime(notes))\n    return c, newest\n\ndef take_if_stale(agent, name):\n    c, newest = last_write(name)\n    idle = time.time() - newest\n    if c[\"claimed_by\"] == agent or idle < STALE_AFTER:\n        log_action(agent, \"wait\", name, \"handoff-protocol#10\", idle_s=int(idle))\n        return False                     # the holder may still be working\n    with open(os.path.join(CLAIMED, name + \".claim\"), \"w\") as f:\n        json.dump({\"claimed_by\": agent, \"claimed_at\": time.time(),\n                   \"taken_from\": c[\"claimed_by\"]}, f)\n    log_action(agent, \"break-claim\", name, \"handoff-protocol#10\",\n               idle_s=int(idle), taken_from=c[\"claimed_by\"])\n    return True\n\ndef finish(agent, name, result):\n    os.rename(os.path.join(CLAIMED, name), os.path.join(DONE, name))\n    os.remove(os.path.join(CLAIMED, name + \".claim\"))\n    notes = os.path.join(CLAIMED, name + \".notes\")\n    if os.path.exists(notes):\n        os.rename(notes, os.path.join(DONE, name + \".notes\"))\n    with open(os.path.join(DONE, name.replace(\".md\", \".result.md\")), \"w\") as f:\n        f.write(f\"finished_by: {agent}\\n\\n{result}\\n\")\n    log_action(agent, \"finish\", name, \"handoff-protocol#11\")\n\ndef show():\n    for d in (INBOX, CLAIMED, DONE):\n        print(f\"  {os.path.basename(d)}/: {sorted(os.listdir(d))}\")\n\npost_task(\"task-7.md\", \"Summarize the three failure modes of message passing.\")\nprint(\"A claims:\", claim(\"agent-A\", \"task-7.md\"))\nprint(\"B claims:\", claim(\"agent-B\", \"task-7.md\"))\nnote(\"agent-A\", \"task-7.md\", \"Plan: read Part II, list the modes, cite the deck.\")\nprint(\"B takes over too early:\", take_if_stale(\"agent-B\", \"task-7.md\"))\nshow()\n\n# Agent A dies here.  Move the clock back on both of its writes.\npath = os.path.join(CLAIMED, \"task-7.md.claim\")\nwith open(path) as f:\n    c = json.load(f)\nc[\"claimed_at\"] -= STALE_AFTER + 1\nwith open(path, \"w\") as f:\n    json.dump(c, f)\nold = time.time() - STALE_AFTER - 1\nos.utime(os.path.join(CLAIMED, \"task-7.md.notes\"), (old, old))\n\nprint(\"B takes the stale claim:\", take_if_stale(\"agent-B\", \"task-7.md\"))\nfinish(\"agent-B\", \"task-7.md\", \"Lost message, crashed receiver, unparseable schema.\")\nshow()",
+ "description": "This protocol moves a task through inbox, claimed, and done while recording each action.",
+ "example": "cs357-tut-handoffprotocols-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: copilot free model",
+ "steps": [
+  {
+   "description": "The code creates separate inbox, claimed, and done folders. STALE_AFTER sets the time a claim may sit without a write.",
+   "kind": "reveal",
+   "lines": "3-12"
+  },
+  {
+   "description": "claim moves the task from inbox to claimed with os.rename. On one disk, that move is atomic, so one caller wins.",
+   "kind": "reveal",
+   "lines": "26-36"
+  },
+  {
+   "answer": "No. A's rename moves the file first, so B gets FileNotFoundError and claim returns False.",
+   "kind": "predict",
+   "lines": "81-82",
+   "question": "After agent A claims task-7.md, can agent B claim the same inbox file?"
+  },
+  {
+   "description": "Agent A calls claim for task-7.md.",
+   "kind": "run",
+   "lines": "81",
+   "trace_step": 43
+  },
+  {
+   "description": "note appends a progress note. last_write uses the newer of the claim time and notes-file modification time as the sign of life.",
+   "kind": "reveal",
+   "lines": "38-51"
+  },
+  {
+   "description": "take_if_stale waits while the holder is working or the most recent write is fresh. It replaces the claim only after the claim is stale.",
+   "kind": "reveal",
+   "lines": "53-64"
+  },
+  {
+   "description": "Agent A writes a note, so agent B's early takeover waits.",
+   "kind": "run",
+   "lines": "83",
+   "trace_step": 78
+  },
+  {
+   "description": "finish moves the task into done, moves any notes, writes the result file, and logs the finish action.",
+   "kind": "reveal",
+   "lines": "66-74"
+  },
+  {
+   "description": "After both recorded writes are moved back beyond STALE_AFTER, agent B can take the stale claim and finish it. The final folders place the task, notes, and result in done.",
+   "kind": "run",
+   "lines": "53",
+   "trace_step": 35
+  }
+ ],
+ "title": "Claim tasks with atomic rename",
+ "version": 1
+}

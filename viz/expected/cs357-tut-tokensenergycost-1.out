@@ -1,0 +1,16 @@
+
+per run_id
+run_id   calls   input  output  seconds
+t-77b0       4    9392     701     17.7
+
+per task
+task     calls   input  output  seconds
+T1           2    1392     101      4.7
+T2           2    8000     600     13.0
+
+per agent
+agent    calls   input  output  seconds
+planner      2    4102     553     11.2
+critic       2    5290     148      6.5
+
+average per task: 4696 input, 350 output tokens

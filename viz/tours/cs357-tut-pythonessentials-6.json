@@ -1,0 +1,50 @@
+{
+ "code": "from collections import Counter\n\nvotes = Counter([\"red\", \"blue\", \"red\"])\nprint(votes)\nprint(votes.most_common(1))\nprint(votes.most_common(1)[0][0])",
+ "description": "Counter tallies occurrences and most_common returns the top items as (element, count) pairs.",
+ "example": "cs357-tut-pythonessentials-6",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe free model",
+ "steps": [
+  {
+   "description": "Reveal import: Counter from collections for counting.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "Reveal Counter creation: counts red twice and blue once from the list.",
+   "kind": "reveal",
+   "lines": "3"
+  },
+  {
+   "description": "Reveal first print: shows the Counter object with element: count pairs.",
+   "kind": "reveal",
+   "lines": "4"
+  },
+  {
+   "answer": "[('red', 2)]",
+   "kind": "predict",
+   "lines": "5",
+   "question": "What does most_common(1) return?"
+  },
+  {
+   "description": "Reveal most_common: returns list of tuples, then extracts the top element's name.",
+   "kind": "reveal",
+   "lines": "5-6"
+  },
+  {
+   "description": "Run to show Counter({'red': 2, 'blue': 1}).",
+   "kind": "run",
+   "lines": "4",
+   "trace_step": 2
+  },
+  {
+   "description": "Run to show red as the most common element.",
+   "kind": "run",
+   "lines": "6",
+   "trace_step": 4
+  }
+ ],
+ "title": "Counting with Counter",
+ "version": 1
+}

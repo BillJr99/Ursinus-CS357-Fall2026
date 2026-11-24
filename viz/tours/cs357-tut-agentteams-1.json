@@ -1,0 +1,37 @@
+{
+ "code": "state = {\n  \"goal\":        \"...\",\n  \"facts\":       [{\"claim\": \"...\", \"source\": \"...\", \"verified\": false}],\n  \"draft\":       null,\n  \"issues\":      [],\n  \"status\":      \"researching\"   # researching -> drafting -> checking -> done\n}",
+ "description": "A shared dictionary that holds a team's goal, facts, draft, issues, and status, with the status field acting as a small state machine.",
+ "example": "cs357-tut-agentteams-1",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a minimal blackboard: a shared dictionary that every agent reads and writes. The keys hold the goal, the facts, the draft, the issues, and the status.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "`goal` holds the task, and `facts` is a list of claims. Each claim carries its `source` and a `verified` flag.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "`draft` starts as `null` and holds the writing once it exists. `issues` starts empty and collects problems found during checking.",
+   "kind": "focus",
+   "lines": "4-5"
+  },
+  {
+   "description": "`status` is a tiny state machine. The comment names its path: researching, then drafting, then checking, then done.",
+   "kind": "focus",
+   "lines": "6"
+  },
+  {
+   "answer": "a tiny state machine",
+   "kind": "predict",
+   "question": "The page calls the `status` field what kind of machine?"
+  }
+ ],
+ "title": "A Minimal Blackboard",
+ "version": 1
+}

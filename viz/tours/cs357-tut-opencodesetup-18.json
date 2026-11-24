@@ -1,0 +1,37 @@
+{
+ "code": "docker run -it --rm `\n  --add-host=host.docker.internal:host-gateway `\n  -v \"${PWD}:/workspace\" `\n  -w /workspace `\n  --cap-drop ALL --security-opt no-new-privileges `\n  course-agent",
+ "description": "The Windows version of the docker run, where the line continuations are backticks rather than backslashes and $PWD works the same way.",
+ "example": "cs357-tut-opencodesetup-18",
+ "lang": "powershell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the PowerShell version of the same run. The page notes the line continuations are backticks rather than backslashes, and `$PWD` works the same way.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "`docker run -it --rm` opens the interactive container, with the trailing backtick continuing the line. `--add-host=host.docker.internal:host-gateway` makes `host.docker.internal` resolve on Linux.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "`-v \"${PWD}:/workspace\"` mounts the current directory at `/workspace`, and `-w /workspace` makes it the working directory from the first keystroke.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "`--cap-drop ALL` and `--security-opt no-new-privileges` drop kernel capabilities, and `course-agent` names the image to run.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "answer": "http://host.docker.internal:11434/v1",
+   "kind": "predict",
+   "question": "The page says inside the container the provider's baseURL must be what, because localhost means the container?"
+  }
+ ],
+ "title": "The Same Run in PowerShell",
+ "version": 1
+}

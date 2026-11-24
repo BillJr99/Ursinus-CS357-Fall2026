@@ -1,0 +1,27 @@
+{
+ "code": "\n# Confirms the token is present without exposing a single character of it\nif [ -n \"${CLOUDFLARE_API_TOKEN:-}\" ]; then\n  echo \"CLOUDFLARE_API_TOKEN is set (length ${#CLOUDFLARE_API_TOKEN}).\"\nelse\n  echo \"CLOUDFLARE_API_TOKEN is missing.\" >&2; exit 1\nfi",
+ "description": "A snippet that confirms the token is present without exposing a single character of it.",
+ "example": "cs357-tut-cloudflare-13",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This snippet proves the token arrived without revealing it. It checks whether the variable is set.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "`[ -n \"${CLOUDFLARE_API_TOKEN:-}\" ]` tests that the variable is non-empty. If it is set, the `echo` prints the length, not the value.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "If the token is missing, the script prints a message to standard error and exits with status 1.",
+   "kind": "focus",
+   "lines": "5-7"
+  }
+ ],
+ "title": "Proving a Secret Arrived",
+ "version": 1
+}

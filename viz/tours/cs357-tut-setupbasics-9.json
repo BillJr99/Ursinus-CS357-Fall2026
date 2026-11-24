@@ -1,0 +1,42 @@
+{
+ "code": "python3 -m venv owui\nsource owui/bin/activate        # PowerShell: .\\owui\\Scripts\\Activate.ps1\npython3 -m pip install open-webui\nopen-webui serve",
+ "description": "The pip route for OpenWebUI: create and activate a virtual environment, install the package, and start the server.",
+ "example": "cs357-tut-setupbasics-9",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the pip route, the second way to install OpenWebUI. The page says the install downloads a large dependency set, and the last command starts the server in your terminal, which you leave open.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "`python3 -m venv owui` creates a virtual environment named `owui`.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "`source owui/bin/activate` turns the environment on. In PowerShell the command is `.\\owui\\Scripts\\Activate.ps1`.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "`python3 -m pip install open-webui` installs OpenWebUI into that environment.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "`open-webui serve` starts the server. The page says when the startup banner shows `Uvicorn running on http://0.0.0.0:8080`, the server is up.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "answer": "--break-system-packages",
+   "kind": "predict",
+   "question": "The page says if pip reports externally-managed-environment, do not use which flag?"
+  }
+ ],
+ "title": "Installing OpenWebUI with pip",
+ "version": 1
+}

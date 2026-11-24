@@ -1,0 +1,37 @@
+{
+ "code": "function extractOpenAIText(data) {\n  if (typeof data?.output_text === \"string\" && data.output_text) return data.output_text;\n  const msg = data?.choices?.[0]?.message;\n  if (typeof msg?.content === \"string\") return msg.content;\n  if (Array.isArray(msg?.content)) return msg.content.map(part => part?.text || part?.content || \"\").join(\"\");\n  return \"\";\n}",
+ "description": "A small helper that pulls the reply text out of an OpenAI-style response while tolerating several response shapes.",
+ "example": "cs357-tut-chessaicoach-5",
+ "lang": "js",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "`extractOpenAIText` takes the parsed response object. The page says it tolerates a few response shapes instead of crashing on an unexpected one.",
+   "kind": "reveal",
+   "lines": "1"
+  },
+  {
+   "description": "First it checks for a top-level `output_text` string and returns it when present.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Otherwise it reads `choices[0].message` and returns `message.content` when that is a string.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "When `message.content` is an array, it maps each part to its `text` or `content` and joins them.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "description": "If none of the shapes matched, return an empty string rather than throwing.",
+   "kind": "focus",
+   "lines": "6-7"
+  }
+ ],
+ "title": "extractOpenAIText Helper",
+ "version": 1
+}

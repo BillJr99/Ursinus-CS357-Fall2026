@@ -1,0 +1,25 @@
+Corpus: 'the cat sat on the mat the cat napped'
+Vocabulary (12 characters): [' ', 'a', 'c', 'd', 'e', 'h', 'm', 'n', 'o', 'p', 's', 't']
+
+Token sequence (first 20): [11, 5, 4, 0, 2, 1, 11, 0, 10, 1, 11, 0, 8, 7, 0, 11, 5, 4, 0, 6]
+Decoded: the cat sat on the m
+
+=== CLM Cross-Entropy Loss Comparison ===
+
+Uniform model (random guessing among 12 chars):
+  Average loss: 2.4849   Perplexity: 12.00
+
+Frequency model (always assigns P = token_frequency):
+  Average loss: 2.2399   Perplexity: 9.39
+
+Theoretical minimum loss for uniform model: log(12) = 2.4849
+
+=== Per-position loss (first 10 positions, frequency model) ===
+
+   t  Context (last 5 chars)      True next   P(true)    -log P
+-----------------------------------------------------------------
+   1  't'                               'h'    0.0811    2.5123
+   2  'th'                              'e'    0.1081    2.2246
+   3  'the'                             ' '    0.2162    1.5315
+   4  'the '                            'c'    0.0541    2.9178
+   5  'the c'                           'a'    0.1351    2.0015

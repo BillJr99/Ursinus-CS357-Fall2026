@@ -1,0 +1,32 @@
+{
+ "code": "PROJECT_DIR=\"${PI_PROJECT_DIR:-$PWD}\"\nBASE_IMAGE=\"${PI_BASE_IMAGE:-node:24-bookworm}\"\nPI_PACKAGE=\"${PI_PACKAGE:-@earendil-works/pi-coding-agent@0.85.1}\"\nPI_RUN_AS=\"${PI_RUN_AS:-user}\" # user or root; package bootstrap always runs as root\nPI_OLLAMA_MODEL=\"${PI_OLLAMA_MODEL:-llama3.2}\"\nPI_OLLAMA_URL=\"${PI_OLLAMA_URL:-http://host.docker.internal:11434}\"\nPI_FALLBACK_CONTEXT=\"${PI_FALLBACK_CONTEXT:-8192}\"\nPI_MAX_CONTEXT=\"${PI_MAX_CONTEXT:-0}\" # 0: no extra client ceiling",
+ "description": "Pre-seed pi-openai-compat config with both Ollama and OpenWebUI providers, empty cachedModels to trigger live fetch on first run.",
+ "example": "cs357-tut-terminalfilesystem-8",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Config pre-seed command for the image.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "Setup: mkdir -p for config directory, printf writes JSON config.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Root: previousModel null, providers object starts.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "Ollama: displayName, baseUrl host.docker.internal:11434/v1, apiKey null, cachedModels empty.",
+   "kind": "focus",
+   "lines": "5-8"
+  }
+ ],
+ "title": "Config Pre-Seed: pi-openai-compat",
+ "version": 1
+}

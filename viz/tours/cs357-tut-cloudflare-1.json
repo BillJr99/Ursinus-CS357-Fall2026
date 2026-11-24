@@ -1,0 +1,37 @@
+{
+ "code": "\n# Install Wrangler globally (or use npx wrangler to run without installing)\nnpm install -g wrangler\n\n# Confirm it is installed\nwrangler --version\n\n# Log in - this opens a browser tab; authorize Cloudflare to connect to your account\nwrangler login\n\n# Confirm your account is connected\nwrangler whoami",
+ "description": "Commands that install Wrangler, log in to your Cloudflare account, and confirm the connection.",
+ "example": "cs357-tut-cloudflare-1",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "These commands install Wrangler, Cloudflare's command-line tool. `npm install -g wrangler` installs it globally, and `wrangler --version` confirms it is there.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "The comment notes you can run `npx wrangler` instead to use it without a global install.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "`wrangler login` opens a browser tab and asks you to authorize Cloudflare to connect to your account.",
+   "kind": "focus",
+   "lines": "8-9"
+  },
+  {
+   "description": "`wrangler whoami` confirms your account is connected.",
+   "kind": "focus",
+   "lines": "11-12"
+  },
+  {
+   "answer": "an OAuth credential",
+   "kind": "predict",
+   "question": "The page says `wrangler login` stores what kind of credential on your machine?"
+  }
+ ],
+ "title": "Installing and Connecting Wrangler",
+ "version": 1
+}

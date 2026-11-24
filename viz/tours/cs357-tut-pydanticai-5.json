@@ -1,0 +1,27 @@
+{
+ "code": "# step3_deps.py: typed dependencies, a validated tool, a permission check, and a human approval.\nfrom dataclasses import dataclass, field\nfrom datetime import date\nfrom pathlib import Path\n\nfrom pydantic_ai import (Agent, ApprovalRequired, DeferredToolRequests, DeferredToolResults,\n                         ModelRetry, RunContext, ToolDenied, UsageLimits)\n\nfrom common import make_model, show_trace\n\n\n@dataclass\nclass Deps:\n    today: date                           # injected, so tests can pin it\n    notes_dir: Path                       # the only folder the agent may write to\n    allowed_courses: set[str] = field(default_factory=lambda: {\"CS357\", \"MATH211\"})\n\n\nagent = Agent(\n    make_model(),\n    deps_type=Deps,\n    output_type=[str, DeferredToolRequests],     # a run may end by asking a human\n    instructions=\"You help a student track deadlines. Use the tools; never guess dates.\",\n    model_settings={\"temperature\": 0.0, \"seed\": 42},\n)\n\n\n@agent.tool\ndef days_until(ctx: RunContext[Deps], target: date) -> int:\n    \"\"\"Returns the number of days from today until the target date.\n\n    Args:\n        target: The target date, for example 2026-12-07.\n    \"\"\"\n    if target.year > ctx.deps.today.year + 1:\n        # Valid as a date, but not plausible here: tell the model why so it can try again.\n        raise ModelRetry(f\"{target} is more than a year out; check the year.\")\n    return (target - ctx.deps.today).days\n\n\n@agent.tool\ndef save_deadline(ctx: RunContext[Deps], course: str, due: date, title: str) -> str:\n    \"\"\"Saves a deadline to the student's notes file for one course.\n\n    Args:\n        course: A course code such as CS357.\n        due: The due date.\n        title: A short title for the deadline.\n    \"\"\"\n    # Validation said these are a string and a date. It did not say this write is allowed.\n    if course not in ctx.deps.allowed_courses:\n        return f\"refused: {course} is not one of this student's courses\"\n    if not ctx.tool_call_approved:\n        raise ApprovalRequired()          # pause the run; a person decides\n    path = ctx.deps.notes_dir / f\"{course}.md\"\n    with path.open(\"a\") as f:\n        f.write(f\"- {due.isoformat()}: {title}\\n\")\n    return f\"saved to {path.name}\"",
+ "description": "Tools receive program-supplied dependencies through RunContext[Deps] and combine schema validation, a domain check, a permission check, and human approval.",
+ "example": "cs357-tut-pydanticai-5",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "Deps holds today's date, the notes_dir folder, and the set of allowed_courses. The Agent declares deps_type=Deps and allows DeferredToolRequests as an output type when a tool pauses for approval.",
+   "kind": "reveal",
+   "lines": "1-25"
+  },
+  {
+   "description": "days_until reads ctx.deps.today and raises ModelRetry if the target date is more than a year ahead, sending a correction back to the model.",
+   "kind": "reveal",
+   "lines": "28-39"
+  },
+  {
+   "description": "save_deadline checks whether course is in ctx.deps.allowed_courses, raises ApprovalRequired() if the call is not yet approved, and only then appends the deadline to the course file.",
+   "kind": "reveal",
+   "lines": "41-58"
+  }
+ ],
+ "title": "Typed dependencies, permission checks, and human approval",
+ "version": 1
+}

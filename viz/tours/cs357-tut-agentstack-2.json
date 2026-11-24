@@ -1,0 +1,32 @@
+{
+ "code": "# llmproxy/litellm_config.yaml\nmodel_list:\n  - model_name: llama3\n    litellm_params:\n      model: ollama/llama3\n      api_base: http://host.docker.internal:11434\n  - model_name: qwen2.5-3b\n    litellm_params:\n      model: ollama/qwen2.5:3b\n      api_base: http://host.docker.internal:11434",
+ "description": "The routing file maps public model names to backends with api_base pointing to host.docker.internal.",
+ "example": "cs357-tut-agentstack-2",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete litellm_config.yaml routing file.",
+   "kind": "reveal",
+   "lines": "1-10"
+  },
+  {
+   "description": "File purpose: this is llmproxy/litellm_config.yaml, the gateway routing configuration.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Model mappings: llama3 and qwen2.5-3b each map to ollama backends via host.docker.internal.",
+   "kind": "focus",
+   "lines": "2-10"
+  },
+  {
+   "description": "Api_base: both models use http://host.docker.internal:11434 to reach host-resident Ollama.",
+   "kind": "focus",
+   "lines": "6,10"
+  }
+ ],
+ "title": "Gateway Routing Configuration",
+ "version": 1
+}

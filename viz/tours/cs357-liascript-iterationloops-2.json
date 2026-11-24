@@ -1,0 +1,64 @@
+{
+ "code": "# The corpus and the twelve labeled queries are the practice kit's.  Each variant is a\n# scoring function; the metric is mean reciprocal rank, and higher is better.\n\nDOCS = [\n    (\"kb/docs/01.md\", \"Agents and tools\", \"An agent calls tools to act on the world; tools extend what agents can do.\"),\n    (\"kb/docs/02.md\", \"What is an agent\", \"An agent perceives, plans, and acts in a loop.\"),\n    (\"kb/docs/03.md\", \"Agent memory\", \"Agents forget between requests unless memory is written down.\"),\n    (\"kb/docs/04.md\", \"Local models with Ollama\", \"Ollama serves local models on port 11434.\"),\n    (\"kb/docs/05.md\", \"Prompt patterns\", \"Personas and few-shot examples shape a model's output.\"),\n    (\"kb/docs/06.md\", \"Agent safety gates\", \"A gate in the tool path stops an agent before an irreversible action.\"),\n    (\"kb/docs/07.md\", \"Agents and skills\", \"Skills are instructions an agent loads on demand.\"),\n    (\"kb/docs/08.md\", \"Evaluating agents\", \"Agents are evaluated against an answer key of checks.\"),\n]\n\nQUERIES = [\n    (\"agent that remembers earlier requests\", \"kb/docs/03.md\"),\n    (\"agent that asks permission first\", \"kb/docs/06.md\"),\n    (\"what port does the local server use\", \"kb/docs/04.md\"),\n    (\"how is an agent checked for quality\", \"kb/docs/08.md\"),\n    (\"extra instructions the agent picks up when needed\", \"kb/docs/07.md\"),\n    (\"how do I stop it before it does something irreversible\", \"kb/docs/06.md\"),\n    (\"agent that uses outside capabilities\", \"kb/docs/01.md\"),\n    (\"the basic definition of an agent\", \"kb/docs/02.md\"),\n    (\"giving the model examples in the prompt\", \"kb/docs/05.md\"),\n    (\"serving a model on my own machine\", \"kb/docs/04.md\"),\n    (\"agent scoring against an answer key\", \"kb/docs/08.md\"),\n    (\"perceive plan act\", \"kb/docs/02.md\"),\n]\n\nSTOPWORDS = {\"a\", \"an\", \"the\", \"of\", \"do\", \"does\", \"is\", \"it\", \"i\", \"my\", \"on\",\n             \"in\", \"for\", \"so\", \"what\", \"how\", \"to\", \"and\", \"that\", \"when\", \"up\"}\n\n\ndef make_scorer(drop_stopwords=False, whole_word=False, title_weight=1):\n    \"\"\"Return a scoring function for one variant from Model 4's table.\"\"\"\n    def score(query, title, body):\n        terms = query.lower().split()\n        if drop_stopwords:\n            terms = [t for t in terms if t not in STOPWORDS]\n        if not terms:\n            return 0.0\n        if whole_word:\n            in_title = set(title.lower().split())\n            in_body = set(body.lower().split())\n        else:\n            in_title, in_body = title.lower(), body.lower()\n        earned = 0\n        for t in terms:\n            if t in in_title:\n                earned += title_weight\n            elif t in in_body:\n                earned += 1\n        return earned / (title_weight * len(terms))\n    return score\n\n\ndef mrr(score):\n    \"\"\"Return the mean reciprocal rank of the labeled document over every query.\"\"\"\n    total = 0.0\n    for query, expected in QUERIES:\n        ranked = sorted(DOCS, key=lambda d: -score(query, d[1], d[2]))\n        hits = [d for d in ranked if score(query, d[1], d[2]) > 0]\n        rank = next((i for i, d in enumerate(hits, 1) if d[0] == expected), 0)\n        total += 1 / rank if rank else 0.0\n    return total / len(QUERIES)\n\n\nvariants = [\n    (\"baseline: fraction of terms found\", make_scorer()),\n    (\"attempt 1: drop stopwords\", make_scorer(drop_stopwords=True)),\n    (\"attempt 2: whole words only\", make_scorer(drop_stopwords=True, whole_word=True)),\n    (\"attempt 3: stopwords + title counts twice\", make_scorer(drop_stopwords=True, title_weight=2)),\n]\n\nbest = 0.0\nfor name, score in variants:\n    value = mrr(score)\n    kept = \"kept\" if value > best else \"discarded\"\n    if value > best:\n        best = value\n    print(f\"{value:.3f}  {kept:<10} {name}\")\nprint(f\"\\nbest {best:.3f}, target 0.80\")",
+ "description": "This example runs four scoring variants over a fixed corpus and query set, computes mean reciprocal rank for each, and keeps only variants that improve on the current best.",
+ "example": "cs357-liascript-iterationloops-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: pi free model",
+ "steps": [
+  {
+   "description": "The corpus is eight short documents, each with a path, a title, and a body. The deck calls these the practice kit.",
+   "kind": "reveal",
+   "lines": "1-13"
+  },
+  {
+   "description": "Twelve labeled queries pair a search string with the document that should rank first. These are the ground truth.",
+   "kind": "reveal",
+   "lines": "15-28"
+  },
+  {
+   "description": "A stopword set removes common words that carry little signal.",
+   "kind": "reveal",
+   "lines": "30-31"
+  },
+  {
+   "description": "make_scorer builds a scoring function. Three flags control it: drop stopwords, match whole words only, and weight title matches.",
+   "kind": "reveal",
+   "lines": "34-54"
+  },
+  {
+   "description": "The inner score function splits the query, optionally filters stopwords, then counts matches in title and body. Title matches earn title_weight points; body matches earn one point.",
+   "kind": "focus",
+   "lines": "36-53"
+  },
+  {
+   "answer": "It returns 0 for that query because rank stays 0 and 1/rank is treated as 0.",
+   "kind": "predict",
+   "lines": "57-65",
+   "question": "What does mrr return when a query's expected document never appears in the hits?"
+  },
+  {
+   "description": "mrr computes mean reciprocal rank. For each query it ranks all documents by score, keeps only those with a positive score, finds the expected document's position, and adds 1/rank to the total.",
+   "kind": "reveal",
+   "lines": "57-65"
+  },
+  {
+   "description": "Four variants are defined, each a scorer with different flags. They correspond to the rows in Model 4's table.",
+   "kind": "reveal",
+   "lines": "68-73"
+  },
+  {
+   "description": "The loop evaluates each variant, prints its MRR to three decimals, and marks it kept if it beats the running best. The final line reports the best score and the 0.80 target.",
+   "kind": "reveal",
+   "lines": "75-82"
+  },
+  {
+   "description": "The loop runs: baseline scores 0.667 and is kept. Attempt 1 scores 0.785 and is kept. Attempt 2 scores 0.646 and is discarded. Attempt 3 scores 0.826 and is kept as the new best.",
+   "kind": "run",
+   "lines": "76-81",
+   "trace_step": 4
+  }
+ ],
+ "title": "Scoring retrieval variants with a discard loop",
+ "version": 1
+}

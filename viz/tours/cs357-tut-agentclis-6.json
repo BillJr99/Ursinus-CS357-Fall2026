@@ -1,0 +1,27 @@
+{
+ "code": "# Aider: add to ~/.aider.conf.yml\nopenai-api-base: http://localhost:4000/v1\nopenai-api-key: sk-litellm-local",
+ "description": "Three lines of YAML configure Aider to use the local gateway: openai-api-base points to localhost:4000/v1 and openai-api-key uses the placeholder sk-litellm-local.",
+ "example": "cs357-tut-agentclis-6",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The config adds two keys to ~/.aider.conf.yml: openai-api-base for the gateway URL and openai-api-key for the dummy key.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Line 2 uses the /v1 path suffix for the OpenAI-compatible endpoint.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "answer": "sk-litellm-local",
+   "kind": "predict",
+   "question": "What is the API key value in the Aider config?"
+  }
+ ],
+ "title": "Aider Local Gateway Configuration (YAML)",
+ "version": 1
+}

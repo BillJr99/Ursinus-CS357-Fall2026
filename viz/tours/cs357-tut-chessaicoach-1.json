@@ -1,0 +1,22 @@
+{
+ "code": "\n# From the folder that contains chess-ai-coach.html\npython -m http.server 8000\n\n# then open http://localhost:8000/chess-ai-coach.html",
+ "description": "A tiny local web server that lets you open the chess coach over http instead of file, because browsers restrict fetch from file pages.",
+ "example": "cs357-tut-chessaicoach-1",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "Start Python's built-in web server on port 8000 from the folder that contains `chess-ai-coach.html`. The page says browsers restrict `fetch` from `file://` pages, so you serve the folder over `http://` instead.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Then open `http://localhost:8000/chess-ai-coach.html` in the browser. The page says to leave the provider set to Local only and play a few moves, because the board enforces full chess rules and the opponent replies with no AI and no API key.",
+   "kind": "focus",
+   "lines": "4-5"
+  }
+ ],
+ "title": "Serve the App Locally",
+ "version": 1
+}

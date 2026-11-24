@@ -1,0 +1,92 @@
+{
+ "code": "import os, json, time, tempfile\n\nROOT = tempfile.mkdtemp()\nINBOX, CLAIMED, DONE = (os.path.join(ROOT, d) for d in (\"inbox\", \"claimed\", \"done\"))\nfor d in (INBOX, CLAIMED, DONE):\n    os.makedirs(d, exist_ok=True)\n\nSTALE_AFTER = 300  # seconds; a crashed holder loses the claim after five minutes\n\ndef post_task(name, text):\n    with open(os.path.join(INBOX, name), \"w\") as f:\n        f.write(text)\n\ndef claim(agent, name):\n    src, dst = os.path.join(INBOX, name), os.path.join(CLAIMED, name)\n    try:\n        os.rename(src, dst)          # atomic: exactly one caller can win this\n    except FileNotFoundError:\n        return False                 # someone else already moved it\n    with open(dst + \".claim\", \"w\") as f:\n        json.dump({\"claimed_by\": agent, \"claimed_at\": time.time()}, f)\n    return True\n\ndef take_if_stale(agent, name):\n    path = os.path.join(CLAIMED, name + \".claim\")\n    with open(path) as f:\n        c = json.load(f)\n    age = time.time() - c[\"claimed_at\"]\n    if age < STALE_AFTER:\n        return False                 # the holder may still be working; skip it\n    with open(path, \"w\") as f:\n        json.dump({\"claimed_by\": agent, \"claimed_at\": time.time(),\n                   \"taken_from\": c[\"claimed_by\"]}, f)\n    return True\n\ndef finish(agent, name, result):\n    os.rename(os.path.join(CLAIMED, name), os.path.join(DONE, name))\n    os.remove(os.path.join(CLAIMED, name + \".claim\"))\n    with open(os.path.join(DONE, name.replace(\".md\", \".result.md\")), \"w\") as f:\n        f.write(f\"finished_by: {agent}\\n\\n{result}\\n\")\n\ndef show():\n    for d in (INBOX, CLAIMED, DONE):\n        print(f\"  {os.path.basename(d)}/: {sorted(os.listdir(d))}\")\n\npost_task(\"task-7.md\", \"Summarize the three failure modes of message passing.\")\nprint(\"A claims:\", claim(\"agent-A\", \"task-7.md\"))\nprint(\"B claims:\", claim(\"agent-B\", \"task-7.md\"))\nshow()\n\n# Agent A dies here.  Move the clock forward by backdating its claim.\npath = os.path.join(CLAIMED, \"task-7.md.claim\")\nc = json.load(open(path))\nc[\"claimed_at\"] -= STALE_AFTER + 1\njson.dump(c, open(path, \"w\"))\n\nprint(\"B takes stale claim:\", take_if_stale(\"agent-B\", \"task-7.md\"))\nfinish(\"agent-B\", \"task-7.md\", \"Lost message, crashed receiver, unparseable schema.\")\nshow()",
+ "description": "This example shows a simple task queue using three directories and atomic file renames. Two agents race to claim a task; the loser can take over if the winner's claim goes stale.",
+ "example": "cs357-liascript-observability-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: pi free model",
+ "steps": [
+  {
+   "description": "The script creates a temporary directory with three subdirectories: inbox, claimed, and done. These hold tasks at each stage.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "STALE_AFTER is 300 seconds (5 minutes). A claim older than this is considered abandoned.",
+   "kind": "reveal",
+   "lines": "8"
+  },
+  {
+   "description": "post_task writes a task file into the inbox directory.",
+   "kind": "reveal",
+   "lines": "10-12"
+  },
+  {
+   "description": "claim uses os.rename to atomically move a task from inbox to claimed. The rename is atomic on one filesystem, so exactly one agent wins. The loser gets FileNotFoundError and returns False. The winner writes a .claim file with its name and timestamp.",
+   "kind": "reveal",
+   "lines": "14-22"
+  },
+  {
+   "description": "The atomic rename is the whole protocol. No locks needed because the filesystem guarantees the rename either happens completely or not at all.",
+   "kind": "focus",
+   "lines": "16-17"
+  },
+  {
+   "description": "take_if_stale reads the .claim file, checks if the claim age exceeds STALE_AFTER, and if so, overwrites the claim with the new agent's info and returns True.",
+   "kind": "reveal",
+   "lines": "24-34"
+  },
+  {
+   "description": "finish moves the task from claimed to done, deletes the .claim file, and writes a result file with the finishing agent's name and the result text.",
+   "kind": "reveal",
+   "lines": "36-40"
+  },
+  {
+   "description": "show lists the contents of all three directories so we can see the state.",
+   "kind": "reveal",
+   "lines": "42-44"
+  },
+  {
+   "description": "A task is posted. Agent A claims it (True). Agent B tries to claim it (False). The directories show the task in claimed with its .claim file.",
+   "kind": "reveal",
+   "lines": "46-49"
+  },
+  {
+   "answer": "The claim age exceeds STALE_AFTER, so take_if_stale returns True and agent B becomes the new claimant.",
+   "kind": "predict",
+   "lines": "51-58",
+   "question": "What happens when agent B calls take_if_stale after agent A's claim is backdated past STALE_AFTER?"
+  },
+  {
+   "description": "The script simulates a crash by backdating agent A's claim timestamp by STALE_AFTER + 1 seconds. Then agent B calls take_if_stale and succeeds.",
+   "kind": "reveal",
+   "lines": "51-58"
+  },
+  {
+   "description": "Agent A claims the task. The claim succeeds and the .claim file is written.",
+   "kind": "run",
+   "lines": "47",
+   "trace_step": 29
+  },
+  {
+   "description": "Agent B tries to claim the same task. The file is no longer in inbox, so os.rename raises FileNotFoundError and claim returns False.",
+   "kind": "run",
+   "lines": "48",
+   "trace_step": 38
+  },
+  {
+   "description": "Agent B calls take_if_stale. The backdated claim is older than STALE_AFTER, so the function returns True and agent B takes over.",
+   "kind": "run",
+   "lines": "57",
+   "trace_step": 59
+  },
+  {
+   "description": "Agent B finishes the task. The task moves to done, the .claim file is deleted, and a result file is created with agent B's answer.",
+   "kind": "run",
+   "lines": "37-38",
+   "trace_step": 66
+  }
+ ],
+ "title": "File-based task queue with atomic claims and stale takeover",
+ "version": 1
+}

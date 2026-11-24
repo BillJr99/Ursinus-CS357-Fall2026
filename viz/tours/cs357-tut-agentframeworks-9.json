@@ -1,0 +1,32 @@
+{
+ "code": "pip install \"pydantic-ai-slim[openai,mcp]\" fastmcp\nollama pull llama3.2               # any local model trained for tool calling will do\nollama pull qwen2.5:3b             # recommended for the tool steps (4 to 6); export MODEL=qwen2.5:3b\nexport PYDANTIC_AI_NO_BANNER=1     # hides a start-up banner that otherwise prints on every run",
+ "description": "Installation and model pulling commands for Pydantic AI with Ollama, plus banner suppression.",
+ "example": "cs357-tut-agentframeworks-9",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "All four setup commands for the Pydantic AI environment.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Pip install: pydantic-ai-slim with openai and mcp extras, plus fastmcp.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Model pulling: llama3.2 for general use, qwen2.5:3b recommended for tool steps.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "Banner suppression: PYDANTIC_AI_NO_BANNER=1 hides the startup banner.",
+   "kind": "focus",
+   "lines": "4"
+  }
+ ],
+ "title": "Pydantic AI: Setup Commands",
+ "version": 1
+}

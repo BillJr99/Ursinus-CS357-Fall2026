@@ -1,0 +1,42 @@
+{
+ "code": "# Debian + Bun 1.4.4, pinned by digest so a re-tag upstream cannot change this demo.\nFROM oven/bun:1.4.4-debian@sha256:93d5032fe06d163427822dc1598f420363759bb18155c9cc90eb1be05a64a19e\nUSER root\nRUN apt-get update \\\n && apt-get install -y --no-install-recommends ca-certificates curl \\\n && rm -rf /var/lib/apt/lists/*\nRUN BUN_INSTALL=/opt/omp bun install -g \"@oh-my-pi/pi-coding-agent@18.18.1\" \\\n && ln -sfn /opt/omp/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js /usr/local/bin/omp \\\n && chmod -R a+rX /opt/omp \\\n && /usr/local/bin/omp --version\nRUN chmod 711 /home && mkdir -p /workspace && chown bun:bun /workspace\nUSER bun\nENV HOME=/home/bun\nWORKDIR /workspace\nCMD [\"bash\"]",
+ "description": "Dockerfile for Oh My Pi coding agent on Debian with Bun, pinned by digest, configured for non-root user and workspace mount.",
+ "example": "cs357-tut-containerisolation-3",
+ "lang": "dockerfile",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete Dockerfile for the isolation demo.",
+   "kind": "reveal",
+   "lines": "1-15"
+  },
+  {
+   "description": "Base image: Debian + Bun 1.4.4 pinned by SHA256 digest for reproducibility.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Root user setup: USER root for package installation and system configuration.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "Apt cleanup: update, install ca-certificates and curl, remove apt lists to minimize image size.",
+   "kind": "focus",
+   "lines": "5-6"
+  },
+  {
+   "description": "Oh My Pi installation: BUN_INSTALL=/opt/omp, global install, symlink to /usr/local/bin/omp, permissions fix.",
+   "kind": "focus",
+   "lines": "7-10"
+  },
+  {
+   "description": "User configuration: chmod 711 on /home, mkdir /workspace, chown to bun user, USER bun, HOME env, WORKDIR.",
+   "kind": "focus",
+   "lines": "11-15"
+  }
+ ],
+ "title": "Isolation Demo Dockerfile",
+ "version": 1
+}

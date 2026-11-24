@@ -1,0 +1,39 @@
+{
+ "code": "\n# inject_vault_context.py\n\n# Concatenates all agent-context/*.md files into a system prompt preamble.\n\n# Usage: python inject_vault_context.py | opencode --system-prompt -\nimport os\nimport pathlib\nimport traceback\n\nVAULT_PATH = pathlib.Path.home() / \"Documents\" / \"Obsidian\" / \"MyVault\"\nCONTEXT_DIR = VAULT_PATH / \"agent-context\"\n\ndef load_context() -> str:\n    try:\n        parts = []\n        for md_file in sorted(CONTEXT_DIR.glob(\"*.md\")):\n            parts.append(f\"### {md_file.stem}\\n\")\n            parts.append(md_file.read_text(encoding=\"utf-8\"))\n            parts.append(\"\\n\\n\")\n        return \"\".join(parts)\n    except Exception as e:\n        print(f\"[inject_vault_context:load_context] {e}\")\n        traceback.print_exc()\n        return \"\"\n\nif __name__ == \"__main__\":\n    print(load_context())",
+ "description": "This helper combines Markdown files from agent-context into one system-prompt preamble.",
+ "example": "cs357-tut-obsidiansync-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: copilot free model",
+ "steps": [
+  {
+   "description": "The script names its vault and agent-context folder with pathlib paths.",
+   "kind": "reveal",
+   "lines": "2-12"
+  },
+  {
+   "description": "load_context finds Markdown files in sorted order. For each file, it adds a heading from the filename and then the file contents.",
+   "kind": "reveal",
+   "lines": "14-20"
+  },
+  {
+   "answer": "It uses sorted on the matching Markdown paths, so it adds them in sorted filename order.",
+   "kind": "predict",
+   "lines": "17-21",
+   "question": "In what order does the helper add context files?"
+  },
+  {
+   "description": "The function joins the collected parts. If an exception occurs, it prints the error and returns an empty string.",
+   "kind": "reveal",
+   "lines": "21-25"
+  },
+  {
+   "description": "When the file runs as a program, it prints the combined context string.",
+   "kind": "run",
+   "lines": "28",
+   "trace_step": 7
+  }
+ ],
+ "title": "Load vault context files",
+ "version": 1
+}

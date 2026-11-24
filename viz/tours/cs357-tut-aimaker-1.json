@@ -1,0 +1,42 @@
+{
+ "code": "\n# The pattern in miniature: the spec exists as a failing test first.\nimport unittest, traceback\nfrom converter import to_celsius\n\nclass TestConverter(unittest.TestCase):\n    def test_freezing(self):  self.assertEqual(to_celsius(32), 0)\n    def test_negative_forty(self): self.assertEqual(to_celsius(-40), -40)\n    def test_rejects_nonnumeric(self):\n        with self.assertRaises(ValueError):   # the comma bug, pre-decided\n            to_celsius(\"1,000\")\n\nif __name__ == \"__main__\":\n    try:\n        unittest.main()\n    except Exception as e:\n        print(f\"[test_converter:main] {e}\")\n        traceback.print_exc()",
+ "description": "A unittest file that states the contract for a to_celsius function before any implementation exists, including a test that pre-decides the comma bug.",
+ "example": "cs357-tut-aimaker-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a test file for a `to_celsius` function. It imports `unittest` and `traceback`, pulls in `to_celsius` from `converter`, and starts a `TestConverter` class.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "The comment states the pattern: the spec exists as a failing test first.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "`test_freezing` and `test_negative_forty` are two contracts: 32 degrees Fahrenheit is 0 Celsius, and -40 is -40.",
+   "kind": "focus",
+   "lines": "7-8"
+  },
+  {
+   "description": "`test_rejects_nonnumeric` uses `assertRaises(ValueError)` to require an error for `\"1,000\"`. The comment calls this the comma bug, pre-decided.",
+   "kind": "focus",
+   "lines": "9-11"
+  },
+  {
+   "description": "The main block runs the tests with `unittest.main`, and the `try`/`except` prints any exception and its traceback.",
+   "kind": "focus",
+   "lines": "13-18"
+  },
+  {
+   "answer": "test_rejects_nonnumeric",
+   "kind": "predict",
+   "question": "Which test pre-decides the comma-bug behavior?"
+  }
+ ],
+ "title": "A Test File First",
+ "version": 1
+}

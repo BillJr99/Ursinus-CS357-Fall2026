@@ -1,0 +1,42 @@
+{
+ "code": "# The dev container: Node 22 (for Wrangler), git, OpenCode, and Oh My Pi. It sees one folder.\nFROM node:22-bookworm\nRUN apt-get update \\\n && apt-get install -y --no-install-recommends git ca-certificates curl \\\n && rm -rf /var/lib/apt/lists/*\n# Pinned versions, so the box you build next month behaves like the one in the tutorial.\nRUN npm install -g --no-audit --no-fund opencode-ai@1.19.5 bun@1.4.4\nRUN BUN_INSTALL=/opt/omp bun install -g \"@oh-my-pi/pi-coding-agent@18.20.0\" \\\n && ln -sfn /opt/omp/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js /usr/local/bin/omp \\\n && chmod -R a+rX /opt/omp\nRUN mkdir -p /work && chmod 777 /work\nWORKDIR /work\nCMD [\"bash\"]",
+ "description": "Node 22-based container with git, OpenCode, and Oh My Pi installed at pinned versions, mounting only one folder.",
+ "example": "cs357-tut-fullstackwithagents-1",
+ "lang": "dockerfile",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete Dockerfile for the dev container.",
+   "kind": "reveal",
+   "lines": "1-13"
+  },
+  {
+   "description": "Base: Node 22-bookworm as the foundation for Wrangler.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Apt: install git, ca-certificates, curl, then clean apt lists to minimize image.",
+   "kind": "focus",
+   "lines": "3-5"
+  },
+  {
+   "description": "Pinned tools: opencode-ai@1.19.5 and bun@1.4.4 installed globally with no audit/fund.",
+   "kind": "focus",
+   "lines": "6-7"
+  },
+  {
+   "description": "Oh My Pi: BUN_INSTALL path, global install of @oh-my-pi/pi-coding-agent@18.20.0, symlink to /usr/local/bin/omp.",
+   "kind": "focus",
+   "lines": "8-10"
+  },
+  {
+   "description": "Workspace: mkdir /work with 777 permissions, WORKDIR /work, CMD bash.",
+   "kind": "focus",
+   "lines": "11-13"
+  }
+ ],
+ "title": "Dev Container Dockerfile",
+ "version": 1
+}

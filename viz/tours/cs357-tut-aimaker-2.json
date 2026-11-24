@@ -1,0 +1,42 @@
+{
+ "code": "\n# .github/workflows/ci.yml\nname: CI\non: [push, pull_request]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-python@v5\n        with:\n          python-version: \"3.12\"\n      - run: pip install -r requirements.txt\n      - run: python -m pytest tests/ -v",
+ "description": "A workflow that runs on every push and pull request, sets up Python 3.12, installs dependencies, and runs the test suite.",
+ "example": "cs357-tut-aimaker-2",
+ "lang": "yaml",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is a GitHub Actions workflow. The comment names its path, `.github/workflows/ci.yml`. It defines one job named `test` that runs on `ubuntu-latest`.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "`on: [push, pull_request]` is the trigger. Your automated checks attach to the development process here.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "The steps check out the repository and set up Python 3.12.",
+   "kind": "focus",
+   "lines": "9-12"
+  },
+  {
+   "description": "`pip install -r requirements.txt` installs the project's dependencies.",
+   "kind": "focus",
+   "lines": "13"
+  },
+  {
+   "description": "`python -m pytest tests/ -v` runs the test suite. This is the second line where your checks attach.",
+   "kind": "focus",
+   "lines": "14"
+  },
+  {
+   "answer": "charm",
+   "kind": "predict",
+   "question": "The page calls CI \"the referee that no agent can\" do what?"
+  }
+ ],
+ "title": "A GitHub Actions CI Workflow",
+ "version": 1
+}

@@ -1,0 +1,37 @@
+{
+ "code": "{\n  \"provider\": {\n    \"myendpoint\": {\n      \"npm\": \"@ai-sdk/openai-compatible\",\n      \"name\": \"My Endpoint\",\n      \"options\": {\n        \"baseURL\": \"https://YOUR-ENDPOINT/api/v1\"\n      }\n    }\n  }\n}",
+ "description": "A step in connecting an OpenAI-compatible endpoint: name the address in opencode.json, with no key and no models map yet.",
+ "example": "cs357-tut-opencodesetup-5",
+ "lang": "json",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This provider block holds only the address. It is step 2 of the page's route for connecting a hosted, OpenAI-compatible endpoint.",
+   "kind": "reveal",
+   "lines": "1-11"
+  },
+  {
+   "description": "The provider ID is `myendpoint`, a placeholder. The page says to pick a short ID and type the same word again in step 3.",
+   "kind": "focus",
+   "lines": "3-4"
+  },
+  {
+   "description": "`name` is the display label, `My Endpoint`.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "description": "`options.baseURL` is `https://YOUR-ENDPOINT/api/v1`, a placeholder address. There is no key and no `models` map here, because the plugin fills the models in on the next start.",
+   "kind": "focus",
+   "lines": "6-8"
+  },
+  {
+   "answer": "the /connect step",
+   "kind": "predict",
+   "question": "The plugin fills the models map in from the endpoint. Where does the key come from in this route?"
+  }
+ ],
+ "title": "A Provider Block with Address Only",
+ "version": 1
+}

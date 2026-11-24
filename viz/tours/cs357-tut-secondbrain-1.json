@@ -1,0 +1,46 @@
+{
+ "code": "\n# The git blob SHA, demystified: this reproduces `git hash-object` exactly.\nimport hashlib, traceback\n\ndef git_blob_sha(content: str) -> str:\n    try:\n        raw = content.encode(\"utf-8\")                # BYTES, not characters\n        header = f\"blob {len(raw)}\\0\".encode(\"utf-8\")\n        return hashlib.sha1(header + raw).hexdigest()\n    except Exception as e:\n        print(f\"[secondbrain:git_blob_sha] {e}\")\n        traceback.print_exc()\n        return \"\"\n\nnote = \"# CS357\\nAgentic AI, Fall 2026.\\n\"\nprint(\"blob sha:\", git_blob_sha(note))\nprint(\"plain sha1 (WRONG for git):\", hashlib.sha1(note.encode()).hexdigest())\n\n# Multi-byte check: byte length vs character count matters\nemoji_note = \"café ☕\\n\"\nprint(\"bytes:\", len(emoji_note.encode(\"utf-8\")), \"chars:\", len(emoji_note))",
+ "description": "This function reproduces Git's blob hash by hashing its byte-length header and content together.",
+ "example": "cs357-tut-secondbrain-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: copilot free model",
+ "steps": [
+  {
+   "description": "The code uses hashlib to reproduce git hash-object's blob hashing.",
+   "kind": "reveal",
+   "lines": "2-3"
+  },
+  {
+   "description": "git_blob_sha encodes the content as UTF-8 bytes, builds Git's blob header from the byte length, and hashes header plus content.",
+   "kind": "reveal",
+   "lines": "5-9"
+  },
+  {
+   "answer": "No. The Git blob SHA includes the blob header before it hashes the content.",
+   "kind": "predict",
+   "lines": "16-17",
+   "question": "Will the Git blob SHA and the plain SHA-1 of the note match?"
+  },
+  {
+   "description": "The first print shows the blob SHA for the note.",
+   "kind": "run",
+   "lines": "16",
+   "trace_step": 3
+  },
+  {
+   "description": "The second print shows a different plain SHA-1, labeled wrong for Git.",
+   "kind": "run",
+   "lines": "17",
+   "trace_step": 9
+  },
+  {
+   "description": "The multi-byte example prints 10 bytes and 7 characters, showing why the header uses byte length.",
+   "kind": "run",
+   "lines": "21",
+   "trace_step": 11
+  }
+ ],
+ "title": "Compute a Git blob SHA",
+ "version": 1
+}

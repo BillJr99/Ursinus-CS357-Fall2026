@@ -1,0 +1,34 @@
+{
+ "code": "# Cell 1: the corpus, and the golden set written before anything is indexed.\nCORPUS = {   # four invented files about a bicycle co-op; every fact in them is synthetic\n    \"hours.md\": \"\"\"# Hours\n\nThe co-op workshop is open Tuesday and Thursday from 4pm to 8pm, and Saturday from 10am to 2pm.\n\nThe workshop is closed on college holidays. Volunteers post closures on the front door.\"\"\",\n    \"membership.md\": \"\"\"# Membership\n\nA semester membership costs $15 and includes unlimited stand time. Students with a college ID pay $10.\n\nEvery member completes a 30-minute orientation before using a repair stand.\"\"\",\n    \"tools.md\": \"\"\"# Tools\n\nTruing stands and wheel tools stay in the workshop. Members may borrow a pump or a tire lever overnight for a $5 deposit.\n\nThe parts washer uses citrus degreaser only. Never pour solvent into the parts washer.\"\"\",\n    \"safety.md\": \"\"\"# Safety\n\nSafety glasses are required whenever anyone is cutting a cable or a chain.\n\nReport any injury to the shift volunteer, who records it in the incident binder before the shift ends.\"\"\",\n}\n\nGOLDEN = [   # (question, a phrase only the right passage contains, the fact a right answer states)\n    (\"How much does a membership cost for a student?\", \"pay $10\",               \"$10\"),\n    (\"When is the workshop open on Saturday?\",          \"Saturday from 10am\",    \"10am to 2pm\"),\n    (\"Can I take a pump home overnight?\",                \"borrow a pump\",         \"$5\"),\n    (\"What do I need before using a repair stand?\",     \"30-minute orientation\", \"orientation\"),\n    (\"Who do I tell if I get hurt?\",                     \"Report any injury\",     \"shift volunteer\"),\n    (\"Does the co-op sell new bikes?\",                   None,                    None),\n]\nprint(f\"{len(CORPUS)} files, {len(GOLDEN)} golden questions, \"\n      f\"{sum(1 for _, ev, _ in GOLDEN if ev is None)} the notes cannot answer\")",
+ "description": "This cell defines a synthetic co-op corpus and questions that test retrievable facts and abstention.",
+ "example": "cs357-tut-ragfromzero-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: copilot free model",
+ "steps": [
+  {
+   "description": "CORPUS stores four invented Markdown files about hours, membership, tools, and safety at a bicycle co-op.",
+   "kind": "reveal",
+   "lines": "1-23"
+  },
+  {
+   "description": "Each golden entry contains a question, an evidence phrase, and the fact a correct answer must state. The final question has None values because the notes cannot answer it.",
+   "kind": "reveal",
+   "lines": "25-31"
+  },
+  {
+   "answer": "One golden question has no evidence phrase.",
+   "kind": "predict",
+   "lines": "33-34",
+   "question": "How many golden questions have no evidence phrase in the notes?"
+  },
+  {
+   "description": "The cell prints 4 files, 6 golden questions, and 1 question the notes cannot answer.",
+   "kind": "run",
+   "lines": "33-34",
+   "trace_step": 6
+  }
+ ],
+ "title": "Define a RAG golden set",
+ "version": 1
+}

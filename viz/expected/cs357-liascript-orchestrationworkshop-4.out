@@ -1,0 +1,13 @@
+1. EXTRACT ->
+Chess club | Thursday | 7pm | Olin 107
+Hawk Hacks | Saturday | 10am | IDDC
+Ultimate frisbee pickup | Sunday | 2pm | the quad
+2. DRAFT ->
+Chess club is on Thursday at 7pm (Olin 107). Hawk Hacks is on Saturday at 10am (IDDC). Ultimate frisbee pickup is on Sunday at 2pm (the quad).
+3. POLISH ->
+Chess club: Friday at 7pm (Olin 107). Hawk Hacks: Saturday at 10am (IDDC). Ultimate frisbee pickup: Sunday at 2pm (the quad).
+4. CHECK -> ['Chess club: Thursday at 7pm']
+   polish broke a fact; returning the draft, with the problem attached
+
+RESULT: Chess club is on Thursday at 7pm (Olin 107). Hawk Hacks is on Saturday at 10am (IDDC). Ultimate frisbee pickup is on Sunday at 2pm (the quad).
+model calls: 3

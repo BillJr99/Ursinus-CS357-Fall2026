@@ -1,0 +1,42 @@
+{
+ "code": "\n# Install: pip install transformers shap\nfrom transformers import pipeline\nimport shap\n\n# Load a sentiment model\nsentiment = pipeline(\"sentiment-analysis\",\n                     model=\"distilbert-base-uncased-finetuned-sst-2-english\")\n\nsentences = [\n    \"This movie was not bad at all.\",   # negation\n    \"Oh sure, the service was fantastic.\",  # sarcasm\n    \"I absolutely loved every minute of this film.\",  # straightforward positive\n    \"The plot was confusing but the acting saved it.\",  # mixed\n    \"It was fine.\"  # ambiguous\n]\n\n# Get predictions\nresults = [sentiment(s)[0] for s in sentences]\n\n# Get SHAP explanations (may take a minute)\nexplainer = shap.Explainer(sentiment)\nshap_values = explainer(sentences)\nshap.plots.text(shap_values[0])  # display explanation for first sentence",
+ "description": "Load a pre-trained sentiment model and use SHAP to produce token-level attributions for five test sentences.",
+ "example": "cs357-tut-explainabilitydeep-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete SHAP sentiment analysis code.",
+   "kind": "reveal",
+   "lines": "1-24"
+  },
+  {
+   "description": "Imports: transformers pipeline and shap libraries.",
+   "kind": "focus",
+   "lines": "2-4"
+  },
+  {
+   "description": "Model loading: distilbert-base-uncased-finetuned-sst-2-english for sentiment analysis.",
+   "kind": "focus",
+   "lines": "6-8"
+  },
+  {
+   "description": "Test sentences: negation, sarcasm, positive, mixed, and ambiguous examples.",
+   "kind": "focus",
+   "lines": "10-16"
+  },
+  {
+   "description": "Predictions: sentiment analysis results for each sentence.",
+   "kind": "focus",
+   "lines": "18-19"
+  },
+  {
+   "description": "SHAP explanation: explainer creation, shap_values computation, and text plot for first sentence.",
+   "kind": "focus",
+   "lines": "21-24"
+  }
+ ],
+ "title": "SHAP Sentiment Analysis Explanation",
+ "version": 1
+}

@@ -1,0 +1,27 @@
+{
+ "code": "tmux new -s ex6            # persistent session\ncd ~/cs357-exercise6\nclaude                     # give it a multi-step goal\n# press Ctrl-b then d      -> detach; the agent keeps running\ntmux ls                    # confirm the session still exists\ntmux attach -t ex6         # reattach and inspect progress",
+ "description": "Six commands create a persistent tmux session, change to an exercise directory, launch claude with a multi-step goal, detach with Ctrl-b d, list sessions to confirm it exists, then reattach to inspect progress.",
+ "example": "cs357-tut-agentclis-17",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The sequence creates session 'ex6', runs claude inside it, detaches with Ctrl-b then d, confirms the session persists with tmux ls, and reattaches to see progress made while detached.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "Line 4 is the detach keystroke: the agent keeps running on the multiplexer's persistent server after you close the view.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "answer": "reattached session shows progress made after detach (new files, more test output, or a completed task)",
+   "kind": "predict",
+   "question": "What confirms the agent kept working while you were gone?"
+  }
+ ],
+ "title": "Exercise 6: Detach and Reattach with tmux",
+ "version": 1
+}

@@ -1,0 +1,22 @@
+{
+ "code": "pwd                  # print working directory: where am I right now?\nls                   # list all files and folders here\nls -la               # list everything including hidden files, with full details (size, owner, date)\ncd projects          # change directory INTO the folder named \"projects\"\ncd ..                # go UP one level to the parent folder\ncd ~                 # jump directly to your home directory, no matter where you are\ncd -                 # jump back to wherever you just were (like a browser Back button)",
+ "description": "These seven commands print the working directory, list visible and hidden files, and move around the directory tree with cd.",
+ "example": "cs357-tut-shell-2",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: gemini",
+ "steps": [
+  {
+   "description": "pwd prints your current working directory, ls lists the files and folders in it, and ls -la includes hidden files (whose names start with a dot) along with size, owner, and date.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "cd projects enters the projects subfolder, cd .. moves up one level to the parent folder, cd ~ jumps to your home directory, and cd - returns to the previous directory.",
+   "kind": "reveal",
+   "lines": "4-7"
+  }
+ ],
+ "title": "Checking your current folder, listing files, and changing directories",
+ "version": 1
+}

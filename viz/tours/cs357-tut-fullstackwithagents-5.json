@@ -1,0 +1,37 @@
+{
+ "code": "P=https://raw.githubusercontent.com/mattpocock/skills/5863806dd4e15c63174bee4e7515a4256792ecfa\nfor f in productivity/grilling/SKILL.md productivity/grill-me/SKILL.md \\\n         engineering/tdd/SKILL.md engineering/tdd/tests.md engineering/tdd/mocking.md \\\n         engineering/code-review/SKILL.md \\\n         engineering/codebase-design/SKILL.md engineering/codebase-design/DEEPENING.md engineering/codebase-design/DESIGN-IT-TWICE.md \\\n         engineering/improve-codebase-architecture/SKILL.md engineering/improve-codebase-architecture/HTML-REPORT.md; do\n  d=.agents/skills/$(basename \"$(dirname \"$f\")\")\n  mkdir -p \"$d\" && curl -fsSL \"$P/skills/$f\" -o \"$d/$(basename \"$f\")\"\ndone\ncurl -fsSL \"$P/LICENSE\" -o .agents/skills/LICENSE-mattpocock-skills.txt",
+ "description": "Shell loop to download six skills from Matt Pocock's repository at a pinned commit for reproducibility.",
+ "example": "cs357-tut-fullstackwithagents-5",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Complete skill installation script.",
+   "kind": "reveal",
+   "lines": "1-10"
+  },
+  {
+   "description": "Pinning: P variable set to specific commit hash for reproducibility.",
+   "kind": "focus",
+   "lines": "1-2"
+  },
+  {
+   "description": "Skill list: six skills from productivity and engineering folders with their files.",
+   "kind": "focus",
+   "lines": "2-6"
+  },
+  {
+   "description": "Destination: d variable computes skill path, mkdir -p creates it, curl downloads each file.",
+   "kind": "focus",
+   "lines": "7-8"
+  },
+  {
+   "description": "License: curl downloads LICENSE to LICENSE-mattpocock-skills.txt.",
+   "kind": "focus",
+   "lines": "9-10"
+  }
+ ],
+ "title": "Install Pocock's Skills",
+ "version": 1
+}

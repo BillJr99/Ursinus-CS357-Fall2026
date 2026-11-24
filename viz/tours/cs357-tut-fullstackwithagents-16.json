@@ -1,0 +1,42 @@
+{
+ "code": "curl -s localhost:8787/api/questions\ncurl -s -X POST -H 'content-type: application/json' -d '{\"text\":\"How does D1 run locally?\"}' localhost:8787/api/questions\ncurl -s -X POST localhost:8787/api/questions/1/upvote\ncurl -s -X POST -H 'content-type: application/json' -d '{\"text\":\"   \"}' localhost:8787/api/questions\ncurl -s localhost:8787/api/nope",
+ "description": "Commands to start the local development server and test the API endpoints with curl.",
+ "example": "cs357-tut-fullstackwithagents-16",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Five curl commands for testing.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "Empty list: curl localhost:8787/api/questions should return empty array.",
+   "kind": "focus",
+   "lines": "1"
+  },
+  {
+   "description": "Create: POST with JSON body to add a question, expects created question with votes:0.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "description": "Upvote: POST to /api/questions/1/upvote, expects same question with votes:1.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "Validation: POST with empty text, expects 400 error about length.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "404: GET /api/nope, expects not found error.",
+   "kind": "focus",
+   "lines": "5"
+  }
+ ],
+ "title": "Run It Yourself: Local Development",
+ "version": 1
+}

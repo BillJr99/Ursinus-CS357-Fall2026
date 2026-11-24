@@ -1,0 +1,27 @@
+{
+ "code": "\n# wrangler.toml (committed to your repository; only non-sensitive values here)\n[vars]\nMODEL_NAME = \"claude-3-5-sonnet-20241022\"    # safe to commit: not a secret\nENVIRONMENT = \"production\"                    # safe to commit: not a secret",
+ "description": "The vars table that holds non-secret configuration in the config file, committed to the repository on purpose.",
+ "example": "cs357-tut-cloudflare-7",
+ "lang": "toml",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This is the `[vars]` table in `wrangler.toml`. It holds configuration that is not secret, and it is committed to your repository.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "`MODEL_NAME` and `ENVIRONMENT` are plain values. Both comments note they are safe to commit because they are not secrets.",
+   "kind": "focus",
+   "lines": "4-5"
+  },
+  {
+   "description": "The comment reminds you to keep only non-sensitive values in this file.",
+   "kind": "focus",
+   "lines": "2"
+  }
+ ],
+ "title": "The Vars Table in wrangler.toml",
+ "version": 1
+}

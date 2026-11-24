@@ -1,0 +1,47 @@
+{
+ "code": "from crewai import Agent, Task, Crew, Process\nfrom crewai_tools import SerperDevTool  # web search tool\n\nresearcher = Agent(role=\"Researcher\",\n                   goal=\"Find accurate and relevant passages for the question\",\n                   backstory=\"You are a rigorous academic researcher who finds primary sources.\",\n                   tools=[SerperDevTool()])\ndrafter    = Agent(role=\"Drafter\",\n                   goal=\"Write a clear, well-structured response using the passages\",\n                   backstory=\"You are a skilled technical writer.\")\ncritic     = Agent(role=\"Critic\",\n                   goal=\"Identify logical gaps and unsupported claims in the draft\",\n                   backstory=\"You are a demanding editor who catches every weakness.\")\n\ntask_r = Task(description=\"Research the following question: {question}\",\n              agent=researcher, expected_output=\"A list of 3-5 relevant passages with sources\")\ntask_d = Task(description=\"Write a response using the research passages: {passages}\",\n              agent=drafter,    expected_output=\"A 3-paragraph response draft\")\ntask_c = Task(description=\"Critique the following draft: {draft}\",\n              agent=critic,     expected_output=\"A bullet list of 3-5 revision notes\")\n\ncrew = Crew(agents=[researcher, drafter, critic],\n            tasks=[task_r, task_d, task_c],\n            process=Process.sequential)\ncrew.kickoff(inputs={\"question\": q})",
+ "description": "Agents defined by plain-English role, goal, and backstory, with sequential task execution and implicit data passing.",
+ "example": "cs357-tut-agentframeworks-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Agent definitions: Researcher with web search tool, Drafter as technical writer, Critic as demanding editor.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "Researcher: role, goal for finding passages, backstory as rigorous academic, and SerperDevTool.",
+   "kind": "focus",
+   "lines": "4-7"
+  },
+  {
+   "description": "Drafter and Critic: Drafter writes responses from passages, Critic identifies gaps and weaknesses.",
+   "kind": "focus",
+   "lines": "8-13"
+  },
+  {
+   "description": "Task definitions that bind agents to descriptions and expected outputs.",
+   "kind": "reveal",
+   "lines": "15-20"
+  },
+  {
+   "description": "Task_r: Researcher task takes question, produces 3-5 passages with sources.",
+   "kind": "focus",
+   "lines": "15-16"
+  },
+  {
+   "description": "Task_d and task_c: Drafter consumes passages, Critic consumes draft, each with specific output formats.",
+   "kind": "focus",
+   "lines": "17-20"
+  },
+  {
+   "description": "Crew assembly: agents list, tasks list, sequential process, and kickoff with question input.",
+   "kind": "focus",
+   "lines": "22-25"
+  }
+ ],
+ "title": "CrewAI: Declarative Agent Roles",
+ "version": 1
+}

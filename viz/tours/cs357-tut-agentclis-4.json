@@ -1,0 +1,27 @@
+{
+ "code": "export ANTHROPIC_BASE_URL=http://localhost:4000   # redirect all API calls to local gateway\nexport ANTHROPIC_API_KEY=sk-litellm-local         # dummy key accepted by the local proxy\nclaude        # now running against local models through the gateway",
+ "description": "A scenario question tests understanding of auto-accept edits mode: the agent proposes pip install requests during a refactor, and the correct answer is that shell commands still pause even when file edits are auto-accepted.",
+ "example": "cs357-tut-agentclis-4",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: omp free model",
+ "steps": [
+  {
+   "description": "The block presents a multiple-choice question about what happens when auto-accept edits mode encounters a pip install command.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "The correct answer (option 2) states that auto-accept edits waives prompts for file edits only; shell commands like pip install still pause at a gate.",
+   "kind": "focus",
+   "lines": "2"
+  },
+  {
+   "answer": "It stops at a gate: auto-accept edits waives the prompt for *file edits only*; a shell command like `pip install` still pauses, which is the whole point of a mode that sits between \"ask\" and \"full-auto\"",
+   "kind": "predict",
+   "question": "Which option correctly describes the gate behavior?"
+  }
+ ],
+ "title": "Auto-Accept Edits Mode Question",
+ "version": 1
+}

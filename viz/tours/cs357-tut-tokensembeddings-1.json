@@ -1,0 +1,60 @@
+{
+ "code": "import numpy as np\nnp.set_printoptions(precision=4, suppress=True)\nvocab = [\"the\", \"cat\", \"sat\", \"ran\", \"mat\"]\n\n# --- Part I: embeddings + positions ---\nE = {\"the\":[1,0], \"cat\":[0,1], \"sat\":[1,1], \"ran\":[-1,1], \"mat\":[1,-1]}\npos = {0:np.array([0.,0]), 1:np.array([1.,0])}\nx_the = np.array(E[\"the\"], float) + pos[0]     # (1,0)\nx_cat = np.array(E[\"cat\"], float) + pos[1]     # (1,1)\nX = np.stack([x_the, x_cat])\nprint(\"x_the =\", x_the, \"  x_cat =\", x_cat)\n\n# --- Part II: Q/K/V projections (row-vector convention q = x @ W) ---\nW_Q = np.array([[0.,1],[1,0]])   # swap\nW_K = np.array([[1.,1],[0,1]])   # shear\nW_V = np.array([[0.,1],[1,0]])   # swap\nq, k, v = X @ W_Q, X @ W_K, X @ W_V\nprint(\"q =\", q.tolist(), \" k =\", k.tolist(), \" v =\", v.tolist())\n\n# attention for the last token \"cat\"\nq_cat = q[1]\nscores = k @ q_cat\nscaled = scores / np.sqrt(2)\nex = np.exp(scaled); alpha = ex / ex.sum()\ncontext = alpha @ v\nprint(\"scores =\", scores, \" scaled =\", np.round(scaled,4))\nprint(\"attention weights =\", np.round(alpha,4), \" context =\", np.round(context,4))\n\n# --- Part III: FFN -> logits -> softmax -> sample ---\nW1 = np.array([[1.,0],[1,1]]); b1 = np.array([0.,0])\nh = np.maximum(context @ W1 + b1, 0.0)          # ReLU\nW_U = np.array([[1.,0],[0,1],[1,1],[-1,1],[1,-1]])\nlogits = W_U @ h\np = np.exp(logits - logits.max()); p = p / p.sum()\nprint(\"h =\", np.round(h,4))\nprint(\"logits =\", dict(zip(vocab, np.round(logits,4))))\nprint(\"probs  =\", dict(zip(vocab, np.round(p,4))))\nprint(\"PREDICTION:\", vocab[int(np.argmax(logits))])\n\n# --- Part IV: cross-entropy loss + one gradient step on W_U[sat,0] ---\ntarget = vocab.index(\"sat\")\nL = -np.log(p[target])\ndz = p.copy(); dz[target] -= 1                  # dL/dlogit = p - y\ngrad = dz[target] * h[0]                         # dL/dW_U[sat,0]\neta = 0.5\nnew_w = W_U[target,0] - eta * grad\nprint(\"\\nloss =\", round(float(L),4), \"  grad dL/dW_U[sat,0] =\", round(float(grad),4))\nprint(\"W_U[sat,0]: %.4f -> %.4f\" % (W_U[target,0], new_w))\n\n# effect of the update\nW_U2 = W_U.copy(); W_U2[target,0] = new_w\nlg2 = W_U2 @ h; p2 = np.exp(lg2 - lg2.max()); p2 /= p2.sum()\nprint(\"logit_sat: %.4f -> %.4f\" % (logits[target], lg2[target]))\nprint(\"p_sat: %.4f -> %.4f   loss: %.4f -> %.4f\"\n      % (p[target], p2[target], L, -np.log(p2[target])))\n\n# numerical gradient check\neps = 1e-5\ndef loss_at(w):\n    Wc = W_U.copy(); Wc[target,0] = w\n    lg = Wc @ h; pp = np.exp(lg - lg.max()); pp /= pp.sum()\n    return -np.log(pp[target])\nnum = (loss_at(W_U[target,0]+eps) - loss_at(W_U[target,0]-eps)) / (2*eps)\nprint(\"numerical grad = %.4f   analytic grad = %.4f  (match!)\" % (num, grad))",
+ "description": "Compute embeddings, attention, feed-forward, softmax, loss, and gradient update, with numerical gradient check confirming analytics.",
+ "example": "cs357-tut-tokensembeddings-1",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe free model",
+ "steps": [
+  {
+   "description": "Reveal setup: imports, vocab, embedding dict E, positions, and token embeddings x_the, x_cat.",
+   "kind": "reveal",
+   "lines": "1-10"
+  },
+  {
+   "description": "Reveal Part II: Q/K/V projection matrices and computations.",
+   "kind": "reveal",
+   "lines": "13-18"
+  },
+  {
+   "description": "Reveal attention: scores, scaling, softmax weights, and context vector for last token.",
+   "kind": "reveal",
+   "lines": "20-27"
+  },
+  {
+   "answer": "sat",
+   "kind": "predict",
+   "lines": "38",
+   "question": "What token does the model predict for input 'the cat'?"
+  },
+  {
+   "description": "Reveal Part III: FFN, logits, softmax probabilities, and final prediction.",
+   "kind": "reveal",
+   "lines": "29-38"
+  },
+  {
+   "description": "Reveal Part IV: loss computation, gradient, weight update, and effect on sat probability.",
+   "kind": "reveal",
+   "lines": "40-55"
+  },
+  {
+   "description": "Reveal numerical gradient check: confirms analytic gradient matches finite difference.",
+   "kind": "reveal",
+   "lines": "57-64"
+  },
+  {
+   "description": "Run to show attention weights and context.",
+   "kind": "run",
+   "lines": "27",
+   "trace_step": 20
+  },
+  {
+   "description": "Run to show PREDICTION: sat.",
+   "kind": "run",
+   "lines": "38",
+   "trace_step": 37
+  }
+ ],
+ "title": "Full Transformer Forward Pass and Training Step",
+ "version": 1
+}

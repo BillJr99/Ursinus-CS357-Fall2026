@@ -1,0 +1,27 @@
+{
+ "code": "\n# In your package directory\nnpm pack --dry-run   # read every line before proceeding\nnpm publish --access public\n\n# Teammate verifies:\nnpx @yourusername/hello-agent \"CS357 classmate\"",
+ "description": "Build and publish hello-cs357 image to GHCR, make it public, have teammate verify pull works without credentials.",
+ "example": "cs357-tut-publishing-8",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Exercise 1 starter commands.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "Build and publish: docker build with ghcr.io/yourusername/hello-cs357:0.1.0, authenticate, push.",
+   "kind": "focus",
+   "lines": "2-4"
+  },
+  {
+   "description": "Verification: teammate runs docker pull and docker run to confirm image works without credentials.",
+   "kind": "focus",
+   "lines": "6-7"
+  }
+ ],
+ "title": "Exercise 1: First Container Image",
+ "version": 1
+}

@@ -1,0 +1,27 @@
+{
+ "code": "pip install \\\n  --index-url https://test.pypi.org/simple/ \\\n  --extra-index-url https://pypi.org/simple/ \\\n  my-agent",
+ "description": "Upload package to TestPyPI safely: install twine, upload with --repository testpypi flag, uses TestPyPI credentials or API token.",
+ "example": "cs357-tut-publishing-15",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "TestPyPI upload commands.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Setup and upload: pip install twine, twine upload --repository testpypi dist/*.",
+   "kind": "focus",
+   "lines": "2-3"
+  },
+  {
+   "description": "Credentials: twine prompts for TestPyPI username/password or uses API token from test.pypi.org.",
+   "kind": "focus",
+   "lines": "4"
+  }
+ ],
+ "title": "TestPyPI: Upload to Test Registry",
+ "version": 1
+}

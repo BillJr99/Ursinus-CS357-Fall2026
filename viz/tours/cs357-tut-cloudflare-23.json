@@ -1,0 +1,37 @@
+{
+ "code": "\n# Minimal example if you have no existing static output\nmkdir my-site && echo \"<h1>CS357 Project Demo</h1>\" > my-site/index.html\nnpx wrangler pages deploy ./my-site --project-name=cs357-yourname\n\n# Output includes a unique preview URL, share that for review",
+ "description": "A starter hint that builds a minimal static site and deploys it to Pages, sharing the preview URL for review.",
+ "example": "cs357-tut-cloudflare-23",
+ "lang": "shell",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "This hint deploys a static site to Pages. It is for the case where you have no existing build output.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "`mkdir my-site` creates a directory, and `echo \"<h1>CS357 Project Demo</h1>\" > my-site/index.html` writes a minimal `index.html`. The comment calls this the minimal example.",
+   "kind": "focus",
+   "lines": "3"
+  },
+  {
+   "description": "`npx wrangler pages deploy ./my-site --project-name=cs357-yourname` publishes the directory to Pages.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "The comment notes the output includes a unique preview URL, and that you share that URL for review rather than the production URL.",
+   "kind": "focus",
+   "lines": "6"
+  },
+  {
+   "answer": "a *.pages.dev URL",
+   "kind": "predict",
+   "question": "The exercise says your site ends up accessible at which kind of URL?"
+  }
+ ],
+ "title": "Exercise 3: Deploy a Static Site to Pages",
+ "version": 1
+}

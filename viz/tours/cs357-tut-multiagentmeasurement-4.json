@@ -1,0 +1,37 @@
+{
+ "code": "import json\nfrom critique_refine import critique_draft, load_config, load_rubric\n\ndef load_rubric_from_file(path):\n    with open(path) as f:\n        return json.load(f)\n\nconfig = load_config()\nrubric = load_rubric(config)\n\nhack_draft = \"\"\"\n\\\"\\\"\\\"Do stuff.\n\nArgs:\n    a (list[int]): a.\n    b (list[int]): b.\n\nReturns:\n    list[int]: result.\n\nExample:\n    >>> merge_sorted_lists([1], [2])\n    [1, 2]\n\\\"\\\"\\\"\n\"\"\"\n\ncritique = critique_draft(hack_draft, rubric, config)\nprint(f\"Critic verdict on hack: {critique['verdict']}\")\nprint(f\"Issues: {critique['issues']}\")\n# Expected: verdict == \"accept\" despite being a poor docstring",
+ "description": "hack.py scores a deliberately poor docstring with your critic, to test whether a rubric loophole lets a useless draft pass. Reward hacking is satisfying the letter of a rule while missing its intent.",
+ "example": "cs357-tut-multiagentmeasurement-4",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: Big Pickle",
+ "steps": [
+  {
+   "description": "The script imports `json` and the critic helpers. `load_rubric_from_file` reads a rubric file, and `config` and `rubric` are loaded once.",
+   "kind": "reveal",
+   "lines": "1-9"
+  },
+  {
+   "description": "`hack_draft` is a deliberately poor docstring. It opens with `\"\"\"Do stuff.` and gives minimal parameter descriptions like `a (list[int]): a.`. It meets the letter of the criteria without being useful.",
+   "kind": "focus",
+   "lines": "11-25"
+  },
+  {
+   "description": "`critique_draft` scores the hack draft, and the script prints the verdict and the issues.",
+   "kind": "focus",
+   "lines": "27-29"
+  },
+  {
+   "description": "The last comment states the expected result: verdict equals `accept` despite being a poor docstring. The page calls this reward hacking, satisfying the letter of a scoring rule while missing its intent.",
+   "kind": "focus",
+   "lines": "30"
+  },
+  {
+   "answer": "an empty issue list",
+   "kind": "predict",
+   "question": "The page says a working hack prints 'Critic verdict on hack: accept' together with what kind of issue list?"
+  }
+ ],
+ "title": "A Hack Draft Against Your Own Rubric",
+ "version": 1
+}

@@ -1,0 +1,47 @@
+{
+ "code": "# step3_skill.py\nfrom pathlib import Path\nfrom pydantic_ai import Agent\nfrom common import make_model, show_context, watch\n\nSKILLS = {p.parent.name: p for p in Path(\"skills\").glob(\"*/SKILL.md\")}\n\ndef description(path: Path) -> str:\n    for line in path.read_text().splitlines():\n        if line.startswith(\"description:\"):\n            return line.removeprefix(\"description:\").strip()\n    return \"\"\n\nagent = Agent(make_model(), instructions=\"You are a concise study-planning assistant.\", capabilities=[watch])\n\n@agent.instructions\ndef skill_menu() -> str:\n    # Only the one-line descriptions sit in the context until a skill is needed.\n    menu = \"\\n\".join(f\"- {name}: {description(p)}\" for name, p in SKILLS.items())\n    return \"Skills you can load with load_skill when one fits the task:\\n\" + menu\n\n@agent.tool_plain\ndef load_skill(name: str) -> str:\n    \"\"\"Load the full instructions for one skill by name.\"\"\"\n    body = SKILLS[name].read_text().split(\"---\", 2)[2]  # drop the front matter\n    return body.strip()\n\nresult = agent.run_sync(\"My calculus exam is in 4 days and covers series, integrals, and limits. Plan my studying.\")\nprint(result.output)\nshow_context(0)   # first request: the menu only\nshow_context()    # last request: the skill body has arrived as a tool result",
+ "description": "Skills as loadable prompts: menu of one-line descriptions in context, full body loaded via tool when requested.",
+ "example": "cs357-tut-agentframeworks-13",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: vibe",
+ "steps": [
+  {
+   "description": "Skill system: directory scanning, menu generation, and load_skill tool.",
+   "kind": "reveal",
+   "lines": "1-31"
+  },
+  {
+   "description": "Setup: imports and SKILLS dict built from glob pattern for */SKILL.md.",
+   "kind": "focus",
+   "lines": "1-6"
+  },
+  {
+   "description": "Description extraction: reads the description: line from front matter.",
+   "kind": "focus",
+   "lines": "8-12"
+  },
+  {
+   "description": "Agent: Agent with make_model and instructions.",
+   "kind": "focus",
+   "lines": "14-15"
+  },
+  {
+   "description": "Skill menu: @agent.instructions decorator generates one-line menu of available skills.",
+   "kind": "focus",
+   "lines": "16-20"
+  },
+  {
+   "description": "Load_skill tool: tool_plain decorator, reads full SKILL.md body after front matter.",
+   "kind": "focus",
+   "lines": "22-26"
+  },
+  {
+   "description": "Execution: run_sync with study plan request, show first and last context to see menu vs loaded skill.",
+   "kind": "focus",
+   "lines": "28-31"
+  }
+ ],
+ "title": "Pydantic AI: Skill System",
+ "version": 1
+}

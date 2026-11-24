@@ -1,0 +1,34 @@
+{
+ "code": "import random\n\ndef flip_coin():\n    return random.choice([\"heads\", \"tails\"])\n\n# Could return either, by design.\nprint(flip_coin())",
+ "description": "This function randomly selects one of two coin-flip outcomes.",
+ "example": "cs357-tut-sampling-2",
+ "lang": "python",
+ "reviewed": false,
+ "source": "draft: copilot free model",
+ "steps": [
+  {
+   "description": "The random module supplies the selection function.",
+   "kind": "reveal",
+   "lines": "1"
+  },
+  {
+   "description": "flip_coin chooses either heads or tails from the two-item list.",
+   "kind": "reveal",
+   "lines": "3-4"
+  },
+  {
+   "answer": "It can print heads or tails.",
+   "kind": "predict",
+   "lines": "7",
+   "question": "Which two values can this call print?"
+  },
+  {
+   "description": "This run prints tails. A different run may select the other listed outcome.",
+   "kind": "run",
+   "lines": "7",
+   "trace_step": 2
+  }
+ ],
+ "title": "Sample a coin flip",
+ "version": 1
+}

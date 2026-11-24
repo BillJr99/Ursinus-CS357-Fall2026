@@ -1,0 +1,14 @@
+x_the = [1. 0.]   x_cat = [1. 1.]
+q = [[0.0, 1.0], [1.0, 1.0]]  k = [[1.0, 1.0], [1.0, 2.0]]  v = [[0.0, 1.0], [1.0, 1.0]]
+scores = [2. 3.]  scaled = [1.4142 2.1213]
+attention weights = [0.3302 0.6698]  context = [0.6698 1.    ]
+h = [1.6698 1.    ]
+logits = {'the': np.float64(1.6698), 'cat': np.float64(1.0), 'sat': np.float64(2.6698), 'ran': np.float64(-0.6698), 'mat': np.float64(0.6698)}
+probs  = {'the': np.float64(0.213), 'cat': np.float64(0.109), 'sat': np.float64(0.5791), 'ran': np.float64(0.0205), 'mat': np.float64(0.0784)}
+PREDICTION: sat
+
+loss = 0.5464   grad dL/dW_U[sat,0] = -0.7029
+W_U[sat,0]: 1.0000 -> 1.3514
+logit_sat: 2.6698 -> 3.2566
+p_sat: 0.5791 -> 0.7121   loss: 0.5464 -> 0.3395
+numerical grad = -0.7029   analytic grad = -0.7029  (match!)
